@@ -1,0 +1,71 @@
+{% extends 'admin/base.html' %}
+{% block page_content %}
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+      data-admin-utc-offset="{% now "Z" %}">
+
+<!-- Container -->
+<div id="container">
+    {% if not is_popup %}
+    <section class="content-header">
+        {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+        {% block breadcrumbs %}{% endblock %}
+    </section>
+    {% endif %}
+
+    <!-- Content -->
+    <section id="content" class="content">
+        {% block messages %}
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fa fa-check"></i>{{ message|capfirst }}</h5>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endblock messages %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h4 class="box-title">
+                            <i class="fa fa-clipboard"></i>
+                            {% trans 'search result' %}{% block pretitle %}{% endblock %}
+                        </h4>
+                        <div class="box-tools pull-right">
+                            {% block object-tools %}{% endblock %}
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        {% block content %}
+                        {{ content }}
+                        {% endblock %}
+                        {% block sidebar %}{% endblock %}
+                    </div>
+
+                </div>
+                <br class="clear" />
+            </div>
+        </div>
+    </section>
+    <!-- END Content -->
+
+</div>
+<!-- END Container -->
+
+{% endblock %}
+
+{% block footer %}
+<div class="pull-right hidden-xs">
+    <b>Adminlte Version</b> 2.3.6
+</div>
+<strong>Copyright &copy; 2019 <a href="https://github.com/wuyue92tree/django-adminlte-ui">django-adminlte-ui</a>.</strong> All rights
+reserved.
+{% endblock %}
+
+{% block custom_js %} {% endblock %}
