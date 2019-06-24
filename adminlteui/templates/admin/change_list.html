@@ -18,6 +18,10 @@
 {% endif %}
 {% endblock %}
 
+{% block custom_style %}
+<link rel="stylesheet" href="{% static "admin/plugins/datatables/dataTables.bootstrap.css" %}">
+{% endblock %}
+
 {% block extrahead %}
 {{ block.super }}
 {{ media.js }}
@@ -39,13 +43,6 @@
 
 {% block content %}
 <div id="content-main">
-    {% block object-tools %}
-    <ul class="object-tools">
-        {% block object-tools-items %}
-        {% change_list_object_tools %}
-        {% endblock %}
-    </ul>
-    {% endblock %}
     {% if cl.formset and cl.formset.errors %}
     <p class="errornote">
         {% if cl.formset.total_error_count == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
@@ -54,11 +51,19 @@
     {% endif %}
     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
         <div class="row">
-        {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
+            {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
 
-        {% block search %}{% search_form cl %}{% endblock %}
+            {% block search %}{% search_form cl %}{% endblock %}
 
         </div>
+
+        {% block object-tools %}
+        <div class="row">
+            {% block object-tools-items %}
+            {% change_list_object_tools %}
+            {% endblock %}
+        </div>
+        {% endblock %}
 
         <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
             {% if cl.formset %}
@@ -77,6 +82,8 @@
 {% endblock %}
 
 {% block custom_js %}
+<script src="{% static "admin/plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "admin/plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
 
 <script>
     var selectors = document.querySelector('#changelist-search').querySelectorAll('select');
@@ -85,7 +92,6 @@
             var $field = $(this);
             var $option = $field.find('option:selected');
             var select_name = $option.data('name');
-            console.log(select_name);
             if (select_name) {
                 $field.attr('name', select_name);
             } else {
@@ -105,7 +111,7 @@
             // }
 
             // remove the hidden input of select_name
-            var input = document.querySelector('#search_group').querySelector('input[name="' + select_name + '"]');
+            var input = document.querySelector('#search_group').querySelector('input[name="' + $field.data('name') + '"]');
             input.parentNode.removeChild(input)
         }
     }
