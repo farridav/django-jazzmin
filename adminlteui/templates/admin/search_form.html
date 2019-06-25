@@ -17,10 +17,10 @@
             </div>
         </div>
         {% endif %}
-
+        {% if cl.has_filters or cl.search_fields %}
         <div class="col-md-2">
             <div class="form-group" id="search_group">
-                <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
+                <button type="submit" class="btn btn-primary" style="margin-right: 5px;">{% trans 'Search' %}</button>
                 {% if show_result_count %}
                 <span class="small quiet">{% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %} (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">{% if cl.show_full_result_count %}{% blocktrans with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktrans %}{% else %}{% trans "Show all" %}{% endif %}</a>)</span>
                 {% endif %}
@@ -29,5 +29,6 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     </form>
 </div>
