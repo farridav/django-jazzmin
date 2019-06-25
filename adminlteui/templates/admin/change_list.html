@@ -67,20 +67,22 @@
                     {{ cl.formset.non_form_errors }}
                     {% endif %}
                     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
-                        <div class="row">
-                            {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
-
-                            {% block search %}{% search_form cl %}{% endblock %}
-
-                        </div>
-
-                        {% block object-tools %}
                         <div class="row" style="margin-bottom: 15px;">
-                            {% block object-tools-items %}
-                            {% change_list_object_tools %}
+                            {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
+                            {% block search %}
+                            <div class="col-md-10 col-sm-12 col-xs-12" id="toolbar">
+                                {% search_form cl %}
+                            </div>
+                            {% endblock %}
+
+                            {% block object-tools %}
+                            <div {% if cl.has_filters or cl.search_fields %}class="col-md-2 col-sm-12 col-xs-12 text-right"{% else %}class="col-md-12"{% endif %}>
+                                {% block object-tools-items %}
+                                {% change_list_object_tools %}
+                                {% endblock %}
+                            </div>
                             {% endblock %}
                         </div>
-                        {% endblock %}
 
                         <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
                             {% if cl.formset %}
