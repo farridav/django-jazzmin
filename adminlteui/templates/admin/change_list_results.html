@@ -1,0 +1,48 @@
+{% load i18n static %}
+{% if result_hidden_fields %}
+<div class="hiddenfields">{# DIV for HTML validation #}
+    {% for item in result_hidden_fields %}{{ item }}{% endfor %}
+</div>
+{% endif %}
+{% if results %}
+
+<div class="dataTables_wrapper form-inline dt-bootstrap">
+    <div class="row">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                <thead>
+                <tr role="row">
+                    {% for header in result_headers %}
+                    <th {% if header.sortable %}
+                        {% if header.sorted %}
+                        {% if header.ascending %}
+                        class="sorting_asc"
+                        {% else %}
+                        class="sorting_desc"
+                        {% endif %}
+                        {% else %}
+                        class="sorting"
+                        {% endif %}
+                        {% endif %}
+                        tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending"><div class="text">{% if header.sortable %}<a href="{{ header.url_primary }}">
+                        {{ header.text|capfirst }}</a>{% else %}<span>{{ header.text|capfirst }}</span>{% endif %} {% if header.sorted %}<a href="{{ header.url_remove }}"><div style="margin-top: .2em;" class="fa fa-close pull-right"></div></a>{% endif %}</div>
+                    </th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for result in results %}
+                <tr role="row" class="{% cycle 'even' 'odd' %}">
+                    {% for item in result %}{{ item }}{% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}

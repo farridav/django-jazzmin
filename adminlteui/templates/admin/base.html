@@ -18,27 +18,18 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href={% static "admin/dist/css/skins/_all-skins.min.css" %}>
-    <!-- iCheck -->
-    <link rel="stylesheet" href={% static "admin/plugins/iCheck/flat/blue.css" %}>
-    <!-- Morris chart -->
-    <link rel="stylesheet" href={% static "admin/plugins/morris/morris.css" %}>
-    <!-- jvectormap -->
-    <link rel="stylesheet" href={% static "admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css" %}>
-    <!-- Date Picker -->
-    <link rel="stylesheet" href={% static "admin/plugins/datepicker/datepicker3.css" %}>
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href={% static "admin/plugins/daterangepicker/daterangepicker.css" %}>
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href={% static "admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" %}>
 
+    {% block custom_style %} {% endblock %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    {% block extrahead %} {% endblock %}
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini fixed">
 <div class="wrapper">
 
     <header class="main-header">
@@ -337,8 +328,8 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="header">页面导航</li>
-                <li class="active">
+                <li class="header">{% trans 'MAIN NAVIGATION' %}</li>
+                <li>
                     <a href="/admin/">
                         <i class="fa fa-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
                     </a>
@@ -347,7 +338,7 @@
                 {% if app_list %}
                 {% for app in app_list %}
                 <li class="treeview">
-                    <a href="#">
+                    <a href="javascript:void(0)">
                         <i class="fa fa-database"></i>
                         <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
                         <span class="pull-right-container">
@@ -366,17 +357,17 @@
                 {% endif %}
                 <!--{% if request.user.is_superuser %}-->
                 <!--<li class="treeview">-->
-                    <!--<a href="#">-->
-                        <!--<i class="fa fa-cog"></i>-->
-                        <!--<span>{% trans 'System manage' %}</span>-->
-                        <!--<span class="pull-right-container">-->
-                          <!--<i class="fa fa-angle-left pull-right"></i>-->
-                        <!--</span>-->
-                    <!--</a>-->
-                    <!--<ul class="treeview-menu">-->
-                        <!--<li><a href="" ><i class="fa fa-file-text-o"></i>{% trans 'Log manage' %}</a></li>-->
-                        <!--<li><a href="/admin/config/system/" ><i class="fa fa-wrench"></i>{% trans 'System config' %}</a></li>-->
-                    <!--</ul>-->
+                <!--<a href="#">-->
+                <!--<i class="fa fa-cog"></i>-->
+                <!--<span>{% trans 'System manage' %}</span>-->
+                <!--<span class="pull-right-container">-->
+                <!--<i class="fa fa-angle-left pull-right"></i>-->
+                <!--</span>-->
+                <!--</a>-->
+                <!--<ul class="treeview-menu">-->
+                <!--<li><a href="" ><i class="fa fa-file-text-o"></i>{% trans 'Log manage' %}</a></li>-->
+                <!--<li><a href="/admin/config/system/" ><i class="fa fa-wrench"></i>{% trans 'System config' %}</a></li>-->
+                <!--</ul>-->
                 <!--</li>-->
                 <!--{% endif %}-->
 
@@ -390,7 +381,7 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper"  style="background-color: white">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         {% block page_content %}
         {% endblock %}
@@ -607,39 +598,41 @@
 </script>
 <!-- Bootstrap 3.3.6 -->
 <script src={% static "admin/bootstrap/js/bootstrap.min.js" %}></script>
-<!-- Morris.js charts -->
-<script src="//cdn.bootcss.com/raphael/2.1.0/raphael-min.js"></script>
-<script src={% static "admin/plugins/morris/morris.min.js" %}></script>
-<!-- Sparkline -->
-<script src={% static "admin/plugins/sparkline/jquery.sparkline.min.js" %}></script>
-<!-- jvectormap -->
-<script src={% static "admin/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" %}></script>
-<script src={% static "admin/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" %}></script>
-<!-- jQuery Knob Chart -->
-<script src={% static "admin/plugins/knob/jquery.knob.js" %}></script>
-<!-- daterangepicker -->
-<script src="//cdn.bootcss.com/moment.js/2.11.2/moment.min.js"></script>
-<script src={% static "admin/plugins/daterangepicker/daterangepicker.js" %}></script>
-<!-- datepicker -->
-<script src={% static "admin/plugins/datepicker/bootstrap-datepicker.js" %}></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src={% static "admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" %}></script>
 <!-- Slimscroll -->
 <script src={% static "admin/plugins/slimScroll/jquery.slimscroll.min.js" %}></script>
 <!-- FastClick -->
 <script src={% static "admin/plugins/fastclick/fastclick.js" %}></script>
 <!-- AdminLTE App -->
 <script src={% static "admin/dist/js/app.min.js" %}></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src={% static "admin/dist/js/pages/dashboard.js" %}></script>
 <!-- AdminLTE for demo purposes -->
 <script src={% static "admin/dist/js/demo.js" %}></script>
 <script>
-    //  用来控制iframe自适应行高
-    $("#page_content").load(function () {
-        var mainheight = $(this).contents().find("body").height() + 20;
-        $(this).height(mainheight);
-    });
+// use js control active status of siderbar-menu
+$(function() {
+    var menuActions = document.querySelectorAll('.sidebar-menu a')
+    for (var i in menuActions) {
+        try {
+            if (window.location.pathname === '/admin/') {
+                menuActions[i].parentNode.setAttribute('class', 'active')
+                break
+            }
+
+            if (window.location.href.indexOf(menuActions[i].href) !== -1) {
+                if (menuActions[i].href===window.location.origin + '/admin/') {
+                    continue
+                }
+
+                console.log('menu matched.', window.location.href, menuActions[i].href);
+                menuActions[i].parentNode.setAttribute('class', 'active');
+                menuActions[i].parentNode.parentNode.setAttribute('class', 'treeview-menu menu-open');
+                menuActions[i].parentNode.parentNode.parentNode.setAttribute('class', 'treeview active');
+                // break
+            }
+        } catch (e) {
+            console.log(window.location.href, menuActions[i].href, e)
+        }
+    }
+})
 </script>
 
 {% block custom_js %}{% endblock %}

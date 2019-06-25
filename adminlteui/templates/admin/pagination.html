@@ -1,0 +1,36 @@
+{% load admin_list adminlte_list %}
+{% load i18n %}
+
+<div class="col-sm-5">
+    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
+        共 {{ cl.result_count }} 条记录
+        {% if show_all_url %}&nbsp;&nbsp;<a href="{{ show_all_url }}"
+                                            class="showall">{% trans 'Show all' %}</a>{% endif %}
+        {% if cl.formset and cl.result_count %}<input type="submit" name="_save"
+                                                      class="btn btn-primary"
+                                                      value="{% trans 'Save' %}">{% endif %}
+    </div>
+</div>
+
+<div class="col-sm-7">
+    <div class="dataTables_paginate paging_simple_numbers"
+         id="example2_paginate">
+        <ul class="pagination">
+            {% if pagination_required %}
+            <li class="paginate_button previous disabled"
+                id="example2_previous">
+                <a href="#" aria-controls="example2" data-dt-idx="0"
+                   tabindex="0">{% trans 'Previous' %}</a></li>
+            {% for i in page_range %}
+            {% adminlte_paginator_number cl i %}
+            {% endfor %}
+            <li class="paginate_button next disabled" id="example2_next">
+                <a href="#"
+                   aria-controls="example2"
+                   data-dt-idx="7"
+                   tabindex="0">{% trans 'Next' %}</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

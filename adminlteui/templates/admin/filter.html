@@ -1,11 +1,10 @@
 {% load i18n %}
 
-<div class="col-md-1">
+<div class="col-md-1" style="padding-right: 0">
     <div class="form-group">
-        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{spec.lookup_kwarg}}">
             <option value="">{{ title }}</option>
             <option value="">------</option>
-            {{new_choices}}
             {% for choice in new_choices %}
             <option data-name="{{ choice.name }}" value="{{ choice.value }}" {% if choice.selected %} selected {% endif %}>{{ choice.display }}</option>
             {% endfor %}
