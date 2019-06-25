@@ -47,43 +47,63 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
-<div id="content-main">
-    {% if cl.formset and cl.formset.errors %}
-    <p class="errornote">
-        {% if cl.formset.total_error_count == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
-    </p>
-    {{ cl.formset.non_form_errors }}
-    {% endif %}
-    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
-        <div class="row">
-            {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
 
-            {% block search %}{% search_form cl %}{% endblock %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h4 class="box-title">
+                    {{title}}{% block pretitle %}{% endblock %}
+                </h4>
+            </div>
+
+            <div class="box-body">
+                <div id="content-main">
+                    {% if cl.formset and cl.formset.errors %}
+                    <p class="errornote">
+                        {% if cl.formset.total_error_count == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+                    </p>
+                    {{ cl.formset.non_form_errors }}
+                    {% endif %}
+                    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+                        <div class="row">
+                            {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
+
+                            {% block search %}{% search_form cl %}{% endblock %}
+
+                        </div>
+
+                        {% block object-tools %}
+                        <div class="row" style="margin-bottom: 15px;">
+                            {% block object-tools-items %}
+                            {% change_list_object_tools %}
+                            {% endblock %}
+                        </div>
+                        {% endblock %}
+
+                        <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+                            {% if cl.formset %}
+                            <div>{{ cl.formset.management_form }}</div>
+                            {% endif %}
+
+                            {% block result_list %}
+                            {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+                            {% result_list cl %}
+                            {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+                            {% endblock %}
+                            {% block pagination %}{% pagination cl %}{% endblock %}
+                        </form>
+                    </div>
+                </div>
+            </div>
 
         </div>
-
-        {% block object-tools %}
-        <div class="row" style="margin-bottom: 15px;">
-            {% block object-tools-items %}
-            {% change_list_object_tools %}
-            {% endblock %}
-        </div>
-        {% endblock %}
-
-        <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
-            {% if cl.formset %}
-            <div>{{ cl.formset.management_form }}</div>
-            {% endif %}
-
-            {% block result_list %}
-            {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
-            {% result_list cl %}
-            {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
-            {% endblock %}
-            {% block pagination %}{% pagination cl %}{% endblock %}
-        </form>
+        <br class="clear" />
     </div>
 </div>
+
+
 {% endblock %}
 
 {% block custom_js %}
