@@ -29,7 +29,7 @@
 
     {% block extrahead %} {% endblock %}
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini fixed">
 <div class="wrapper">
 
     <header class="main-header">
@@ -328,8 +328,8 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="header">页面导航</li>
-                <li class="active">
+                <li class="header">{% trans 'MAIN NAVIGATION' %}</li>
+                <li>
                     <a href="/admin/">
                         <i class="fa fa-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
                     </a>
@@ -338,7 +338,7 @@
                 {% if app_list %}
                 {% for app in app_list %}
                 <li class="treeview">
-                    <a href="#">
+                    <a href="javascript:void(0)">
                         <i class="fa fa-database"></i>
                         <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
                         <span class="pull-right-container">
@@ -607,11 +607,32 @@
 <!-- AdminLTE for demo purposes -->
 <script src={% static "admin/dist/js/demo.js" %}></script>
 <script>
-//  用来控制iframe自适应行高
-$("#page_content").load(function () {
-    var mainheight = $(this).contents().find("body").height() + 20;
-    $(this).height(mainheight);
-});
+// use js control active status of siderbar-menu
+$(function() {
+    var menuActions = document.querySelectorAll('.sidebar-menu a')
+    for (var i in menuActions) {
+        try {
+            if (window.location.pathname === '/admin/') {
+                menuActions[i].parentNode.setAttribute('class', 'active')
+                break
+            }
+
+            if (window.location.href.indexOf(menuActions[i].href) !== -1) {
+                if (menuActions[i].href===window.location.origin + '/admin/') {
+                    continue
+                }
+
+                console.log('menu matched.', window.location.href, menuActions[i].href);
+                menuActions[i].parentNode.setAttribute('class', 'active');
+                menuActions[i].parentNode.parentNode.setAttribute('class', 'treeview-menu menu-open');
+                menuActions[i].parentNode.parentNode.parentNode.setAttribute('class', 'treeview active');
+                // break
+            }
+        } catch (e) {
+            console.log(window.location.href, menuActions[i].href, e)
+        }
+    }
+})
 </script>
 
 {% block custom_js %}{% endblock %}
