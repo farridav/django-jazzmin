@@ -9,7 +9,7 @@ setup(
     version=version,
     url='https://github.com/wuyue92tree/django-adminlte-ui',
     description='django admin theme base on adminlte',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     author='wuyue',
     author_email='wuyue92tree@163.com',
     maintainer='wuyue',
