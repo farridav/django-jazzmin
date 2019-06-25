@@ -20,6 +20,9 @@
 
 {% block custom_style %}
 <link rel="stylesheet" href="{% static "admin/plugins/datatables/dataTables.bootstrap.css" %}">
+{% if cl.formset or action_form %}
+<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+{% endif %}
 {% endblock %}
 
 {% block extrahead %}
@@ -38,6 +41,8 @@
 </ol>
 {% endblock %}
 {% endif %}
+
+{% block content_title %} {{ cl.opts.verbose_name_plural|capfirst }} {% endblock %}
 
 {% block coltype %}flex{% endblock %}
 
@@ -58,7 +63,7 @@
         </div>
 
         {% block object-tools %}
-        <div class="row">
+        <div class="row" style="margin-bottom: 15px;">
             {% block object-tools-items %}
             {% change_list_object_tools %}
             {% endblock %}
