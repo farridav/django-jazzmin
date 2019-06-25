@@ -29,7 +29,7 @@
 {% block content %}
 
 <div class="row">
-    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.model_name }}_form" novalidate>{% csrf_token %}{% block form_top %}{% endblock %}
+    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.model_name }}_form" novalidate>
         <div class="col-md-9">
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -41,6 +41,7 @@
                 <div class="box-body">
                     <div id="content-main">
                         <div>
+                            {% csrf_token %}{% block form_top %}{% endblock %}
                             {% if is_popup %}<input type="hidden" name="{{ is_popup_var }}" value="1">{% endif %}
                             {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
                             {% if save_on_top %}{% block submit_buttons_top %}{% submit_row %}{% endblock %}{% endif %}
