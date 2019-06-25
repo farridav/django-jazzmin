@@ -40,8 +40,8 @@ def adminlte_admin_list_filter(cl, spec):
     tpl = get_template(spec.template)
     new_choice = []
 
-    print(spec.lookup_kwarg)
-    print(list(spec.choices(cl)))
+    # print(spec.lookup_kwarg)
+    # print(list(spec.choices(cl)))
 
     for choice in list(spec.choices(cl)):
         qs = (urllib.parse.parse_qs(choice.get('query_string')))
@@ -54,7 +54,7 @@ def adminlte_admin_list_filter(cl, spec):
                                'display': choice.get('display'),
                                'selected': choice.get('selected')})
 
-    print(new_choice)
+    # print(new_choice)
 
     return tpl.render({
         'title': spec.title,
