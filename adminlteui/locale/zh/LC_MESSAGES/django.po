@@ -1,0 +1,266 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-26 17:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: adminlteui/templates/admin/actions.html:10
+msgid "Run the selected action"
+msgstr ""
+
+#: adminlteui/templates/admin/actions.html:10
+msgid "Go"
+msgstr ""
+
+#: adminlteui/templates/admin/actions.html:18
+msgid "Click here to select the objects across all pages"
+msgstr ""
+
+#: adminlteui/templates/admin/actions.html:18
+#, python-format
+msgid "Select all %(total_count)s %(module_name)s"
+msgstr ""
+
+#: adminlteui/templates/admin/actions.html:20
+msgid "Clear selection"
+msgstr ""
+
+#: adminlteui/templates/admin/base.html:66
+msgid "Super manager"
+msgstr "超级管理员"
+
+#: adminlteui/templates/admin/base.html:71
+msgid "Normal"
+msgstr "普通用户"
+
+#: adminlteui/templates/admin/base.html:74
+msgid "Register time"
+msgstr "注册时间"
+
+#: adminlteui/templates/admin/base.html:95
+msgid "Change password"
+msgstr ""
+
+#: adminlteui/templates/admin/base.html:98
+msgid "Log out"
+msgstr ""
+
+#: adminlteui/templates/admin/base.html:122
+msgid "Online"
+msgstr "在线"
+
+#: adminlteui/templates/admin/base.html:128
+#: adminlteui/templates/admin/search_form.html:20
+msgid "Search"
+msgstr "搜索"
+
+#: adminlteui/templates/admin/base.html:138
+msgid "MAIN NAVIGATION"
+msgstr "页面导航"
+
+#: adminlteui/templates/admin/base.html:141
+msgid "Dashboard"
+msgstr "仪表盘"
+
+#: adminlteui/templates/admin/base.html:169
+msgid "System manage"
+msgstr ""
+
+#: adminlteui/templates/admin/base.html:175
+msgid "Log manage"
+msgstr ""
+
+#: adminlteui/templates/admin/base.html:176
+msgid "System config"
+msgstr ""
+
+#: adminlteui/templates/admin/base.html:182
+msgid "Important"
+msgstr ""
+
+#: adminlteui/templates/admin/base.html:183
+msgid "Warning"
+msgstr ""
+
+#: adminlteui/templates/admin/base.html:184
+msgid "Information"
+msgstr ""
+
+#: adminlteui/templates/admin/base_site.html:2
+msgid "Django site admin"
+msgstr ""
+
+#: adminlteui/templates/admin/change_form.html:18
+#: adminlteui/templates/admin/change_list.html:38
+#: adminlteui/templates/admin/index.html:14
+msgid "Home"
+msgstr ""
+
+#: adminlteui/templates/admin/change_form.html:21
+#: adminlteui/templates/admin/change_list_object_tools.html:7
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: adminlteui/templates/admin/change_form.html:50
+#: adminlteui/templates/admin/change_list.html:65
+msgid "Please correct the error below."
+msgstr ""
+
+#: adminlteui/templates/admin/change_form.html:50
+#: adminlteui/templates/admin/change_list.html:65
+msgid "Please correct the errors below."
+msgstr ""
+
+#: adminlteui/templates/admin/change_form.html:97
+msgid "change form tools"
+msgstr "操作面板"
+
+#: adminlteui/templates/admin/index.html:10
+#: adminlteui/templates/admin/index.html:15
+msgid "dashboard"
+msgstr "仪表盘"
+
+#: adminlteui/templates/admin/index.html:39
+msgid "Add"
+msgstr ""
+
+#: adminlteui/templates/admin/index.html:45
+msgid "View"
+msgstr ""
+
+#: adminlteui/templates/admin/index.html:47
+msgid "Change"
+msgstr ""
+
+#: adminlteui/templates/admin/index.html:69
+msgid "My Applications"
+msgstr "我的应用"
+
+#: adminlteui/templates/admin/index.html:83
+msgid "My tables"
+msgstr "我的表格"
+
+#: adminlteui/templates/admin/index.html:125
+msgid "Recent actions"
+msgstr ""
+
+#: adminlteui/templates/admin/index.html:126
+msgid "My actions"
+msgstr ""
+
+#: adminlteui/templates/admin/index.html:130
+msgid "None available"
+msgstr ""
+
+#: adminlteui/templates/admin/index.html:146
+msgid "Unknown content"
+msgstr ""
+
+#: adminlteui/templates/admin/index.html:161
+msgid "You don't have permission to view or edit anything."
+msgstr ""
+
+#: adminlteui/templates/admin/login.html:7
+#: adminlteui/templates/admin/login.html:65
+msgid "Log in"
+msgstr "登录"
+
+#: adminlteui/templates/admin/login.html:37
+msgid "Login and Enjoy"
+msgstr "芝麻开门"
+
+#: adminlteui/templates/admin/login.html:48
+msgid "username"
+msgstr "用户名"
+
+#: adminlteui/templates/admin/login.html:52
+msgid "password"
+msgstr "密码"
+
+#: adminlteui/templates/admin/login.html:59
+msgid "Remember me"
+msgstr "记住我"
+
+#: adminlteui/templates/admin/login.html:72
+msgid "Other"
+msgstr "更多"
+
+#: adminlteui/templates/admin/login.html:73
+msgid "Sign in using Facebook"
+msgstr ""
+
+#: adminlteui/templates/admin/login.html:74
+msgid "Sign in using Google+"
+msgstr ""
+
+#: adminlteui/templates/admin/login.html:78
+msgid "Forgot password ?"
+msgstr ""
+
+#: adminlteui/templates/admin/pagination.html:8
+#: adminlteui/templates/admin/search_form.html:22
+msgid "Show all"
+msgstr ""
+
+#: adminlteui/templates/admin/pagination.html:11
+#: adminlteui/templates/admin/submit_line.html:5
+msgid "Save"
+msgstr ""
+
+#: adminlteui/templates/admin/pagination.html:23
+msgid "Previous"
+msgstr ""
+
+#: adminlteui/templates/admin/pagination.html:31
+msgid "Next"
+msgstr ""
+
+#: adminlteui/templates/admin/search_form.html:22
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: adminlteui/templates/admin/search_form.html:22
+#, python-format
+msgid "%(full_result_count)s total"
+msgstr ""
+
+#: adminlteui/templates/admin/submit_line.html:13
+msgid "Delete"
+msgstr ""
+
+#: adminlteui/templates/admin/submit_line.html:19
+msgid "Save as new"
+msgstr ""
+
+#: adminlteui/templates/admin/submit_line.html:25
+msgid "Save and add another"
+msgstr ""
+
+#: adminlteui/templates/admin/submit_line.html:33
+msgid "Save and continue editing"
+msgstr ""
+
+#: adminlteui/templates/admin/submit_line.html:33
+msgid "Save and view"
+msgstr ""
+
+#: adminlteui/templates/admin/submit_line.html:39
+msgid "Close"
+msgstr ""
