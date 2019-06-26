@@ -68,7 +68,6 @@
                     {% endif %}
                     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
                         <div class="row" style="margin-bottom: 15px;">
-                            {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
                             {% block search %}
                             <div class="col-md-10 col-sm-12 col-xs-12" id="toolbar">
                                 {% search_form cl %}
@@ -82,6 +81,10 @@
                                 {% endblock %}
                             </div>
                             {% endblock %}
+                        </div>
+
+                        <div class="row">
+                            {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
                         </div>
 
                         <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
