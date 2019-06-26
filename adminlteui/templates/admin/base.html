@@ -31,7 +31,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini fixed">
 <div class="wrapper">
-
+    {% if not is_popup %}
     <header class="main-header">
         <!-- Logo -->
         <a href="/" class="logo">
@@ -186,14 +186,15 @@
         </section>
         <!-- /.sidebar -->
     </aside>
-
+    {% endif %}
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 0px;"{% endif %}>
         <!-- Content Header (Page header) -->
         {% block page_content %}
         {% endblock %}
     </div>
     <!-- /.content-wrapper -->
+    {% if not is_popup %}
     <footer class="main-footer">
         {% block footer %}
         {% endblock %}
@@ -392,6 +393,7 @@
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
+    {% endif %}
 </div>
 <!-- ./wrapper -->
 
