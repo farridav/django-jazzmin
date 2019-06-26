@@ -34,7 +34,7 @@
     {% if not is_popup %}
     <header class="main-header">
         <!-- Logo -->
-        <a href="/" class="logo">
+        <a href="{% url 'admin:index' %}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>{{ site_header }}</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -137,7 +137,7 @@
             <ul class="sidebar-menu">
                 <li class="header">{% trans 'MAIN NAVIGATION' %}</li>
                 <li>
-                    <a href="/admin/">
+                    <a id="adminIndex" href="{% url 'admin:index' %}">
                         <i class="fa fa-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
                     </a>
                 </li>
@@ -420,14 +420,16 @@
 $(function() {
     var menuActions = document.querySelectorAll('.sidebar-menu a')
     for (var i in menuActions) {
+        var pathname = document.querySelector('#adminIndex').pathname
+
         try {
-            if (window.location.pathname === '/admin/') {
+            if (window.location.pathname === pathname) {
                 menuActions[i].parentNode.setAttribute('class', 'active')
                 break
             }
 
             if (window.location.href.indexOf(menuActions[i].href) !== -1) {
-                if (menuActions[i].href===window.location.origin + '/admin/') {
+                if (menuActions[i].href===window.location.origin + pathname) {
                     continue
                 }
 
