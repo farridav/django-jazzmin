@@ -1,8 +1,7 @@
 language: python
 python:
-- '2.7'
-- '3.3'
-- pypy
+- '3.6'
+script: python setup.py install
 
 deploy:
   provider: pypi
@@ -12,4 +11,10 @@ deploy:
   skip_existing: true
   skip_cleanup: true
   on:
-    tags: true
+    tag: true
+    all_branches: true
+
+branches:
+  except:
+  - develop
+  - master
