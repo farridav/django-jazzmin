@@ -31,22 +31,7 @@
         {% endblock messages %}
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h4 class="box-title">
-                            {{title}}{% block pretitle %}{% endblock %}
-                        </h4>
-                    </div>
-
-                    <div class="box-body">
-                        {% block content %}
-                        {{ content }}
-                        {% endblock %}
-                        {% block sidebar %}{% endblock %}
-                    </div>
-
-                </div>
-                <br class="clear" />
+                {% block content %} {% endblock %}
             </div>
         </div>
     </section>
