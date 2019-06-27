@@ -1,4 +1,8 @@
-[![title](./images/django-adminlte-ui.jpg)](https://github.com/wuyue92tree/django-adminlte-ui)
+<p align="center">
+  <a href="https://github.com/wuyue92tree/django-adminlte-ui">
+    <img alt="title" src="./images/django-adminlte-ui.jpg" width="400">
+  </a>
+</p>
 
 # django-adminlte-ui
 [![PyPI Version](https://img.shields.io/pypi/v/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
