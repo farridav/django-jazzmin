@@ -6,6 +6,7 @@
 
 # django-adminlte-ui
 [![PyPI Version](https://img.shields.io/pypi/v/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
+[![Download Status](https://img.shields.io/pypi/dm/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Build Status](https://api.travis-ci.org/wuyue92tree/django-adminlte-ui.svg)](https://travis-ci.org/wuyue92tree/django-adminlte-ui)
 
 django admin theme base on adminlte
@@ -45,3 +46,6 @@ INSTALLED_APPS = [
 
 ## table list
 ![table list](./images/table-list.jpg)
+
+## form page
+![form page](./images/form.png)
