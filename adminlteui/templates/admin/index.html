@@ -125,7 +125,7 @@
                     <h3>{% trans 'Recent actions' %}</h3>
                     <h4>{% trans 'My actions' %}</h4>
                     {% load log %}
-                    {% get_admin_log 10 as admin_log for_user user %}
+                    {% get_admin_log 6 as admin_log for_user user %}
                     {% if not admin_log %}
                     <p>{% trans 'None available' %}</p>
                     {% else %}
@@ -134,10 +134,10 @@
                         <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
                             <i class="fa fa-database bg-aqua"></i>
                             <div class="timeline-item">
-                                {% if entry.is_deletion or not entry.get_admin_url %}
-                                {{ entry.object_repr }}
-                                {% else %}
-                                <h3 class="timeline-header no-border">
+                                <h3 class="timeline-header">
+                                    {% if entry.is_deletion or not entry.get_admin_url %}
+                                    {{ entry.object_repr }}
+                                    {% else %}
                                     <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
                                     {% endif %}
                                     {% if entry.content_type %}
@@ -146,6 +146,9 @@
                                     <span class="mini quiet">{% trans 'Unknown content' %}</span>
                                     {% endif %}
                                 </h3>
+                                <div class="timeline-body">
+                                    {{ entry }}
+                                </div>
                             </div>
                         </li>
                         {% endfor %}
