@@ -415,7 +415,7 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
     display: none;
 }
 
-input[type="number"] {
+input[type="number"], input[type="password"] {
     width: auto;
     height: 34px;
     padding: 6px 12px;
@@ -425,6 +425,11 @@ input[type="number"] {
     background-color: #fff;
     border: 1px solid #ccc;
 }
+
+input[type="password"] {
+    width: 100%;
+}
+
 
 input[type="checkbox"] {
     width: auto;
