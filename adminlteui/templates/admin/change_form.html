@@ -123,3 +123,11 @@
 
 
 {% endblock %}
+
+{% block custom_js %}
+<script src="{% static "admin/plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "admin/plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+<script>
+$('[required]').before('<span class="text-red" style="margin-left: -10px;">* </span>');
+</script>
+{% endblock %}
