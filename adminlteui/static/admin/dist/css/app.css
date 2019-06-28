@@ -289,7 +289,6 @@ ul.timelist, .timelist li {
     background-color: #fff;
     border: 1px solid #ccc;
     margin-left: 0 !important;
-
 }
 
 .selector .selector-filter label,
@@ -408,80 +407,36 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
     background-position: 0 -144px;
 }
 
-/* STACKED SELECTORS */
-
-/*.stacked {*/
-    /*float: left;*/
-    /*width: 490px;*/
-/*}*/
-
-/*.stacked select {*/
-    /*width: 480px;*/
-    /*height: 10.1em;*/
-/*}*/
-
-/*.stacked .selector-available, .stacked .selector-chosen {*/
-    /*width: 480px;*/
-/*}*/
-
-/*.stacked .selector-available {*/
-    /*margin-bottom: 0;*/
-/*}*/
-
-/*.stacked .selector-available input {*/
-    /*width: 422px;*/
-/*}*/
-
-/*.stacked ul.selector-chooser {*/
-    /*height: 22px;*/
-    /*width: 50px;*/
-    /*margin: 0 0 10px 40%;*/
-    /*background-color: #eee;*/
-    /*border-radius: 10px;*/
-/*}*/
-
-/*.stacked .selector-chooser li {*/
-    /*float: left;*/
-    /*padding: 3px 3px 3px 5px;*/
-/*}*/
-
-/*.stacked .selector-chooseall, .stacked .selector-clearall {*/
-    /*display: none;*/
-/*}*/
-
-/*.stacked .selector-add {*/
-    /*background: url(../img/selector-icons.svg) 0 -32px no-repeat;*/
-    /*cursor: default;*/
-/*}*/
-
-/*.stacked .active.selector-add {*/
-    /*background-position: 0 -48px;*/
-    /*cursor: pointer;*/
-/*}*/
-
-/*.stacked .selector-remove {*/
-    /*background: url(../img/selector-icons.svg) 0 0 no-repeat;*/
-    /*cursor: default;*/
-/*}*/
-
-/*.stacked .active.selector-remove {*/
-    /*background-position: 0 -16px;*/
-    /*cursor: pointer;*/
-/*}*/
-
-/*.selector .help-icon {*/
-    /*background: url(../img/icon-unknown.svg) 0 0 no-repeat;*/
-    /*display: inline-block;*/
-    /*vertical-align: middle;*/
-    /*margin: -2px 0 0 2px;*/
-    /*width: 13px;*/
-    /*height: 13px;*/
-/*}*/
-
-/*.selector .selector-chosen .help-icon {*/
-    /*background: url(../img/icon-unknown-alt.svg) 0 0 no-repeat;*/
-/*}*/
-
 .selector .search-label-icon {
     height: 0;
+}
+
+.empty-form {
+    display: none;
+}
+
+input[type="number"] {
+    width: auto;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    height: 26px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.control-label {
+    margin-top: 7px;
 }
