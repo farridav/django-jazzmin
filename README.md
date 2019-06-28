@@ -13,6 +13,12 @@ django admin theme base on adminlte
 
 adminlte version: 2.3.6
 
+# helper
+
+- if you have good ideas, just contact me.
+- if you find some bug, just add an issue.
+- if you think this project is good, just star and fork, make it better 🍉.
+
 # install
 
 ```
