@@ -1,8 +1,16 @@
-<fieldset class="module aligned {{ fieldset.classes }}">
-    {% if fieldset.name %}<div class="page-header text-center"><strong>{{ fieldset.name }}</strong></div>{% endif %}
-    {% if fieldset.description %}
-    <div class="description">{{ fieldset.description|safe }}</div>
+<fieldset class="box box-solid module aligned {{ fieldset.classes }}">
+    {% if fieldset.name %}
+    <div class="box-header with-border">
+        <div class="box-title">
+            {{ fieldset.name }}
+            {% if fieldset.description %}
+            <span class="description">{{ fieldset.description|safe }}</span>
+            {% endif %}
+        </div>
+    </div>
     {% endif %}
+
+    <div {% if fieldset.name %}class="box-body"{% endif %}>
     {% for line in fieldset %}
     <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
         <div class="row">
@@ -32,4 +40,5 @@
     </div>
     </div>
     {% endfor %}
+    </div>
 </fieldset>

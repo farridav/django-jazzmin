@@ -3,10 +3,7 @@
 
 {% block extrastyle %}
 {{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">
-{% if cl.formset %}
-<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
-{% endif %}
+<link rel="stylesheet" href="{% static "admin/plugins/datatables/dataTables.bootstrap.css" %}">
 {% if cl.formset or action_form %}
 <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 {% endif %}
@@ -15,13 +12,6 @@
 <style>
     #changelist table thead th:first-child {width: inherit}
 </style>
-{% endif %}
-{% endblock %}
-
-{% block custom_style %}
-<link rel="stylesheet" href="{% static "admin/plugins/datatables/dataTables.bootstrap.css" %}">
-{% if cl.formset or action_form %}
-<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 {% endif %}
 {% endblock %}
 
@@ -111,7 +101,7 @@
 
 {% endblock %}
 
-{% block custom_js %}
+{% block extrajs %}
 <script src="{% static "admin/plugins/datatables/jquery.dataTables.min.js" %}"></script>
 <script src="{% static "admin/plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
 
