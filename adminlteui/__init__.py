@@ -1,1 +1,2 @@
-version = '1.0.0'
+version = '1.1.0'
+# default_app_config = 'adminlteui.apps.AdminlteUIConfig'
