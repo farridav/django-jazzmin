@@ -1,12 +1,15 @@
 {% load i18n %}
 
-
 <div class="form-group">
-    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{spec.lookup_kwarg}}">
+    <select class="form-control select2 select2-hidden-accessible search-filter" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
         <option value="">{{ title }}</option>
-        <option value="">------</option>
-        {% for choice in new_choices %}
-        <option data-name="{{ choice.name }}" value="{{ choice.value }}" {% if choice.selected %} selected {% endif %}>{{ choice.display }}</option>
+        <option value="">---------</option>
+        {% for choice in choices %}
+        {% if choice.name %}
+        <option data-name="{{ choice.name }}" value="{{ choice.value }}" {% if choice.selected %} selected {% endif %}>
+            {{ choice.display }}
+        </option>
+        {% endif %}
         {% endfor %}
     </select>
 </div>
