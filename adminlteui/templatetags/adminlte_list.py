@@ -1,3 +1,4 @@
+import itertools
 from django.contrib.admin.views.main import (
     ALL_VAR, ORDER_VAR, PAGE_VAR, SEARCH_VAR,
 )
@@ -35,48 +36,64 @@ def adminlte_paginator_number(cl, i):
         )
 
 
+def get_filter_id(spec):
+    try:
+        return getattr(spec, 'field_path')
+    except AttributeError:
+        try:
+            return getattr(spec, 'parameter_name')
+        except AttributeError:
+            pass
+    return spec.title
+
+
+@register.simple_tag
+def admin_extra_filters(cl):
+    """ Return the dict of used filters which is not included
+    in list_filters form """
+    used_parameters = list(itertools.chain(*(s.used_parameters.keys()
+                                             for s in cl.filter_specs)))
+    return dict(
+        (k, v) for k, v in cl.params.items() if k not in used_parameters)
+
+
 @register.simple_tag
 def adminlte_admin_list_filter(cl, spec):
     tpl = get_template(spec.template)
-    new_choice = []
+    choices = list(spec.choices(cl))
+    field_key = get_filter_id(spec)
+    matched_key = field_key
+    for choice in choices:
+        query_string = choice['query_string'][1:]
+        query_parts = urllib.parse.parse_qs(query_string)
 
-    # print(spec.lookup_kwarg)
-    # print(list(spec.choices(cl)))
+        value = ''
+        matches = {}
+        for key in query_parts.keys():
+            if key == field_key:
+                value = query_parts[key][0]
+                matched_key = key
+            elif key.startswith(
+                    field_key + '__') or '__' + field_key + '__' in key:
+                value = query_parts[key][0]
+                matched_key = key
 
-    for choice in list(spec.choices(cl)):
-        qs = (urllib.parse.parse_qs(choice.get('query_string')))
-        # print(qs)
-        for k, v in qs.items():
-            if k.strip('?') in cl.params.keys() and k.strip(
-                    '?') != spec.lookup_kwarg:
-                continue
-            new_choice.append({'name': k.strip('?'), 'value': v[0],
-                               'display': choice.get('display'),
-                               'selected': choice.get('selected')})
+            if value:
+                matches[matched_key] = value
 
-    # print(new_choice)
+        # Iterate matches, use first as actual values, additional for hidden
+        i = 0
+        for key, value in matches.items():
+            if i == 0:
+                choice['name'] = key
+                choice['value'] = value
+            # else:
+            #     choice['additional'] = '%s=%s' % (key, value)
+            i += 1
 
     return tpl.render({
+        'field_name': field_key,
         'title': spec.title,
-        'choices': list(spec.choices(cl)),
-        'new_choices': new_choice,
+        'choices': choices,
         'spec': spec,
     })
-
-# def adminlte_search_form(cl):
-#     """
-#     Display a search form for searching the list.
-#     """
-#     print(cl)
-#     return {
-#         'cl': cl,
-#         'show_result_count': cl.result_count != cl.full_result_count,
-#         'search_var': SEARCH_VAR
-#     }
-#
-#
-# @register.tag(name='adminlte_search_form')
-# def adminlte_search_form_tag(parser, token):
-#     return InclusionAdminNode(parser, token, func=adminlte_search_form,
-#                               template_name='search_form.html',
-#                               takes_context=False)

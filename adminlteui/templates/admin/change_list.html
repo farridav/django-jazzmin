@@ -106,9 +106,10 @@
 <script src="{% static "admin/plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
 
 <script>
-    var selectors = document.querySelector('#changelist-search').querySelectorAll('select');
-    for (var i in selectors) {
-        selectors[i].onchange = function() {
+    // var selectors = document.querySelector('#changelist-search').querySelectorAll('select');
+
+    $.fn.search_filters = function () {
+        $(this).change(function () {
             var $field = $(this);
             var $option = $field.find('option:selected');
             var select_name = $option.data('name');
@@ -129,12 +130,11 @@
             //     additional = additional.split('=');
             //     $hidden.attr('name', additional[0]).val(additional[1])
             // }
+        });
+        $(this).trigger('change');
+    };
 
-            // remove the hidden input of select_name
-            var input = document.querySelector('#search_group').querySelector('input[name="' + $field.data('name') + '"]');
-            input.parentNode.removeChild(input)
-        }
-    }
+    $('.search-filter').search_filters();
 
 </script>
 
