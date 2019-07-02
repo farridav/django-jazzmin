@@ -4,6 +4,7 @@ import django
 from django import template
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
+
 try:
     from django.urls import reverse, resolve
 except:
@@ -35,13 +36,31 @@ def get_menu(context, request):
         if not available_apps:
             try:
                 from django.contrib import admin
-                template_response = get_admin_site(request.current_app).index(request)
+                template_response = get_admin_site(request.current_app).index(
+                    request)
                 available_apps = template_response.context_data['app_list']
             except Exception:
                 pass
     if not available_apps:
         logging.warn('Django Suit was unable to retrieve apps list for menu.')
 
+    for app in available_apps:
+        if app.get('app_label') == 'django_admin_settings':
+            app.get('models').insert(0,
+                                     {
+                                         'name': 'General Options',
+                                         'object_name': 'Options',
+                                         'perms':
+                                             {
+                                                 'add': True,
+                                                 'change': True,
+                                                 'delete': True,
+                                                 'view': True
+                                             },
+                                         'admin_url': '/admin/django_admin_settings/options/general_option/',
+                                         'view_only': False
+                                     }
+                                     )
     # return MenuManager(available_apps, context, request)
     return available_apps
 
