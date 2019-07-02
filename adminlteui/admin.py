@@ -45,8 +45,8 @@ class GeneralOptionForm(forms.Form):
                                  widget=widgets.AdminTextInputWidget())
     site_header = forms.CharField(label=_('Site Header'),
                                   widget=widgets.AdminTextInputWidget())
-    index_title = forms.CharField(label=_('Index Title'),
-                                  widget=widgets.AdminTextInputWidget())
+    # index_title = forms.CharField(label=_('Index Title'),
+    #                               widget=widgets.AdminTextInputWidget())
     site_logo = forms.ImageField(label=_('Site Logo'),
                                  widget=forms.ClearableFileInput(),
                                  required=False)
@@ -128,8 +128,8 @@ class OptionsAdmin(admin.ModelAdmin):
                     option_name='site_title') or admin.AdminSite.site_title,
                 'site_header': get_option(
                     option_name='site_header') or admin.AdminSite.site_header,
-                'index_title': get_option(
-                    option_name='index_title') or admin.AdminSite.index_title,
+                # 'index_title': get_option(
+                #     option_name='index_title') or admin.AdminSite.index_title,
                 'welcome_sign': get_option(option_name='welcome_sign'),
                 'site_logo': ImageBox(
                     get_option(option_name='site_logo')) if get_option(
@@ -147,8 +147,8 @@ class OptionsAdmin(admin.ModelAdmin):
                         option_name='site_title') or admin.AdminSite.site_title,
                     'site_header': get_option(
                         option_name='site_header') or admin.AdminSite.site_header,
-                    'index_title': get_option(
-                        option_name='index_title') or admin.AdminSite.index_title,
+                    # 'index_title': get_option(
+                    #     option_name='index_title') or admin.AdminSite.index_title,
                     'welcome_sign': get_option(option_name='welcome_sign'),
                     'site_logo': ImageBox(
                         get_option(option_name='site_logo')) if get_option(
