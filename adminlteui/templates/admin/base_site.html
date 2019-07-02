@@ -1,7 +1,14 @@
 {% extends 'admin/base.html' %}
-{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% load i18n adminlte_options %}
+{% block title %}{{ title }} |
+{% get_adminlte_option 'site_title' as adminlte_site_title %}
+{% if adminlte_site_title.valid %}
+{{ adminlte_site_title.site_title }}
+{% else %}
+{{ site_title|default:_('Django site admin') }}
+{% endif %}
+{% endblock %}
 {% block page_content %}
-{% load i18n %}
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
       data-admin-utc-offset="{% now "Z" %}">
