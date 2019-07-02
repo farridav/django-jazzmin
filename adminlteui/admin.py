@@ -42,17 +42,22 @@ def get_image_box():
 
 class GeneralOptionForm(forms.Form):
     site_title = forms.CharField(label=_('Site Title'),
-                                 widget=widgets.AdminTextInputWidget())
+                                 widget=widgets.AdminTextInputWidget(),
+                                 help_text=_("Text to put at the end of each page's tag title."))
     site_header = forms.CharField(label=_('Site Header'),
-                                  widget=widgets.AdminTextInputWidget())
+                                  widget=widgets.AdminTextInputWidget(),
+                                  help_text=_("Text to put in base page's tag b."))
     # index_title = forms.CharField(label=_('Index Title'),
     #                               widget=widgets.AdminTextInputWidget())
     site_logo = forms.ImageField(label=_('Site Logo'),
                                  widget=forms.ClearableFileInput(),
-                                 required=False)
+                                 required=False,
+                                 help_text=_("Transparent background picture is a good choice."))
     welcome_sign = forms.CharField(
         label=_('Welcome Sign'),
-        widget=widgets.AdminTextInputWidget())
+        widget=widgets.AdminTextInputWidget(),
+        help_text=_("Login page welcome sign.")
+    )
 
     def save(self):
         try:
