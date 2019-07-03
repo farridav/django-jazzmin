@@ -8,6 +8,7 @@
 [![PyPI Version](https://img.shields.io/pypi/v/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Download Status](https://img.shields.io/pypi/dm/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Build Status](https://api.travis-ci.org/wuyue92tree/django-adminlte-ui.svg)](https://travis-ci.org/wuyue92tree/django-adminlte-ui)
+[![Documentation Status](https://readthedocs.org/projects/django-adminlte-ui/badge/?version=latest)](https://django-adminlte-ui.readthedocs.io/en/latest/?badge=latest)
 
 django admin theme base on adminlte
 
@@ -28,6 +29,8 @@ pip install django-adminlte-ui
 # setup
 
 ```
+# settings.py
+
 INSTALLED_APPS = [
     'adminlteui',
     'django.contrib.admin',
@@ -40,6 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     ...
 ]
+```
+
+# Init models
+```
+python manage.py migrate django_admin_settings
 ```
 
 # screen shot
@@ -55,3 +63,12 @@ INSTALLED_APPS = [
 
 ## form page
 ![form page](./images/form.png)
+
+## general_option
+![general_option](./images/general_option.jpg)
+
+# Donate
+
+Your donation take me higher. 🚀
+
+![alipay](./images/alipay.png)

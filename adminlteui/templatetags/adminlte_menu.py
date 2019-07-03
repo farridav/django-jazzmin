@@ -4,6 +4,7 @@ import django
 from django import template
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
+from django.utils.translation import gettext_lazy as _
 
 try:
     from django.urls import reverse, resolve
@@ -48,7 +49,7 @@ def get_menu(context, request):
         if app.get('app_label') == 'django_admin_settings':
             app.get('models').insert(0,
                                      {
-                                         'name': 'General Options',
+                                         'name': _('General Option'),
                                          'object_name': 'Options',
                                          'perms':
                                              {
