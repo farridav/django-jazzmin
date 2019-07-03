@@ -8,6 +8,7 @@
 [![PyPI Version](https://img.shields.io/pypi/v/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Download Status](https://img.shields.io/pypi/dm/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Build Status](https://api.travis-ci.org/wuyue92tree/django-adminlte-ui.svg)](https://travis-ci.org/wuyue92tree/django-adminlte-ui)
+[![Documentation Status](https://readthedocs.org/projects/django-adminlte-ui/badge/?version=latest)](https://django-adminlte-ui.readthedocs.io/en/latest/?badge=latest)
 
 django admin theme base on adminlte
 
