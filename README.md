@@ -28,6 +28,8 @@ pip install django-adminlte-ui
 # setup
 
 ```
+# settings.py
+
 INSTALLED_APPS = [
     'adminlteui',
     'django.contrib.admin',
@@ -40,6 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     ...
 ]
+```
+
+# Init models
+```
+python manage.py migrate django_admin_settings
 ```
 
 # screen shot
@@ -55,3 +62,12 @@ INSTALLED_APPS = [
 
 ## form page
 ![form page](./images/form.png)
+
+## general_option
+![general_option](./images/general_option.jpg)
+
+# Donate
+
+Your donation take me higher. 🚀
+
+![alipay](./images/alipay.png)
