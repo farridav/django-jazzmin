@@ -71,4 +71,8 @@ python manage.py migrate django_admin_settings
 
 Your donation take me higher. 🚀
 
-![alipay](./images/alipay.png)
+<p align="left">
+  <a href="https://github.com/wuyue92tree/django-adminlte-ui">
+    <img alt="title" src="./images/alipay.png" width="200px">
+  </a>
+</p>
