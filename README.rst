@@ -35,4 +35,4 @@ Init models
 
 ::
 
-python manage.py migrate django_admin_settings
+    python manage.py migrate django_admin_settings
