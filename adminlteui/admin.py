@@ -7,7 +7,10 @@ from django.urls import path
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from .models import Options
+from django.utils.html import format_html
+from treebeard.admin import TreeAdmin
+from treebeard.forms import movenodeform_factory
+from .models import Options, Menu
 
 
 def get_option(option_name):
@@ -43,16 +46,19 @@ def get_image_box():
 class GeneralOptionForm(forms.Form):
     site_title = forms.CharField(label=_('Site Title'),
                                  widget=widgets.AdminTextInputWidget(),
-                                 help_text=_("Text to put at the end of each page's tag title."))
+                                 help_text=_(
+                                     "Text to put at the end of each page's tag title."))
     site_header = forms.CharField(label=_('Site Header'),
                                   widget=widgets.AdminTextInputWidget(),
-                                  help_text=_("Text to put in base page's tag b."))
+                                  help_text=_(
+                                      "Text to put in base page's tag b."))
     # index_title = forms.CharField(label=_('Index Title'),
     #                               widget=widgets.AdminTextInputWidget())
     site_logo = forms.ImageField(label=_('Site Logo'),
                                  widget=forms.ClearableFileInput(),
                                  required=False,
-                                 help_text=_("Transparent background picture is a good choice."))
+                                 help_text=_(
+                                     "Transparent background picture is a good choice."))
     welcome_sign = forms.CharField(
         label=_('Welcome Sign'),
         widget=widgets.AdminTextInputWidget(),
@@ -168,3 +174,39 @@ class OptionsAdmin(admin.ModelAdmin):
         context['line'] = form
         return TemplateResponse(request, 'adminlte/general_option.html',
                                 context)
+
+
+@admin.register(Menu)
+class MenuAdmin(TreeAdmin):
+    list_display = ('name', 'position', 'link', 'display_icon',
+                    'display_permission',
+                    'display_permission_group', 'valid')
+    list_filter = ('position', 'valid')
+    list_editable = ('valid',)
+    filter_horizontal = ('permission', 'permission_group')
+    form = movenodeform_factory(Menu)
+    change_list_template = 'adminlte/menu_change_list.html'
+
+    def display_icon(self, obj):
+        if obj.icon:
+            return format_html(
+                '<i class="fa {}"></i> {}'.format(obj.icon, obj.icon))
+        return obj.icon
+
+    display_icon.short_description = _('Icon')
+
+    def display_permission(self, obj):
+        # TODO
+        if obj.permission:
+            return 'true'
+        return 'false'
+
+    display_permission.short_description = _('Permission')
+
+    def display_permission_group(self, obj):
+        # TODO
+        if obj.permission_group:
+            return 'true'
+        return 'false'
+
+    display_permission_group.short_description = _('Permission Group')
