@@ -27,6 +27,8 @@ setup
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        # custom menu base on treebeard
+        'treebeard',
         ...
     ]
 

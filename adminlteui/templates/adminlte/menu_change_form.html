@@ -1,0 +1,8 @@
+{% extends 'admin/change_form.html' %}
+
+{% block extrajs %}
+{{ block.super }}
+<script>
+    django.jQuery('#id_content_type').select2();
+</script>
+{% endblock %}

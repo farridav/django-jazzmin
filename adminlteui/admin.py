@@ -7,7 +7,13 @@ from django.urls import path
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from .models import Options
+from django.utils.html import format_html
+from django.db import models
+from django.conf import settings
+from adminlteui.widgets import AdminlteSelect, AdminlteSelectMultiple
+from treebeard.admin import TreeAdmin
+from treebeard.forms import movenodeform_factory
+from .models import Options, Menu
 
 
 def get_option(option_name):
@@ -20,7 +26,7 @@ def get_option(option_name):
 
 def handle_uploaded_file(f, file_name):
     # save site_logo
-    with open('media/' + file_name, 'wb+') as destination:
+    with open(settings.MEDIA_ROOT + '/' + file_name, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
 
@@ -43,16 +49,19 @@ def get_image_box():
 class GeneralOptionForm(forms.Form):
     site_title = forms.CharField(label=_('Site Title'),
                                  widget=widgets.AdminTextInputWidget(),
-                                 help_text=_("Text to put at the end of each page's tag title."))
+                                 help_text=_(
+                                     "Text to put at the end of each page's tag title."))
     site_header = forms.CharField(label=_('Site Header'),
                                   widget=widgets.AdminTextInputWidget(),
-                                  help_text=_("Text to put in base page's tag b."))
+                                  help_text=_(
+                                      "Text to put in base page's tag b."))
     # index_title = forms.CharField(label=_('Index Title'),
     #                               widget=widgets.AdminTextInputWidget())
     site_logo = forms.ImageField(label=_('Site Logo'),
                                  widget=forms.ClearableFileInput(),
                                  required=False,
-                                 help_text=_("Transparent background picture is a good choice."))
+                                 help_text=_(
+                                     "Transparent background picture is a good choice."))
     welcome_sign = forms.CharField(
         label=_('Welcome Sign'),
         widget=widgets.AdminTextInputWidget(),
@@ -65,18 +74,24 @@ class GeneralOptionForm(forms.Form):
             if self.data.get('site_logo-clear'):
                 obj = Options.objects.get(option_name='site_logo')
                 obj.delete()
+                self.changed_data.remove('site_logo')
 
             for data_item in self.changed_data:
                 try:
                     obj = Options.objects.get(option_name=data_item)
 
                     if data_item == 'site_logo':
+                        if not settings.MEDIA_ROOT or not settings.MEDIA_URL:
+                            self.errors[data_item] = _(
+                                'site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT.')
+                            return False
                         if not self.files.get(data_item) or self.data.get(
                                 data_item) == '':
                             continue
                         handle_uploaded_file(self.files.get(data_item),
                                              self.files.get(data_item).name)
-                        obj.option_value = 'media/' + self.files.get(
+                        obj.option_value = settings.MEDIA_URL.lstrip(
+                            '/') + self.files.get(
                             data_item).name
                     else:
                         if obj.option_value == self.data.get(data_item):
@@ -84,11 +99,16 @@ class GeneralOptionForm(forms.Form):
                         obj.option_value = self.data.get(data_item)
                 except Options.DoesNotExist:
                     if data_item == 'site_logo':
+                        if not settings.MEDIA_ROOT or not settings.MEDIA_URL:
+                            self.errors[data_item] = _(
+                                'site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT.')
+                            return False
                         handle_uploaded_file(self.files.get(data_item),
                                              self.files.get(data_item).name)
                         obj = Options.objects.create(
                             option_name=data_item,
-                            option_value='media/' + self.files.get(
+                            option_value=settings.MEDIA_URL.lstrip(
+                                '/') + self.files.get(
                                 data_item).name,
                             create_time=timezone.now())
                     else:
@@ -168,3 +188,26 @@ class OptionsAdmin(admin.ModelAdmin):
         context['line'] = form
         return TemplateResponse(request, 'adminlte/general_option.html',
                                 context)
+
+
+@admin.register(Menu)
+class MenuAdmin(TreeAdmin):
+    list_display = ('name', 'position', 'link_type', 'link',
+                    'content_type', 'display_icon',
+                    'valid')
+    list_filter = ('position', 'link_type', 'valid')
+    list_editable = ('valid',)
+    form = movenodeform_factory(Menu)
+    change_list_template = 'adminlte/menu_change_list.html'
+    change_form_template = 'adminlte/menu_change_form.html'
+    formfield_overrides = {
+        models.ForeignKey: {'widget': AdminlteSelect}
+    }
+
+    def display_icon(self, obj):
+        if obj.icon:
+            return format_html(
+                '<i class="fa {}"></i> {}'.format(obj.icon, obj.icon))
+        return obj.icon
+
+    display_icon.short_description = _('Icon')

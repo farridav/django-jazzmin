@@ -1,5 +1,6 @@
 site_name: django-adminlte-ui
 nav:
 - Home: index.md
+- Guide: guide.md
 - About: about.md
 #theme: readthedocs

@@ -19,5 +19,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     entry_points={},
-    install_requires=[],
+    install_requires=[
+        'django-treebeard==4.3'
+    ],
 )

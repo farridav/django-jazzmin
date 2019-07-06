@@ -1,5 +1,13 @@
 # ChangeLog
 
+## [v1.3.0b0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.0b0)
+
+- add treebeard as menu depends;
+- add `select2` into `widgets.py`;
+- update site_logo save path, base on settings.MEDIA_ROOT & settings.MEDIA_URL;
+- fix base.html & login.html b tag issue;
+- change base.html extra_style and extra_head position.
+
 ## [v1.2.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.2.0)
 
 - add models with options;
