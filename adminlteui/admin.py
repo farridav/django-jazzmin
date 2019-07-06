@@ -8,6 +8,9 @@ from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
+from django.db import models
+from django.conf import settings
+from adminlteui.widgets import AdminlteSelect, AdminlteSelectMultiple
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
 from .models import Options, Menu
@@ -23,7 +26,7 @@ def get_option(option_name):
 
 def handle_uploaded_file(f, file_name):
     # save site_logo
-    with open('media/' + file_name, 'wb+') as destination:
+    with open(settings.MEDIA_ROOT + '/' + file_name, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
 
@@ -71,18 +74,24 @@ class GeneralOptionForm(forms.Form):
             if self.data.get('site_logo-clear'):
                 obj = Options.objects.get(option_name='site_logo')
                 obj.delete()
+                self.changed_data.remove('site_logo')
 
             for data_item in self.changed_data:
                 try:
                     obj = Options.objects.get(option_name=data_item)
 
                     if data_item == 'site_logo':
+                        if not settings.MEDIA_ROOT or not settings.MEDIA_URL:
+                            self.errors[data_item] = _(
+                                'site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT.')
+                            return False
                         if not self.files.get(data_item) or self.data.get(
                                 data_item) == '':
                             continue
                         handle_uploaded_file(self.files.get(data_item),
                                              self.files.get(data_item).name)
-                        obj.option_value = 'media/' + self.files.get(
+                        obj.option_value = settings.MEDIA_URL.lstrip(
+                            '/') + self.files.get(
                             data_item).name
                     else:
                         if obj.option_value == self.data.get(data_item):
@@ -90,11 +99,16 @@ class GeneralOptionForm(forms.Form):
                         obj.option_value = self.data.get(data_item)
                 except Options.DoesNotExist:
                     if data_item == 'site_logo':
+                        if not settings.MEDIA_ROOT or not settings.MEDIA_URL:
+                            self.errors[data_item] = _(
+                                'site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT.')
+                            return False
                         handle_uploaded_file(self.files.get(data_item),
                                              self.files.get(data_item).name)
                         obj = Options.objects.create(
                             option_name=data_item,
-                            option_value='media/' + self.files.get(
+                            option_value=settings.MEDIA_URL.lstrip(
+                                '/') + self.files.get(
                                 data_item).name,
                             create_time=timezone.now())
                     else:
@@ -178,14 +192,17 @@ class OptionsAdmin(admin.ModelAdmin):
 
 @admin.register(Menu)
 class MenuAdmin(TreeAdmin):
-    list_display = ('name', 'position', 'link', 'display_icon',
-                    'display_permission',
-                    'display_permission_group', 'valid')
-    list_filter = ('position', 'valid')
+    list_display = ('name', 'position', 'link_type', 'link',
+                    'content_type', 'display_icon',
+                    'valid')
+    list_filter = ('position', 'link_type', 'valid')
     list_editable = ('valid',)
-    filter_horizontal = ('permission', 'permission_group')
     form = movenodeform_factory(Menu)
     change_list_template = 'adminlte/menu_change_list.html'
+    change_form_template = 'adminlte/menu_change_form.html'
+    formfield_overrides = {
+        models.ForeignKey: {'widget': AdminlteSelect}
+    }
 
     def display_icon(self, obj):
         if obj.icon:
@@ -194,19 +211,3 @@ class MenuAdmin(TreeAdmin):
         return obj.icon
 
     display_icon.short_description = _('Icon')
-
-    def display_permission(self, obj):
-        # TODO
-        if obj.permission:
-            return 'true'
-        return 'false'
-
-    display_permission.short_description = _('Permission')
-
-    def display_permission_group(self, obj):
-        # TODO
-        if obj.permission_group:
-            return 'true'
-        return 'false'
-
-    display_permission_group.short_description = _('Permission Group')
