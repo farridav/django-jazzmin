@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # custom menu base on treebeard
+    'treebeard',
     ...
 ]
 ```
@@ -45,55 +47,26 @@ INSTALLED_APPS = [
 ```
 python manage.py migrate django_admin_settings
 ```
+## screen shot
 
-## Guides
+### login page
+![login](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/login.jpg?raw=true)
 
-### General Option
+### dashboard
+![dashboard](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/dashboard.jpg?raw=true)
 
-dynamic setup your site base on table `django_admin_settings_options`.
+### table list
+![table list](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/table-list.jpg?raw=true)
 
-support options:
+### form page
+![form page](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/form.png?raw=true)
 
-- Site Title
-- Site Header
-- Site Logo
-- Welcome Sign
+### general_option
+![general_option](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/general_option.jpg?raw=true)
 
-### Options
+## Thanks
 
-this options in your db, named `django_admin_settings_options`, after do migrate.
-
-you can also add your custom option into this table, and use it by templatetags
- `adminlte_options` with function `get_adminlte_option`.
-
-options table has a valid field to control your option work or not.
-
-
-example:
-
-```
-# adminlte/general_option.html
-
-{% load adminlte_options %}
-
-# here my option_name is site_title, you can custom yourself.
-{% get_adminlte_option 'site_title' as adminlte_site_title %}
-{% if adminlte_site_title.valid %}
-{{ adminlte_site_title.site_title }}
-{% else %}
-{{ site_title|default:_('Django site admin') }}
-{% endif %}
-
-```
-
-before custom option, you should known what adminlte has used.
-
-- site_title
-- site_header
-- site_logo
-- welcome_sign
-
-
-### Menu
-
-coming soon...
+- [AdminLTE](https://github.com/ColorlibHQ/AdminLTE)
+- [django](https://github.com/django/django)
+- [django-treebeard](https://github.com/django-treebeard/django-treebeard)
+- [django-suit](https://github.com/darklow/django-suit)
