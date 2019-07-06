@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-03 08:59+0800\n"
+"POT-Creation-Date: 2019-07-06 15:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,77 +17,123 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: adminlteui/admin.py:44
+#: adminlteui/admin.py:50
 msgid "Site Title"
 msgstr "站点标题"
 
-#: adminlteui/admin.py:46
+#: adminlteui/admin.py:53
 msgid "Text to put at the end of each page's tag title."
 msgstr "每个页面的标题后缀，对应templates中的site_title标签。"
 
-#: adminlteui/admin.py:47
+#: adminlteui/admin.py:54
 msgid "Site Header"
 msgstr "站点标头"
 
-#: adminlteui/admin.py:49
+#: adminlteui/admin.py:57
 msgid "Text to put in base page's tag b."
 msgstr "右上角文字标头，对应templates中的site_header标签。"
 
-#: adminlteui/admin.py:52
+#: adminlteui/admin.py:60
 msgid "Site Logo"
 msgstr "站点logo"
 
-#: adminlteui/admin.py:55
+#: adminlteui/admin.py:64
 msgid "Transparent background picture is a good choice."
 msgstr "透明背景的图片更适合。"
 
-#: adminlteui/admin.py:57
+#: adminlteui/admin.py:66
 msgid "Welcome Sign"
 msgstr "欢迎标语"
 
-#: adminlteui/admin.py:59
+#: adminlteui/admin.py:68
 msgid "Login page welcome sign."
 msgstr "登录页面欢迎标语"
 
-#: adminlteui/admin.py:164
+#: adminlteui/admin.py:86 adminlteui/admin.py:104
+msgid "site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT."
+msgstr "site_logo依赖于setting.MEDIA_URL和setting.MEDIA_ROOT。"
+
+#: adminlteui/admin.py:184
 msgid "General Option Saved."
 msgstr "基本设置保存成功。"
 
-#: adminlteui/admin.py:167
+#: adminlteui/admin.py:187
 msgid "General Option Save Failed."
 msgstr "基本设置保存失败。"
+
+#: adminlteui/admin.py:213 adminlteui/models.py:44
+msgid "Icon"
+msgstr "图标"
 
 #: adminlteui/apps.py:12 adminlteui/templates/adminlte/general_option.html:13
 msgid "AdminSettings"
 msgstr "设置"
 
-#: adminlteui/models.py:9
+#: adminlteui/models.py:12
 msgid "Option Name"
 msgstr "名称"
 
-#: adminlteui/models.py:11
+#: adminlteui/models.py:14
 msgid "Option Value"
 msgstr "值"
 
-#: adminlteui/models.py:12
+#: adminlteui/models.py:15 adminlteui/models.py:49
 msgid "Valid"
 msgstr "有效性"
 
-#: adminlteui/models.py:14
+#: adminlteui/models.py:17
 msgid "CreateTime"
-msgstr ""
+msgstr "创建时间"
 
-#: adminlteui/models.py:16
+#: adminlteui/models.py:19
 msgid "UpdateTime"
-msgstr ""
+msgstr "更新时间"
 
-#: adminlteui/models.py:22
+#: adminlteui/models.py:25
 msgid "Options"
 msgstr "选项"
 
-#: adminlteui/models.py:23
+#: adminlteui/models.py:26
 msgid "All Options"
 msgstr "所有选项"
+
+#: adminlteui/models.py:31
+msgid "Internal"
+msgstr "内部"
+
+#: adminlteui/models.py:32
+msgid "External"
+msgstr "外部"
+
+#: adminlteui/models.py:34
+#, fuzzy
+#| msgid "username"
+msgid "name"
+msgstr "用户名"
+
+#: adminlteui/models.py:36
+msgid "Menu Position"
+msgstr "菜单位置"
+
+#: adminlteui/models.py:38
+msgid "Link Type"
+msgstr "链接类型"
+
+#: adminlteui/models.py:40
+msgid "Link"
+msgstr "链接"
+
+#: adminlteui/models.py:46
+msgid "ContentType"
+msgstr "关联Model"
+
+#: adminlteui/models.py:56
+msgid "Menu"
+msgstr "菜单"
+
+#: adminlteui/models.py:57
+msgid "Menu Setting"
+msgstr "菜单设置"
 
 #: adminlteui/templates/admin/404.html:4 adminlteui/templates/admin/404.html:6
 msgid "Page not found"
@@ -164,7 +210,7 @@ msgstr ""
 #: adminlteui/templates/admin/auth/user/change_password.html:22
 #: adminlteui/templates/admin/auth/user/change_password.html:27
 #: adminlteui/templates/admin/auth/user/change_password.html:94
-#: adminlteui/templates/admin/base.html:118
+#: adminlteui/templates/admin/base.html:119
 #: adminlteui/templates/registration/password_change_done.html:3
 #: adminlteui/templates/registration/password_change_form.html:7
 #: adminlteui/templates/registration/password_change_form.html:102
@@ -190,68 +236,68 @@ msgstr ""
 msgid "Please correct the errors below."
 msgstr ""
 
-#: adminlteui/templates/admin/base.html:89
+#: adminlteui/templates/admin/base.html:90
 msgid "Super manager"
 msgstr "超级管理员"
 
-#: adminlteui/templates/admin/base.html:94
+#: adminlteui/templates/admin/base.html:95
 msgid "Normal"
 msgstr "普通用户"
 
-#: adminlteui/templates/admin/base.html:97
+#: adminlteui/templates/admin/base.html:98
 msgid "Register time"
 msgstr "注册时间"
 
-#: adminlteui/templates/admin/base.html:121
+#: adminlteui/templates/admin/base.html:122
 #: adminlteui/templates/registration/password_change_done.html:3
 #: adminlteui/templates/registration/password_change_form.html:7
 msgid "Log out"
 msgstr ""
 
-#: adminlteui/templates/admin/base.html:145
+#: adminlteui/templates/admin/base.html:146
 msgid "Online"
 msgstr "在线"
 
-#: adminlteui/templates/admin/base.html:151
+#: adminlteui/templates/admin/base.html:152
 #: adminlteui/templates/admin/search_form.html:20
 msgid "Search"
 msgstr "搜索"
 
-#: adminlteui/templates/admin/base.html:161
+#: adminlteui/templates/admin/base.html:162
 msgid "MAIN NAVIGATION"
 msgstr "页面导航"
 
-#: adminlteui/templates/admin/base.html:164
+#: adminlteui/templates/admin/base.html:165
 msgid "Dashboard"
 msgstr "仪表盘"
 
-#: adminlteui/templates/admin/base.html:192
+#: adminlteui/templates/admin/base.html:193
 msgid "System manage"
 msgstr ""
 
-#: adminlteui/templates/admin/base.html:198
+#: adminlteui/templates/admin/base.html:199
 msgid "Log manage"
 msgstr ""
 
-#: adminlteui/templates/admin/base.html:199
+#: adminlteui/templates/admin/base.html:200
 msgid "System config"
 msgstr ""
 
-#: adminlteui/templates/admin/base.html:205
+#: adminlteui/templates/admin/base.html:206
 msgid "Important"
 msgstr ""
 
-#: adminlteui/templates/admin/base.html:206
+#: adminlteui/templates/admin/base.html:207
 msgid "Warning"
 msgstr ""
 
-#: adminlteui/templates/admin/base.html:207
+#: adminlteui/templates/admin/base.html:208
 msgid "Information"
 msgstr ""
 
 #: adminlteui/templates/admin/base_site.html:8
 #: adminlteui/templates/admin/login.html:13
-#: adminlteui/templates/adminlte/general_option.html:18
+#: adminlteui/templates/adminlte/general_option.html:23
 msgid "Django site admin"
 msgstr ""
 
@@ -470,17 +516,17 @@ msgstr ""
 
 #: adminlteui/templates/admin/pagination.html:11
 #: adminlteui/templates/admin/submit_line.html:5
-#: adminlteui/templates/adminlte/general_option.html:64
+#: adminlteui/templates/adminlte/general_option.html:47
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: adminlteui/templates/admin/pagination.html:23
 msgid "Previous"
-msgstr ""
+msgstr "上一页"
 
 #: adminlteui/templates/admin/pagination.html:31
 msgid "Next"
-msgstr ""
+msgstr "下一页"
 
 #: adminlteui/templates/admin/search_form.html:22
 #, python-format
@@ -516,11 +562,15 @@ msgstr ""
 
 #: adminlteui/templates/adminlte/general_option.html:14
 #: adminlteui/templates/adminlte/general_option.html:18
-#: adminlteui/templates/adminlte/general_option.html:20
-#: adminlteui/templates/adminlte/general_option.html:29
+#: adminlteui/templates/adminlte/general_option.html:27
+#: adminlteui/templates/adminlte/general_option.html:36
 #: adminlteui/templatetags/adminlte_menu.py:52
 msgid "General Option"
 msgstr "基本设置"
+
+#: adminlteui/templates/adminlte/menu_change_list.html:4
+msgid "Exchange Menu"
+msgstr "菜单切换"
 
 #: adminlteui/templates/registration/password_change_done.html:3
 #: adminlteui/templates/registration/password_change_form.html:7
