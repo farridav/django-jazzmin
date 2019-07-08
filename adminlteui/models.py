@@ -30,6 +30,7 @@ class Menu(MP_Node):
     LINK_TYPE = (
         (0, _('Internal')),
         (1, _('External')),
+        (3, _('Divide'))
     )
     name = models.CharField(max_length=255, verbose_name=_('name'))
     position = models.CharField(
@@ -37,14 +38,18 @@ class Menu(MP_Node):
     link_type = models.IntegerField(default=0, choices=LINK_TYPE,
                                     verbose_name=_('Link Type'))
     link = models.CharField(max_length=255, blank=True, null=True,
-                            verbose_name=_('Link'))
+                            verbose_name=_('Link'),
+                            help_text='support admin:index or /admin/ or http://')
     icon = models.CharField(max_length=255,
                             blank=True,
                             null=True,
                             verbose_name=_('Icon'))
-    content_type = models.ForeignKey(ContentType, blank=True,
+    content_type = models.ForeignKey(ContentType,
+                                     blank=True, null=True,
                                      verbose_name=_('ContentType'),
-                                     on_delete=models.CASCADE)
+                                     on_delete=models.CASCADE,
+                                     help_text=_(
+                                         'use for permission control.'))
 
     valid = models.BooleanField(default=True, verbose_name=_('Valid'))
     node_order_by = ['name', 'position']
