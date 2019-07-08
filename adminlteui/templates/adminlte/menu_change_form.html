@@ -2,7 +2,26 @@
 
 {% block extrajs %}
 {{ block.super }}
+
 <script>
     django.jQuery('#id_content_type').select2();
+    $.fn.link_type = function () {
+        $(this).change(function () {
+            var $field = $(this);
+            var $option = $field.find('option:selected');
+            if ($option.val() !== "0") {
+                $('.field-content_type').hide();
+            } else {
+                $('.field-content_type').show();
+            }
+            if ($option.val() === "3") {
+                $('.field-link').hide();
+            } else {
+                $('.field-link').show();
+            }
+        });
+        $(this).trigger('change');
+    };
+    $('#id_link_type').link_type();
 </script>
 {% endblock %}
