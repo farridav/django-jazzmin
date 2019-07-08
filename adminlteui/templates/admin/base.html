@@ -168,21 +168,25 @@
                 {% get_menu request as app_list %}
                 {% if app_list %}
                 {% for app in app_list %}
-                <li class="treeview">
-                    <a href="javascript:void(0)">
-                        <i class="fa fa-database"></i>
+                <li {% if not app.admin_url %}class="treeview"{% endif %}>
+                    <a href="{% if app.admin_url %}{{app.admin_url}}{% else %}javascript:void(0){% endif %}">
+                        <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
                         <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
+                        {% if not app.admin_url %}
                         <span class="pull-right-container">
                           <i class="fa fa-angle-left pull-right"></i>
                         </span>
+                        {% endif %}
                     </a>
+                    {% if not app.admin_url %}
                     <ul class="treeview-menu">
                         {% for model in app.models %}
                         {% if model.admin_url %}
-                        <li><a href="{{ model.admin_url }}" ><i class="fa fa-circle-o"></i>{{ model.name }}</a></li>
+                        <li><a href="{{ model.admin_url }}" ><i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}</a></li>
                         {% endif %}
                         {% endfor %}
                     </ul>
+                    {% endif %}
                 </li>
                 {% endfor %}
                 {% endif %}
