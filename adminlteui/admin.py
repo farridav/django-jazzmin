@@ -1,19 +1,20 @@
+import json
 import traceback
 from django import forms
 from django.contrib import admin
 from django.contrib import messages
 from django.contrib.admin import widgets
-from django.urls import path
+from django.urls import path, reverse
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
-from django.db import models
 from django.conf import settings
-from adminlteui.widgets import AdminlteSelect, AdminlteSelectMultiple
+from django.http.response import HttpResponse
+from adminlteui.widgets import AdminlteSelect
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
-from .models import Options, Menu
+from .models import Options, Menu, ContentType
 
 
 def get_option(option_name):
@@ -192,17 +193,80 @@ class OptionsAdmin(admin.ModelAdmin):
 
 @admin.register(Menu)
 class MenuAdmin(TreeAdmin):
-    list_display = ('name', 'position', 'link_type', 'link',
-                    'content_type', 'display_icon',
+    list_display = ('name', 'position', 'link_type', 'display_link',
+                    'display_content_type', 'display_icon',
                     'valid')
     list_filter = ('position', 'link_type', 'valid')
     list_editable = ('valid',)
     form = movenodeform_factory(Menu)
     change_list_template = 'adminlte/menu_change_list.html'
     change_form_template = 'adminlte/menu_change_form.html'
-    formfield_overrides = {
-        models.ForeignKey: {'widget': AdminlteSelect}
-    }
+
+    class ContentTypeModelChoiceField(forms.ModelChoiceField):
+        def label_from_instance(self, obj):
+            return "%s:%s" % (obj.app_label, obj.model)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """
+        reset content_type display text
+        """
+        if db_field.name == 'content_type':
+            return self.ContentTypeModelChoiceField(
+                queryset=ContentType.objects.all(),
+                required=False,
+                label=_('ContentType'),
+                widget=AdminlteSelect)
+
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def get_urls(self):
+        base_urls = super().get_urls()
+        urls = [
+            path('exchange_menu/',
+                 self.admin_site.admin_view(
+                     self.exchange_menu_view,
+                     cacheable=True), name='exchange_menu'),
+        ]
+        return urls + base_urls
+
+    def exchange_menu_view(self, request):
+        if request.is_ajax():
+            response_data = dict()
+            response_data['message'] = 'success'
+            try:
+                use_custom_menu = Options.objects.get(
+                    option_name='USE_CUSTOM_MENU')
+            except Options.DoesNotExist:
+                use_custom_menu = None
+
+            if not use_custom_menu or use_custom_menu.option_value == '0':
+                use_custom_menu.option_value = '1'
+                use_custom_menu.save()
+
+            else:
+                use_custom_menu.option_value = '0'
+                use_custom_menu.save()
+            return HttpResponse(json.dumps(response_data),
+                                content_type="application/json,charset=utf-8")
+        return HttpResponse('method not allowed.')
+
+    def display_link(self, obj):
+        if obj.link:
+            if '/' in obj.link:
+                return format_html(
+                    '<i class="fa fa-check text-green"></i> {}'.format(
+                        obj.link))
+            try:
+                reverse(obj.link)
+                return format_html(
+                    '<i class="fa fa-check text-green"></i> {}'.format(
+                        obj.link))
+            except Exception as e:
+                return format_html(
+                    '<i class="fa fa-close text-red"></i> {}'.format(obj.link))
+        return '-'
+
+    display_link.short_description = _('Link')
 
     def display_icon(self, obj):
         if obj.icon:
@@ -211,3 +275,11 @@ class MenuAdmin(TreeAdmin):
         return obj.icon
 
     display_icon.short_description = _('Icon')
+
+    def display_content_type(self, obj):
+        if obj.content_type:
+            return '{}:{}'.format(obj.content_type.app_label,
+                                  obj.content_type.model)
+        return obj.content_type_id
+
+    display_content_type.short_description = _('ContentType')
