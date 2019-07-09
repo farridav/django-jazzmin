@@ -43,13 +43,13 @@ def get_custom_menu(request):
     """
     all_permissions = request.user.get_all_permissions()
 
-    limit_for_interval_link = []
+    limit_for_internal_link = []
     for permission in all_permissions:
         app_label = permission.split('.')[0]
         model = permission.split('.')[1].split('_')[1]
-        limit_for_interval_link.append('{}:{}'.format(app_label, model))
+        limit_for_internal_link.append('{}:{}'.format(app_label, model))
 
-    limit_for_interval_link = set(limit_for_interval_link)
+    limit_for_internal_link = set(limit_for_internal_link)
     new_available_apps = []
     menu = Menu.dump_bulk()
     for menu_item in menu:
@@ -73,18 +73,18 @@ def get_custom_menu(request):
 
         for children_item in children:
             if children_item.get('data').get('link_type') == 0:
-                # interval link should connect a content_type, otherwise it will be hide.
+                # internal link should connect a content_type, otherwise it will be hide.
                 if children_item.get('data').get('content_type'):
                     obj = ContentType.objects.get(id=children_item.get('data').get('content_type'))
                     # if user hasn't permission, the model will be skip.
-                    if obj.app_label + ':' + obj.model not in limit_for_interval_link:
+                    if obj.app_label + ':' + obj.model not in limit_for_internal_link:
                         continue
                 else:
                     continue
 
             if children_item.get('data').get('valid') is False:
                 continue
-            new_children_item = {}
+            new_children_item = dict()
             new_children_item['name'] = children_item.get('data').get('name')
             new_children_item['admin_url'] = get_reverse_link(
                 children_item.get('data').get('link')
