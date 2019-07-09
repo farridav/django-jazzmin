@@ -39,7 +39,7 @@ class Menu(MP_Node):
                                     verbose_name=_('Link Type'))
     link = models.CharField(max_length=255, blank=True, null=True,
                             verbose_name=_('Link'),
-                            help_text='support admin:index or /admin/ or http://')
+                            help_text=_('support admin:index or /admin/ or http://'))
     icon = models.CharField(max_length=255,
                             blank=True,
                             null=True,
