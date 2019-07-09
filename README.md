@@ -74,13 +74,13 @@ python manage.py migrate django_admin_settings
 ![menu list](./images/menu-list.png)
 
 
-# features
+# Features
 
 - [Custom General Option](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#general-option)
 - [Widgets](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#widgets)
 - [Custom Menu](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#menu)
 
-# TODO
+# Todo
 
 - Custom Dashboard
 

@@ -1,6 +1,11 @@
 # ChangeLog
 
-## [v1.3.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.0b1)
+## [v1.3.1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.1)
+
+- fix #2 get 500 when exchange menu;
+- add .gitattributes.
+
+## [v1.3.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.0)
 
 - add exchange_menu logic with permission limit;
 - add message when call exchange menu;
