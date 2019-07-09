@@ -237,7 +237,9 @@ class MenuAdmin(TreeAdmin):
                 use_custom_menu = Options.objects.get(
                     option_name='USE_CUSTOM_MENU')
             except Options.DoesNotExist:
-                use_custom_menu = None
+                use_custom_menu = Options.objects.create(
+                    option_name='USE_CUSTOM_MENU', option_value='0'
+                )
 
             if not use_custom_menu or use_custom_menu.option_value == '0':
                 use_custom_menu.option_value = '1'
