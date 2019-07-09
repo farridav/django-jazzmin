@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-08 21:39+0800\n"
+"POT-Creation-Date: 2019-07-09 10:24+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,59 +17,67 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:52
+#: admin.py:51
 msgid "Site Title"
 msgstr "站点标题"
 
-#: admin.py:55
+#: admin.py:54
 msgid "Text to put at the end of each page's tag title."
 msgstr "每个页面的标题后缀，对应templates中的site_title标签。"
 
-#: admin.py:56
+#: admin.py:55
 msgid "Site Header"
 msgstr "站点标头"
 
-#: admin.py:59
+#: admin.py:58
 msgid "Text to put in base page's tag b."
 msgstr "右上角文字标头，对应templates中的site_header标签。"
 
-#: admin.py:62
+#: admin.py:61
 msgid "Site Logo"
 msgstr "站点logo"
 
-#: admin.py:66
+#: admin.py:65
 msgid "Transparent background picture is a good choice."
 msgstr "透明背景的图片更适合。"
 
-#: admin.py:68
+#: admin.py:67
 msgid "Welcome Sign"
 msgstr "欢迎标语"
 
-#: admin.py:70
+#: admin.py:69
 msgid "Login page welcome sign."
 msgstr "登录页面欢迎标语"
 
-#: admin.py:88 admin.py:106
+#: admin.py:87 admin.py:105
 msgid "site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT."
 msgstr "site_logo依赖于setting.MEDIA_URL和setting.MEDIA_ROOT。"
 
-#: admin.py:186
+#: admin.py:185
 msgid "General Option Saved."
 msgstr "基本设置保存成功。"
 
-#: admin.py:189
+#: admin.py:188
 msgid "General Option Save Failed."
 msgstr "基本设置保存失败。"
 
-#: admin.py:218 admin.py:286 models.py:49
+#: admin.py:217 admin.py:287 models.py:49
 msgid "ContentType"
 msgstr "关联Model"
 
-#: admin.py:270 models.py:41
+#: admin.py:245
+msgid "Menu exchanged, current is `custom menu`."
+msgstr "菜单切换成功，当前为`自定义菜单`"
+
+#: admin.py:250
+msgid "Menu exchanged, current is `system menu`."
+msgstr "菜单切换成功，当前为`系统菜单`"
+
+#: admin.py:271 models.py:41
 msgid "Link"
 msgstr "链接"
 
-#: admin.py:278 models.py:46
+#: admin.py:279 models.py:46
 msgid "Icon"
 msgstr "图标"
 
@@ -130,6 +138,10 @@ msgstr "菜单位置"
 #: models.py:39
 msgid "Link Type"
 msgstr "链接类型"
+
+#: models.py:42
+msgid "support admin:index or /admin/ or http://"
+msgstr "支持 admin:index 或 /admin/ 或 http://"
 
 #: models.py:52
 msgid "use for permission control."
@@ -558,7 +570,7 @@ msgstr ""
 #: templates/adminlte/general_option.html:14
 #: templates/adminlte/general_option.html:18
 #: templates/adminlte/general_option.html:27
-#: templates/adminlte/general_option.html:36 templatetags/adminlte_menu.py:106
+#: templates/adminlte/general_option.html:36 templatetags/adminlte_menu.py:139
 msgid "General Option"
 msgstr "基本设置"
 

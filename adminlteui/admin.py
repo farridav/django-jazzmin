@@ -242,10 +242,12 @@ class MenuAdmin(TreeAdmin):
             if not use_custom_menu or use_custom_menu.option_value == '0':
                 use_custom_menu.option_value = '1'
                 use_custom_menu.save()
+                messages.add_message(request, messages.SUCCESS, _('Menu exchanged, current is `custom menu`.'))
 
             else:
                 use_custom_menu.option_value = '0'
                 use_custom_menu.save()
+                messages.add_message(request, messages.SUCCESS, _('Menu exchanged, current is `system menu`.'))
             return HttpResponse(json.dumps(response_data),
                                 content_type="application/json,charset=utf-8")
         return HttpResponse('method not allowed.')

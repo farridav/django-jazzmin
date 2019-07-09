@@ -69,6 +69,22 @@ python manage.py migrate django_admin_settings
 ## general_option
 ![general_option](./images/general_option.jpg)
 
+## menu list
+
+![menu list](./images/menu-list.png)
+
+
+# features
+
+- [Custom General Option](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#general-option)
+- [Widgets](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#widgets)
+- [Custom Menu](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#menu)
+
+# TODO
+
+- Custom Dashboard
+
+
 # Thanks
 
 - [AdminLTE](https://github.com/ColorlibHQ/AdminLTE)

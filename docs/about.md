@@ -1,5 +1,17 @@
 # ChangeLog
 
+## [v1.3.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.0b1)
+
+- add exchange_menu logic with permission limit;
+- add message when call exchange menu;
+- update docs.
+
+## [v1.3.0b1](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.0b1)
+
+- update models, content_type option add null=True;
+- add js logic for menu;
+- add exchange_menu logic without permission limit.
+
 ## [v1.3.0b0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.0b0)
 
 - add treebeard as menu depends;

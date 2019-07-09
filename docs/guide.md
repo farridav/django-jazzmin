@@ -44,6 +44,7 @@ before custom option, you should known what adminlte has used.
 - site_header
 - site_logo
 - welcome_sign
+- USE_CUSTOM_MENU
 
 ## Widgets
 
@@ -110,4 +111,50 @@ effect:
 
 ## Menu
 
-developing ...
+Custom your menu depends on database && treebeard.
+
+`depth 2` only, more will not effective now.
+
+### Menu Setting
+
+Exchange Menu by click the `Exchange Menu` button
+
+![menu list](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/menu-list.png?raw=true)
+
+### Menu Form
+
+![menu form](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/menu-form.png?raw=true)
+
+- name: The menu name
+- position: The position of your custom menu, default `left`
+- link_type:
+    1. internal: django urls
+    2. external: third part urls
+    3. divide: link divide, like app verbose_name.
+- link:
+    1. `admin:index`: django url name, recommend.
+    2. `/admin/`: django internal url, if you use i18n url, it's not a good choice.
+    3. `http://`: outside url
+- icon: [icon](https://adminlte.io/themes/AdminLTE/pages/UI/icons.html)
+- content_type: Use for permission control, if user don't have permission to access the `app_label:model` in content_type, it will be skipped.
+- valid: This menu item effective only when the valid is True.
+- treebeard option: for order.
+
+### get django url name for link
+
+```
+
+╰─$ python manage.py shell
+Python 3.6.6 (default, Sep 29 2018, 19:18:41) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.5.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from django.urls import resolve                                                                                                                                             
+
+In [2]: resolve('/zh-hans/admin/video/parsed/')                                                                                                                                     
+Out[2]: ResolverMatch(func=django.contrib.admin.options.changelist_view, args=(), kwargs={}, 
+url_name=video_parsed_changelist, app_names=['admin'], namespaces=['admin'], route=zh-hans/admin/video/parsed/)
+
+```
+
+django url name = namespaces:url_name

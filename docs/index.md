@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 ```
 python manage.py migrate django_admin_settings
 ```
-## screen shot
+## Screen shot
 
 ### login page
 ![login](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/login.jpg?raw=true)
@@ -63,6 +63,21 @@ python manage.py migrate django_admin_settings
 
 ### general_option
 ![general_option](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/general_option.jpg?raw=true)
+
+### menu list
+![menu list](https://github.com/wuyue92tree/django-adminlte-ui/blob/master/images/menu-list.png?raw=true)
+
+
+## Features
+
+- [Custom General Option](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#general-option)
+- [Widgets](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#widgets)
+- [Custom Menu](https://django-adminlte-ui.readthedocs.io/en/latest/guide/#menu)
+
+## Todo
+
+- Custom Dashboard
+
 
 ## Thanks
 
