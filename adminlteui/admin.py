@@ -69,6 +69,14 @@ class GeneralOptionForm(forms.Form):
         help_text=_("Login page welcome sign.")
     )
 
+    avatar_field = forms.CharField(label=_('Avatar Field'),
+                                   widget=widgets.AdminTextInputWidget(),
+                                   required=False,
+                                   help_text=_(
+                                       "which field is avatar."))
+    show_avatar = forms.BooleanField(
+        label=_('Show Avatar'), required=False)
+
     def save(self):
         try:
             # clear site-logo
@@ -76,6 +84,16 @@ class GeneralOptionForm(forms.Form):
                 obj = Options.objects.get(option_name='site_logo')
                 obj.delete()
                 self.changed_data.remove('site_logo')
+
+            if not self.data.get('show_avatar'):
+                try:
+                    obj = Options.objects.get(option_name='show_avatar')
+                    obj.option_value = 'off'
+                    obj.save()
+                except Exception:
+                    obj = Options.objects.create(option_name='show_avatar',
+                                                 option_value='off')
+                    obj.save()
 
             for data_item in self.changed_data:
                 try:
@@ -164,7 +182,11 @@ class OptionsAdmin(admin.ModelAdmin):
                 'welcome_sign': get_option(option_name='welcome_sign'),
                 'site_logo': ImageBox(
                     get_option(option_name='site_logo')) if get_option(
-                    option_name='site_logo') else ''
+                    option_name='site_logo') else '',
+                'show_avatar': True if get_option(
+                    option_name='show_avatar') == 'on' else False,
+                'avatar_field': get_option(
+                    option_name='avatar_field') or 'request.user.head_avatar',
             }
             form = GeneralOptionForm(initial=initial_value)
         else:
@@ -183,7 +205,11 @@ class OptionsAdmin(admin.ModelAdmin):
                     'welcome_sign': get_option(option_name='welcome_sign'),
                     'site_logo': ImageBox(
                         get_option(option_name='site_logo')) if get_option(
-                        option_name='site_logo') else ''
+                        option_name='site_logo') else '',
+                    'show_avatar': True if get_option(
+                        option_name='show_avatar') == 'on' else False,
+                    'avatar_field': get_option(
+                        option_name='avatar_field') or 'request.user.head_avatar',
                 }
                 form = GeneralOptionForm(initial=initial_value)
                 messages.add_message(request, messages.SUCCESS,

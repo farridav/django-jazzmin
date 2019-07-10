@@ -76,14 +76,28 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
+                            {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
+                            {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
+                            {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
+                            <img src="{{ adminlte_avatar_field.avatar_field }}" class="user-image" alt="User Image" style="width: 25px; height:25px;">
+                            {% else %}
                             <img src={% static "admin/dist/img/default.jpg" %} class="user-image" alt="User Image">
+                            {% endif %}
+                            {% endif %}
                             <span class="hidden-xs">{{ request.user.username }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
+                            {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
+                            {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
                             <li class="user-header">
+                                {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
+                                {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
+                                <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image" style="width: 90px; height:90px;">
+                                {% else %}
                                 <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">
-
+                                {% endif %}
                                 <p>
                                     {{ request.user.username }} -
                                     {% if request.user.is_superuser %}
@@ -98,6 +112,24 @@
                                     <small>{% trans "Register time" %}： {{ request.user.date_joined }}</small>
                                 </p>
                             </li>
+                            {% else %}
+                            <li class="user-header" style="height: auto;">
+                                <p>
+                                    {{ request.user.username }} -
+                                    {% if request.user.is_superuser %}
+                                    {% trans "Super manager" %}
+                                    {% else %}
+                                    {% if request.user.groups.all %}
+                                    {% for i in request.user.groups.all %}{{ i.name }}{% endfor %}
+                                    {% else %}
+                                    {% trans 'Normal' %}
+                                    {% endif %}
+                                    {% endif %}
+                                    <small>{% trans "Register time" %}： {{ request.user.date_joined }}</small>
+                                </p>
+                            </li>
+                            {% endif %}
+
                             <!-- Menu Body -->
                             <!--<li class="user-body">-->
                             <!--<div class="row">-->
@@ -137,15 +169,23 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
+            {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
+            {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
             <div class="user-panel">
                 <div class="pull-left image">
+                    {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
+                    {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
+                    <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image" style="width: 45px; height:45px;">
+                    {% else %}
                     <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">
+                    {% endif %}
                 </div>
                 <div class="pull-left info">
                     <p>{{ request.user.username }}</p>
                     <a href="#"><i class="fa fa-circle text-success"></i> {% trans "Online" %}</a>
                 </div>
             </div>
+            {% endif %}
             <!-- search form -->
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
@@ -460,8 +500,8 @@ $(function() {
                 if (menuActions[i].href===window.location.origin + pathname) {
                     continue
                 }
-
                 console.log('menu matched.', window.location.href, menuActions[i].href);
+                menuActions[i].parentNode.setAttribute('class', 'active');
                 if (menuActions[i].parentNode.parentNode.getAttribute('class') !== 'sidebar-menu') {
                     menuActions[i].parentNode.parentNode.setAttribute('class', 'treeview-menu menu-open');
                     menuActions[i].parentNode.parentNode.parentNode.setAttribute('class', 'treeview active');
