@@ -42,7 +42,7 @@ def get_custom_menu(request):
     :return:
     """
     all_permissions = request.user.get_all_permissions()
-
+    print(all_permissions)
     limit_for_internal_link = []
     for permission in all_permissions:
         app_label = permission.split('.')[0]
@@ -75,7 +75,8 @@ def get_custom_menu(request):
             if children_item.get('data').get('link_type') == 0:
                 # internal link should connect a content_type, otherwise it will be hide.
                 if children_item.get('data').get('content_type'):
-                    obj = ContentType.objects.get(id=children_item.get('data').get('content_type'))
+                    obj = ContentType.objects.get(
+                        id=children_item.get('data').get('content_type'))
                     # if user hasn't permission, the model will be skip.
                     if obj.app_label + ':' + obj.model not in limit_for_internal_link:
                         continue
@@ -134,22 +135,23 @@ def get_menu(context, request):
 
     for app in available_apps:
         if app.get('app_label') == 'django_admin_settings':
-            app.get('models').insert(0,
-                                     {
-                                         'name': _('General Option'),
-                                         'object_name': 'Options',
-                                         'perms':
-                                             {
-                                                 'add': True,
-                                                 'change': True,
-                                                 'delete': True,
-                                                 'view': True
-                                             },
-                                         'admin_url': reverse(
-                                             'admin:general_option'),
-                                         'view_only': False
-                                     }
-                                     )
+            if request.user.has_perm('django_admin_settings.add_options') or \
+                    request.user.has_perm(
+                        'django_admin_settings.change_options'):
+                app.get('models').insert(0, {
+                    'name': _('General Option'),
+                    'object_name': 'Options',
+                    'perms':
+                        {
+                            'add': True,
+                            'change': True,
+                            'delete': True,
+                            'view': True
+                        },
+                    'admin_url': reverse(
+                        'admin:general_option'),
+                    'view_only': False
+                })
     # return MenuManager(available_apps, context, request)
     return available_apps
 
