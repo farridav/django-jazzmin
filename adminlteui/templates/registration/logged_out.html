@@ -1,0 +1,70 @@
+{% load i18n admin_static adminlte_options %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <!-- Current language: {{ LANGUAGE_CODE }} -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        {% get_adminlte_option 'site_title' as adminlte_site_title %}
+        {% if adminlte_site_title.valid %}
+        {{ adminlte_site_title.site_title }}
+        {% else %}
+        {{ site_title|default:_('Django site admin') }}
+        {% endif %}
+        | {% trans 'Log in again' %}
+    </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href={% static "admin/bootstrap/css/bootstrap.min.css" %}>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href={% static "admin/dist/css/AdminLTE.min.css" %}>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition login-page">
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href="/">
+            <b>
+                {% get_adminlte_option 'site_header' as adminlte_site_header  %}
+                {% if adminlte_site_header.valid %}
+                {{ adminlte_site_header.site_header }}
+                {% else %}
+                {{ site_header }}
+                {% endif %}
+            </b>
+        </a>
+    </div>
+
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">
+            {% get_adminlte_option 'welcome_sign' as adminlte_welcome_sign  %}
+            {% if adminlte_welcome_sign.valid %}
+            {{ adminlte_welcome_sign.welcome_sign }}
+            {% else %}
+            {% trans 'Login and Enjoy' %}
+            {% endif %}
+        </p>
+        <p class="text-center">{% trans "Thanks for spending some quality time with the Web site today." %}</p>
+
+        <p class="text-center"><a class="btn btn-primary" href="{% url 'admin:index' %}">{% trans 'Log in again' %}</a></p>
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+</body>
+</html>
