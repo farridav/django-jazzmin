@@ -9,24 +9,25 @@
 [![Download Status](https://img.shields.io/pypi/dm/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Build Status](https://api.travis-ci.org/wuyue92tree/django-adminlte-ui.svg)](https://travis-ci.org/wuyue92tree/django-adminlte-ui)
 [![Documentation Status](https://readthedocs.org/projects/django-adminlte-ui/badge/?version=latest)](https://django-adminlte-ui.readthedocs.io/en/latest/?badge=latest)
+[![Gitter](https://badges.gitter.im/django-adminlte-ui/community.svg)](https://gitter.im/django-adminlte-ui/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 django admin theme base on adminlte
 
 adminlte version: 2.3.6
 
-# helper
+# Helper
 
 - if you have good ideas, just contact me.
 - if you find some bug, just add an issue.
 - if you think this project is good, just star and fork, make it better 🍉.
 
-# install
+# Install
 
 ```
 pip install django-adminlte-ui
 ```
 
-# setup
+# Setup
 
 ```
 # settings.py
@@ -52,7 +53,7 @@ INSTALLED_APPS = [
 python manage.py migrate django_admin_settings
 ```
 
-# screen shot
+# Screen shot
 
 ## login page
 ![login](./images/login.jpg)
