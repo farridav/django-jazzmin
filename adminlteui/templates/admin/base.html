@@ -462,9 +462,10 @@ $(function() {
                 }
 
                 console.log('menu matched.', window.location.href, menuActions[i].href);
-                menuActions[i].parentNode.setAttribute('class', 'active');
-                menuActions[i].parentNode.parentNode.setAttribute('class', 'treeview-menu menu-open');
-                menuActions[i].parentNode.parentNode.parentNode.setAttribute('class', 'treeview active');
+                if (menuActions[i].parentNode.parentNode.getAttribute('class') !== 'sidebar-menu') {
+                    menuActions[i].parentNode.parentNode.setAttribute('class', 'treeview-menu menu-open');
+                    menuActions[i].parentNode.parentNode.parentNode.setAttribute('class', 'treeview active');
+                }
                 break
             }
         } catch (e) {
