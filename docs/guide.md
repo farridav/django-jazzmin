@@ -10,6 +10,8 @@ support options:
 - Site Header
 - Site Logo
 - Welcome Sign
+- Avatar Field
+- Show Avatar
 
 ## Options
 
@@ -45,6 +47,8 @@ before custom option, you should known what adminlte has used.
 - site_logo
 - welcome_sign
 - USE_CUSTOM_MENU
+- avatar_field
+- show_avatar
 
 ## Widgets
 
