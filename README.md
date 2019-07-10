@@ -21,6 +21,18 @@ adminlte version: 2.3.6
 - if you find some bug, just add an issue.
 - if you think this project is good, just star and fork, make it better 🍉.
 
+# Demo
+
+[Chinese](http://django-demo.antio.top/zh-hans/admin/)
+
+[English](http://django-demo.antio.top/en/admin/)
+
+auth:
+ - username: demo
+ - password: demo123
+ 
+database will restore every hour. 🍌
+
 # Install
 
 ```
