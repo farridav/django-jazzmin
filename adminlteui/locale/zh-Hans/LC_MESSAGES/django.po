@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-09 10:24+0800\n"
+"POT-Creation-Date: 2019-07-10 22:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,35 +49,47 @@ msgstr "欢迎标语"
 msgid "Login page welcome sign."
 msgstr "登录页面欢迎标语"
 
-#: admin.py:87 admin.py:105
+#: admin.py:72
+msgid "Avatar Field"
+msgstr "头像字段"
+
+#: admin.py:76
+msgid "which field is avatar."
+msgstr "用户表中头像对应的字段"
+
+#: admin.py:78
+msgid "Show Avatar"
+msgstr "显示头像"
+
+#: admin.py:105 admin.py:123
 msgid "site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT."
 msgstr "site_logo依赖于setting.MEDIA_URL和setting.MEDIA_ROOT。"
 
-#: admin.py:185
+#: admin.py:216
 msgid "General Option Saved."
 msgstr "基本设置保存成功。"
 
-#: admin.py:188
+#: admin.py:219
 msgid "General Option Save Failed."
 msgstr "基本设置保存失败。"
 
-#: admin.py:217 admin.py:287 models.py:49
+#: admin.py:248 admin.py:324 models.py:49
 msgid "ContentType"
 msgstr "关联Model"
 
-#: admin.py:245
+#: admin.py:281
 msgid "Menu exchanged, current is `custom menu`."
 msgstr "菜单切换成功，当前为`自定义菜单`"
 
-#: admin.py:250
+#: admin.py:287
 msgid "Menu exchanged, current is `system menu`."
 msgstr "菜单切换成功，当前为`系统菜单`"
 
-#: admin.py:271 models.py:41
+#: admin.py:308 models.py:41
 msgid "Link"
 msgstr "链接"
 
-#: admin.py:279 models.py:46
+#: admin.py:316 models.py:46
 msgid "Icon"
 msgstr "图标"
 
@@ -227,7 +239,7 @@ msgstr ""
 #: templates/admin/auth/user/change_password.html:22
 #: templates/admin/auth/user/change_password.html:27
 #: templates/admin/auth/user/change_password.html:94
-#: templates/admin/base.html:119
+#: templates/admin/base.html:151
 #: templates/registration/password_change_done.html:3
 #: templates/registration/password_change_form.html:7
 #: templates/registration/password_change_form.html:102
@@ -251,66 +263,67 @@ msgstr ""
 msgid "Please correct the errors below."
 msgstr ""
 
-#: templates/admin/base.html:90
+#: templates/admin/base.html:104 templates/admin/base.html:120
 msgid "Super manager"
 msgstr "超级管理员"
 
-#: templates/admin/base.html:95
+#: templates/admin/base.html:109 templates/admin/base.html:125
 msgid "Normal"
 msgstr "普通用户"
 
-#: templates/admin/base.html:98
+#: templates/admin/base.html:112 templates/admin/base.html:128
 msgid "Register time"
 msgstr "注册时间"
 
-#: templates/admin/base.html:122
+#: templates/admin/base.html:154
 #: templates/registration/password_change_done.html:3
 #: templates/registration/password_change_form.html:7
 msgid "Log out"
 msgstr ""
 
-#: templates/admin/base.html:146
+#: templates/admin/base.html:185
 msgid "Online"
 msgstr "在线"
 
-#: templates/admin/base.html:152 templates/admin/search_form.html:20
+#: templates/admin/base.html:192 templates/admin/search_form.html:20
 msgid "Search"
 msgstr "搜索"
 
-#: templates/admin/base.html:162
+#: templates/admin/base.html:202
 msgid "MAIN NAVIGATION"
 msgstr "页面导航"
 
-#: templates/admin/base.html:165
+#: templates/admin/base.html:205
 msgid "Dashboard"
 msgstr "仪表盘"
 
-#: templates/admin/base.html:197
+#: templates/admin/base.html:237
 msgid "System manage"
 msgstr ""
 
-#: templates/admin/base.html:203
+#: templates/admin/base.html:243
 msgid "Log manage"
 msgstr ""
 
-#: templates/admin/base.html:204
+#: templates/admin/base.html:244
 msgid "System config"
 msgstr ""
 
-#: templates/admin/base.html:210
+#: templates/admin/base.html:250
 msgid "Important"
 msgstr ""
 
-#: templates/admin/base.html:211
+#: templates/admin/base.html:251
 msgid "Warning"
 msgstr ""
 
-#: templates/admin/base.html:212
+#: templates/admin/base.html:252
 msgid "Information"
 msgstr ""
 
 #: templates/admin/base_site.html:8 templates/admin/login.html:13
 #: templates/adminlte/general_option.html:23
+#: templates/registration/logged_out.html:13
 msgid "Django site admin"
 msgstr ""
 
@@ -466,7 +479,7 @@ msgstr ""
 msgid "Log in"
 msgstr "登录"
 
-#: templates/admin/login.html:60
+#: templates/admin/login.html:60 templates/registration/logged_out.html:58
 msgid "Login and Enjoy"
 msgstr "芝麻开门"
 
@@ -570,13 +583,24 @@ msgstr ""
 #: templates/adminlte/general_option.html:14
 #: templates/adminlte/general_option.html:18
 #: templates/adminlte/general_option.html:27
-#: templates/adminlte/general_option.html:36 templatetags/adminlte_menu.py:139
+#: templates/adminlte/general_option.html:36 templatetags/adminlte_menu.py:142
 msgid "General Option"
 msgstr "基本设置"
 
 #: templates/adminlte/menu_change_list.html:4
 msgid "Exchange Menu"
 msgstr "菜单切换"
+
+#: templates/registration/logged_out.html:15
+#: templates/registration/logged_out.html:63
+#, fuzzy
+#| msgid "Log in"
+msgid "Log in again"
+msgstr "登录"
+
+#: templates/registration/logged_out.html:61
+msgid "Thanks for spending some quality time with the Web site today."
+msgstr ""
 
 #: templates/registration/password_change_done.html:3
 #: templates/registration/password_change_form.html:7

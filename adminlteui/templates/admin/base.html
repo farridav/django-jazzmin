@@ -175,7 +175,7 @@
                 <div class="pull-left image">
                     {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
                     {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
-                    <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image" style="width: 45px; height:45px;">
+                    <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image">
                     {% else %}
                     <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">
                     {% endif %}

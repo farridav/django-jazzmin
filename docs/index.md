@@ -3,6 +3,8 @@
 [![PyPI Version](https://img.shields.io/pypi/v/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Download Status](https://img.shields.io/pypi/dm/django-adminlte-ui.svg)](https://pypi.python.org/pypi/django-adminlte-ui)
 [![Build Status](https://api.travis-ci.org/wuyue92tree/django-adminlte-ui.svg)](https://travis-ci.org/wuyue92tree/django-adminlte-ui)
+[![Gitter](https://badges.gitter.im/django-adminlte-ui/community.svg)](https://gitter.im/django-adminlte-ui/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 
 django-adminlte is a django admin theme base on adminlte
 
@@ -14,6 +16,17 @@ adminlte version: 2.3.6
 - if you have good ideas, just contact me.
 - if you find some bug, just add an issue.
 - if you think this project is good, just star and fork, make it better 🍉.
+
+## Demo
+
+[Chinese](http://django-demo.antio.top/zh-hans/admin/)
+
+[English](http://django-demo.antio.top/en/admin/)
+
+- username: demo
+- password: demo123
+ 
+database will restore every hour. 🍌
 
 
 ## Install

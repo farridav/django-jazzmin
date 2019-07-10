@@ -27,9 +27,8 @@ adminlte version: 2.3.6
 
 [English](http://django-demo.antio.top/en/admin/)
 
-auth:
- - username: demo
- - password: demo123
+- username: demo
+- password: demo123
  
 database will restore every hour. 🍌
 
