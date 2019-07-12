@@ -71,6 +71,21 @@
                 <span class="sr-only">Toggle navigation</span>
             </a>
 
+            <div class="navbar-custom-menu" style="float: left;">
+                <ul class="nav navbar-nav top-menu">
+                    {% get_menu request 'top' as app_list %}
+                    {% if app_list %}
+                    {% for app in app_list %}
+                    <li class="dropdown user user-menu">
+                        <a href="{{ app.admin_url }}">
+                            <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
+                            {{ app.name }}</a>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- User Account: style can be found in dropdown.less -->
@@ -512,6 +527,16 @@ $(function() {
             console.log(window.location.href, menuActions[i].href, e)
         }
     }
+
+    var topMenuActions = document.querySelectorAll('.top-menu a')
+    for (var j in topMenuActions) {
+        if (window.location.href.indexOf(topMenuActions[j].href) !== -1) {
+            topMenuActions[j].parentNode.setAttribute('class', 'active');
+            console.log('top menu matched.', window.location.href, topMenuActions[j].href);
+        }
+    }
+
+
 })
 </script>
 

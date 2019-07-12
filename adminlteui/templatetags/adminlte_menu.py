@@ -32,7 +32,7 @@ def get_reverse_link(link):
         return None
 
 
-def get_custom_menu(request):
+def get_custom_menu(request, position):
     """
     use content_type and user.permission control the menu
 
@@ -53,6 +53,9 @@ def get_custom_menu(request):
     new_available_apps = []
     menu = Menu.dump_bulk()
     for menu_item in menu:
+        if menu_item.get('data').get('position') != position:
+            continue
+
         new_available_apps_item = {}
         data = (menu_item.get('data'))
         if data.get('valid') is False:
@@ -102,7 +105,7 @@ def get_custom_menu(request):
 
 
 @simple_tag(takes_context=True)
-def get_menu(context, request):
+def get_menu(context, request, position='left'):
     """
     :type request: WSGIRequest
     """
@@ -112,7 +115,10 @@ def get_menu(context, request):
     use_custom_menu = get_adminlte_option('USE_CUSTOM_MENU')
     if use_custom_menu.get('USE_CUSTOM_MENU',
                            '0') == '1' and use_custom_menu.get('valid') is True:
-        return get_custom_menu(request)
+        return get_custom_menu(request, position)
+
+    if position != 'left':
+        return []
 
     # Django 1.9+
     available_apps = context.get('available_apps')
