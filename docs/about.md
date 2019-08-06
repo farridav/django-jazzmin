@@ -1,5 +1,10 @@
 # ChangeLog
 
+## [v1.3.3](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.3)
+
+- add menu on the top;
+- feature #3 add priority_level for menu order.
+
 ## [v1.3.2](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.2)
 
 - add permission control for general_option & exchange_menu;
