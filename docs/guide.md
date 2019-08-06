@@ -142,6 +142,7 @@ Exchange Menu by click the `Exchange Menu` button
 - icon: [icon](https://adminlte.io/themes/AdminLTE/pages/UI/icons.html)
 - content_type: Use for permission control, if user don't have permission to access the `app_label:model` in content_type, it will be skipped.
 - valid: This menu item effective only when the valid is True.
+- priority_level: default 100, use for ordering. `The bigger the priority`
 - treebeard option: for order.
 
 ### get django url name for link
