@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+import itertools
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
-from treebeard.mp_tree import MP_Node
+from treebeard.mp_tree import MP_Node,\
+    InvalidMoveToDescendant, MP_MoveHandler
 
 
 class Options(models.Model):
@@ -39,7 +41,8 @@ class Menu(MP_Node):
                                     verbose_name=_('Link Type'))
     link = models.CharField(max_length=255, blank=True, null=True,
                             verbose_name=_('Link'),
-                            help_text=_('support admin:index or /admin/ or http://'))
+                            help_text=_(
+                                'support admin:index or /admin/ or http://'))
     icon = models.CharField(max_length=255,
                             blank=True,
                             null=True,
@@ -50,12 +53,26 @@ class Menu(MP_Node):
                                      on_delete=models.CASCADE,
                                      help_text=_(
                                          'use for permission control.'))
-
+    priority_level = models.IntegerField(default=100,
+                                         verbose_name=_('Priority Level'),
+                                         help_text=_('The bigger the priority'))
     valid = models.BooleanField(default=True, verbose_name=_('Valid'))
-    node_order_by = ['name', 'position']
+    node_order_by = ['priority_level']
+
+    def move(self, target, pos=None):
+        """
+        Moves the current node and all it's descendants to a new position
+        relative to another node.
+
+        :raise PathOverflow: when the library can't make room for the
+           node's new position
+        """
+        if target.depth == 2:
+            raise InvalidMoveToDescendant(_('max depth is 2.'))
+        return MP_MoveHandler(self, target, pos).process()
 
     def __str__(self):
-        return '{}'.format(self.name)
+        return '{}|{}'.format(self.name, self.priority_level)
 
     class Meta:
         verbose_name = _('Menu')

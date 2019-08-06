@@ -7,10 +7,12 @@ from django.contrib.admin import widgets
 from django.urls import path, reverse
 from django.template.response import TemplateResponse
 from django.utils import timezone
+from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
 from django.conf import settings
-from django.http.response import HttpResponse, HttpResponseForbidden
+from django.http.response import HttpResponse, HttpResponseForbidden, \
+    HttpResponseBadRequest
 from adminlteui.widgets import AdminlteSelect
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
@@ -225,10 +227,10 @@ class OptionsAdmin(admin.ModelAdmin):
 @admin.register(Menu)
 class MenuAdmin(TreeAdmin):
     list_display = ('name', 'position', 'link_type', 'display_link',
-                    'display_content_type', 'display_icon',
+                    'display_content_type', 'priority_level', 'display_icon',
                     'valid')
     list_filter = ('position', 'link_type', 'valid')
-    list_editable = ('valid',)
+    list_editable = ('valid', 'priority_level')
     form = movenodeform_factory(Menu)
     change_list_template = 'adminlte/menu_change_list.html'
     change_form_template = 'adminlte/menu_change_form.html'
@@ -249,6 +251,16 @@ class MenuAdmin(TreeAdmin):
                 widget=AdminlteSelect)
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        try:
+            return super().changeform_view(request, object_id, form_url, extra_context)
+        except Exception as e:
+            messages.error(request,
+                           _('Exception raised while add node: %s') % _(
+                               force_str(e)))
+            return HttpResponseBadRequest(
+                _('Exception raised while add node: %s') % _(force_str(e)))
 
     def get_urls(self):
         base_urls = super().get_urls()
