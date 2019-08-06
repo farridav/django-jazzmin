@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-10 22:14+0800\n"
+"POT-Creation-Date: 2019-08-06 20:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,79 +17,84 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:51
+#: admin.py:53
 msgid "Site Title"
 msgstr "站点标题"
 
-#: admin.py:54
+#: admin.py:56
 msgid "Text to put at the end of each page's tag title."
 msgstr "每个页面的标题后缀，对应templates中的site_title标签。"
 
-#: admin.py:55
+#: admin.py:57
 msgid "Site Header"
 msgstr "站点标头"
 
-#: admin.py:58
+#: admin.py:60
 msgid "Text to put in base page's tag b."
 msgstr "右上角文字标头，对应templates中的site_header标签。"
 
-#: admin.py:61
+#: admin.py:63
 msgid "Site Logo"
 msgstr "站点logo"
 
-#: admin.py:65
+#: admin.py:67
 msgid "Transparent background picture is a good choice."
 msgstr "透明背景的图片更适合。"
 
-#: admin.py:67
+#: admin.py:69
 msgid "Welcome Sign"
 msgstr "欢迎标语"
 
-#: admin.py:69
+#: admin.py:71
 msgid "Login page welcome sign."
 msgstr "登录页面欢迎标语"
 
-#: admin.py:72
+#: admin.py:74
 msgid "Avatar Field"
 msgstr "头像字段"
 
-#: admin.py:76
+#: admin.py:78
 msgid "which field is avatar."
 msgstr "用户表中头像对应的字段"
 
-#: admin.py:78
+#: admin.py:80
 msgid "Show Avatar"
 msgstr "显示头像"
 
-#: admin.py:105 admin.py:123
+#: admin.py:107 admin.py:125
 msgid "site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT."
 msgstr "site_logo依赖于setting.MEDIA_URL和setting.MEDIA_ROOT。"
 
-#: admin.py:216
+#: admin.py:218
 msgid "General Option Saved."
 msgstr "基本设置保存成功。"
 
-#: admin.py:219
+#: admin.py:221
 msgid "General Option Save Failed."
 msgstr "基本设置保存失败。"
 
-#: admin.py:248 admin.py:324 models.py:49
+#: admin.py:250 admin.py:336 models.py:52
 msgid "ContentType"
 msgstr "关联Model"
 
-#: admin.py:281
+#: admin.py:260 admin.py:263
+#, python-format
+msgid "Exception raised while add node: %s"
+msgstr "在添加菜单时，发生异常：%s"
+
+#: admin.py:293
 msgid "Menu exchanged, current is `custom menu`."
 msgstr "菜单切换成功，当前为`自定义菜单`"
 
-#: admin.py:287
+#: admin.py:299
 msgid "Menu exchanged, current is `system menu`."
 msgstr "菜单切换成功，当前为`系统菜单`"
 
-#: admin.py:308 models.py:41
+#: admin.py:320 models.py:43
 msgid "Link"
 msgstr "链接"
 
-#: admin.py:316 models.py:46
+#: admin.py:328 models.py:49
 msgid "Icon"
 msgstr "图标"
 
@@ -97,73 +102,85 @@ msgstr "图标"
 msgid "AdminSettings"
 msgstr "设置"
 
-#: models.py:12
+#: models.py:14
 msgid "Option Name"
 msgstr "名称"
 
-#: models.py:14
+#: models.py:16
 msgid "Option Value"
 msgstr "值"
 
-#: models.py:15 models.py:54
+#: models.py:17 models.py:59
 msgid "Valid"
 msgstr "有效性"
 
-#: models.py:17
+#: models.py:19
 msgid "CreateTime"
 msgstr "创建时间"
 
-#: models.py:19
+#: models.py:21
 msgid "UpdateTime"
 msgstr "更新时间"
 
-#: models.py:25
+#: models.py:27
 msgid "Options"
 msgstr "选项"
 
-#: models.py:26
+#: models.py:28
 msgid "All Options"
 msgstr "所有选项"
 
-#: models.py:31
+#: models.py:33
 msgid "Internal"
 msgstr "内部"
 
-#: models.py:32
+#: models.py:34
 msgid "External"
 msgstr "外部"
 
-#: models.py:33
+#: models.py:35
 msgid "Divide"
 msgstr "链接分组"
 
-#: models.py:35
+#: models.py:37
 #, fuzzy
 #| msgid "username"
 msgid "name"
 msgstr "用户名"
 
-#: models.py:37
+#: models.py:39
 msgid "Menu Position"
 msgstr "菜单位置"
 
-#: models.py:39
+#: models.py:41
 msgid "Link Type"
 msgstr "链接类型"
 
-#: models.py:42
+#: models.py:45
 msgid "support admin:index or /admin/ or http://"
 msgstr "支持 admin:index 或 /admin/ 或 http://"
 
-#: models.py:52
+#: models.py:55
 msgid "use for permission control."
 msgstr "用于权限控制。"
 
-#: models.py:61
+#: models.py:57
+msgid "Priority Level"
+msgstr "优先级"
+
+#: models.py:58
+msgid "The bigger the priority"
+msgstr "越大越优先"
+
+#: models.py:71
+msgid "max depth is 2."
+msgstr "菜单最大深度为2"
+
+#: models.py:78
 msgid "Menu"
 msgstr "菜单"
 
-#: models.py:62
+#: models.py:79
 msgid "Menu Setting"
 msgstr "菜单设置"
 
@@ -239,7 +256,7 @@ msgstr ""
 #: templates/admin/auth/user/change_password.html:22
 #: templates/admin/auth/user/change_password.html:27
 #: templates/admin/auth/user/change_password.html:94
-#: templates/admin/base.html:151
+#: templates/admin/base.html:166
 #: templates/registration/password_change_done.html:3
 #: templates/registration/password_change_form.html:7
 #: templates/registration/password_change_form.html:102
@@ -263,61 +280,61 @@ msgstr ""
 msgid "Please correct the errors below."
 msgstr ""
 
-#: templates/admin/base.html:104 templates/admin/base.html:120
+#: templates/admin/base.html:119 templates/admin/base.html:135
 msgid "Super manager"
 msgstr "超级管理员"
 
-#: templates/admin/base.html:109 templates/admin/base.html:125
+#: templates/admin/base.html:124 templates/admin/base.html:140
 msgid "Normal"
 msgstr "普通用户"
 
-#: templates/admin/base.html:112 templates/admin/base.html:128
+#: templates/admin/base.html:127 templates/admin/base.html:143
 msgid "Register time"
 msgstr "注册时间"
 
-#: templates/admin/base.html:154
+#: templates/admin/base.html:169
 #: templates/registration/password_change_done.html:3
 #: templates/registration/password_change_form.html:7
 msgid "Log out"
 msgstr ""
 
-#: templates/admin/base.html:185
+#: templates/admin/base.html:200
 msgid "Online"
 msgstr "在线"
 
-#: templates/admin/base.html:192 templates/admin/search_form.html:20
+#: templates/admin/base.html:207 templates/admin/search_form.html:20
 msgid "Search"
 msgstr "搜索"
 
-#: templates/admin/base.html:202
+#: templates/admin/base.html:217
 msgid "MAIN NAVIGATION"
 msgstr "页面导航"
 
-#: templates/admin/base.html:205
+#: templates/admin/base.html:220
 msgid "Dashboard"
 msgstr "仪表盘"
 
-#: templates/admin/base.html:237
+#: templates/admin/base.html:252
 msgid "System manage"
 msgstr ""
 
-#: templates/admin/base.html:243
+#: templates/admin/base.html:258
 msgid "Log manage"
 msgstr ""
 
-#: templates/admin/base.html:244
+#: templates/admin/base.html:259
 msgid "System config"
 msgstr ""
 
-#: templates/admin/base.html:250
+#: templates/admin/base.html:265
 msgid "Important"
 msgstr ""
 
-#: templates/admin/base.html:251
+#: templates/admin/base.html:266
 msgid "Warning"
 msgstr ""
 
-#: templates/admin/base.html:252
+#: templates/admin/base.html:267
 msgid "Information"
 msgstr ""
 
@@ -583,11 +600,11 @@ msgstr ""
 #: templates/adminlte/general_option.html:14
 #: templates/adminlte/general_option.html:18
 #: templates/adminlte/general_option.html:27
-#: templates/adminlte/general_option.html:36 templatetags/adminlte_menu.py:142
+#: templates/adminlte/general_option.html:36 templatetags/adminlte_menu.py:146
 msgid "General Option"
 msgstr "基本设置"
 
-#: templates/adminlte/menu_change_list.html:4
+#: templates/adminlte/menu_change_list.html:16
 msgid "Exchange Menu"
 msgstr "菜单切换"
 
@@ -622,4 +639,8 @@ msgstr ""
 msgid ""
 "Please enter your old password, for security's sake, and then enter your new "
 "password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#: templatetags/adminlte_list.py:172
+msgid "Return to ordered tree"
 msgstr ""
