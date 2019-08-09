@@ -68,8 +68,14 @@
 <div class="pull-right hidden-xs">
     <b>Adminlte Version</b> 2.3.6
 </div>
-<strong>Copyright &copy; 2019 <a href="https://github.com/wuyue92tree/django-adminlte-ui">django-adminlte-ui</a>.</strong> All rights
-reserved.
+<strong>
+Copyright &copy; {% now 'Y' %}
+{% if adminlte.copyright %}
+    {{ adminlte.copyright }}.
+{% else %}
+    <a href="https://github.com/wuyue92tree/django-adminlte-ui">django-adminlte-ui</a>.
+{% endif %}
+</strong> All rights reserved.
 {% endblock %}
 
 {% block extrajs %} {% endblock %}

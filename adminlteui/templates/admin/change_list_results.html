@@ -28,6 +28,9 @@
                         class="sorting"
                         {% endif %}
                         {% endif %}
+                        {% if forloop.counter0 == 0 %}
+                        class="djn-checkbox-select-all"
+                        {% endif %}
                         tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending"><div class="text">{% if header.sortable %}<a href="{{ header.url_primary }}">
                         {{ header.text|capfirst }}</a>{% else %}<span>{{ header.text|capfirst }}</span>{% endif %} {% if header.sorted %}<a href="{{ header.url_remove }}"><div style="margin-top: .2em;" class="fa fa-close pull-right"></div></a>{% endif %}</div>
                     </th>

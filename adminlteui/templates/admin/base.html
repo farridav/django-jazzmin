@@ -10,9 +10,11 @@
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href={% static "admin/bootstrap/css/bootstrap.min.css" %}>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href={% static "admin/font-awesome/css/font-awesome.min.css" %}>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="//cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href={% static "admin/ionicons/ionicons.min.css" %}>
+
     {% block extrastyle %} {% endblock %}
 
     {% block extrahead %} {% endblock %}
@@ -20,7 +22,16 @@
     <link rel="stylesheet" href={% static "admin/dist/css/AdminLTE.min.css" %}>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
+    {% if adminlte.skin %}
+    <link rel="stylesheet" href={% static "admin/dist/css/skins/skin-"|add:adminlte.skin|add:".min.css" %}>
+    {% else %}
     <link rel="stylesheet" href={% static "admin/dist/css/skins/_all-skins.min.css" %}>
+    {% endif %}
+
+    <link rel="stylesheet" href={% static "admin/dist/css/django.css" %}>
+
+    <link rel="apple-touch-icon" href="/{{ adminlte_site_logo.site_logo }}">
+    <link rel="icon" href="/{{ adminlte_site_logo.site_logo }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +41,7 @@
     <![endif]-->
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini fixed">
+<body class="hold-transition skin-{% if adminlte.skin %}{{ adminlte.skin }}{% else %}blue{% endif %} sidebar-mini fixed">
 
 <div class="wrapper">
     {% if not is_popup %}
@@ -173,7 +184,9 @@
                     </li>
                     <!-- Control Sidebar Toggle Button -->
                     <li>
+                        {% if adminlte.demo %}
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
@@ -202,6 +215,7 @@
             </div>
             {% endif %}
             <!-- search form -->
+            {% if adminlte.search_form %}
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="{% trans 'Search' %}...">
@@ -211,60 +225,96 @@
               </span>
                 </div>
             </form>
+            {% endif %}
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="header">{% trans 'MAIN NAVIGATION' %}</li>
-                <li>
-                    <a id="adminIndex" href="{% url 'admin:index' %}">
-                        <i class="fa fa-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
-                    </a>
-                </li>
-                {% get_menu request as app_list %}
-                {% if app_list %}
-                {% for app in app_list %}
-                <li {% if not app.admin_url %}class="treeview"{% endif %}>
-                    <a href="{% if app.admin_url %}{{app.admin_url}}{% else %}javascript:void(0){% endif %}">
-                        <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
-                        <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
-                        {% if not app.admin_url %}
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                        {% endif %}
-                    </a>
-                    {% if not app.admin_url %}
-                    <ul class="treeview-menu">
-                        {% for model in app.models %}
-                        {% if model.admin_url %}
-                        <li><a href="{{ model.admin_url }}" ><i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}</a></li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </li>
-                {% endfor %}
-                {% endif %}
-                <!--{% if request.user.is_superuser %}-->
-                <!--<li class="treeview">-->
-                <!--<a href="#">-->
-                <!--<i class="fa fa-cog"></i>-->
-                <!--<span>{% trans 'System manage' %}</span>-->
-                <!--<span class="pull-right-container">-->
-                <!--<i class="fa fa-angle-left pull-right"></i>-->
-                <!--</span>-->
-                <!--</a>-->
-                <!--<ul class="treeview-menu">-->
-                <!--<li><a href="" ><i class="fa fa-file-text-o"></i>{% trans 'Log manage' %}</a></li>-->
-                <!--<li><a href="/admin/config/system/" ><i class="fa fa-wrench"></i>{% trans 'System config' %}</a></li>-->
-                <!--</ul>-->
-                <!--</li>-->
-                <!--{% endif %}-->
 
-                <!--<li class="header">LABELS</li>-->
-                <!--<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>{% trans 'Important' %}</span></a></li>-->
-                <!--<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>{% trans 'Warning' %}</span></a></li>-->
-                <!--<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>{% trans 'Information' %}</span></a></li>-->
+                    <li class="header">{% trans 'MAIN NAVIGATION' %}</li>
+                    <li>
+                        <a id="adminIndex" href="{% url 'admin:index' %}">
+                            <i class="fa fa-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
+                        </a>
+                    </li>
+
+                    {% if adminlte.main_navigation_app %}
+
+                        {% get_menu request as app_list %}
+                        {% if app_list %}
+                        {% for app in app_list %}
+                            {% if app.app_label == adminlte.main_navigation_app %}
+                            {% for model in app.models %}
+                            {% if model.admin_url %}
+                            <li>
+                                <a href="{{ model.admin_url }}">
+                                    <i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        {% endif %}
+
+                    {% endif %}
+
+                {% if adminlte.navigation_expanded %}
+
+                    {% get_menu request as app_list %}
+                    {% if app_list %}
+                    {% for app in app_list %}
+                        {% if not adminlte.show_apps or adminlte.show_apps and app.app_label in adminlte.show_apps %}
+                        {% if app.app_label != adminlte.main_navigation_app %}
+                        <li class="header">{{ app.name|upper }}</li>
+                        {% for model in app.models %}
+                        {% ifchanged %}
+                        {% if model.admin_url %}
+                        <li>
+                            <a href="{{ model.admin_url }}">
+                                <i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endifchanged %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+
+                {% else %}
+
+                    {% get_menu request as app_list %}
+                    {% if app_list %}
+                    {% for app in app_list %}
+                        {% if not adminlte.show_apps or adminlte.show_apps and app.app_label in adminlte.show_apps %}
+                        {% if app.app_label != adminlte.main_navigation_app %}
+                        <li {% if not app.admin_url %}class="treeview"{% endif %}>
+                            <a href="{% if app.admin_url %}{{app.admin_url}}{% else %}javascript:void(0){% endif %}">
+                                <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
+                                <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
+                                {% if not app.admin_url %}
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                                {% endif %}
+                            </a>
+                            {% if not app.admin_url %}
+                            <ul class="treeview-menu">
+                                {% for model in app.models %}
+                                {% if model.admin_url %}
+                                <li><a href="{{ model.admin_url }}" ><i class="fa {% if model.icon %} {{model.icon}} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}</a></li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </li>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+
+                {% endif %}
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -497,7 +547,9 @@
 <!-- AdminLTE App -->
 <script src={% static "admin/dist/js/app.min.js" %}></script>
 <!-- AdminLTE for demo purposes -->
+{% if adminlte.demo %}
 <script src={% static "admin/dist/js/demo.js" %}></script>
+{% endif %}
 <script>
 // use js control active status of siderbar-menu
 $(function() {
