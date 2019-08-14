@@ -2,6 +2,7 @@ import logging
 
 import django
 from django import template
+from django.conf import settings
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
@@ -143,7 +144,7 @@ def get_menu(context, request, position='left'):
                     request.user.has_perm(
                         'django_admin_settings.change_options'):
                 app.get('models').insert(0, {
-                    'name': _('General Option'),
+                    'name': _('General Options'),
                     'object_name': 'Options',
                     'perms':
                         {
@@ -156,6 +157,10 @@ def get_menu(context, request, position='left'):
                         'admin:general_option'),
                     'view_only': False
                 })
+        else:
+            for model in app.get('models', []):
+                model['icon'] = settings.ADMINLTE_SETTINGS\
+                    .get('icons', {}).get(app['app_label'], {}).get(model['name'].lower())
     # return MenuManager(available_apps, context, request)
     return available_apps
 

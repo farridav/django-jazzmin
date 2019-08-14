@@ -65,7 +65,7 @@
                             {% endblock %}
 
                             {% block object-tools %}
-                            <div {% if cl.has_filters or cl.search_fields %}class="col-md-2 col-sm-12 col-xs-12 text-right"{% else %}class="col-md-12"{% endif %}>
+                            <div {% if cl.has_filters or cl.search_fields %}class="col-md-2 col-sm-12 col-xs-12 text-right"{% else %}class="col-md-12 text-right"{% endif %}>
                                 {% block object-tools-items %}
                                 {% change_list_object_tools %}
                                 {% endblock %}
