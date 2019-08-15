@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 20:34+0800\n"
+"POT-Creation-Date: 2019-08-15 16:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,351 +17,341 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:53
+#: adminlteui/admin.py:53
 msgid "Site Title"
 msgstr "站点标题"
 
-#: admin.py:56
+#: adminlteui/admin.py:56
 msgid "Text to put at the end of each page's tag title."
 msgstr "每个页面的标题后缀，对应templates中的site_title标签。"
 
-#: admin.py:57
+#: adminlteui/admin.py:57
 msgid "Site Header"
 msgstr "站点标头"
 
-#: admin.py:60
+#: adminlteui/admin.py:60
 msgid "Text to put in base page's tag b."
 msgstr "右上角文字标头，对应templates中的site_header标签。"
 
-#: admin.py:63
+#: adminlteui/admin.py:63
 msgid "Site Logo"
 msgstr "站点logo"
 
-#: admin.py:67
+#: adminlteui/admin.py:67
 msgid "Transparent background picture is a good choice."
 msgstr "透明背景的图片更适合。"
 
-#: admin.py:69
+#: adminlteui/admin.py:69
 msgid "Welcome Sign"
 msgstr "欢迎标语"
 
-#: admin.py:71
+#: adminlteui/admin.py:71
 msgid "Login page welcome sign."
 msgstr "登录页面欢迎标语"
 
-#: admin.py:74
+#: adminlteui/admin.py:74
 msgid "Avatar Field"
 msgstr "头像字段"
 
-#: admin.py:78
+#: adminlteui/admin.py:78
 msgid "which field is avatar."
 msgstr "用户表中头像对应的字段"
 
-#: admin.py:80
+#: adminlteui/admin.py:80
 msgid "Show Avatar"
 msgstr "显示头像"
 
-#: admin.py:107 admin.py:125
+#: adminlteui/admin.py:107 adminlteui/admin.py:125
 msgid "site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT."
 msgstr "site_logo依赖于setting.MEDIA_URL和setting.MEDIA_ROOT。"
 
-#: admin.py:218
+#: adminlteui/admin.py:218
 msgid "General Option Saved."
 msgstr "基本设置保存成功。"
 
-#: admin.py:221
+#: adminlteui/admin.py:221
 msgid "General Option Save Failed."
 msgstr "基本设置保存失败。"
 
-#: admin.py:250 admin.py:336 models.py:52
+#: adminlteui/admin.py:250 adminlteui/admin.py:336 adminlteui/models.py:52
 msgid "ContentType"
 msgstr "关联Model"
 
-#: admin.py:260 admin.py:263
+#: adminlteui/admin.py:260 adminlteui/admin.py:263
 #, python-format
 msgid "Exception raised while add node: %s"
 msgstr "在添加菜单时，发生异常：%s"
 
-#: admin.py:293
+#: adminlteui/admin.py:293
 msgid "Menu exchanged, current is `custom menu`."
 msgstr "菜单切换成功，当前为`自定义菜单`"
 
-#: admin.py:299
+#: adminlteui/admin.py:299
 msgid "Menu exchanged, current is `system menu`."
 msgstr "菜单切换成功，当前为`系统菜单`"
 
-#: admin.py:320 models.py:43
+#: adminlteui/admin.py:320 adminlteui/models.py:43
 msgid "Link"
 msgstr "链接"
 
-#: admin.py:328 models.py:49
+#: adminlteui/admin.py:328 adminlteui/models.py:49
 msgid "Icon"
 msgstr "图标"
 
-#: apps.py:12 templates/adminlte/general_option.html:13
+#: adminlteui/apps.py:12 adminlteui/templates/adminlte/general_option.html:13
 msgid "AdminSettings"
 msgstr "设置"
 
-#: models.py:14
+#: adminlteui/models.py:14
 msgid "Option Name"
 msgstr "名称"
 
-#: models.py:16
+#: adminlteui/models.py:16
 msgid "Option Value"
 msgstr "值"
 
-#: models.py:17 models.py:59
+#: adminlteui/models.py:17 adminlteui/models.py:59
 msgid "Valid"
 msgstr "有效性"
 
-#: models.py:19
+#: adminlteui/models.py:19
 msgid "CreateTime"
 msgstr "创建时间"
 
-#: models.py:21
+#: adminlteui/models.py:21
 msgid "UpdateTime"
 msgstr "更新时间"
 
-#: models.py:27
+#: adminlteui/models.py:27
 msgid "Options"
 msgstr "选项"
 
-#: models.py:28
+#: adminlteui/models.py:28
 msgid "All Options"
 msgstr "所有选项"
 
-#: models.py:33
+#: adminlteui/models.py:33
 msgid "Internal"
 msgstr "内部"
 
-#: models.py:34
+#: adminlteui/models.py:34
 msgid "External"
 msgstr "外部"
 
-#: models.py:35
+#: adminlteui/models.py:35
 msgid "Divide"
 msgstr "链接分组"
 
-#: models.py:37
+#: adminlteui/models.py:37
 #, fuzzy
 #| msgid "username"
 msgid "name"
 msgstr "用户名"
 
-#: models.py:39
+#: adminlteui/models.py:39
 msgid "Menu Position"
 msgstr "菜单位置"
 
-#: models.py:41
+#: adminlteui/models.py:41
 msgid "Link Type"
 msgstr "链接类型"
 
-#: models.py:45
+#: adminlteui/models.py:45
 msgid "support admin:index or /admin/ or http://"
 msgstr "支持 admin:index 或 /admin/ 或 http://"
 
-#: models.py:55
+#: adminlteui/models.py:55
 msgid "use for permission control."
 msgstr "用于权限控制。"
 
-#: models.py:57
+#: adminlteui/models.py:57
 msgid "Priority Level"
 msgstr "优先级"
 
-#: models.py:58
+#: adminlteui/models.py:58
 msgid "The bigger the priority"
 msgstr "越大越优先"
 
-#: models.py:71
+#: adminlteui/models.py:71
 msgid "max depth is 2."
 msgstr "菜单最大深度为2"
 
-#: models.py:78
+#: adminlteui/models.py:78
 msgid "Menu"
 msgstr "菜单"
 
-#: models.py:79
+#: adminlteui/models.py:79
 msgid "Menu Setting"
 msgstr "菜单设置"
 
-#: templates/admin/404.html:4 templates/admin/404.html:6
+#: adminlteui/templates/admin/404.html:4 adminlteui/templates/admin/404.html:6
 msgid "Page not found"
 msgstr ""
 
-#: templates/admin/404.html:10
+#: adminlteui/templates/admin/404.html:10
 msgid "We're sorry, but the requested page could not be found."
 msgstr ""
 
-#: templates/admin/500.html:7 templates/admin/auth/user/change_password.html:18
-#: templates/admin/change_form.html:21 templates/admin/change_list.html:28
-#: templates/admin/delete_confirmation.html:14
-#: templates/admin/delete_selected_confirmation.html:14
-#: templates/admin/index.html:14 templates/admin/invalid_setup.html:6
-#: templates/admin/object_history.html:11
-#: templates/adminlte/general_option.html:12
-#: templates/registration/password_change_done.html:6
-#: templates/registration/password_change_form.html:11
+#: adminlteui/templates/admin/500.html:7
+#: adminlteui/templates/admin/auth/user/change_password.html:18
+#: adminlteui/templates/admin/change_form.html:21
+#: adminlteui/templates/admin/change_list.html:28
+#: adminlteui/templates/admin/delete_confirmation.html:14
+#: adminlteui/templates/admin/delete_selected_confirmation.html:14
+#: adminlteui/templates/admin/index.html:14
+#: adminlteui/templates/admin/invalid_setup.html:6
+#: adminlteui/templates/admin/object_history.html:11
+#: adminlteui/templates/adminlte/general_option.html:12
+#: adminlteui/templates/registration/password_change_done.html:6
+#: adminlteui/templates/registration/password_change_form.html:11
 msgid "Home"
 msgstr ""
 
-#: templates/admin/500.html:8
+#: adminlteui/templates/admin/500.html:8
 msgid "Server error"
 msgstr ""
 
-#: templates/admin/500.html:12
+#: adminlteui/templates/admin/500.html:12
 msgid "Server error (500)"
 msgstr ""
 
-#: templates/admin/500.html:14
+#: adminlteui/templates/admin/500.html:14
 msgid "Server Error <em>(500)</em>"
 msgstr ""
 
-#: templates/admin/500.html:18
+#: adminlteui/templates/admin/500.html:18
 msgid ""
 "There's been an error. It's been reported to the site administrators via "
 "email and should be fixed shortly. Thanks for your patience."
 msgstr ""
 
-#: templates/admin/actions.html:10
+#: adminlteui/templates/admin/actions.html:10
 msgid "Run the selected action"
 msgstr ""
 
-#: templates/admin/actions.html:10
+#: adminlteui/templates/admin/actions.html:10
 msgid "Go"
 msgstr ""
 
-#: templates/admin/actions.html:18
+#: adminlteui/templates/admin/actions.html:18
 msgid "Click here to select the objects across all pages"
 msgstr ""
 
-#: templates/admin/actions.html:18
+#: adminlteui/templates/admin/actions.html:18
 #, python-format
 msgid "Select all %(total_count)s %(module_name)s"
 msgstr ""
 
-#: templates/admin/actions.html:20
+#: adminlteui/templates/admin/actions.html:20
 msgid "Clear selection"
 msgstr ""
 
-#: templates/admin/auth/user/add_form.html:6
+#: adminlteui/templates/admin/auth/user/add_form.html:6
 msgid ""
 "First, enter a username and password. Then, you'll be able to edit more user "
 "options."
 msgstr ""
 
-#: templates/admin/auth/user/add_form.html:8
+#: adminlteui/templates/admin/auth/user/add_form.html:8
 msgid "Enter a username and password."
 msgstr ""
 
-#: templates/admin/auth/user/change_password.html:22
-#: templates/admin/auth/user/change_password.html:27
-#: templates/admin/auth/user/change_password.html:94
-#: templates/admin/base.html:166
-#: templates/registration/password_change_done.html:3
-#: templates/registration/password_change_form.html:7
-#: templates/registration/password_change_form.html:102
+#: adminlteui/templates/admin/auth/user/change_password.html:22
+#: adminlteui/templates/admin/auth/user/change_password.html:27
+#: adminlteui/templates/admin/auth/user/change_password.html:94
+#: adminlteui/templates/admin/base.html:182
+#: adminlteui/templates/registration/password_change_done.html:3
+#: adminlteui/templates/registration/password_change_form.html:7
+#: adminlteui/templates/registration/password_change_form.html:102
 msgid "Change password"
 msgstr ""
 
-#: templates/admin/auth/user/change_password.html:36
+#: adminlteui/templates/admin/auth/user/change_password.html:36
 #, python-format
 msgid "Enter a new password for the user <strong>%(username)s</strong>."
 msgstr ""
 
-#: templates/admin/auth/user/change_password.html:48
-#: templates/admin/change_form.html:53 templates/admin/change_list.html:55
-#: templates/registration/password_change_form.html:37
+#: adminlteui/templates/admin/auth/user/change_password.html:48
+#: adminlteui/templates/admin/change_form.html:53
+#: adminlteui/templates/admin/change_list.html:55
+#: adminlteui/templates/registration/password_change_form.html:37
 msgid "Please correct the error below."
 msgstr ""
 
-#: templates/admin/auth/user/change_password.html:48
-#: templates/admin/change_form.html:53 templates/admin/change_list.html:55
-#: templates/registration/password_change_form.html:37
+#: adminlteui/templates/admin/auth/user/change_password.html:48
+#: adminlteui/templates/admin/change_form.html:53
+#: adminlteui/templates/admin/change_list.html:55
+#: adminlteui/templates/registration/password_change_form.html:37
 msgid "Please correct the errors below."
 msgstr ""
 
-#: templates/admin/base.html:119 templates/admin/base.html:135
+#: adminlteui/templates/admin/base.html:135
+#: adminlteui/templates/admin/base.html:151
 msgid "Super manager"
 msgstr "超级管理员"
 
-#: templates/admin/base.html:124 templates/admin/base.html:140
+#: adminlteui/templates/admin/base.html:140
+#: adminlteui/templates/admin/base.html:156
 msgid "Normal"
 msgstr "普通用户"
 
-#: templates/admin/base.html:127 templates/admin/base.html:143
+#: adminlteui/templates/admin/base.html:143
+#: adminlteui/templates/admin/base.html:159
 msgid "Register time"
 msgstr "注册时间"
 
-#: templates/admin/base.html:169
-#: templates/registration/password_change_done.html:3
-#: templates/registration/password_change_form.html:7
+#: adminlteui/templates/admin/base.html:185
+#: adminlteui/templates/registration/password_change_done.html:3
+#: adminlteui/templates/registration/password_change_form.html:7
 msgid "Log out"
 msgstr ""
 
-#: templates/admin/base.html:200
+#: adminlteui/templates/admin/base.html:218
 msgid "Online"
 msgstr "在线"
 
-#: templates/admin/base.html:207 templates/admin/search_form.html:20
+#: adminlteui/templates/admin/base.html:226
+#: adminlteui/templates/admin/search_form.html:20
 msgid "Search"
 msgstr "搜索"
 
-#: templates/admin/base.html:217
+#: adminlteui/templates/admin/base.html:238
 msgid "MAIN NAVIGATION"
 msgstr "页面导航"
 
-#: templates/admin/base.html:220
+#: adminlteui/templates/admin/base.html:241
 msgid "Dashboard"
 msgstr "仪表盘"
 
-#: templates/admin/base.html:252
-msgid "System manage"
-msgstr ""
-
-#: templates/admin/base.html:258
-msgid "Log manage"
-msgstr ""
-
-#: templates/admin/base.html:259
-msgid "System config"
-msgstr ""
-
-#: templates/admin/base.html:265
-msgid "Important"
-msgstr ""
-
-#: templates/admin/base.html:266
-msgid "Warning"
-msgstr ""
-
-#: templates/admin/base.html:267
-msgid "Information"
-msgstr ""
-
-#: templates/admin/base_site.html:8 templates/admin/login.html:13
-#: templates/adminlte/general_option.html:23
-#: templates/registration/logged_out.html:13
+#: adminlteui/templates/admin/base_site.html:8
+#: adminlteui/templates/admin/login.html:13
+#: adminlteui/templates/adminlte/general_option.html:23
+#: adminlteui/templates/registration/logged_out.html:13
 msgid "Django site admin"
 msgstr ""
 
-#: templates/admin/change_form.html:24
-#: templates/admin/change_list_object_tools.html:7
+#: adminlteui/templates/admin/change_form.html:24
 #, python-format
 msgid "Add %(name)s"
 msgstr ""
 
-#: templates/admin/change_form.html:100
+#: adminlteui/templates/admin/change_form.html:100
 msgid "change form tools"
 msgstr "操作面板"
 
-#: templates/admin/delete_confirmation.html:18
-#: templates/admin/delete_confirmation.html:22
-#: templates/admin/delete_confirmation.html:32
-#: templates/admin/submit_line.html:13
+#: adminlteui/templates/admin/change_list_object_tools.html:7
+#, python-format
+msgid "<i class=\"fa fa-plus-circle\"></i> &nbsp; Add %(name)s"
+msgstr "<i class=\"fa fa-plus-circle\"></i> &nbsp; 增加 %(name)s"
+
+#: adminlteui/templates/admin/delete_confirmation.html:18
+#: adminlteui/templates/admin/delete_confirmation.html:22
+#: adminlteui/templates/admin/delete_confirmation.html:32
+#: adminlteui/templates/admin/submit_line.html:13
 msgid "Delete"
 msgstr ""
 
-#: templates/admin/delete_confirmation.html:39
+#: adminlteui/templates/admin/delete_confirmation.html:39
 #, python-format
 msgid ""
 "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
@@ -369,42 +359,42 @@ msgid ""
 "following types of objects:"
 msgstr ""
 
-#: templates/admin/delete_confirmation.html:46
+#: adminlteui/templates/admin/delete_confirmation.html:46
 #, python-format
 msgid ""
 "Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
 "following protected related objects:"
 msgstr ""
 
-#: templates/admin/delete_confirmation.html:53
+#: adminlteui/templates/admin/delete_confirmation.html:53
 #, python-format
 msgid ""
 "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
 "All of the following related items will be deleted:"
 msgstr ""
 
-#: templates/admin/delete_confirmation.html:55
-#: templates/admin/delete_selected_confirmation.html:53
+#: adminlteui/templates/admin/delete_confirmation.html:55
+#: adminlteui/templates/admin/delete_selected_confirmation.html:53
 msgid "Objects"
 msgstr ""
 
-#: templates/admin/delete_confirmation.html:62
-#: templates/admin/delete_selected_confirmation.html:64
+#: adminlteui/templates/admin/delete_confirmation.html:62
+#: adminlteui/templates/admin/delete_selected_confirmation.html:64
 msgid "Yes, I'm sure"
 msgstr ""
 
-#: templates/admin/delete_confirmation.html:63
-#: templates/admin/delete_selected_confirmation.html:65
+#: adminlteui/templates/admin/delete_confirmation.html:63
+#: adminlteui/templates/admin/delete_selected_confirmation.html:65
 msgid "No, take me back"
 msgstr ""
 
-#: templates/admin/delete_selected_confirmation.html:17
-#: templates/admin/delete_selected_confirmation.html:21
-#: templates/admin/delete_selected_confirmation.html:30
+#: adminlteui/templates/admin/delete_selected_confirmation.html:17
+#: adminlteui/templates/admin/delete_selected_confirmation.html:21
+#: adminlteui/templates/admin/delete_selected_confirmation.html:30
 msgid "Delete multiple objects"
 msgstr ""
 
-#: templates/admin/delete_selected_confirmation.html:37
+#: adminlteui/templates/admin/delete_selected_confirmation.html:37
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would result in deleting related "
@@ -412,235 +402,246 @@ msgid ""
 "types of objects:"
 msgstr ""
 
-#: templates/admin/delete_selected_confirmation.html:44
+#: adminlteui/templates/admin/delete_selected_confirmation.html:44
 #, python-format
 msgid ""
 "Deleting the selected %(objects_name)s would require deleting the following "
 "protected related objects:"
 msgstr ""
 
-#: templates/admin/delete_selected_confirmation.html:51
+#: adminlteui/templates/admin/delete_selected_confirmation.html:51
 #, python-format
 msgid ""
 "Are you sure you want to delete the selected %(objects_name)s? All of the "
 "following objects and their related items will be deleted:"
 msgstr ""
 
-#: templates/admin/edit_inline/stacked.html:18
-#: templates/admin/edit_inline/tabular.html:38 templates/admin/index.html:47
+#: adminlteui/templates/admin/edit_inline/stacked.html:18
+#: adminlteui/templates/admin/edit_inline/tabular.html:38
+#: adminlteui/templates/admin/index.html:47
 msgid "Change"
 msgstr ""
 
-#: templates/admin/edit_inline/stacked.html:18
-#: templates/admin/edit_inline/tabular.html:38 templates/admin/index.html:45
+#: adminlteui/templates/admin/edit_inline/stacked.html:18
+#: adminlteui/templates/admin/edit_inline/tabular.html:38
+#: adminlteui/templates/admin/index.html:45
 msgid "View"
 msgstr ""
 
-#: templates/admin/edit_inline/stacked.html:20
-#: templates/admin/edit_inline/tabular.html:40
+#: adminlteui/templates/admin/edit_inline/stacked.html:20
+#: adminlteui/templates/admin/edit_inline/tabular.html:40
 msgid "View on site"
 msgstr ""
 
-#: templates/admin/edit_inline/tabular.html:24
+#: adminlteui/templates/admin/edit_inline/tabular.html:24
 msgid "Delete?"
 msgstr ""
 
-#: templates/admin/includes/object_delete_summary.html:2
+#: adminlteui/templates/admin/includes/object_delete_summary.html:2
 msgid "Summary"
 msgstr ""
 
-#: templates/admin/index.html:10 templates/admin/index.html:15
+#: adminlteui/templates/admin/index.html:10
+#: adminlteui/templates/admin/index.html:15
 msgid "dashboard"
 msgstr "仪表盘"
 
-#: templates/admin/index.html:39
+#: adminlteui/templates/admin/index.html:39
 msgid "Add"
 msgstr ""
 
-#: templates/admin/index.html:69
+#: adminlteui/templates/admin/index.html:69
 msgid "My Applications"
 msgstr "我的应用"
 
-#: templates/admin/index.html:83
+#: adminlteui/templates/admin/index.html:83
 msgid "My tables"
 msgstr "我的表格"
 
-#: templates/admin/index.html:125
+#: adminlteui/templates/admin/index.html:125
 msgid "Recent actions"
 msgstr ""
 
-#: templates/admin/index.html:126
+#: adminlteui/templates/admin/index.html:126
 msgid "My actions"
 msgstr ""
 
-#: templates/admin/index.html:130
+#: adminlteui/templates/admin/index.html:130
 msgid "None available"
 msgstr ""
 
-#: templates/admin/index.html:146
+#: adminlteui/templates/admin/index.html:146
 msgid "Unknown content"
 msgstr ""
 
-#: templates/admin/index.html:164
+#: adminlteui/templates/admin/index.html:164
 msgid "You don't have permission to view or edit anything."
 msgstr ""
 
-#: templates/admin/invalid_setup.html:14
+#: adminlteui/templates/admin/invalid_setup.html:14
 msgid ""
 "Something's wrong with your database installation. Make sure the appropriate "
 "database tables have been created, and make sure the database is readable by "
 "the appropriate user."
 msgstr ""
 
-#: templates/admin/login.html:15 templates/admin/login.html:90
+#: adminlteui/templates/admin/login.html:15
+#: adminlteui/templates/admin/login.html:90
 msgid "Log in"
 msgstr "登录"
 
-#: templates/admin/login.html:60 templates/registration/logged_out.html:58
+#: adminlteui/templates/admin/login.html:60
+#: adminlteui/templates/registration/logged_out.html:58
 msgid "Login and Enjoy"
 msgstr "芝麻开门"
 
-#: templates/admin/login.html:73
+#: adminlteui/templates/admin/login.html:73
 msgid "username"
 msgstr "用户名"
 
-#: templates/admin/login.html:77
+#: adminlteui/templates/admin/login.html:77
 msgid "password"
 msgstr "密码"
 
-#: templates/admin/login.html:84
+#: adminlteui/templates/admin/login.html:84
 msgid "Remember me"
 msgstr "记住我"
 
-#: templates/admin/login.html:97
+#: adminlteui/templates/admin/login.html:97
 msgid "Other"
 msgstr "更多"
 
-#: templates/admin/login.html:98
+#: adminlteui/templates/admin/login.html:98
 msgid "Sign in using Facebook"
 msgstr ""
 
-#: templates/admin/login.html:99
+#: adminlteui/templates/admin/login.html:99
 msgid "Sign in using Google+"
 msgstr ""
 
-#: templates/admin/object_history.html:15
-#: templates/admin/object_history.html:19
-#: templates/admin/object_history.html:28
+#: adminlteui/templates/admin/object_history.html:15
+#: adminlteui/templates/admin/object_history.html:19
+#: adminlteui/templates/admin/object_history.html:28
 msgid "History"
 msgstr ""
 
-#: templates/admin/object_history.html:39
+#: adminlteui/templates/admin/object_history.html:39
 msgid "Date/time"
 msgstr ""
 
-#: templates/admin/object_history.html:40
+#: adminlteui/templates/admin/object_history.html:40
 msgid "User"
 msgstr ""
 
-#: templates/admin/object_history.html:41
+#: adminlteui/templates/admin/object_history.html:41
 msgid "Action"
 msgstr ""
 
-#: templates/admin/object_history.html:55
+#: adminlteui/templates/admin/object_history.html:55
 msgid ""
 "This object doesn't have a change history. It probably wasn't added via this "
 "admin site."
 msgstr ""
 
-#: templates/admin/pagination.html:8 templates/admin/search_form.html:22
+#: adminlteui/templates/admin/pagination.html:14
+#: adminlteui/templates/admin/search_form.html:22
 msgid "Show all"
 msgstr ""
 
-#: templates/admin/pagination.html:11 templates/admin/submit_line.html:5
-#: templates/adminlte/general_option.html:47
+#: adminlteui/templates/admin/pagination.html:17
+#: adminlteui/templates/admin/submit_line.html:5
+#: adminlteui/templates/adminlte/general_option.html:47
 msgid "Save"
 msgstr "保存"
 
-#: templates/admin/pagination.html:23
+#: adminlteui/templates/admin/pagination.html:29
 msgid "Previous"
 msgstr "上一页"
 
-#: templates/admin/pagination.html:31
+#: adminlteui/templates/admin/pagination.html:37
 msgid "Next"
 msgstr "下一页"
 
-#: templates/admin/search_form.html:22
+#: adminlteui/templates/admin/search_form.html:22
 #, python-format
 msgid "%(counter)s result"
 msgid_plural "%(counter)s results"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/admin/search_form.html:22
+#: adminlteui/templates/admin/search_form.html:22
 #, python-format
 msgid "%(full_result_count)s total"
 msgstr ""
 
-#: templates/admin/submit_line.html:19
+#: adminlteui/templates/admin/submit_line.html:19
 msgid "Save as new"
 msgstr ""
 
-#: templates/admin/submit_line.html:25
+#: adminlteui/templates/admin/submit_line.html:25
 msgid "Save and add another"
 msgstr ""
 
-#: templates/admin/submit_line.html:33
+#: adminlteui/templates/admin/submit_line.html:33
 msgid "Save and continue editing"
 msgstr ""
 
-#: templates/admin/submit_line.html:33
+#: adminlteui/templates/admin/submit_line.html:33
 msgid "Save and view"
 msgstr ""
 
-#: templates/admin/submit_line.html:39
+#: adminlteui/templates/admin/submit_line.html:39
 msgid "Close"
 msgstr ""
 
-#: templates/adminlte/general_option.html:14
-#: templates/adminlte/general_option.html:18
-#: templates/adminlte/general_option.html:27
-#: templates/adminlte/general_option.html:36 templatetags/adminlte_menu.py:146
+#: adminlteui/templates/adminlte/general_option.html:14
+#: adminlteui/templates/adminlte/general_option.html:18
+#: adminlteui/templates/adminlte/general_option.html:27
+#: adminlteui/templates/adminlte/general_option.html:36
 msgid "General Option"
 msgstr "基本设置"
 
-#: templates/adminlte/menu_change_list.html:16
+#: adminlteui/templates/adminlte/menu_change_list.html:16
 msgid "Exchange Menu"
 msgstr "菜单切换"
 
-#: templates/registration/logged_out.html:15
-#: templates/registration/logged_out.html:63
+#: adminlteui/templates/registration/logged_out.html:15
+#: adminlteui/templates/registration/logged_out.html:63
 #, fuzzy
 #| msgid "Log in"
 msgid "Log in again"
 msgstr "登录"
 
-#: templates/registration/logged_out.html:61
+#: adminlteui/templates/registration/logged_out.html:61
 msgid "Thanks for spending some quality time with the Web site today."
 msgstr ""
 
-#: templates/registration/password_change_done.html:3
-#: templates/registration/password_change_form.html:7
+#: adminlteui/templates/registration/password_change_done.html:3
+#: adminlteui/templates/registration/password_change_form.html:7
 msgid "Documentation"
 msgstr ""
 
-#: templates/registration/password_change_done.html:7
-#: templates/registration/password_change_form.html:12
+#: adminlteui/templates/registration/password_change_done.html:7
+#: adminlteui/templates/registration/password_change_form.html:12
 #, fuzzy
 #| msgid "password"
 msgid "Password change"
 msgstr "密码"
 
-#: templates/registration/password_change_done.html:14
+#: adminlteui/templates/registration/password_change_done.html:14
 msgid "Your password was changed."
 msgstr ""
 
-#: templates/registration/password_change_form.html:27
+#: adminlteui/templates/registration/password_change_form.html:27
 msgid ""
 "Please enter your old password, for security's sake, and then enter your new "
 "password twice so we can verify you typed it in correctly."
 msgstr ""
 
-#: templatetags/adminlte_list.py:172
+#: adminlteui/templatetags/adminlte_list.py:172
 msgid "Return to ordered tree"
 msgstr ""
+
+#: adminlteui/templatetags/adminlte_menu.py:147
+msgid "General Options"
+msgstr "基本设置"

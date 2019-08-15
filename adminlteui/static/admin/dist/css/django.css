@@ -1,0 +1,38 @@
+/** Django-related improvements to AdminLTE UI **/
+
+div.inline-related {
+    padding: 10px;
+}
+
+.form-row {
+    padding: 5px;
+}
+
+.inlinechangelink {
+    content: url('/static/admin/img/icon-changelink.svg');
+}
+
+.inline-related .tabular {
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+td.djn-td,
+th.djn-th {
+    padding: 10px;
+}
+
+td.delete input {
+    margin: 10px;
+}
+
+tr.djn-tr > .original {
+    padding-left: 20px;
+}
+
+/* Checkbox selection table header */
+.djn-checkbox-select-all {
+    padding-right: 0px !important;
+    width: 0px;
+}
+
