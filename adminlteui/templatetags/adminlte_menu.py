@@ -2,12 +2,12 @@ import logging
 
 import django
 from django import template
-from django.conf import settings
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
-from adminlteui.templatetags.adminlte_options import get_adminlte_option
+from adminlteui.templatetags.adminlte_options import get_adminlte_option, \
+    get_adminlte_settings
 from adminlteui.models import Menu
 
 try:
@@ -159,8 +159,9 @@ def get_menu(context, request, position='left'):
                 })
         else:
             for model in app.get('models', []):
-                model['icon'] = settings.ADMINLTE_SETTINGS\
-                    .get('icons', {}).get(app['app_label'], {}).get(model['name'].lower())
+                model['icon'] = get_adminlte_settings() \
+                    .get('icons', {}).get(app['app_label'], {}).get(
+                    model['name'].lower())
     # return MenuManager(available_apps, context, request)
     return available_apps
 
