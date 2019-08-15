@@ -163,3 +163,30 @@ url_name=video_parsed_changelist, app_names=['admin'], namespaces=['admin'], rou
 ```
 
 django url name = namespaces:url_name
+
+## settings
+
+```python
+# in your setting.py
+# this is the default settings
+# what the setting work for? [You can see](https://github.com/wuyue92tree/django-adminlte-ui/pull/6)
+
+ADMINLTE_SETTINGS = {
+    'demo': True,
+    'search_form': True,
+    # 'skin': 'blue',
+    # 'copyright': '<a href="https://github.com/wuyue92tree/django-adminlte-ui/tree/'+version+'">django-adminlte-ui '+version+'</a>',
+    # 'navigation_expanded': True,
+
+    # if you are use custom menu, which will not effective below!
+
+    # 'show_apps': ['django_admin_settings', 'auth', 'main'],
+    # 'main_navigation_app': 'django_admin_settings',
+    # 'icons': {
+    #     'myapp': {
+    #         'shops': 'fa-shopping-cart',
+    #         'products': 'fa-dollar',
+    #     }
+    # }
+}
+```
