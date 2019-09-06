@@ -54,27 +54,29 @@ before custom option, you should known what adminlte has used.
 
 ### AdminlteSelect
 
+> Since v1.5.0b0, you don't need modify new template to active select2.
+
 example:
 ```
 # adminlte/admin.py
 @admin.register(Menu)
 class MenuAdmin(TreeAdmin):
     ...
-    change_form_template = 'adminlte/menu_change_form.html'
+    # change_form_template = 'adminlte/menu_change_form.html'
     formfield_overrides = {
         models.ForeignKey: {'widget': AdminlteSelect}
     }
 
 # adminlte/menu_change_form.html
 # active the target select
-{% extends 'admin/change_form.html' %}
+# {% extends 'admin/change_form.html' %}
 
-{% block extrajs %}
-{{ block.super }}
-<script>
-    django.jQuery('#id_content_type').select2();
-</script>
-{% endblock %}
+# {% block extrajs %}
+# {{ block.super }}
+# <script>
+#     django.jQuery('#id_content_type').select2();
+# </script>
+# {% endblock %}
 ```
 effect:
 
@@ -82,13 +84,15 @@ effect:
 
 ### AdminlteSelectMultiple
 
+> Since v1.5.0b0, you don't need modify new template to active select2.
+
 example:
 ```
 # adminlte/admin.py
 @admin.register(Menu)
 class MenuAdmin(TreeAdmin):
     ...
-    change_form_template = 'adminlte/menu_change_form.html'
+    # change_form_template = 'adminlte/menu_change_form.html'
     formfield_overrides = {
         # multiple for ManayToManyField
         models.ManayToManyField: {'widget': AdminlteSelectMultiple(
@@ -98,14 +102,14 @@ class MenuAdmin(TreeAdmin):
 
 # adminlte/menu_change_form.html
 # active the target select
-{% extends 'admin/change_form.html' %}
+# {% extends 'admin/change_form.html' %}
 
-{% block extrajs %}
-{{ block.super }}
-<script>
-    django.jQuery('#id_content_type').select2();
-</script>
-{% endblock %}
+# {% block extrajs %}
+# {{ block.super }}
+# <script>
+#     django.jQuery('#id_content_type').select2();
+# </script>
+# {% endblock %}
 ```
 effect:
 

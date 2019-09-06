@@ -3,6 +3,7 @@ from django.forms.widgets import Select, SelectMultiple
 
 
 class AdminlteSelect(Select):
+    template_name = "adminlte/widgets/select.html"
 
     def _get_media(self):
         return forms.Media(
@@ -17,6 +18,8 @@ class AdminlteSelect(Select):
 
 
 class AdminlteSelectMultiple(SelectMultiple):
+    template_name = "adminlte/widgets/select.html"
+
     def build_attrs(self, base_attrs, extra_attrs=None):
         extra_attrs['multiple'] = 'multiple'
         return {**base_attrs, **(extra_attrs or {})}

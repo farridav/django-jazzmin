@@ -1,5 +1,14 @@
 # ChangeLog
 
+## [v1.5.0b0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.5.0b0)
+
+- add adminlte/widgets/select.html && auto active select2 by select id.
+
+## [v1.4.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.4.0)
+
+- feature #6 add `ADMINLTE_SETTINGS`;
+- update menu render logic.
+
 ## [v1.3.3](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.3.3)
 
 - add menu on the top;
