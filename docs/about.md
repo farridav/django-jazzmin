@@ -1,7 +1,8 @@
 # ChangeLog
 
-## [v1.5.0b0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.5.0b0)
+## [v1.5.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.5.0)
 
+- fix #12 admin_static is removed in django3
 - add adminlte/widgets/select.html && auto active select2 by select id.
 
 ## [v1.4.0](https://github.com/wuyue92tree/django-adminlte-ui/releases/tag/1.4.0)
