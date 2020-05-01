@@ -18,16 +18,13 @@ setup
 ::
 
     INSTALLED_APPS = [
+        # Place before admin
         'adminlteui',
+
         'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.sites',
-        'django.contrib.sitemaps',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-        # custom menu base on treebeard
+        ...
+
+        # For a custom menu
         'treebeard',
         ...
     ]

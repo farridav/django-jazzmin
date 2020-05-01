@@ -5,14 +5,10 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('django_admin_settings', '0001_initial'),
-    ]
+    dependencies = [('django_admin_settings', '0001_initial'),]
 
     operations = [
         migrations.AddField(
-            model_name='options',
-            name='valid',
-            field=models.BooleanField(default=True, verbose_name='Valid'),
+            model_name='options', name='valid', field=models.BooleanField(default=True, verbose_name='Valid'),
         ),
     ]

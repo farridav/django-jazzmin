@@ -1,142 +1,84 @@
 import json
-import traceback
+
 from django import forms
+from django.conf import settings
 from django.contrib import admin
 from django.contrib import messages
 from django.contrib.admin import widgets
 from django.core.files.storage import default_storage
-from django.urls import path, reverse
+from django.http.response import HttpResponse, HttpResponseForbidden
 from django.template.response import TemplateResponse
-from django.utils import timezone
-from django.utils.encoding import force_str
-from django.utils.translation import gettext_lazy as _
+from django.urls import path, reverse, NoReverseMatch
 from django.utils.html import format_html
-from django.conf import settings
-from django.http.response import HttpResponse, HttpResponseForbidden, \
-    HttpResponseBadRequest
-from adminlteui.widgets import AdminlteSelect
+from django.utils.translation import gettext_lazy as _
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
+
 from .models import Options, Menu, ContentType
-
-
-def get_option(option_name):
-    try:
-        if Options.objects.filter(option_name=option_name):
-            return Options.objects.get(option_name=option_name).option_value
-    except Exception:
-        return None
-
-
-def handle_uploaded_file(f, file_name):
-    # save site_logo
-    return default_storage.save(file_name, f)
+from .widgets import AdminlteSelect
 
 
 class ImageBox:
     # for ClearableFileInput initial
     def __init__(self, name):
-        self.url = '/' + name
+        self.url = f'{settings.MEDIA_URL}/{name}'
         self.value = name
 
     def __str__(self):
-        return '{}'.format(self.value)
-
-
-def get_image_box():
-    return ImageBox(get_option(option_name='site_logo')) if get_option(
-        option_name='site_logo') else ''
+        return f'{self.value}'
 
 
 class GeneralOptionForm(forms.Form):
-    site_title = forms.CharField(label=_('Site Title'),
-                                 widget=widgets.AdminTextInputWidget(),
-                                 help_text=_(
-                                     "Text to put at the end of each page's tag title."))
-    site_header = forms.CharField(label=_('Site Header'),
-                                  widget=widgets.AdminTextInputWidget(),
-                                  help_text=_(
-                                      "Text to put in base page's tag b."))
-    # index_title = forms.CharField(label=_('Index Title'),
-    #                               widget=widgets.AdminTextInputWidget())
-    site_logo = forms.ImageField(label=_('Site Logo'),
-                                 widget=forms.ClearableFileInput(),
-                                 required=False,
-                                 help_text=_(
-                                     "Transparent background picture is a good choice."))
+    site_title = forms.CharField(
+        label=_('Site Title'), widget=widgets.AdminTextInputWidget(),
+        help_text=_("Text to put at the end of each page's tag title.")
+    )
+    site_header = forms.CharField(
+        label=_('Site Header'), widget=widgets.AdminTextInputWidget(),
+        help_text=_("Text to put in base page's tag b.")
+    )
+    # index_title = forms.CharField(label=_('Index Title'), widget=widgets.AdminTextInputWidget())
+    site_logo = forms.ImageField(
+        label=_('Site Logo'), widget=forms.ClearableFileInput(), required=False,
+        help_text=_("Transparent background picture is a good choice.")
+    )
     welcome_sign = forms.CharField(
-        label=_('Welcome Sign'),
-        widget=widgets.AdminTextInputWidget(),
+        label=_('Welcome Sign'), widget=widgets.AdminTextInputWidget(),
         help_text=_("Login page welcome sign.")
     )
-
-    avatar_field = forms.CharField(label=_('Avatar Field'),
-                                   widget=widgets.AdminTextInputWidget(),
-                                   required=False,
-                                   help_text=_(
-                                       "which field is avatar."))
-    show_avatar = forms.BooleanField(
-        label=_('Show Avatar'), required=False)
+    avatar_field = forms.CharField(
+        label=_('Avatar Field'), widget=widgets.AdminTextInputWidget(),
+        required=False, help_text=_("which field is avatar.")
+    )
+    show_avatar = forms.BooleanField(label=_('Show Avatar'), required=False)
 
     def save(self):
-        try:
-            # clear site-logo
-            if self.data.get('site_logo-clear'):
-                obj = Options.objects.get(option_name='site_logo')
-                obj.delete()
-                self.changed_data.remove('site_logo')
+        cleaned_data = self.cleaned_data
+        options = Options.objects.in_bulk(field_name='option_name')
 
-            if not self.data.get('show_avatar'):
-                try:
-                    obj = Options.objects.get(option_name='show_avatar')
-                    obj.option_value = 'off'
-                    obj.save()
-                except Exception:
-                    obj = Options.objects.create(option_name='show_avatar',
-                                                 option_value='off')
-                    obj.save()
+        if self.files.get('site_logo'):
+            file = self.files['site_logo']
+            cleaned_data['site_logo'] = default_storage.save(file.name, file)
 
-            for data_item in self.changed_data:
-                try:
-                    obj = Options.objects.get(option_name=data_item)
+        if cleaned_data.get('site_logo-clear'):
+            Options.objects.filter(option_name='site_logo').delete()
+            cleaned_data['site_logo'] = ''
 
-                    if data_item == 'site_logo':
-                        if not settings.MEDIA_ROOT or not settings.MEDIA_URL:
-                            self.errors[data_item] = _(
-                                'site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT.')
-                            return False
-                        if not self.files.get(data_item) or self.data.get(
-                                data_item) == '':
-                            continue
-                        filename = handle_uploaded_file(self.files.get(data_item), self.files.get(data_item).name)
-                        obj.option_value = settings.MEDIA_URL + filename
-                    else:
-                        if obj.option_value == self.data.get(data_item):
-                            continue
-                        obj.option_value = self.data.get(data_item)
-                except Options.DoesNotExist:
-                    if data_item == 'site_logo':
-                        if not settings.MEDIA_ROOT or not settings.MEDIA_URL:
-                            self.errors[data_item] = _(
-                                'site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT.')
-                            return False
-                        filename = handle_uploaded_file(self.files.get(data_item), self.files.get(data_item).name)
-                        obj = Options.objects.create(
-                            option_name=data_item,
-                            option_value=settings.MEDIA_URL + filename,
-                            create_time=timezone.now())
-                    else:
-                        obj = Options.objects.create(
-                            option_name=data_item,
-                            option_value=self.data.get(data_item),
-                            create_time=timezone.now())
-                obj.save()
-            return True
+        if not cleaned_data.get('show_avatar'):
+            avatar = options.get('show_avatar', Options(option_name='show_avatar', option_value='off'))
+            if not avatar.pk or avatar.option_value != 'off':
+                avatar.option_value = 'off'
+                avatar.save(update_fields=['option_value'])
 
-        except Exception as e:
-            traceback.print_exc()
-            # self.errors = e
-            return False
+        for key in self.changed_data:
+            value = cleaned_data[key]
+            option = options.get(key, Options(option_name=key, option_value=value))
+
+            if not option.pk or option.option_value != value:
+                option.option_value = value
+                option.save(update_fields=['option_name', 'option_value'])
+
+        return {k: v.option_value for k, v in options.items()}
 
 
 @admin.register(Options)
@@ -149,79 +91,52 @@ class OptionsAdmin(admin.ModelAdmin):
     def get_urls(self):
         base_urls = super().get_urls()
         urls = [
-            path('general_option/',
-                 self.admin_site.admin_view(
-                     self.general_option_view,
-                     cacheable=True), name='general_option'),
+            path(
+                'general_option/', self.admin_site.admin_view(self.general_option_view, cacheable=True),
+                name='general_option'
+            ),
         ]
         return urls + base_urls
 
     def general_option_view(self, request):
-        if request.user.has_perm('django_admin_settings.add_options') is False \
-                and request.user.has_perm(
-            'django_admin_settings.change_options') is False:
+        perms = ['django_admin_settings.add_options', 'django_admin_settings.change_options']
+        if not all(request.user.has_perm(perm) for perm in perms):
             return HttpResponseForbidden(format_html('<h1>403 Forbidden</h1>'))
 
-        context = dict(
-            self.admin_site.each_context(request),
-        )
+        context = dict(self.admin_site.each_context(request), )
+        options = dict(Options.objects.values_list('option_name', 'option_value'))
 
-        if request.method == 'GET':
-            initial_value = {
-                'site_title': get_option(
-                    option_name='site_title') or admin.AdminSite.site_title,
-                'site_header': get_option(
-                    option_name='site_header') or admin.AdminSite.site_header,
-                # 'index_title': get_option(
-                #     option_name='index_title') or admin.AdminSite.index_title,
-                'welcome_sign': get_option(option_name='welcome_sign'),
-                'site_logo': ImageBox(
-                    get_option(option_name='site_logo')) if get_option(
-                    option_name='site_logo') else '',
-                'show_avatar': True if get_option(
-                    option_name='show_avatar') == 'on' else False,
-                'avatar_field': get_option(
-                    option_name='avatar_field') or 'request.user.head_avatar',
-            }
-            form = GeneralOptionForm(initial=initial_value)
-        else:
-            form = GeneralOptionForm(
-                request.POST, request.FILES
-            )
-
-            if form.save():
-                initial_value = {
-                    'site_title': get_option(
-                        option_name='site_title') or admin.AdminSite.site_title,
-                    'site_header': get_option(
-                        option_name='site_header') or admin.AdminSite.site_header,
-                    # 'index_title': get_option(
-                    #     option_name='index_title') or admin.AdminSite.index_title,
-                    'welcome_sign': get_option(option_name='welcome_sign'),
-                    'site_logo': ImageBox(
-                        get_option(option_name='site_logo')) if get_option(
-                        option_name='site_logo') else '',
-                    'show_avatar': True if get_option(
-                        option_name='show_avatar') == 'on' else False,
-                    'avatar_field': get_option(
-                        option_name='avatar_field') or 'request.user.head_avatar',
-                }
-                form = GeneralOptionForm(initial=initial_value)
-                messages.add_message(request, messages.SUCCESS,
-                                     _('General Option Saved.'))
+        if request.method == 'POST':
+            form = GeneralOptionForm(data=request.POST, files=request.FILES)
+            if form.is_valid():
+                options = form.save()
+                messages.add_message(request, messages.SUCCESS, _('General Option Saved.'))
             else:
-                messages.add_message(request, messages.ERROR,
-                                     _('General Option Save Failed.'))
-        context['line'] = form
-        return TemplateResponse(request, 'adminlte/general_option.html',
-                                context)
+                messages.add_message(request, messages.ERROR, _('General Option Save Failed.'))
+
+        logo = options.get('site_logo')
+        context['line'] = GeneralOptionForm(initial={
+            'site_title': options.get('site_title', admin.AdminSite.site_title),
+            'site_header': options.get('site_header', admin.AdminSite.site_header),
+            # 'index_title': options.get('index_title', admin.AdminSite.index_title),
+            'welcome_sign': options.get('welcome_sign'),
+            'site_logo': ImageBox(logo) if logo else '',
+            'show_avatar': True if options.get('show_avatar') == 'on' else False,
+            'avatar_field': options.get('avatar_field', 'request.user.head_avatar'),
+        })
+
+        import ipdb;
+        ipdb.set_trace()
+
+        return TemplateResponse(request, 'adminlte/general_option.html', context)
 
 
 @admin.register(Menu)
 class MenuAdmin(TreeAdmin):
-    list_display = ('name', 'position', 'link_type', 'display_link',
-                    'display_content_type', 'priority_level', 'display_icon',
-                    'valid')
+    list_display = (
+        'name', 'position', 'link_type', 'display_link', 'display_content_type',
+        'priority_level', 'display_icon', 'valid'
+    )
     list_filter = ('position', 'link_type', 'valid')
     list_editable = ('valid', 'priority_level')
     form = movenodeform_factory(Menu)
@@ -229,8 +144,9 @@ class MenuAdmin(TreeAdmin):
     change_form_template = 'adminlte/menu_change_form.html'
 
     class ContentTypeModelChoiceField(forms.ModelChoiceField):
+
         def label_from_instance(self, obj):
-            return "%s:%s" % (obj.app_label, obj.model)
+            return f"{obj.app_label}:{obj.model}"
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         """
@@ -238,92 +154,71 @@ class MenuAdmin(TreeAdmin):
         """
         if db_field.name == 'content_type':
             return self.ContentTypeModelChoiceField(
-                queryset=ContentType.objects.all(),
-                required=False,
-                label=_('ContentType'),
-                widget=AdminlteSelect)
+                queryset=ContentType.objects.all(), required=False, label=_('ContentType'), widget=AdminlteSelect
+            )
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
-        try:
-            return super().changeform_view(request, object_id, form_url, extra_context)
-        except Exception as e:
-            messages.error(request,
-                           _('Exception raised while add node: %s') % _(
-                               force_str(e)))
-            return HttpResponseBadRequest(
-                _('Exception raised while add node: %s') % _(force_str(e)))
+        return super().changeform_view(request, object_id, form_url, extra_context)
 
     def get_urls(self):
         base_urls = super().get_urls()
         urls = [
-            path('exchange_menu/',
-                 self.admin_site.admin_view(
-                     self.exchange_menu_view,
-                     cacheable=True), name='exchange_menu'),
+            path(
+                'exchange_menu/',
+                self.admin_site.admin_view(self.exchange_menu_view, cacheable=True),
+                name='exchange_menu'
+            ),
         ]
         return urls + base_urls
 
     def exchange_menu_view(self, request):
-        if request.user.has_perm('django_admin_settings.view_menu') is False:
+        if not request.user.has_perm('django_admin_settings.view_menu'):
             return HttpResponseForbidden(format_html('<h1>403 Forbidden</h1>'))
-        if request.is_ajax():
-            response_data = dict()
-            response_data['message'] = 'success'
-            try:
-                use_custom_menu = Options.objects.get(
-                    option_name='USE_CUSTOM_MENU')
-            except Options.DoesNotExist:
-                use_custom_menu = Options.objects.create(
-                    option_name='USE_CUSTOM_MENU', option_value='0'
-                )
 
-            if not use_custom_menu or use_custom_menu.option_value == '0':
-                use_custom_menu.option_value = '1'
-                use_custom_menu.save()
-                messages.add_message(request, messages.SUCCESS, _(
-                    'Menu exchanged, current is `custom menu`.'))
+        response_data = dict()
+        response_data['message'] = 'success'
+        use_custom_menu, _created = Options.objects.get_or_create(
+            option_name='USE_CUSTOM_MENU', defaults={'option_value': '0'}
+        )
 
-            else:
-                use_custom_menu.option_value = '0'
-                use_custom_menu.save()
-                messages.add_message(request, messages.SUCCESS, _(
-                    'Menu exchanged, current is `system menu`.'))
-            return HttpResponse(json.dumps(response_data),
-                                content_type="application/json,charset=utf-8")
-        return HttpResponse('method not allowed.')
+        if use_custom_menu.option_value == '0':
+            use_custom_menu.option_value = '1'
+            use_custom_menu.save(update_fields=['option_value'])
+            messages.add_message(request, messages.SUCCESS, _('Menu exchanged, current is "custom menu".'))
+
+        else:
+            use_custom_menu.option_value = '0'
+            use_custom_menu.save(update_fields=['option_value'])
+
+            messages.add_message(request, messages.SUCCESS, _('Menu exchanged, current is "system menu".'))
+
+        return HttpResponse(json.dumps(response_data), content_type="application/json,charset=utf-8")
 
     def display_link(self, obj):
         if obj.link:
             if '/' in obj.link:
-                return format_html(
-                    '<i class="fa fa-check text-green"></i> {}'.format(
-                        obj.link))
+                return format_html(f'<i class="fa fa-check text-green"></i> {obj.link}')
             try:
                 reverse(obj.link)
-                return format_html(
-                    '<i class="fa fa-check text-green"></i> {}'.format(
-                        obj.link))
-            except Exception as e:
-                return format_html(
-                    '<i class="fa fa-close text-red"></i> {}'.format(obj.link))
-        return '-'
+                return format_html(f'<i class="fa fa-check text-green"></i> {obj.link}')
+            except NoReverseMatch:
+                return format_html(f'<i class="fa fa-close text-red"></i> {obj.link}')
+        return None
 
     display_link.short_description = _('Link')
 
     def display_icon(self, obj):
         if obj.icon:
-            return format_html(
-                '<i class="fa {}"></i> {}'.format(obj.icon, obj.icon))
+            return format_html(f'<i class="fa {obj.icon}"></i> {obj.icon}')
         return obj.icon
 
     display_icon.short_description = _('Icon')
 
     def display_content_type(self, obj):
         if obj.content_type:
-            return '{}:{}'.format(obj.content_type.app_label,
-                                  obj.content_type.model)
+            return f'{obj.content_type.app_label}:{obj.content_type.model}'
         return obj.content_type_id
 
     display_content_type.short_description = _('ContentType')

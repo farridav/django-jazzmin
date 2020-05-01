@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/wuyue92tree/django-adminlte-ui">
-    <img alt="title" src="./images/django-adminlte-ui.jpg" width="400">
+    <img alt="title" src="docs/images/django-adminlte-ui.jpg" width="400">
   </a>
 </p>
 
@@ -67,23 +67,23 @@ python manage.py migrate django_admin_settings
 # Screen shot
 
 ## login page
-![login](./images/login.jpg)
+![login](docs/images/login.jpg)
 
 ## dashboard
-![dashboard](./images/dashboard.jpg)
+![dashboard](docs/images/dashboard.jpg)
 
 ## table list
-![table list](./images/table-list.jpg)
+![table list](docs/images/table-list.jpg)
 
 ## form page
-![form page](./images/form.png)
+![form page](docs/images/form.png)
 
 ## general_option
-![general_option](./images/general_option.jpg)
+![general_option](docs/images/general_option.jpg)
 
 ## menu list
 
-![menu list](./images/menu-list.png)
+![menu list](docs/images/menu-list.png)
 
 
 # Features
@@ -110,6 +110,6 @@ Your donation take me higher. 🚀
 
 <p align="left">
   <a href="https://github.com/wuyue92tree/django-adminlte-ui">
-    <img alt="title" src="./images/alipay.png" width="200px">
+    <img alt="title" src="docs/images/alipay.png" width="200px">
   </a>
 </p>

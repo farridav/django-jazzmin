@@ -5,9 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('django_admin_settings', '0004_auto_20190708_1832'),
-    ]
+    dependencies = [('django_admin_settings', '0004_auto_20190708_1832'),]
 
     operations = [
         migrations.AddField(
