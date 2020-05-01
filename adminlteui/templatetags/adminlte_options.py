@@ -15,9 +15,8 @@ def get_adminlte_option(option_name, request=None):
     if config:
         ret = {
             config.option_name: config.option_value,
-            'valid': config.valid
         }
-        if config.option_name in ('site_logo', 'avatar_field'):
+        if config.option_name in ('site_logo',):
             ret[config.option_name] = f'{settings.MEDIA_URL}{ret[config.option_name]}'
 
     return ret

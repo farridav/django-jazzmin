@@ -23,8 +23,7 @@
                     parent="{{ parent_id }}" node="{{ node_id }}">
                     {% for item in result %}
                         {% if forloop.counter == 1 %}
-                            {% for spacer in item.depth %}<span class="grab">&nbsp;
-                                </span>{% endfor %}
+                            {% for spacer in item.depth %}<span class="grab">&nbsp;</span>{% endfor %}
                         {% endif %}
                         {{ item }}
                     {% endfor %}</tr>

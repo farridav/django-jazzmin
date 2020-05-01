@@ -35,7 +35,7 @@
 
     <link rel="stylesheet" href={% static "admin/dist/css/django.css" %}>
 
-    {% if adminlte_site_logo.valid %}
+    {% if adminlte_site_logo %}
     <link rel="apple-touch-icon" href="{{ adminlte_site_logo.site_logo }}">
     <link rel="icon" href="{{ adminlte_site_logo.site_logo }}">
     {% else %}
@@ -59,7 +59,7 @@
         <a href="{% url 'admin:index' %}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini">
-                {% if adminlte_site_logo.valid %}
+                {% if adminlte_site_logo %}
                 <img src="{{ adminlte_site_logo.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
                 {% else %}
                 <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
@@ -67,14 +67,14 @@
             </span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
-                {% if adminlte_site_logo.valid %}
+                {% if adminlte_site_logo %}
                 <img src="{{ adminlte_site_logo.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
                 {% else %}
                 <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
                 {% endif %}
                 <b>
                     {% get_adminlte_option 'site_header' as adminlte_site_header  %}
-                    {% if adminlte_site_header.valid %}
+                    {% if adminlte_site_header %}
                     {{ adminlte_site_header.site_header }}
                     {% else %}
                     {{ site_header }}
@@ -110,9 +110,9 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
-                            {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
+                            {% if adminlte_show_avatar and adminlte_show_avatar.show_avatar == 'on' %}
                             {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
-                            {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
+                            {% if adminlte_avatar_field and adminlte_avatar_field.avatar_field %}
                             <img src="{{ adminlte_avatar_field.avatar_field }}" class="user-image" alt="User Image" style="width: 25px; height:25px;">
                             {% else %}
                             <img src={% static "admin/dist/img/default.jpg" %} class="user-image" alt="User Image">
@@ -123,10 +123,10 @@
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
-                            {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
+                            {% if adminlte_show_avatar and adminlte_show_avatar.show_avatar == 'on' %}
                             <li class="user-header">
                                 {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
-                                {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
+                                {% if adminlte_avatar_field and adminlte_avatar_field.avatar_field %}
                                 <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image" style="width: 90px; height:90px;">
                                 {% else %}
                                 <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">
@@ -205,11 +205,11 @@
         <section class="sidebar">
             <!-- Sidebar user panel -->
             {% get_adminlte_option 'show_avatar' as adminlte_show_avatar  %}
-            {% if adminlte_show_avatar.valid and adminlte_show_avatar.show_avatar == 'on' %}
+            {% if adminlte_show_avatar and adminlte_show_avatar.show_avatar == 'on' %}
             <div class="user-panel">
                 <div class="pull-left image">
                     {% get_adminlte_option 'avatar_field' request as adminlte_avatar_field  %}
-                    {% if adminlte_avatar_field.valid and adminlte_avatar_field.avatar_field %}
+                    {% if adminlte_avatar_field and adminlte_avatar_field.avatar_field %}
                     <img src="{{ adminlte_avatar_field.avatar_field }}" class="img-circle" alt="User Image">
                     {% else %}
                     <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">

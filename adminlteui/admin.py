@@ -59,26 +59,25 @@ class GeneralOptionForm(forms.Form):
         if self.files.get('site_logo'):
             file = self.files['site_logo']
             cleaned_data['site_logo'] = default_storage.save(file.name, file)
+        elif options.get('site_logo'):
+            cleaned_data['site_logo'] = options.get('site_logo').option_value
+        else:
+            cleaned_data['site_logo'] = ''
 
-        if cleaned_data.get('site_logo-clear'):
+        if self.data.get('site_logo-clear'):
             Options.objects.filter(option_name='site_logo').delete()
             cleaned_data['site_logo'] = ''
 
-        if not cleaned_data.get('show_avatar'):
-            avatar = options.get('show_avatar', Options(option_name='show_avatar', option_value='off'))
-            if not avatar.pk or avatar.option_value != 'off':
-                avatar.option_value = 'off'
-                avatar.save(update_fields=['option_value'])
+        cleaned_data['show_avatar'] = 'on' if cleaned_data.get('show_avatar') else 'off'
 
-        for key in self.changed_data:
-            value = cleaned_data[key]
+        for key, value in cleaned_data.items():
             option = options.get(key, Options(option_name=key, option_value=value))
 
             if not option.pk or option.option_value != value:
                 option.option_value = value
-                option.save(update_fields=['option_name', 'option_value'])
+                option.save()
 
-        return {k: v.option_value for k, v in options.items()}
+        return cleaned_data
 
 
 @admin.register(Options)
@@ -94,7 +93,7 @@ class OptionsAdmin(admin.ModelAdmin):
             path(
                 'general_option/', self.admin_site.admin_view(self.general_option_view, cacheable=True),
                 name='general_option'
-            ),
+            )
         ]
         return urls + base_urls
 
@@ -124,9 +123,6 @@ class OptionsAdmin(admin.ModelAdmin):
             'show_avatar': True if options.get('show_avatar') == 'on' else False,
             'avatar_field': options.get('avatar_field', 'request.user.head_avatar'),
         })
-
-        import ipdb;
-        ipdb.set_trace()
 
         return TemplateResponse(request, 'adminlte/general_option.html', context)
 

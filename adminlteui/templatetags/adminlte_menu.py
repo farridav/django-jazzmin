@@ -52,6 +52,7 @@ def get_custom_menu(user, position):
     limit_for_internal_link = set(limit_for_internal_link)
     new_available_apps = []
     menu = Menu.get_tree().filter(depth=1).order_by('-priority_level')
+
     for menu_item in menu:
         if menu_item.position != position:
             continue
@@ -109,7 +110,7 @@ def get_menu(context, request, position='left'):
     user = getattr(request, 'user', None)
 
     use_custom_menu = get_adminlte_option('USE_CUSTOM_MENU')
-    if use_custom_menu.get('USE_CUSTOM_MENU', '0') == '1' and use_custom_menu.get('valid') is True:
+    if use_custom_menu.get('USE_CUSTOM_MENU', '0') == '1':
         return get_custom_menu(user, position)
 
     if position != 'left':
@@ -140,5 +141,4 @@ def get_menu(context, request, position='left'):
                     'icons', {}
                 ).get(app['app_label'], {}).get(model['name'].lower())
 
-    # return MenuManager(available_apps, context, request)
     return available_apps

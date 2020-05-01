@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         {% get_adminlte_option 'site_title' as adminlte_site_title %}
-        {% if adminlte_site_title.valid %}
+        {% if adminlte_site_title %}
         {{ adminlte_site_title.site_title }}
         {% else %}
         {{ site_title|default:_('Django site admin') }}
@@ -39,7 +39,7 @@
         <a href="/">
             <b>
                 {% get_adminlte_option 'site_header' as adminlte_site_header  %}
-                {% if adminlte_site_header.valid %}
+                {% if adminlte_site_header %}
                 {{ adminlte_site_header.site_header }}
                 {% else %}
                 {{ site_header }}
@@ -52,7 +52,7 @@
     <div class="login-box-body">
         <p class="login-box-msg">
             {% get_adminlte_option 'welcome_sign' as adminlte_welcome_sign  %}
-            {% if adminlte_welcome_sign.valid %}
+            {% if adminlte_welcome_sign %}
             {{ adminlte_welcome_sign.welcome_sign }}
             {% else %}
             {% trans 'Login and Enjoy' %}
