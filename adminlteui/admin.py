@@ -190,7 +190,7 @@ class MenuAdmin(TreeAdmin):
 
             messages.add_message(request, messages.SUCCESS, _('Menu exchanged, current is "system menu".'))
 
-        return HttpResponse(json.dumps(response_data), model="application/json,charset=utf-8")
+        return HttpResponse(json.dumps(response_data), content_type="application/json,charset=utf-8")
 
     def display_link(self, obj):
         if obj.link:
