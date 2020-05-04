@@ -1,17 +1,16 @@
 {% extends 'admin/base.html' %}
 {% load i18n adminlte_options %}
-{% block title %}{{ title }} |
-{% get_adminlte_option 'site_title' as adminlte_site_title %}
-{% if adminlte_site_title %}
-{{ adminlte_site_title.site_title }}
-{% else %}
-{{ site_title|default:_('Django site admin') }}
-{% endif %}
+
+{% get_adminlte_settings as adminlte %}
+{% get_adminlte_options as adminlte_opts %}
+
+{% block title %}
+{{ title }} | {% if adminlte_opts.site_title %}{{ adminlte_opts.site_title }} {% else %} {{ site_title|default:_('Django site admin') }} {% endif %}
 {% endblock %}
+
 {% block page_content %}
 
-<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
-      data-admin-utc-offset="{% now "Z" %}">
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
 
 <!-- Container -->
 <div id="container">
@@ -25,7 +24,6 @@
     <!-- Content -->
     <section id="content" class="content">
         {% block messages %}
-        {% if messages %}
         {% for message in messages %}
         {% if message.tags == 'success' %}
         <div class="alert alert-success alert-dismissible">
@@ -49,7 +47,6 @@
         </div>
         {% endif %}
         {% endfor %}
-        {% endif %}
         {% endblock messages %}
         <div class="row">
             <div class="col-md-12">
@@ -66,15 +63,12 @@
 
 {% block footer %}
 <div class="pull-right hidden-xs">
-    <b>Adminlte Version</b> 2.3.6
+    <b>Adminlte Version</b> {% get_adminlte_version %}
 </div>
 <strong>
 Copyright &copy; {% now 'Y' %}
 {% if adminlte.copyright %}
     {{ adminlte.copyright }}.
-{% else %}
-    {% get_adminlte_version as adminlte_version %}
-    <a href="https://github.com/wuyue92tree/django-adminlte-ui/tree/{{ adminlte_version }}">django-adminlte-ui {{ adminlte_version }}</a>.
 {% endif %}
 </strong> All rights reserved.
 {% endblock %}

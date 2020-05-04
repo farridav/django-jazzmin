@@ -130,11 +130,11 @@ class OptionsAdmin(admin.ModelAdmin):
 @admin.register(Menu)
 class MenuAdmin(TreeAdmin):
     list_display = (
-        'name', 'position', 'link_type', 'display_link', 'display_content_type',
-        'priority_level', 'display_icon', 'valid'
+        'name', 'position', 'display_link', 'display_model',
+        'priority_level', 'display_icon',
     )
-    list_filter = ('position', 'link_type', 'valid')
-    list_editable = ('valid', 'priority_level')
+    list_filter = ('position',)
+    list_editable = ('priority_level',)
     form = movenodeform_factory(Menu)
     change_list_template = 'adminlte/menu_change_list.html'
     change_form_template = 'adminlte/menu_change_form.html'
@@ -146,9 +146,9 @@ class MenuAdmin(TreeAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         """
-        reset content_type display text
+        reset model display text
         """
-        if db_field.name == 'content_type':
+        if db_field.name == 'model':
             return self.ContentTypeModelChoiceField(
                 queryset=ContentType.objects.all(), required=False, label=_('ContentType'), widget=AdminlteSelect
             )
@@ -190,7 +190,7 @@ class MenuAdmin(TreeAdmin):
 
             messages.add_message(request, messages.SUCCESS, _('Menu exchanged, current is "system menu".'))
 
-        return HttpResponse(json.dumps(response_data), content_type="application/json,charset=utf-8")
+        return HttpResponse(json.dumps(response_data), model="application/json,charset=utf-8")
 
     def display_link(self, obj):
         if obj.link:
@@ -212,9 +212,9 @@ class MenuAdmin(TreeAdmin):
 
     display_icon.short_description = _('Icon')
 
-    def display_content_type(self, obj):
-        if obj.content_type:
-            return f'{obj.content_type.app_label}:{obj.content_type.model}'
-        return obj.content_type_id
+    def display_model(self, obj):
+        if obj.model:
+            return f'{obj.model.app_label}:{obj.model.model}'
+        return obj.model_id
 
-    display_content_type.short_description = _('ContentType')
+    display_model.short_description = _('ContentType')

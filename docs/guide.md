@@ -18,7 +18,7 @@ support options:
 this options in your db, named `django_admin_settings_options`, after do migrate.
 
 you can also add your custom option into this table, and use it by templatetags
- `adminlte_options` with function `get_adminlte_option`.
+ `adminlte_options` with function `get_adminlte_options`.
 
 options table has a valid field to control your option work or not.
 
@@ -31,9 +31,9 @@ example:
 {% load adminlte_options %}
 
 # here my option_name is site_title, you can custom yourself.
-{% get_adminlte_option 'site_title' as adminlte_site_title %}
-{% if adminlte_site_title.valid %}
-{{ adminlte_site_title.site_title }}
+
+{% if adminlte_opts.site_title %}
+{{ adminlte._opts.site_title }}
 {% else %}
 {{ site_title|default:_('Django site admin') }}
 {% endif %}

@@ -1,5 +1,6 @@
 {% extends 'admin/base_site.html' %}
 {% load i18n static adminlte_options %}
+{% get_adminlte_options as adminlte_opts %}
 
 {% block extrastyle %}
 {{ block.super }}
@@ -16,9 +17,9 @@
 {% endblock %}
 
 {% block title %}{% trans 'General Option' %} |
-{% get_adminlte_option 'site_title' as adminlte_site_title %}
-{% if adminlte_site_title %}
-{{ adminlte_site_title.site_title }}
+
+{% if adminlte_opts.site_title %}
+{{ adminlte_opts.site_title }}
 {% else %}
 {{ site_title|default:_('Django site admin') }}
 {% endif %}

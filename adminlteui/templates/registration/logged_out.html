@@ -1,4 +1,8 @@
-{% load i18n static adminlte_options %}<!DOCTYPE html>
+{% load i18n static adminlte_options %}
+{% get_adminlte_settings as adminlte %}
+{% get_adminlte_options as adminlte_opts %}
+
+<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
@@ -6,9 +10,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
-        {% get_adminlte_option 'site_title' as adminlte_site_title %}
-        {% if adminlte_site_title %}
-        {{ adminlte_site_title.site_title }}
+
+        {% if adminlte_opts.site_title %}
+        {{ adminlte_opts.site_title }}
         {% else %}
         {{ site_title|default:_('Django site admin') }}
         {% endif %}
@@ -38,9 +42,9 @@
     <div class="login-logo">
         <a href="/">
             <b>
-                {% get_adminlte_option 'site_header' as adminlte_site_header  %}
-                {% if adminlte_site_header %}
-                {{ adminlte_site_header.site_header }}
+
+                {% if adminlte_opts.site_header %}
+                {{ adminlte_opts.site_header }}
                 {% else %}
                 {{ site_header }}
                 {% endif %}
@@ -51,9 +55,9 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">
-            {% get_adminlte_option 'welcome_sign' as adminlte_welcome_sign  %}
-            {% if adminlte_welcome_sign %}
-            {{ adminlte_welcome_sign.welcome_sign }}
+
+            {% if adminlte_opts.welcome_sign %}
+            {{ adminlte_opts.welcome_sign }}
             {% else %}
             {% trans 'Login and Enjoy' %}
             {% endif %}
