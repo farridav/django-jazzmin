@@ -58,7 +58,7 @@
                             {% block field_sets %}
                             <ul class="nav nav-tabs">
                                 {% for fieldset in adminform %}
-                                <li><a data-toggle="tab" href="#{{ fieldset.name }}">{{ fieldset.name|default:"General" }}</a></li>
+                                <li{% if forloop.first %} class="active"{% endif %}><a data-toggle="tab" href="#{{ fieldset.name }}">{{ fieldset.name|default:"General" }}</a></li>
                                 {% endfor %}
                                 {% for inline_admin_formset in inline_admin_formsets %}
                                 <li><a data-toggle="tab" href="#{{ inline_admin_formset.opts.verbose_name_plural }}">{{ inline_admin_formset.opts.verbose_name_plural }}</a></li>
@@ -67,7 +67,7 @@
                             <br />
                             <div class="tab-content">
                                 {% for fieldset in adminform %}
-                                <div id="{{ fieldset.name }}" class="tab-pane fade">
+                                <div id="{{ fieldset.name }}" class="tab-pane fade{% if forloop.first %} active in{% endif %}">
                                     {% include "admin/includes/fieldset.html" %}
                                 </div>
                                 {% endfor %}
@@ -143,7 +143,5 @@
 <script src="{% static "admin/plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
 <script>
 $('[required]').before('<span class="text-red" style="margin-left: -10px;">* </span>');
-$('.nav-tabs li:first').addClass('active');
-$('.tab-content div:first').addClass('active in');
 </script>
 {% endblock %}
