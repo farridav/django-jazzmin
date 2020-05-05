@@ -58,21 +58,21 @@
                             {% block field_sets %}
                             <ul class="nav nav-tabs">
                                 {% for fieldset in adminform %}
-                                <li{% if forloop.first %} class="active"{% endif %}><a data-toggle="tab" href="#{{ fieldset.name }}">{{ fieldset.name|default:"General" }}</a></li>
+                                <li{% if forloop.first %} class="active"{% endif %}><a data-toggle="tab" href="#{{ fieldset.name|default:"General"|slugify }}">{{ fieldset.name|default:"General" }}</a></li>
                                 {% endfor %}
                                 {% for inline_admin_formset in inline_admin_formsets %}
-                                <li><a data-toggle="tab" href="#{{ inline_admin_formset.opts.verbose_name_plural }}">{{ inline_admin_formset.opts.verbose_name_plural }}</a></li>
+                                <li><a data-toggle="tab" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">{{ inline_admin_formset.opts.verbose_name_plural }}</a></li>
                                 {% endfor %}
                             </ul>
                             <br />
                             <div class="tab-content">
                                 {% for fieldset in adminform %}
-                                <div id="{{ fieldset.name }}" class="tab-pane fade{% if forloop.first %} active in{% endif %}">
+                                <div id="{{ fieldset.name|slugify }}" class="tab-pane fade{% if forloop.first %} active in{% endif %}">
                                     {% include "admin/includes/fieldset.html" %}
                                 </div>
                                 {% endfor %}
                                 {% for inline_admin_formset in inline_admin_formsets %}
-                                <div id="{{ inline_admin_formset.opts.verbose_name_plural }}" class="tab-pane fade">
+                                <div id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" class="tab-pane fade">
                                     {% include inline_admin_formset.opts.template %}
                                 </div>
                                 {% endfor %}
