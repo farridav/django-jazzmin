@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+from django.core.cache import cache
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -15,12 +16,23 @@ class Options(models.Model):
     create_time = models.DateTimeField(default=timezone.now, verbose_name=_('CreateTime'))
     update_time = models.DateTimeField(auto_now=True, verbose_name=_('UpdateTime'))
 
+    CACHE_KEY = 'admin_settings.config'
+
     def __str__(self):
         return f'{self.option_name}'
 
     @classmethod
     def as_dict(cls):
-        return dict(cls.objects.values_list('option_name', 'option_value'))
+        values = cache.get(cls.CACHE_KEY)
+        if not values:
+            values = dict(cls.objects.values_list('option_name', 'option_value'))
+            cache.set(cls.CACHE_KEY, values)
+
+        return values
+
+    def save(self, **kwargs):
+        super().save(**kwargs)
+        cache.delete(self.CACHE_KEY)
 
     class Meta:
         verbose_name = _('Options')
