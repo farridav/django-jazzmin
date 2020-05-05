@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib import messages
 from django.contrib.admin import widgets
+from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
 from django.http.response import HttpResponse, HttpResponseForbidden
 from django.template.response import TemplateResponse
@@ -52,6 +53,17 @@ class GeneralOptionForm(forms.Form):
     )
     show_avatar = forms.BooleanField(label=_('Show Avatar'), required=False)
 
+    def clean_site_logo(self):
+        data = self.cleaned_data['site_logo']
+        if not settings.MEDIA_URL:
+            raise ValidationError('Media uploads will not work without a MEDIA_URL')
+
+        return data
+
+    def clean_show_avatar(self):
+        data = self.cleaned_data['show_avatar']
+        return 'on' if data else 'off'
+
     def save(self):
         cleaned_data = self.cleaned_data
         options = Options.objects.in_bulk(field_name='option_name')
@@ -67,8 +79,6 @@ class GeneralOptionForm(forms.Form):
         if self.data.get('site_logo-clear'):
             Options.objects.filter(option_name='site_logo').delete()
             cleaned_data['site_logo'] = ''
-
-        cleaned_data['show_avatar'] = 'on' if cleaned_data.get('show_avatar') else 'off'
 
         for key, value in cleaned_data.items():
             option = options.get(key, Options(option_name=key, option_value=value))
