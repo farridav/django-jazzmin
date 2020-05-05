@@ -9,7 +9,7 @@ div.inline-related {
 }
 
 .inlinechangelink {
-    content: url('/static/admin/img/icon-changelink.svg');
+    content: url('../img/icon-changelink.svg');
 }
 
 .inline-related .tabular {
@@ -36,3 +36,21 @@ tr.djn-tr > .original {
     width: 0px;
 }
 
+.object-tools {
+    padding: 0;
+}
+
+.object-tools li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.object-tools .historylink {
+    background-color: #097700;
+    width: 100%;
+    display: block;
+    padding: 5px;
+    text-align: center;
+    color: white;
+}
