@@ -19,46 +19,60 @@
 {% block content %}
 <div id="content-main">
     {% if app_list %}
+    {% widthratio app_list|length 2 1 as middle %}
     <div class="row">
         <div class="col-md-9 col-sm-12 col-xs-12">
-            {% for app in app_list %}
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">{{ app.name }}</h3>
-                </div>
-                <div class="box-body">
-                    <table class="table table-condensed">
-                        <tbody>
-                        {% for model in app.models %}
-                        <tr>
-                            <td>
-                                {% if model.admin_url %}
-                                <a href="{{ model.admin_url }}">{{ model.name }}</a>
-                                {% else %}
-                                {{ model.name }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                <div class="btn-group pull-right">
-                                    {% if model.add_url %}
-                                    <a href="{{ model.add_url }}" class="btn btn-sm btn-success btn-flat addlink">{% trans 'Add' %}</a>
-                                    {% endif %}
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+
+                {% for app in app_list %}
+                    <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">{{ app.name }}</h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-condensed">
+                            <tbody>
+                            {% for model in app.models %}
+                            <tr>
+                                <td>
                                     {% if model.admin_url %}
-                                    {% if model.view_only %}
-                                    <a href="{{ model.admin_url }}" class="btn btn-sm btn-info btn-flat viewlink">{% trans 'View' %}</a>
+                                    <a href="{{ model.admin_url }}">{{ model.name }}</a>
                                     {% else %}
-                                    <a href="{{ model.admin_url }}" class="btn btn-sm btn-warning btn-flat changelink">{% trans 'Change' %}</a>
+                                    {{ model.name }}
                                     {% endif %}
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                                </td>
+                                <td>
+                                    <div class="btn-group pull-right">
+                                        {% if model.add_url %}
+                                        <a href="{{ model.add_url }}" class="btn btn-sm btn-success btn-flat addlink">{% trans 'Add' %}</a>
+                                        {% endif %}
+                                        {% if model.admin_url %}
+                                        {% if model.view_only %}
+                                        <a href="{{ model.admin_url }}" class="btn btn-sm btn-info btn-flat viewlink">{% trans 'View' %}</a>
+                                        {% else %}
+                                        <a href="{{ model.admin_url }}" class="btn btn-sm btn-warning btn-flat changelink">{% trans 'Change' %}</a>
+                                        {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+                {% if forloop.counter == middle|add:"0" %}
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                {% endif %}
+
+                {% endfor %}
+                </div>
+
             </div>
-            {% endfor %}
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
             <div id="content-related">
