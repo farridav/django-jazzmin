@@ -4,6 +4,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib import messages
 from django.contrib.admin import widgets
+from django.core.files.storage import default_storage
 from django.urls import path, reverse
 from django.template.response import TemplateResponse
 from django.utils import timezone
@@ -29,9 +30,7 @@ def get_option(option_name):
 
 def handle_uploaded_file(f, file_name):
     # save site_logo
-    with open(settings.MEDIA_ROOT + '/' + file_name, 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
+    return default_storage.save(file_name, f)
 
 
 class ImageBox:
@@ -109,11 +108,8 @@ class GeneralOptionForm(forms.Form):
                         if not self.files.get(data_item) or self.data.get(
                                 data_item) == '':
                             continue
-                        handle_uploaded_file(self.files.get(data_item),
-                                             self.files.get(data_item).name)
-                        obj.option_value = settings.MEDIA_URL.lstrip(
-                            '/') + self.files.get(
-                            data_item).name
+                        filename = handle_uploaded_file(self.files.get(data_item), self.files.get(data_item).name)
+                        obj.option_value = settings.MEDIA_URL + filename
                     else:
                         if obj.option_value == self.data.get(data_item):
                             continue
@@ -124,13 +120,10 @@ class GeneralOptionForm(forms.Form):
                             self.errors[data_item] = _(
                                 'site_logo depends on setting.MEDIA_URL and setting.MEDIA_ROOT.')
                             return False
-                        handle_uploaded_file(self.files.get(data_item),
-                                             self.files.get(data_item).name)
+                        filename = handle_uploaded_file(self.files.get(data_item), self.files.get(data_item).name)
                         obj = Options.objects.create(
                             option_name=data_item,
-                            option_value=settings.MEDIA_URL.lstrip(
-                                '/') + self.files.get(
-                                data_item).name,
+                            option_value=settings.MEDIA_URL + filename,
                             create_time=timezone.now())
                     else:
                         obj = Options.objects.create(
