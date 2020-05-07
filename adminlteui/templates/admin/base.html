@@ -3,7 +3,7 @@
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 
 {% get_adminlte_settings as adminlte %}
-{% get_adminlte_options as adminlte_opts %}
+
 
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
@@ -35,13 +35,8 @@
 
     <link rel="stylesheet" href={% static "admin/dist/css/django.css" %}>
 
-    {% if adminlte_opts.site_logo %}
-    <link rel="apple-touch-icon" href="{{ adminlte_opts.site_logo }}">
-    <link rel="icon" href="{{ adminlte_opts.site_logo }}">
-    {% else %}
-    <link rel="apple-touch-icon" href="{% static "admin/dist/img/default-log.svg" %}">
-    <link rel="icon" href="{% static "admin/dist/img/default-log.svg" %}">
-    {% endif %}
+    <link rel="apple-touch-icon" href="{% static adminlte.site_logo %}">
+    <link rel="icon" href="{% static adminlte.site_logo %}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -59,26 +54,12 @@
         <a href="{% url 'admin:index' %}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini">
-                {% if adminlte_opts.site_logo %}
-                <img src="{{ adminlte_opts.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-                {% else %}
-                <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-                {% endif %}
+                <img src={% static adminlte.site_logo %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
             </span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
-                {% if adminlte_opts.site_logo %}
-                <img src="{{ adminlte_opts.site_logo }}" class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-                {% else %}
-                <img src={% static "admin/dist/img/default-log.svg" %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-                {% endif %}
-                <b>
-                    {% if adminlte_opts.site_header %}
-                    {{ adminlte_opts.site_header }}
-                    {% else %}
-                    {{ site_header }}
-                    {% endif %}
-                </b>
+                <img src={% static adminlte.site_logo %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
+                <b>{{ adminlte.site_header }}</b>
             </span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -92,11 +73,15 @@
                 <ul class="nav navbar-nav top-menu">
                     {% get_menu request 'top' as app_list %}
                     {% for app in app_list %}
-                    <li class="dropdown user user-menu">
-                        <a href="{{ app.admin_url }}">
-                            <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
-                            {{ app.name }}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-{{ app.name|slugify }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ app.name|upper }}
                         </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown-{{ app.name|slugify }}">
+                            {% for model in app.models %}
+                            <a class="dropdown-item" href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}">{{ model.name }}</a>
+                            {% endfor %}
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>
@@ -107,27 +92,16 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {% if adminlte_opts.show_avatar and adminlte.show_avatar == 'on' %}
-                            {% if adminlte_opts.avatar_field %}
-                            <img src="{{ adminlte_opts.avatar_field }}" class="user-image" alt="User Image" style="width: 25px; height:25px;">
-                            {% else %}
                             <img src={% static "admin/dist/img/default.jpg" %} class="user-image" alt="User Image">
-                            {% endif %}
-                            {% endif %}
                             <span class="hidden-xs">{{ request.user.username }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
-                            {% if adminlte_opts.show_avatar and adminlte_opts.show_avatar == 'on' %}
                             <li class="user-header">
-                                {% if adminlte_opts.avatar_field and adminlte_opts.avatar_field %}
-                                <img src="{{ adminlte_opts.avatar_field }}" class="img-circle" alt="User Image" style="width: 90px; height:90px;">
-                                {% else %}
                                 <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">
-                                {% endif %}
                                 <p>
                                     {{ request.user.username }}
-                                    <small>{% trans "Register time" %}： {{ request.user.date_joined }}</small>
+                                    <small>{% trans "Registered" %}： {{ request.user.date_joined }}</small>
                                 </p>
                             </li>
                             {% else %}
@@ -152,12 +126,6 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- Control Sidebar Toggle Button -->
-                    <li>
-                        {% if adminlte.demo %}
-                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                        {% endif %}
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -168,31 +136,26 @@
         <section class="sidebar">
             <!-- Sidebar user panel -->
 
-            {% if adminlte_opts.show_avatar and adminlte_opts.show_avatar == 'on' %}
             <div class="user-panel">
                 <div class="pull-left image">
-
-                    {% if adminlte_opts.avatar_field %}
-                    <img src="{{ adminlte_opts.avatar_field }}" class="img-circle" alt="User Image">
-                    {% else %}
                     <img src={% static "admin/dist/img/default.jpg" %} class="img-circle" alt="User Image">
-                    {% endif %}
                 </div>
                 <div class="pull-left info">
                     <p>{{ request.user.username }}</p>
                     <a href="#"><i class="fa fa-circle text-success"></i> {% trans "Online" %}</a>
                 </div>
             </div>
-            {% endif %}
+
             <!-- search form -->
-            {% if adminlte.search_form %}
-            <form action="#" method="get" class="sidebar-form">
+            {% if adminlte.search_model %}
+            <form action="{{ adminlte.search_model }}" method="GET" class="sidebar-form">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="{% trans 'Search' %}...">
                     <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
+                        <button type="submit" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
                 </div>
             </form>
             {% endif %}
@@ -201,301 +164,76 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
 
-                <li class="header">{% trans 'MAIN NAVIGATION' %}</li>
+                <li class="header">{% trans 'Navigation' %}</li>
                 <li>
                     <a id="adminIndex" href="{% url 'admin:index' %}">
                         <i class="fa fa-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
                     </a>
                 </li>
 
-                {% if adminlte.main_navigation_app %}
-
                 {% get_menu request as app_list %}
-                {% for app in app_list %}
-                {% if app.app_label == adminlte.main_navigation_app %}
-                {% for model in app.models %}
-                {% if model.admin_url %}
-                <li>
-                    <a href="{{ model.admin_url }}">
-                        <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
-                    </a>
-                </li>
-                {% endif %}
-                {% endfor %}
-                {% endif %}
-                {% endfor %}
-
-                {% endif %}
 
                 {% if adminlte.navigation_expanded %}
 
-                {% get_menu request as app_list %}
-                {% if app_list %}
-                {% for app in app_list %}
-                {% if not adminlte.show_apps or adminlte.show_apps and not app.app_label or app.app_label in adminlte.show_apps %}
-                {% if not app.app_label or app.app_label != adminlte.main_navigation_app %}
-                <li class="header">{{ app.name|upper }}</li>
-                {% for model in app.models %}
-                {% ifchanged %}
-                {% if model.admin_url %}
-                <li>
-                    <a href="{{ model.admin_url }}">
-                        <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
-                    </a>
-                </li>
-                {% endif %}
-                {% endifchanged %}
-                {% endfor %}
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-                {% endif %}
+                    {% for app in app_list %}
+                        <li class="header">{{ app.name|upper }}</li>
+                        {% for model in app.models %}
+                            <li>
+                                <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}">
+                                    <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
 
                 {% else %}
 
-                {% get_menu request as app_list %}
-                {% if app_list %}
                 {% for app in app_list %}
-                {% if not adminlte.show_apps or adminlte.show_apps and not app.app_label or app.app_label in adminlte.show_apps %}
-                {% if not app.app_label or app.app_label != adminlte.main_navigation_app %}
-                <li {% if not app.admin_url %}class="treeview"{% endif %}>
-                    <a href="{% if app.admin_url %}{{app.admin_url}}{% else %}javascript:void(0){% endif %}">
-                        <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
-                        <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
+                    <li {% if not app.admin_url %}class="treeview"{% endif %}>
+                        <a href="{% if app.admin_url %}{{app.admin_url}}{% else %}javascript:void(0){% endif %}">
+                            <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
+                            <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
+                            {% if not app.admin_url %}
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            {% endif %}
+                        </a>
                         {% if not app.admin_url %}
-                        <span class="pull-right-container">
-                                  <i class="fa fa-angle-left pull-right"></i>
-                                </span>
+                        <ul class="treeview-menu">
+                            {% for model in app.models %}
+                                <li>
+                                    <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}">
+                                        <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                         {% endif %}
-                    </a>
-                    {% if not app.admin_url %}
-                    <ul class="treeview-menu">
-                        {% for model in app.models %}
-                        {% if model.admin_url %}
-                        <li><a href="{{ model.admin_url }}" ><i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}</a></li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </li>
-                {% endif %}
-                {% endif %}
+                    </li>
                 {% endfor %}
-                {% endif %}
 
                 {% endif %}
             </ul>
         </section>
         <!-- /.sidebar -->
     </aside>
-    {% endif %}
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 0px;"{% endif %}>
         <!-- Content Header (Page header) -->
         {% block page_content %}
         {% endblock %}
     </div>
+
     <!-- /.content-wrapper -->
     {% if not is_popup %}
     <footer class="main-footer">
         {% block footer %}
         {% endblock %}
     </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">Recent Activity</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                                <p>Will be 23 on April 24th</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                                <p>New phone +1(800)555-1234</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                                <p>nora@example.com</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                                <p>Execution time 5 seconds</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Custom Template Design
-                                <span class="label label-danger pull-right">70%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Update Resume
-                                <span class="label label-success pull-right">95%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Laravel Integration
-                                <span class="label label-warning pull-right">50%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Back End Framework
-                                <span class="label label-primary pull-right">68%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
-
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Some information about this general settings option
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Allow mail redirect
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Other sets of options are available
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Expose author name in posts
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Allow the user to show his name in blog posts
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Show me as online
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Turn off notifications
-                            <input type="checkbox" class="pull-right">
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Delete chat history
-                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                        </label>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
-            <!-- /.tab-pane -->
-        </div>
-    </aside>
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-         immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
     {% endif %}
+
 </div>
 <!-- ./wrapper -->
 
@@ -515,10 +253,6 @@
 <script src={% static "admin/plugins/fastclick/fastclick.js" %}></script>
 <!-- AdminLTE App -->
 <script src={% static "admin/dist/js/app.min.js" %}></script>
-<!-- AdminLTE for demo purposes -->
-{% if adminlte.demo %}
-<script src={% static "admin/dist/js/demo.js" %}></script>
-{% endif %}
 <script>
 // use js control active status of siderbar-menu
 $(function() {
@@ -556,8 +290,6 @@ $(function() {
             console.log('top menu matched.', window.location.href, topMenuActions[j].href);
         }
     }
-
-
 })
 </script>
 

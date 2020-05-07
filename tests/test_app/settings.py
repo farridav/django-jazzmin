@@ -18,9 +18,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
-
-    # For a custom menu
-    'treebeard'
 ]
 
 if django.VERSION < (2, 0):

@@ -1,15 +1,11 @@
 import itertools
 import urllib.parse
 
-from django.contrib.admin.templatetags.admin_list import (result_headers, result_hidden_fields)
 from django.contrib.admin.views.main import PAGE_VAR
 from django.template import Library
 from django.template.loader import get_template
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _
-from treebeard.templatetags import needs_checkboxes
-from treebeard.templatetags.admin_tree import check_empty_dict, get_parent_id, items_for_result
 
 register = Library()
 
@@ -90,76 +86,3 @@ def adminlte_admin_list_filter(cl, spec):
             i += 1
 
     return tpl.render({'field_name': field_key, 'title': spec.title, 'choices': choices, 'spec': spec, })
-
-
-def results(cl):
-    """
-    reorder by priority_level
-    :param cl:
-    :return:
-    """
-    if cl.formset:
-        new_result_list = []
-        new_forms = []
-        parent_nodes = cl.result_list.filter(depth=1).order_by('-priority_level')
-        for parent_node in parent_nodes:
-            new_result_list.append(parent_node)
-
-            child_nodes = parent_node.get_children().order_by('-priority_level')
-            for child_node in child_nodes:
-                new_result_list.append(child_node)
-
-        order_ = []
-        for i, obj in enumerate(new_result_list):
-            for j, obj_new in enumerate(cl.result_list):
-                if obj_new == obj:
-                    order_.append(j)
-
-        for o in order_:
-            new_forms.append(cl.formset.forms[o])
-
-        for res, form in zip(new_result_list, new_forms):
-            yield (
-                res.pk, get_parent_id(res), res.get_depth(), res.get_children_count(),
-                list(items_for_result(cl, res, form))
-            )
-    else:
-        new_result_list = []
-        parent_nodes = cl.result_list.filter(depth=1).order_by('-priority_level')
-        for parent_node in parent_nodes:
-            new_result_list.append(parent_node)
-
-            child_nodes = parent_node.get_children().order_by('-priority_level')
-            for child_node in child_nodes:
-                new_result_list.append(child_node)
-
-        for res in new_result_list:
-            yield (
-                res.pk, get_parent_id(res), res.get_depth(), res.get_children_count(),
-                list(items_for_result(cl, res, None))
-            )
-
-
-@register.inclusion_tag('admin/tree_change_list_results.html', takes_context=True)
-def adminlte_result_tree(context, cl, request):
-    """
-    Added 'filtered' param, so the template's js knows whether the results have
-    been affected by a GET param or not. Only when the results are not filtered
-    you can drag and sort the tree
-    """
-
-    # Here I'm adding an extra col on pos 2 for the drag handlers
-    headers = list(result_headers(cl))
-    headers.insert(1 if needs_checkboxes(context) else 0, {
-        'text': '+',
-        'sortable': True,
-        'url': request.path,
-        'tooltip': _('Return to ordered tree'),
-        'class_attrib': mark_safe(' class="oder-grabber"')
-    })
-    return {
-        'filtered': not check_empty_dict(request.GET),
-        'result_hidden_fields': list(result_hidden_fields(cl)),
-        'result_headers': headers,
-        'results': list(results(cl)),
-    }
