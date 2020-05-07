@@ -18,14 +18,19 @@ class SmokeTestCase(TestCase):
         )
 
     def test_login(self):
-        url = reverse('admin:index')
+        url = reverse('admin:login')
 
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
 
     def test_dashboard(self):
-        pass
+        url = reverse('admin:index')
+        self.client.force_login(self.user)
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
 
     def test_list_view(self):
         pass

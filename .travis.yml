@@ -1,20 +1,4 @@
 language: python
 python:
-- '3.6'
-script: python setup.py install
-
-deploy:
-  provider: pypi
-  user: wuyue
-  password:
-    secure: ZIgyvPMWDL4sSAwT9b47iHF9HZPqloYqAG+q7l624uYtUZ8JVFBspUP3CGv1htrBVCeN6U5WZLodgFaosaT25PscUAgkVgQF7diyComRubx1HUG403yVr0SeRJTWHeDqz6jmQgjR1fSmXvM+Oho6lMILOUkPneHV3ZRmklnsxqT1mlOjf51ohjfmYd9/20KknH1ecqwa7dQ4OnbyLlrThKUzXE+AdwPrHO2hXP3nD+hUnVzZL+aCpMmnVmSrWIZUQ82LiQonxt0OdXUzgoyzSo0yRhmA4uUUUlSy4FZFE7oOEW1JmGwA3Tx32d55RXetzbQ+lWpfKHrkyQoj3lF0EE7+CMY3xpXz8UjFo4wSWH9KLWV4mTUSCHxVhG6jJ24LSesoCjPo8z9GPtbO8GUcOIW3HckKOitnfuV80xqp6BOFe69Zat8y/I4TOpomLjaOUHrYaFbmO2KEXb/rTVpTMDiWrkhT1i0JhEz4mHtzXHBFHGHTWtisW8nDaVUAW459tf/DXVUUD/szX/DYVawzn9IwLjKlOAMFJUJVzOfBRccPOklkfgEVMWcF4RUt2UZmKltxYWrhozUuJWjAXU6LGYROPjEbCdeV4TxowRoZp12vE3Hj2rpM0NYhhZg2qg08s1o4TB1VceFjmMBy54inoaVTyqRgqQPXaW3sT4FqzpQ=
-  skip_existing: true
-  skip_cleanup: true
-  on:
-    tag: true
-    all_branches: true
-
-branches:
-  except:
-  - develop
-  - master
+  - '3.6'
+script: tox

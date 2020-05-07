@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from django.urls import reverse
 
 User = get_user_model()
 
@@ -15,29 +14,9 @@ class AdminlteTestCase(TestCase):
         )
         self.client.force_login(self.user)
 
-    def test_options_admin(self):
+    def test_menu_configuration(self):
         """
-        The Options admin renders out
-        """
-        url = reverse('admin:index')
-
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, 200)
-
-    def test_menu_admin(self):
-        """
-        The menu admin renders out
-        """
-        url = reverse('admin:general_option')
-
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, 200)
-
-    def test_update_options(self):
-        """
-        We can update all of the options available, and they affect the UI as expected
+        All menu tweaking settings work as expected
         """
         pass
 
@@ -47,20 +26,8 @@ class AdminlteTestCase(TestCase):
         """
         pass
 
-    def test_exchange_menu(self):
+    def test_ui_customisations(self):
         """
-        We can exchange our basic menu for a custom one, and back
-        """
-        pass
-
-    def test_build_custom_menu(self):
-        """
-        We can build a custom menu and it renders out on top and left side
-        """
-        pass
-
-    def test_numqueries(self):
-        """
-        We make a minimal no. of queries on each admin page view
+        All UI settings work as expected
         """
         pass

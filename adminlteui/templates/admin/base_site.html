@@ -2,11 +2,9 @@
 {% load i18n adminlte_options %}
 
 {% get_adminlte_settings as adminlte %}
-{% get_adminlte_options as adminlte_opts %}
 
-{% block title %}
-{{ title }} | {% if adminlte_opts.site_title %}{{ adminlte_opts.site_title }} {% else %} {{ site_title|default:_('Django site admin') }} {% endif %}
-{% endblock %}
+
+{% block title %}{{ title }} | {{ adminlte.site_title }}{% endblock %}
 
 {% block page_content %}
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
@@ -66,9 +64,7 @@
 </div>
 <strong>
 Copyright &copy; {% now 'Y' %}
-{% if adminlte.copyright %}
-    {{ adminlte.copyright }}.
-{% endif %}
+{{ adminlte.copyright }}.
 </strong> All rights reserved.
 {% endblock %}
 

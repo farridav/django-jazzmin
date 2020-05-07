@@ -22,7 +22,6 @@ setup(
     entry_points={},
     install_requires=[
         'django>=1.7',
-        'django-treebeard==4.3'
     ],
     test_suite='runtests.runtests',
 )
