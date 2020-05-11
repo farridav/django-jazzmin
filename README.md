@@ -1,4 +1,9 @@
 # Django jazzmin (Jazzy Admin)
+Drop-in theme for django admin, that utilises AdminLTE & Bootstrap to make yo' admin looky jazzy
+
+This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that I refactored so much I thought it 
+deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, I am still patching into that 
+project were possible, but this project is taking a slightly different direction.
 
 ## Installation
 ```

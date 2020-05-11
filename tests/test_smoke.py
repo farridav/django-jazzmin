@@ -7,7 +7,7 @@ User = get_user_model()
 
 class SmokeTestCase(TestCase):
     """
-    Smoke test rendering of various admin views with adminlte app installed
+    Smoke test rendering of various admin views with jazzmin app installed
     """
 
     def setUp(self):
