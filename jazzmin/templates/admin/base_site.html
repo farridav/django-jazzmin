@@ -1,0 +1,70 @@
+{% extends 'admin/base.html' %}
+{% load i18n jazzmin %}
+
+{% get_jazzmin_settings as jazzmin_settings %}
+
+{% block title %}{{ title }} | {{ jazzmin_settings.site_title }}{% endblock %}
+
+{% block page_content %}
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
+
+<!-- Container -->
+<div id="container">
+    {% if not is_popup %}
+    <section class="content-header">
+        <h1>{% block content_title %}{% endblock %}</h1>
+        {% block breadcrumbs %}{% endblock %}
+    </section>
+    {% endif %}
+
+    <!-- Content -->
+    <section id="content" class="content">
+        {% block messages %}
+        {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fa fa-check"></i>{{ message|capfirst }}</h5>
+        </div>
+        {% elif message.tags == 'error' %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fa fa-ban"></i>{{ message|capfirst }}</h5>
+        </div>
+        {% elif message.tags == 'warning' %}
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fa fa-warning"></i>{{ message|capfirst }}</h5>
+        </div>
+        {% elif message.tags == 'info' %}
+        <div class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fa fa-info"></i>{{ message|capfirst }}</h5>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endblock messages %}
+        <div class="row">
+            <div class="col-md-12">
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+    </section>
+    <!-- END Content -->
+
+</div>
+<!-- END Container -->
+
+{% endblock %}
+
+{% block footer %}
+<div class="pull-right hidden-xs">
+    <b>Adminlte Version</b> {% get_jazzmin_version %}
+</div>
+<strong>
+Copyright &copy; {% now 'Y' %}
+{{ jazzmin_settings.copyright }}.
+</strong> All rights reserved.
+{% endblock %}
+
+{% block extrajs %} {% endblock %}

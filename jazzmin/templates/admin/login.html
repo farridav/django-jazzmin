@@ -1,0 +1,102 @@
+{% load i18n static jazzmin %}
+{% get_jazzmin_settings as jazzmin_settings %}
+
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <!-- Current language: {{ LANGUAGE_CODE }} -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ jazzmin_settings.site_title }} | {% trans 'Log in' %}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href={% static "admin/dist/css/AdminLTE.min.css" %}>
+    <!-- iCheck -->
+    <link rel="stylesheet" href={% static "admin/plugins/iCheck/square/blue.css" %}>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition login-page">
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href="/">
+            <b>{{ jazzmin_settings.site_header }}</b>
+        </a>
+    </div>
+
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">{{ jazzmin_settings.welcome_sign }}</p>
+        <form action="{{ app_path }}" method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+            <div class="callout callout-danger">
+                {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="form-group has-feedback">
+                <input id="id_username" name="username" type="text" class="form-control" placeholder="{% trans 'username' %}" required>
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input id="id_password" name="password" type="password" class="form-control" placeholder="{% trans 'password' %}" required>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            <input type="checkbox"> {% trans 'Remember me' %}
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">{% trans "Log in" %}</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+        <div class="row">
+            {# <div class="col-xs-8"><a href="#">{% trans 'Forgot password ?' %}</a></div> #}
+            {# <div class="col-xs-4 text-right"><a href="{% url 'admin:register' %}" class="text-center">{% trans "Register" %}</a></div> #}
+        </div>
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 2.2.3 -->
+<script src={% static "admin/plugins/jQuery/jquery-2.2.3.min.js" %}></script>
+<!-- Bootstrap 3.3.6 -->
+<script src={% static "admin/bootstrap/js/bootstrap.min.js" %}></script>
+<!-- iCheck -->
+<script src={% static "admin/plugins/iCheck/icheck.min.js" %}></script>
+<script>
+$(function () {
+    $('input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' // optional
+    });
+});
+</script>
+</body>
+</html>

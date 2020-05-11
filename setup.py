@@ -3,18 +3,16 @@
 
 from setuptools import setup, find_packages
 
-from adminlteui import version
+from jazzmin import version
 
 setup(
-    name='django-adminlte-ui',
+    name='django-jazzmin',
     version=version,
-    url='https://github.com/wuyue92tree/django-adminlte-ui',
-    description='django admin theme base on adminlte',
-    long_description=open('README.rst').read(),
-    author='wuyue',
-    author_email='wuyue92tree@163.com',
-    maintainer='wuyue',
-    maintainer_email='wuyue92tree@163.com',
+    url='https://github.com/farridav/django-jazzmin',
+    description='Django admin theme based adminlte & bootstrap',
+    long_description=open('README.md').read(),
+    author='farridav',
+    maintainer='farridav',
     license='MIT',
     packages=find_packages(exclude=('tests', 'tests.*')),
     include_package_data=True,

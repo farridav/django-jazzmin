@@ -11,7 +11,7 @@ SECRET_KEY = 'shippin-it-all-day-long'
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    'adminlteui',
+    'jazzmin',
 
     'django.contrib.admin',
     'django.contrib.auth',

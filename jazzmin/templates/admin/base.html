@@ -1,0 +1,259 @@
+{% load i18n static jazzmin %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+{% get_jazzmin_settings as jazzmin_settings %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href={% static "admin/ionicons/ionicons.min.css" %}>
+
+    {% block extrastyle %} {% endblock %}
+
+    {% block extrahead %} {% endblock %}
+    <!-- Theme style -->
+    <link rel="stylesheet" href={% static "admin/dist/css/AdminLTE.min.css" %}>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    {% if jazzmin_settings.skin %}
+    <link rel="stylesheet" href={% static "admin/dist/css/skins/skin-"|add:jazzmin_settings.skin|add:".min.css" %}>
+    {% else %}
+    <link rel="stylesheet" href={% static "admin/dist/css/skins/_all-skins.min.css" %}>
+    {% endif %}
+
+    <link rel="stylesheet" href={% static "admin/dist/css/django.css" %}>
+
+    <link rel="apple-touch-icon" href="{% static jazzmin_settings.site_logo %}">
+    <link rel="icon" href="{% static jazzmin_settings.site_logo %}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="hold-transition skin-{% if jazzmin_settings.skin %}{{ jazzmin_settings.skin }}{% else %}blue{% endif %} sidebar-mini fixed">
+<div class="wrapper">
+    {% if not is_popup %}
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="{% url 'admin:index' %}" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">
+                <img src={% static jazzmin_settings.site_logo %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
+            </span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">
+                <img src={% static jazzmin_settings.site_logo %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
+                <b>{{ jazzmin_settings.site_header }}</b>
+            </span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {% get_user_avatar request.user %}
+                            <span class="hidden-xs">{{ request.user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+
+                            <li class="user-header">
+                                {% get_user_avatar request.user %}
+                                <p>
+                                    {{ request.user.username }}
+                                    <small>{% trans "Registered" %}： {{ request.user.date_joined }}</small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a  href="{% url 'admin:password_change' %}" class="btn btn-default btn-flat">{% trans 'Change password' %}</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="{% url 'admin:logout' %}" class="btn btn-default btn-flat">{% trans 'Log out' %}</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- search form -->
+            {% if jazzmin_settings.search_model %}
+            <form action="{{ jazzmin_settings.search_url }}" method="GET" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="{% trans 'Search' %} {{ jazzmin_settings.search_name }}...">
+                    <span class="input-group-btn">
+                        <button type="submit" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+            {% endif %}
+
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+
+                <li class="header">{% trans 'Navigation' %}</li>
+                <li>
+                    <a id="adminIndex" href="{% url 'admin:index' %}">
+                        <i class="fa fa-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
+                    </a>
+                </li>
+
+                {% get_menu request as app_list %}
+
+                {% if jazzmin_settings.navigation_expanded %}
+
+                    {% for app in app_list %}
+                        <li class="header">{{ app.name|upper }}</li>
+                        {% for model in app.models %}
+                            <li>
+                                <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}">
+                                    <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+
+                {% else %}
+
+                {% for app in app_list %}
+                    <li {% if not app.admin_url %}class="treeview"{% endif %}>
+                        <a href="{% if app.admin_url %}{{app.admin_url}}{% else %}javascript:void(0){% endif %}">
+                            <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
+                            <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
+                            {% if not app.admin_url %}
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            {% endif %}
+                        </a>
+                        {% if not app.admin_url %}
+                        <ul class="treeview-menu">
+                            {% for model in app.models %}
+                                <li>
+                                    <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}">
+                                        <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+
+                {% endif %}
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    {% endif %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 0px;"{% endif %}>
+        <!-- Content Header (Page header) -->
+        {% block page_content %}
+        {% endblock %}
+    </div>
+
+    <!-- /.content-wrapper -->
+    {% if not is_popup %}
+    <footer class="main-footer">
+        {% block footer %}
+        {% endblock %}
+    </footer>
+    {% endif %}
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src={% static "admin/plugins/jQuery/jquery-2.2.3.min.js" %}></script>
+<!-- jQuery UI 1.11.4 -->
+<script src={% static "admin/plugins/jQueryUI/jquery-ui.min.js" %}></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+<!-- Bootstrap 3.3.6 -->
+<script src={% static "admin/bootstrap/js/bootstrap.min.js" %}></script>
+<!-- Slimscroll -->
+<script src={% static "admin/plugins/slimScroll/jquery.slimscroll.min.js" %}></script>
+<!-- FastClick -->
+<script src={% static "admin/plugins/fastclick/fastclick.js" %}></script>
+<!-- AdminLTE App -->
+<script src={% static "admin/dist/js/app.min.js" %}></script>
+<script>
+// use js control active status of siderbar-menu
+$(function() {
+    var menuActions = document.querySelectorAll('.sidebar-menu a')
+    for (var i in menuActions) {
+        var pathname = document.querySelector('#adminIndex').pathname
+
+        try {
+            if (window.location.pathname === pathname) {
+                menuActions[i].parentNode.setAttribute('class', 'active')
+                break
+            }
+
+            if (window.location.href.indexOf(menuActions[i].href) !== -1) {
+                if (menuActions[i].href===window.location.origin + pathname) {
+                    continue
+                }
+                console.log('menu matched.', window.location.href, menuActions[i].href);
+                menuActions[i].parentNode.setAttribute('class', 'active');
+                if (menuActions[i].parentNode.parentNode.getAttribute('class') !== 'sidebar-menu') {
+                    menuActions[i].parentNode.parentNode.setAttribute('class', 'treeview-menu menu-open');
+                    menuActions[i].parentNode.parentNode.parentNode.setAttribute('class', 'treeview active');
+                }
+                break
+            }
+        } catch (e) {
+            console.log(window.location.href, menuActions[i].href, e)
+        }
+    }
+
+    var topMenuActions = document.querySelectorAll('.top-menu a')
+    for (var j in topMenuActions) {
+        if (window.location.href.indexOf(topMenuActions[j].href) !== -1) {
+            topMenuActions[j].parentNode.setAttribute('class', 'active');
+            console.log('top menu matched.', window.location.href, topMenuActions[j].href);
+        }
+    }
+})
+</script>
+
+{% block extrajs %}{% endblock %}
+
+</body>
+</html>

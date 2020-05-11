@@ -1,0 +1,147 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "admin/dist/css/app.css" %}">
+{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'admin:index' %}"><i class="fa fa-dashboard"></i> {% trans 'Home' %}</a></li>
+    <li><a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a></li>
+    <li>{% if has_view_permission %}<a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %}</li>
+    <li class="active">{% if add %}{% blocktrans with name=opts.verbose_name %}Add {{ name }}{% endblocktrans %}{% else %}{{ original|truncatewords:"18" }}{% endif %}</li>
+</ol>
+{% endblock %}
+{% endif %}
+
+{% block content_title %} {{ opts.verbose_name_plural|capfirst }} {% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.model_name }}_form" novalidate>
+        <div class="col-md-9">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h4 class="box-title">
+                        {{title}}{% block pretitle %}{% endblock %}
+                    </h4>
+                </div>
+
+                <div class="box-body">
+                    <div id="content-main">
+                        <div>
+                            {% csrf_token %}{% block form_top %}{% endblock %}
+                            {% if is_popup %}<input type="hidden" name="{{ is_popup_var }}" value="1">{% endif %}
+                            {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
+                            {% if save_on_top %}{% block submit_buttons_top %}{% submit_row %}{% endblock %}{% endif %}
+                            {% if errors %}
+                            <div class="errornote text-red text-center" style="margin: 20px;">
+                                {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+                            </div>
+                            {{ adminform.form.non_field_errors }}
+                            {% endif %}
+
+                            {% block field_sets %}
+                            <ul class="nav nav-tabs">
+                                {% for fieldset in adminform %}
+                                <li{% if forloop.first %} class="active"{% endif %}><a data-toggle="tab" href="#{{ fieldset.name|default:"General"|slugify }}">{{ fieldset.name|default:"General" }}</a></li>
+                                {% endfor %}
+                                {% for inline_admin_formset in inline_admin_formsets %}
+                                <li><a data-toggle="tab" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">{{ inline_admin_formset.opts.verbose_name_plural }}</a></li>
+                                {% endfor %}
+                            </ul>
+                            <br />
+                            <div class="tab-content">
+                                {% for fieldset in adminform %}
+                                <div id="{{ fieldset.name|default:"General"|slugify }}" class="tab-pane fade{% if forloop.first %} active in{% endif %}">
+                                    {% include "admin/includes/fieldset.html" %}
+                                </div>
+                                {% endfor %}
+                                {% for inline_admin_formset in inline_admin_formsets %}
+                                <div id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" class="tab-pane fade">
+                                    {% include inline_admin_formset.opts.template %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endblock %}
+
+                            {% block after_field_sets %}{% endblock %}
+
+                            {% block inline_field_sets %}{% endblock %}
+
+                            {% block after_related_objects %}{% endblock %}
+
+                            {% block admin_change_form_document_ready %}
+                            <script type="text/javascript"
+                                    id="django-admin-form-add-constants"
+                                    src="{% static 'admin/js/change_form.js' %}"
+                                    {% if adminform and add %}
+                                    data-model-name="{{ opts.model_name }}"
+                                    {% endif %}>
+                            </script>
+                            {% endblock %}
+
+                            {# JavaScript for prepopulated fields #}
+                            {% prepopulated_fields_js %}
+                            <div class="form-inline visible-sm visible-xs">
+                                <br class="clear" />
+                                {% submit_row %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br class="clear" />
+        </div>
+        <div class="col-md-3 hidden-sm hidden-xs">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h4 class="box-title">
+                        {% trans 'change form tools' %}
+                    </h4>
+                </div>
+
+                <div class="box-body">
+                    {% block submit_buttons_bottom %}{% submit_row %}{% endblock %}
+
+                    {% block object-tools %}
+                    {% if change %}{% if not is_popup %}
+                    <ul class="object-tools">
+                        {% block object-tools-items %}
+                        {% change_form_object_tools %}
+                        {% endblock %}
+                    </ul>
+                    {% endif %}{% endif %}
+                    {% endblock %}
+                </div>
+
+            </div>
+            <br class="clear" />
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static "admin/plugins/datatables/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "admin/plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+<script>
+$('[required]').before('<span class="text-red" style="margin-left: -10px;">* </span>');
+</script>
+{% endblock %}
