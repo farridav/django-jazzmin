@@ -10,7 +10,7 @@ setup(
     version=version,
     url='https://github.com/farridav/django-jazzmin',
     description='Django admin theme based adminlte & bootstrap',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     author='farridav',
     maintainer='farridav',
     license='MIT',
