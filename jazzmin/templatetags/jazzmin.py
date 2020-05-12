@@ -1,5 +1,4 @@
 import itertools
-import itertools
 import logging
 import urllib.parse
 

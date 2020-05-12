@@ -38,7 +38,7 @@ JAZZMIN_SETTINGS = {
     'site_logo': 'admin/dist/img/default-log.svg',
 
     # Welcome text on the login screen
-    'welcome_sign': 'Welcome big dog',
+    'welcome_sign': 'Welcome',
 
     # Copyright on the footer
     'copyright': 'Acme Ltd',
