@@ -25,7 +25,7 @@
 {% if not is_popup %}
 {% block breadcrumbs %}
 <ol class="breadcrumb">
-    <li><a href="{% url 'admin:index' %}"><i class="fa fa-dashboard"></i> {% trans 'Home' %}</a></li>
+    <li><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
     <li><a href="javascript:void(0)">{{ cl.opts.app_config.verbose_name }}</a></li>
     <li class="active">{{ cl.opts.verbose_name_plural|capfirst }}</li>
 </ol>

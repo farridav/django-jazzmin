@@ -12,8 +12,8 @@
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <!--<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
-    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href={% static "admin/ionicons/ionicons.min.css" %}>
 
@@ -126,7 +126,7 @@
                 <li class="header">{% trans 'Navigation' %}</li>
                 <li>
                     <a id="adminIndex" href="{% url 'admin:index' %}">
-                        <i class="fa fa-dashboard"></i> <span>{% trans 'Dashboard' %}</span>
+                        <i class="fa fa-tachometer-alt"></i> <span>{% trans 'Dashboard' %}</span>
                     </a>
                 </li>
 
@@ -139,7 +139,7 @@
                         {% for model in app.models %}
                             <li>
                                 <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}">
-                                    <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i> <span>{{ model.name }}</span>
+                                    <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-times-circle{% endif %}"></i> <span>{{ model.name }}</span>
                                 </a>
                             </li>
                         {% endfor %}
@@ -163,7 +163,7 @@
                             {% for model in app.models %}
                                 <li>
                                     <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}">
-                                        <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-circle-o{% endif %}"></i>{{ model.name }}
+                                        <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-times-circle{% endif %}"></i>{{ model.name }}
                                     </a>
                                 </li>
                             {% endfor %}

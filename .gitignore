@@ -1,11 +1,12 @@
+*.egg-info
+*.pyc
+.DS_Store
 .coverage
 .idea
 .tox
-__pycache__
-*.pyc
-*.egg-info
 .venv
-_resource
 /build
 /dist
 /test-reports
+__pycache__
+_resource
