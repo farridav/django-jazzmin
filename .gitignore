@@ -8,3 +8,4 @@ __pycache__
 _resource
 /build
 /dist
+/test-reports
