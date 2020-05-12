@@ -25,7 +25,7 @@ DEFAULT_SETTINGS = {
     # Copyright on the footer
     'copyright': 'Acme Ltd',
 
-    # Wether to aut expand the menu
+    # Whether to aut expand the menu
     'navigation_expanded': True,
 
     # The model admin to search from the search bar, search bar omitted if excluded
@@ -60,7 +60,7 @@ DEFAULT_SETTINGS = {
 
 def get_settings():
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
-    user_settings = getattr(settings, 'JAZZMIN_SETTINGS')
+    user_settings = getattr(settings, 'JAZZMIN_SETTINGS', {})
     jazzmin_settings.update(user_settings)
 
     if jazzmin_settings['search_model']:
