@@ -32,7 +32,7 @@ def get_menu(context, request):
     for permission in request.user.get_all_permissions():
         app_label, model = permission.split('.')
         model = model.split('_')[1]
-        permissions.add(f'{app_label}.{model}')
+        permissions.add('{app_label}.{model}'.format(app_label=app_label, model=model))
 
     available_apps = []
     all_apps = get_available_apps(request, context)
@@ -44,7 +44,7 @@ def get_menu(context, request):
 
         allowed_models = []
         for model in app.get('models', []):
-            model_str = f'{app_label}.{model["object_name"]}'.lower()
+            model_str = '{app_label}.{model}'.format(app_label=app_label, model=model["object_name"]).lower()
             if model_str not in permissions:
                 continue
             if model_str in OPTIONS.get('hide_models', []):
@@ -94,7 +94,7 @@ def get_user_avatar(user):
 
     avatar_field = getattr(user, OPTIONS['user_avatar'], None)
     if avatar_field:
-        return f'<img src="{avatar_field.url}" class="img-circle" alt="User Image">'
+        return '<img src="{avatar}" class="img-circle" alt="User Image">'.format(avatar=avatar_field.url)
 
     return format_html(no_avatar)
 
@@ -112,20 +112,21 @@ def jazzmin_paginator_number(cl, i):
         )
 
     elif i == cl.page_num:
-        return format_html(
-            '<li class="paginate_button active">'
-            f'<a href="javascript:void(0);" aria-controls="example2" data-dt-idx="3" tabindex="0">{i + 1}</a>'
-            '</li>'
-        )
+        return format_html(("""
+            <li class="paginate_button active">
+            <a href="javascript:void(0);" aria-controls="example2" data-dt-idx="3" tabindex="0">{num}
+            </a>
+            </li>
+        """.format(num=i + 1)))
 
     else:
         query_string = cl.get_query_string({PAGE_VAR: i})
         classes = mark_safe(' class="end"' if i == cl.paginator.num_pages - 1 else '')
-        return format_html(
-            '<li class="paginate_button">'
-            f'<a href="{query_string}" {classes} aria-controls="example2" data-dt-idx="3" tabindex="0">{i + 1}</a>'
-            '</li>'
-        )
+        return format_html(("""
+            <li class="paginate_button">
+            <a href="{query_string}" {classes} aria-controls="example2" data-dt-idx="3" tabindex="0">{num}</a>
+            </li>
+        """).format(num=i + 1, query_string=query_string, classes=classes))
 
 
 @register.simple_tag

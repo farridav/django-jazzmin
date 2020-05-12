@@ -26,9 +26,9 @@ def get_admin_url(model):
     """
     try:
         app_label, model_name = model.split('.')
-        return reverse(f"admin:{app_label}_{model_name}_changelist")
+        return reverse('admin:{app_label}_{model_name}_changelist'.format(app_label=app_label, model_name=model_name))
     except NoReverseMatch:
-        logger.error(f'Could not reverse {model}, it must be in <app_label>.<model_name> format')
+        logger.error('Could not reverse {model}, it must be in <app_label>.<model_name> format'.format(model=model))
         return None
 
 
