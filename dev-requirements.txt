@@ -1,0 +1,9 @@
+-e .
+
+wheel
+setuptools
+twine
+flake8
+pytest
+pytest-django
+pytest-cov

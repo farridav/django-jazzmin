@@ -21,5 +21,5 @@ setup(
     install_requires=[
         'django>=1.7',
     ],
-    test_suite='runtests.runtests',
+    test_suite='pytest',
 )

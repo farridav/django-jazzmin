@@ -1,42 +1,37 @@
-from django.contrib.auth import get_user_model
-from django.test import TestCase
+import pytest
 from django.urls import reverse
 
-User = get_user_model()
+
+@pytest.mark.django_db
+def test_login(client, admin_user):
+    url = reverse('admin:login')
+    client.force_login(admin_user)
+
+    response = client.get(url, follow=True)
+
+    assert response.status_code == 200
 
 
-class SmokeTestCase(TestCase):
-    """
-    Smoke test rendering of various admin views with jazzmin app installed
-    """
+@pytest.mark.django_db
+def test_dashboard(client, admin_user):
+    url = reverse('admin:index')
+    client.force_login(admin_user)
 
-    def setUp(self):
-        super().setUp()
-        self.user = User.objects.create(
-            email='test@test.com', password='test',
-            is_staff=True, is_superuser=True, is_active=True
-        )
+    response = client.get(url)
 
-    def test_login(self):
-        url = reverse('admin:login')
+    assert response.status_code == 200
 
-        response = self.client.get(url)
 
-        self.assertEqual(response.status_code, 200)
+@pytest.mark.django_db
+def test_list_view(client, admin_user):
+    pass
 
-    def test_dashboard(self):
-        url = reverse('admin:index')
-        self.client.force_login(self.user)
 
-        response = self.client.get(url)
+@pytest.mark.django_db
+def test_detail_view(client, admin_user):
+    pass
 
-        self.assertEqual(response.status_code, 200)
 
-    def test_list_view(self):
-        pass
-
-    def test_detail_view(self):
-        pass
-
-    def test_history_view(self):
-        pass
+@pytest.mark.django_db
+def test_history_view(client, admin_user):
+    pass

@@ -27,15 +27,19 @@ else:
 
 
 @simple_tag(takes_context=True)
-def get_menu(context, request):
+def get_menu(context):
+    user = context.get('user')
+    if not user:
+        return []
+
     permissions = set()
-    for permission in request.user.get_all_permissions():
+    for permission in user.get_all_permissions():
         app_label, model = permission.split('.')
         model = model.split('_')[1]
         permissions.add('{app_label}.{model}'.format(app_label=app_label, model=model))
 
     available_apps = []
-    all_apps = get_available_apps(request, context)
+    all_apps = get_available_apps(context)
 
     for app in all_apps:
         app_label = app['app_label'].lower()
@@ -56,7 +60,7 @@ def get_menu(context, request):
         for custom_link in OPTIONS.get('custom_links', {}).get(app_label, []):
 
             for perm in custom_link.get('permissions', []):
-                if not request.user.has_perm(perm):
+                if not user.has_perm(perm):
                     continue
 
             allowed_models.append({
