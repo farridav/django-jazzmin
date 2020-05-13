@@ -179,3 +179,11 @@ def jazzmin_admin_list_filter(cl, spec):
             i += 1
 
     return tpl.render({'field_name': field_key, 'title': spec.title, 'choices': choices, 'spec': spec, })
+
+
+@register.filter
+def debug(value):
+    """
+    Add in a breakpoint here and use filter in templates for debugging ;)
+    """
+    return type(value)
