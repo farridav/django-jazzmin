@@ -47,7 +47,7 @@ tr.djn-tr > .original {
 }
 
 .object-tools .historylink {
-    background-color: #097700;
+    background-color: #3c8dbc;
     width: 100%;
     display: block;
     padding: 5px;
@@ -64,5 +64,5 @@ tr.djn-tr > .original {
 }
 
 .tab-pane {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
