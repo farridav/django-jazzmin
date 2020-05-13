@@ -1,5 +1,6 @@
 import pytest
-from django.urls import reverse
+
+from jazzmin.compat import reverse
 
 
 @pytest.mark.django_db
