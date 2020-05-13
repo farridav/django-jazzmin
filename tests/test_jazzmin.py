@@ -2,7 +2,7 @@ import pytest
 
 
 @pytest.mark.django_db
-def test_menu_configuration(client, admin_user):
+def test_menu_configuration(admin_client):
     """
     All menu tweaking settings work as expected
     """
@@ -10,7 +10,7 @@ def test_menu_configuration(client, admin_user):
 
 
 @pytest.mark.django_db
-def test_update_site_logo(client, admin_user):
+def test_update_site_logo(admin_client):
     """
     We can add a site logo, and it renders out
     """
@@ -18,7 +18,7 @@ def test_update_site_logo(client, admin_user):
 
 
 @pytest.mark.django_db
-def test_ui_customisations(client, admin_user):
+def test_ui_customisations(admin_client):
     """
     All UI settings work as expected
     """

@@ -62,3 +62,7 @@ tr.djn-tr > .original {
 .related-widget-wrapper-link {
     padding: 7px;
 }
+
+.tab-pane {
+    overflow-x: scroll;
+}

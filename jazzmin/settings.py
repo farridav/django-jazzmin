@@ -6,7 +6,7 @@ from django.contrib.admin import AdminSite
 from .utils import get_admin_url
 
 DEFAULT_SETTINGS = {
-    # Choose from black, black-light, blue, blue-light, green, green-light, purple, purple-light,
+    # Choose from black, black-light, blue, blue-light, green, green-light, purple, purple-light
     # red, red-light, yellow, yellow-light
     'skin': 'blue',
 
