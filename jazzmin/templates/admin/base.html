@@ -9,8 +9,8 @@
     <title>{% block title %}{% endblock %}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Bootstrap 4.5.0 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
@@ -196,21 +196,17 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
-<script src={% static "admin/plugins/jQuery/jquery-2.2.3.min.js" %}></script>
+<script src={% static "admin/plugins/jquery/jquery.slim.min.js" %}>
 <!-- jQuery UI 1.11.4 -->
-<script src={% static "admin/plugins/jQueryUI/jquery-ui.min.js" %}></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button);
-</script>
-<!-- Bootstrap 3.3.6 -->
-<script src={% static "admin/bootstrap/js/bootstrap.min.js" %}></script>
+<script src={% static "admin/plugins/jquery-ui/jquery-ui.min.js" %}>
+<!-- Bootstrap 4.5.0 -->
+<script src={% static "admin/plugins/bootstrap/js/bootstrap.min.js" %}>
 <!-- Slimscroll -->
-<script src={% static "admin/plugins/slimScroll/jquery.slimscroll.min.js" %}></script>
+<!--<script src={% static "admin/plugins/slimScroll/jquery.slimscroll.min.js" %}>-->
 <!-- FastClick -->
-<script src={% static "admin/plugins/fastclick/fastclick.js" %}></script>
+<script src={% static "admin/plugins/fastclick/fastclick.js" %}>
 <!-- AdminLTE App -->
-<script src={% static "admin/dist/js/app.min.js" %}></script>
+<script src={% static "admin/dist/js/adminlte.min.js" %}>
 <script>
 // use js control active status of siderbar-menu
 $(function() {
