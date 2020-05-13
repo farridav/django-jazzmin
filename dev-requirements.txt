@@ -6,4 +6,5 @@ twine
 flake8
 pytest
 pytest-django
-pytest-cov
+tox-gh-actions
+coverage

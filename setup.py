@@ -20,6 +20,5 @@ setup(
     entry_points={},
     install_requires=[
         'django>=1.7',
-    ],
-    test_suite='pytest',
+    ]
 )
