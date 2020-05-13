@@ -1,6 +1,6 @@
 import logging
 
-from django.urls import reverse, NoReverseMatch
+from jazzmin.compat import reverse, NoReverseMatch
 
 logger = logging.getLogger(__name__)
 

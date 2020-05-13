@@ -3,9 +3,9 @@ import logging
 from django.contrib import admin
 
 try:
-    from django.urls import reverse, resolve  # NOQA
+    from django.urls import reverse, resolve, NoReverseMatch  # NOQA
 except ImportError:
-    from django.core.urlresolvers import reverse, resolve  # NOQA
+    from django.core.urlresolvers import reverse, resolve, NoReverseMatch  # NOQA
 
 logger = logging.getLogger(__name__)
 
