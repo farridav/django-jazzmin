@@ -8,3 +8,5 @@ pytest
 pytest-django
 tox-gh-actions
 coverage
+tox
+tox-pyenv

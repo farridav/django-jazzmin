@@ -4,21 +4,19 @@ from jazzmin.compat import reverse
 
 
 @pytest.mark.django_db
-def test_login(client, admin_user):
+def test_login(admin_client):
     url = reverse('admin:login')
-    client.force_login(admin_user)
 
-    response = client.get(url, follow=True)
+    response = admin_client.get(url, follow=True)
 
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
-def test_dashboard(client, admin_user):
+def test_dashboard(admin_client):
     url = reverse('admin:index')
-    client.force_login(admin_user)
 
-    response = client.get(url)
+    response = admin_client.get(url)
 
     assert response.status_code == 200
 

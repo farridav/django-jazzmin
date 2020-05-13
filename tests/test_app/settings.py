@@ -24,7 +24,7 @@ if django.VERSION < (2, 0):
     MIDDLEWARE_CLASSES = [
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware'
+        'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.common.CommonMiddleware',
     ]
 else:

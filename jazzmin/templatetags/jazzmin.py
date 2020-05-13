@@ -79,6 +79,11 @@ def get_menu(context):
     return available_apps
 
 
+@register.filter
+def jazzmin_settings(key):
+    return OPTIONS.get(key)
+
+
 @register.simple_tag
 def get_jazzmin_settings():
     return OPTIONS
