@@ -13,59 +13,104 @@
 {% endblock %}
 
 {% block content %}
-<div class="col-lg-6">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
 
-            <p class="card-text">
-                Some quick example text to build on the card title and make up the bulk of the card's
-                content.
-            </p>
+{% if app_list %}
+{% widthratio app_list|length 2 1 as middle %}
+{% endif %}
 
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+<div class="col-lg-9 col-sm-12 col-xs-12">
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-xs-12">
+
+            {% for app in app_list %}
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h5 class="m-0">{{ app.name }}</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tbody>
+                        {% for model in app.models %}
+                        <tr>
+                            <td>
+                                {% if model.admin_url %}
+                                <a href="{{ model.admin_url }}">{{ model.name }}</a>
+                                {% else %}
+                                {{ model.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group float-right">
+                                    {% if model.add_url %}
+                                    <a href="{{ model.add_url }}" class="btn btn-sm btn-success btn-flat addlink">{% trans 'Add' %}</a>
+                                    {% endif %}
+                                    {% if model.admin_url %}
+                                    {% if model.view_only %}
+                                    <a href="{{ model.admin_url }}" class="btn btn-sm btn-info btn-flat viewlink">{% trans 'View' %}</a>
+                                    {% else %}
+                                    <a href="{{ model.admin_url }}" class="btn btn-sm btn-warning btn-flat changelink">{% trans 'Change' %}</a>
+                                    {% endif %}
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {% if forloop.counter == middle|add:"0" %}
         </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            {% endif %}
+
+            {% endfor %}
+        </div>
+
     </div>
 
-    <div class="card card-primary card-outline">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-
-            <p class="card-text">
-                Some quick example text to build on the card title and make up the bulk of the card's
-                content.
-            </p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-        </div>
-    </div><!-- /.card -->
 </div>
-<!-- /.col-md-6 -->
-<div class="col-lg-6">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="m-0">Featured</h5>
-        </div>
-        <div class="card-body">
-            <h6 class="card-title">Special title treatment</h6>
-
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-
-    <div class="card card-primary card-outline">
-        <div class="card-header">
-            <h5 class="m-0">Featured</h5>
-        </div>
-        <div class="card-body">
-            <h6 class="card-title">Special title treatment</h6>
-
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+<div class="col-lg-3 col-sm-12 col-xs-12">
+    <div id="content-related">
+        <div class="module" id="recent-actions-module">
+            <h3>{% trans 'Recent actions' %}</h3>
+            <h4>{% trans 'My actions' %}</h4>
+            {% load log %}
+            {% get_admin_log 6 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% trans 'None available' %}</p>
+            {% else %}
+            <ul class="timeline">
+                {% for entry in admin_log %}
+                <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                    <i class="fa fa-database bg-aqua"></i>
+                    <div class="timeline-item">
+                        <h3 class="timeline-header">
+                            {% if entry.is_deletion or not entry.get_admin_url %}
+                            {{ entry.object_repr }}
+                            {% else %}
+                            <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                            {% endif %}
+                            {% if entry.model %}
+                            <span class="mini quiet">{% filter capfirst %}{{ entry.model }}{% endfilter %}</span>
+                            {% else %}
+                            <span class="mini quiet">{% trans 'Unknown content' %}</span>
+                            {% endif %}
+                        </h3>
+                        <div class="timeline-body">
+                            {{ entry }}
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+                <li>
+                    <i class="fa fa-clock bg-gray"></i>
+                </li>
+            </ul>
+            {% endif %}
         </div>
     </div>
 </div>
-<!-- /.col-md-6 -->
+
 {% endblock %}
