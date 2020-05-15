@@ -1,124 +1,71 @@
 {% extends "admin/base_site.html" %}
 {% load i18n static %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "jazzmin/css/app.css" %}">{% endblock %}
-
-{% block coltype %}colMS{% endblock %}
-
 {% block bodyclass %}{{ block.super }} dashboard{% endblock %}
 
 {% block content_title %} {% trans 'dashboard' %} {% endblock %}
 
 {% block breadcrumbs %}
-<ol class="breadcrumb">
-    <li><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
-    <li class="active">{% trans 'Dashboard' %}</li>
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item active">{% trans 'Dashboard' %}</li>
 </ol>
 {% endblock %}
 
 {% block content %}
-<div id="content-main">
-    {% if app_list %}
-    {% widthratio app_list|length 2 1 as middle %}
-    <div class="row">
-        <div class="col-md-9 col-sm-12 col-xs-12">
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
 
-            <div class="row">
-                <div class="col-md-6 col-sm-12 col-xs-12">
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+            </p>
 
-                {% for app in app_list %}
-                    <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">{{ app.name }}</h3>
-                    </div>
-                    <div class="box-body">
-                        <table class="table table-condensed">
-                            <tbody>
-                            {% for model in app.models %}
-                            <tr>
-                                <td>
-                                    {% if model.admin_url %}
-                                    <a href="{{ model.admin_url }}">{{ model.name }}</a>
-                                    {% else %}
-                                    {{ model.name }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <div class="btn-group pull-right">
-                                        {% if model.add_url %}
-                                        <a href="{{ model.add_url }}" class="btn btn-sm btn-success btn-flat addlink">{% trans 'Add' %}</a>
-                                        {% endif %}
-                                        {% if model.admin_url %}
-                                        {% if model.view_only %}
-                                        <a href="{{ model.admin_url }}" class="btn btn-sm btn-info btn-flat viewlink">{% trans 'View' %}</a>
-                                        {% else %}
-                                        <a href="{{ model.admin_url }}" class="btn btn-sm btn-warning btn-flat changelink">{% trans 'Change' %}</a>
-                                        {% endif %}
-                                        {% endif %}
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                {% if forloop.counter == middle|add:"0" %}
-                </div>
-                <div class="col-md-6 col-sm-12 col-xs-12">
-                {% endif %}
-
-                {% endfor %}
-                </div>
-
-            </div>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
         </div>
-        <div class="col-md-3 col-sm-12 col-xs-12">
-            <div id="content-related">
-                <div class="module" id="recent-actions-module">
-                    <h3>{% trans 'Recent actions' %}</h3>
-                    <h4>{% trans 'My actions' %}</h4>
-                    {% load log %}
-                    {% get_admin_log 6 as admin_log for_user user %}
-                    {% if not admin_log %}
-                    <p>{% trans 'None available' %}</p>
-                    {% else %}
-                    <ul class="timeline">
-                        {% for entry in admin_log %}
-                        <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
-                            <i class="fa fa-database bg-aqua"></i>
-                            <div class="timeline-item">
-                                <h3 class="timeline-header">
-                                    {% if entry.is_deletion or not entry.get_admin_url %}
-                                    {{ entry.object_repr }}
-                                    {% else %}
-                                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
-                                    {% endif %}
-                                    {% if entry.model %}
-                                    <span class="mini quiet">{% filter capfirst %}{{ entry.model }}{% endfilter %}</span>
-                                    {% else %}
-                                    <span class="mini quiet">{% trans 'Unknown content' %}</span>
-                                    {% endif %}
-                                </h3>
-                                <div class="timeline-body">
-                                    {{ entry }}
-                                </div>
-                            </div>
-                        </li>
-                        {% endfor %}
-                        <li>
-                            <i class="fa fa-clock bg-gray"></i>
-                        </li>
-                    </ul>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        {% else %}
-        <div class="row"><div class="col-md-12">{% trans "You don't have permission to view or edit anything." %}</div></div>
-        {% endif %}
-
     </div>
-    {% endblock %}
+
+    <div class="card card-primary card-outline">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+            </p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div><!-- /.card -->
 </div>
+<!-- /.col-md-6 -->
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="m-0">Featured</h5>
+        </div>
+        <div class="card-body">
+            <h6 class="card-title">Special title treatment</h6>
+
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h5 class="m-0">Featured</h5>
+        </div>
+        <div class="card-body">
+            <h6 class="card-title">Special title treatment</h6>
+
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+</div>
+<!-- /.col-md-6 -->
+{% endblock %}
