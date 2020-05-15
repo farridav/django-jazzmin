@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n static %}
+{% load i18n static jazzmin %}
 
 {% block bodyclass %}{{ block.super }} dashboard{% endblock %}
 
@@ -75,18 +75,19 @@
     <div id="content-related">
         <div class="module" id="recent-actions-module">
             <h3>{% trans 'Recent actions' %}</h3>
-            <h4>{% trans 'My actions' %}</h4>
             {% load log %}
             {% get_admin_log 6 as admin_log for_user user %}
             {% if not admin_log %}
             <p>{% trans 'None available' %}</p>
             {% else %}
-            <ul class="timeline">
+            <div class="timeline">
                 {% for entry in admin_log %}
-                <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
-                    <i class="fa fa-database bg-aqua"></i>
+                <!-- timeline item -->
+                <div>
+                    <i class="fas fa-user bg-green"></i>
                     <div class="timeline-item">
-                        <h3 class="timeline-header">
+                        <span class="time"><i class="fas fa-clock"></i> {{ entry.action_time|timesince }} Ago</span>
+                        <h3 class="timeline-header no-border">
                             {% if entry.is_deletion or not entry.get_admin_url %}
                             {{ entry.object_repr }}
                             {% else %}
@@ -102,12 +103,10 @@
                             {{ entry }}
                         </div>
                     </div>
-                </li>
+                </div>
+                <!-- END timeline item -->
                 {% endfor %}
-                <li>
-                    <i class="fa fa-clock bg-gray"></i>
-                </li>
-            </ul>
+            </div>
             {% endif %}
         </div>
     </div>
