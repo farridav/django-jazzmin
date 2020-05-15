@@ -7,13 +7,14 @@ from django.contrib.admin.views.main import PAGE_VAR
 from django.contrib.auth import get_user_model
 from django.template import Library
 from django.template.loader import get_template
+from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from .. import version
 from ..compat import get_available_apps
 from ..settings import get_settings
-from ..utils import order_with_respect_to, get_filter_id
+from ..utils import order_with_respect_to, get_filter_id, get_admin_url
 
 User = get_user_model()
 register = Library()
@@ -90,22 +91,27 @@ def get_jazzmin_settings():
 
 
 @register.simple_tag
+def admin_change_link(user):
+    return get_admin_url(user)
+
+
+@register.simple_tag
 def get_jazzmin_version():
     return version
 
 
 @register.simple_tag
 def get_user_avatar(user):
-    no_avatar = '<i class="jazzmin-avatar fa fa-user fa-inverse"></i>'
+    no_avatar = static("adminlte/img/user2-160x160.jpg")
 
     if not OPTIONS.get('user_avatar'):
-        return format_html(no_avatar)
+        return no_avatar
 
     avatar_field = getattr(user, OPTIONS['user_avatar'], None)
     if avatar_field:
-        return '<img src="{avatar}" class="img-circle" alt="User Image">'.format(avatar=avatar_field.url)
+        return avatar_field.url
 
-    return format_html(no_avatar)
+    return no_avatar
 
 
 @register.simple_tag

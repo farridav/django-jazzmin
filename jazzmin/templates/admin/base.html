@@ -5,253 +5,271 @@
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block title %}{% endblock %}</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static "adminlte/plugins/fontawesome-free/css/all.min.css" %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static "adminlte/css/adminlte.min.css" %}">
+
+    {% if jazzmin_settings.skin %}
+    <!-- TODO: Add in skin support here -->
+    {% endif %}
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     {% block extrastyle %} {% endblock %}
 
     {% block extrahead %} {% endblock %}
-    <!-- Theme style -->
-    <link rel="stylesheet" href={% static "admin/dist/css/AdminLTE.min.css" %}>
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    {% if jazzmin_settings.skin %}
-    <link rel="stylesheet" href={% static "admin/dist/css/skins/skin-"|add:jazzmin_settings.skin|add:".min.css" %}>
-    {% else %}
-    <link rel="stylesheet" href={% static "admin/dist/css/skins/_all-skins.min.css" %}>
-    {% endif %}
-
-    <link rel="stylesheet" href={% static "admin/dist/css/django.css" %}>
-
-    <link rel="apple-touch-icon" href="{% static jazzmin_settings.site_logo %}">
-    <link rel="icon" href="{% static jazzmin_settings.site_logo %}">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
-<body class="hold-transition skin-{% if jazzmin_settings.skin %}{{ jazzmin_settings.skin }}{% else %}blue{% endif %} sidebar-mini fixed">
-<div class="wrapper">
-    {% if not is_popup %}
-    <header class="main-header">
-        <!-- Logo -->
-        <a href="{% url 'admin:index' %}" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini">
-                <img src={% static jazzmin_settings.site_logo %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-            </span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg">
-                <img src={% static jazzmin_settings.site_logo %} class="user-image" alt="User Image" style="width:45px;height:45px;padding:5px;">
-                <b>{{ jazzmin_settings.site_header }}</b>
-            </span>
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
+<body class="hold-transition sidebar-mini">
 
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {% get_user_avatar request.user %}
-                            <span class="hidden-xs">{{ request.user.username }}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <!-- User image -->
+    <div class="wrapper">
 
-                            <li class="user-header">
-                                {% get_user_avatar request.user %}
-                                <p>
-                                    {{ request.user.username }}
-                                    <small>{% trans "Registered" %}： {{ request.user.date_joined }}</small>
-                                </p>
-                            </li>
-                            <!-- Menu Body -->
+        {% if not is_popup %}
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
 
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a  href="{% url 'admin:password_change' %}" class="btn warning btn-flat">{% trans 'Change password' %}</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="{% url 'admin:logout' %}" class="btn btn-danger btn-flat">{% trans 'Log out' %}</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-            <!-- search form -->
+                {% if topmenu %}
+                <!-- TODO: Add in top menu support here -->
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Home</a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <!-- SEARCH FORM -->
             {% if jazzmin_settings.search_model %}
-            <form action="{{ jazzmin_settings.search_url }}" method="GET" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="{% trans 'Search' %} {{ jazzmin_settings.search_name }}...">
-                    <span class="input-group-btn">
-                        <button type="submit" id="search-btn" class="btn btn-flat">
-                            <i class="fa fa-search"></i>
+            <form action="{{ jazzmin_settings.search_url }}" method="GET" class="form-inline ml-3">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" name="q" type="search" placeholder="{% trans 'Search' %} {{ jazzmin_settings.search_name }}..." aria-label="{% trans 'Search' %} {{ jazzmin_settings.search_name }}...">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
                         </button>
-                    </span>
+                    </div>
                 </div>
             </form>
             {% endif %}
 
-            <!-- /.search form -->
-            <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu">
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
 
-                <li class="header">{% trans 'Navigation' %}</li>
-                <li>
-                    <a id="adminIndex" href="{% url 'admin:index' %}">
-                        <i class="fa fa-tachometer-alt"></i> <span>{% trans 'Dashboard' %}</span>
+                <!-- Profile Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-user"> {{ request.user }}</i>
                     </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-header">{% trans 'Account' %}</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'admin:password_change' %}" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> {% trans 'Change password' %}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'admin:logout' %}" class="dropdown-item">
+                            <i class="fas fa-users mr-2"></i> {% trans 'Log out' %}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% admin_change_link request.user %}" class="dropdown-item dropdown-footer">See Profile</a>
+                    </div>
                 </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index3.html" class="brand-link">
+                <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">{{ jazzmin_settings.site_header }}</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="{% get_user_avatar request.user %}" width="160px" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">{{ request.user }}</a>
+                    </div>
+                </div>
 
                 {% get_menu as app_list %}
 
-                {% if jazzmin_settings.navigation_expanded %}
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-                    {% for app in app_list %}
-                        <li class="header">{{ app.name|upper }}</li>
+                        <li class="nav-item">
+                            <a href="/" class="nav-link active">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+
+                        {% if jazzmin_settings.navigation_expanded %}
+                        {% for app in app_list %}
+                        <li class="nav-header">{{ app.name }}</li>
                         {% for model in app.models %}
-                            <li>
-                                <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}">
-                                    <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-times-circle{% endif %}"></i> <span>{{ model.name }}</span>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
+                                <i class="far nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                <p>{{ model.name }}</p>
+                            </a>
+                        </li>
                         {% endfor %}
-                    {% endfor %}
-
-                {% else %}
-
-                {% for app in app_list %}
-                    <li {% if not app.admin_url %}class="treeview"{% endif %}>
-                        <a href="{% if app.admin_url %}{{app.admin_url}}{% else %}javascript:void(0){% endif %}">
-                            <i class="fa {% if app.icon %} {{app.icon}} {% else %}fa-database{% endif %}"></i>
-                            <span style="overflow: hidden; display: inline-block; vertical-align:top;">{{ app.name }}</span>
-                            {% if not app.admin_url %}
-                            <span class="pull-right-container">
-                              <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                            {% endif %}
-                        </a>
-                        {% if not app.admin_url %}
-                        <ul class="treeview-menu">
-                            {% for model in app.models %}
-                                <li>
-                                    <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}">
-                                        <i class="fa {% if model.icon %} {{ model.icon }} {% else %}fa-times-circle{% endif %}"></i>{{ model.name }}
+                        {% endfor %}
+                        {% else %}
+                        {% for app in app_list %}
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                <p>
+                                    {{ app.name|truncatechars:21 }}
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview" style="display: none;">
+                                {% for model in app.models %}
+                                <li class="nav-item">
+                                    <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
+                                        <i class="far nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                        <p>{{ model.name }}</p>
                                     </a>
                                 </li>
-                            {% endfor %}
-                        </ul>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
                         {% endif %}
-                    </li>
-                {% endfor %}
 
-                {% endif %}
-            </ul>
-        </section>
-        <!-- /.sidebar -->
-    </aside>
-    {% endif %}
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- /Main Sidebar Container -->
+        {% endif %}
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 0px;"{% endif %}>
-        <!-- Content Header (Page header) -->
-        {% block page_content %}
-        {% endblock %}
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Starter Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Starter Page</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+
+                                    <p class="card-text">
+                                        Some quick example text to build on the card title and make up the bulk of the card's
+                                        content.
+                                    </p>
+
+                                    <a href="#" class="card-link">Card link</a>
+                                    <a href="#" class="card-link">Another link</a>
+                                </div>
+                            </div>
+
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+
+                                    <p class="card-text">
+                                        Some quick example text to build on the card title and make up the bulk of the card's
+                                        content.
+                                    </p>
+                                    <a href="#" class="card-link">Card link</a>
+                                    <a href="#" class="card-link">Another link</a>
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                        <!-- /.col-md-6 -->
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="m-0">Featured</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title">Special title treatment</h6>
+
+                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h5 class="m-0">Featured</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title">Special title treatment</h6>
+
+                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col-md-6 -->
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="float-right d-none d-sm-inline">
+                Anything you want
+            </div>
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+        </footer>
     </div>
+    <!-- ./wrapper -->
 
-    <!-- /.content-wrapper -->
-    {% if not is_popup %}
-    <footer class="main-footer">
-        {% block footer %}
-        {% endblock %}
-    </footer>
-    {% endif %}
+    <!-- REQUIRED SCRIPTS -->
 
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 2.2.3 -->
-<script src={% static "admin/plugins/jQuery/jquery-2.2.3.min.js" %}></script>
-<!-- jQuery UI 1.11.4 -->
-<script src={% static "admin/plugins/jQueryUI/jquery-ui.min.js" %}></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button);
-</script>
-<!-- Bootstrap 3.3.6 -->
-<script src="//stackpath.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<!-- Slimscroll -->
-<script src={% static "admin/plugins/slimScroll/jquery.slimscroll.min.js" %}></script>
-<!-- FastClick -->
-<script src={% static "admin/plugins/fastclick/fastclick.js" %}></script>
-<!-- AdminLTE App -->
-<script src={% static "admin/dist/js/app.min.js" %}></script>
-<script>
-// use js control active status of siderbar-menu
-$(function() {
-    var menuActions = document.querySelectorAll('.sidebar-menu a')
-    for (var i in menuActions) {
-        var pathname = document.querySelector('#adminIndex').pathname
-
-        try {
-            if (window.location.pathname === pathname) {
-                menuActions[i].parentNode.setAttribute('class', 'active')
-                break
-            }
-
-            if (window.location.href.indexOf(menuActions[i].href) !== -1) {
-                if (menuActions[i].href===window.location.origin + pathname) {
-                    continue
-                }
-                console.log('menu matched.', window.location.href, menuActions[i].href);
-                menuActions[i].parentNode.setAttribute('class', 'active');
-                if (menuActions[i].parentNode.parentNode.getAttribute('class') !== 'sidebar-menu') {
-                    menuActions[i].parentNode.parentNode.setAttribute('class', 'treeview-menu menu-open');
-                    menuActions[i].parentNode.parentNode.parentNode.setAttribute('class', 'treeview active');
-                }
-                break
-            }
-        } catch (e) {
-            console.log(window.location.href, menuActions[i].href, e)
-        }
-    }
-
-    var topMenuActions = document.querySelectorAll('.top-menu a')
-    for (var j in topMenuActions) {
-        if (window.location.href.indexOf(topMenuActions[j].href) !== -1) {
-            topMenuActions[j].parentNode.setAttribute('class', 'active');
-            console.log('top menu matched.', window.location.href, topMenuActions[j].href);
-        }
-    }
-})
-</script>
-
-{% block extrajs %}{% endblock %}
-
+    <!-- jQuery -->
+    <script src="{% static "adminlte/plugins/jquery/jquery.min.js" %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static "adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static "adminlte/js/adminlte.min.js" %}"></script>
 </body>
 </html>

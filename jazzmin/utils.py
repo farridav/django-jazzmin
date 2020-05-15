@@ -1,4 +1,7 @@
 import logging
+from urllib.parse import urlencode
+
+from django.db.models.base import ModelBase
 
 from jazzmin.compat import reverse, NoReverseMatch
 
@@ -20,16 +23,34 @@ def order_with_respect_to(first, reference):
     return [y for x, y in sorted(zip(ranking, first), key=lambda x: x[0])]
 
 
-def get_admin_url(model):
+def get_admin_url(instance, **kwargs):
     """
-    Return the admin URL for the given <app>.<model>
+    Return the admin URL for the given instance, model class or <app>/<model> string
     """
+    url = '#'
+
     try:
-        app_label, model_name = model.split('.')
-        return reverse('admin:{app_label}_{model_name}_changelist'.format(app_label=app_label, model_name=model_name))
+
+        if type(instance) == str:
+            app_label, model_name = instance.split('.')
+            url = reverse('admin:{app_label}_{model_name}_changelist'.format(
+                app_label=app_label, model_name=model_name
+            ))
+        elif type(instance) == ModelBase:
+            app_label, model_name = instance._meta.app_label, instance._meta.model_name
+            url = reverse("admin:{app_label}_{model_name}_changelist".format(
+                app_label=app_label, model_name=model_name
+            ))
+        else:
+            app_label, model_name = instance._meta.app_label, instance._meta.model_name
+            url = reverse("admin:{app_label}_{model_name}_change".format(
+                app_label=app_label, model_name=model_name
+            ), args=(instance.pk,))
+
     except NoReverseMatch:
-        logger.error('Could not reverse {model}, it must be in <app_label>.<model_name> format'.format(model=model))
-        return None
+        logger.error(f'Couldnt reverse url from {instance}')
+
+    return f'{url}?{urlencode(kwargs)}'
 
 
 def get_filter_id(spec):

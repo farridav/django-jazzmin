@@ -38,7 +38,7 @@ Setup & configuration
         'site_header': 'Django',
 
         # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-        'site_logo': 'admin/dist/img/default-log.svg',
+        'site_logo': 'jazzmin/img/default-log.svg',
 
         # Welcome text on the login screen
         'welcome_sign': 'Welcome',
