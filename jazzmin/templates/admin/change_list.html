@@ -3,7 +3,7 @@
 
 {% block extrastyle %}
 {{ block.super }}
-<link rel="stylesheet" href="{% static "admin/plugins/datatables/dataTables.bootstrap.css" %}">
+<link rel="stylesheet" href="{% static "adminlte/plugins/datatables/dataTables.bootstrap.css" %}">
 {% if cl.formset or action_form %}
 <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 {% endif %}
@@ -102,8 +102,7 @@
 {% endblock %}
 
 {% block extrajs %}
-<script src="{% static "admin/plugins/datatables/jquery.dataTables.min.js" %}"></script>
-<script src="{% static "admin/plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+<script src="{% static "adminlte/plugins/datatables/jquery.dataTables.min.js" %}"></script>
 
 <script>
     // var selectors = document.querySelector('#changelist-search').querySelectorAll('select');
