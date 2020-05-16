@@ -15,13 +15,13 @@
 {% endif %}
 {% if show_save_as_new %}
 <div class="form-group">
-    <input type="submit" class="btn btn-primary"
+    <input type="submit" class="btn btn-outline-info"
            value="{% trans 'Save as new' %}" name="_saveasnew">
 </div>
 {% endif %}
 {% if show_save_and_add_another %}
 <div class="form-group">
-    <input type="submit" class="btn btn-primary form-control"
+    <input type="submit" class="btn btn-outline-info form-control"
            value="{% trans 'Save and add another' %}"
            name="_addanother">
 </div>
@@ -29,14 +29,14 @@
 {% if show_save_and_continue %}
 <div class="form-group">
     <input type="submit"
-           class="btn btn-primary form-control"
+           class="btn btn-outline-info form-control"
            value="{% if can_change %}{% trans 'Save and continue editing' %}{% else %}{% trans 'Save and view' %}{% endif %}"
            name="_continue"></div>
 {% endif %}
 {% if show_close %}
 <div class="form-group"><a
         href="{% url opts|admin_urlname:'changelist' %}"
-        class="btn btn-danger form-control">{% trans 'Close' %}</a>
+        class="btn btn-outline-danger form-control">{% trans 'Close' %}</a>
 </div>
 {% endif %}
 {% endblock %}
