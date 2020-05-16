@@ -1,21 +1,29 @@
 {% load i18n static %}
 {% if result_hidden_fields %}
-<div class="hiddenfields">{# DIV for HTML validation #}
+<div class="hiddenfields">
     {% for item in result_hidden_fields %}{{ item }}{% endfor %}
 </div>
 {% endif %}
 {% if results %}
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Responsive Hover Table</h3>
 
-<div class="dataTables_wrapper form-inline dt-bootstrap">
-    <div class="row">
-        <div class="col-sm-6"></div>
-        <div class="col-sm-6"></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+            <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body table-responsive p-0">
+            <table class="table table-striped">
                 <thead>
-                <tr role="row">
+                <tr>
                     {% for header in result_headers %}
                     <th {% if header.sortable %}
                         {% if header.sorted %}
@@ -31,8 +39,19 @@
                         {% if forloop.counter0 == 0 %}
                         class="djn-checkbox-select-all"
                         {% endif %}
-                        tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending"><div class="text">{% if header.sortable %}<a href="{{ header.url_primary }}">
-                        {{ header.text|capfirst }}</a>{% else %}<span>{{ header.text|capfirst }}</span>{% endif %} {% if header.sorted %}<a href="{{ header.url_remove }}"><div style="margin-top: .2em;" class="fa fa-times pull-right"></div></a>{% endif %}</div>
+                        tabindex="0" rowspan="1" colspan="1">
+                        <div class="text">
+                            {% if header.sortable %}
+                            <a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>
+                            {% else %}
+                            <span>{{ header.text|capfirst }}</span>
+                            {% endif %}
+                            {% if header.sorted %}
+                            <a href="{{ header.url_remove }}">
+                                <div style="margin-top: .2em;" class="fa fa-times float-right"></div>
+                            </a>
+                            {% endif %}
+                        </div>
                     </th>
                     {% endfor %}
                 </tr>
@@ -47,5 +66,6 @@
             </table>
         </div>
     </div>
+
 </div>
 {% endif %}

@@ -20,7 +20,7 @@
               {% if inline_admin_form.show_url %}<a href="{{ inline_admin_form.absolute_url }}">{% trans "View on site" %}</a>{% endif %}
             </h3>
             {% if inline_admin_formset.formset.can_delete and inline_admin_form.original %}
-            <span class="box-tools pull-right delete">
+            <span class="box-tools float-right delete">
               {{ inline_admin_form.deletion_field.field }} {{ inline_admin_form.deletion_field.label_tag }}
             </span>
             {% endif %}
