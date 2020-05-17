@@ -47,17 +47,17 @@
 
         {% block field_sets %}
             <div class="col-12">
-                <div class="card card-primary card-tabs">
-                    <div class="card-header p-0 pt-1">
+                <div class="card card-primary card-outline card-outline-tabs">
+                    <div class="card-header p-0 border-bottom-0">
                         <ul class="nav nav-tabs" role="tablist">
                             {% for fieldset in adminform %}
                                 <li class="nav-item">
-                                    <a id="{{ fieldset.name|default:"General"|slugify }}-tab" class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls={{ fieldset.name|default:"General"|slugify }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:"General"|slugify }}">{{ fieldset.name|default:"General" }}</a>
+                                    <a id="{{ fieldset.name|default:"General"|slugify }}-tab" class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls={{ fieldset.name|default:"General"|slugify }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:"General"|slugify }}">{{ fieldset.name|default:"General"|title }}</a>
                                 </li>
                             {% endfor %}
                             {% for inline_admin_formset in inline_admin_formsets %}
                                 <li class="na">
-                                    <a id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab" class="nav-link" data-toggle="pill" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" aria-selected="false" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">{{ inline_admin_formset.opts.verbose_name_plural }}</a>
+                                    <a id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab" class="nav-link" data-toggle="pill" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" aria-selected="false" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">{{ inline_admin_formset.opts.verbose_name_plural|title }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
