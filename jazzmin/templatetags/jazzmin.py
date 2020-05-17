@@ -192,5 +192,4 @@ def debug(value):
     """
     Add in a breakpoint here and use filter in templates for debugging ;)
     """
-    import ipdb; ipdb.set_trace()  # NOQA E702
     return type(value)

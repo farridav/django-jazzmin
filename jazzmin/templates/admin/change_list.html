@@ -3,6 +3,8 @@
 
 {% block extrastyle %}
 {{ block.super }}
+<link rel="stylesheet" href="{% static 'adminlte/plugins/select2/css/select2.min.css' %}">
+
 {% if cl.formset or action_form %}
 <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 {% endif %}
@@ -93,4 +95,27 @@
     </div>
     <br class="clear" />
 </div>
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static 'adminlte/plugins/select2/js/select2.min.js' %}"></script>
+    <script>
+        $.fn.search_filters = function () {
+            $(this).change(function () {
+                var $field = $(this);
+                var $option = $field.find('option:selected');
+                var select_name = $option.data('name');
+                if (select_name) {
+                    $field.attr('name', select_name);
+                } else {
+                    $field.removeAttr('name');
+                }
+            });
+            $(this).trigger('change');
+        };
+
+        var $ele = $('.search-filter');
+        $ele.search_filters();
+        $ele.select2();
+    </script>
 {% endblock %}

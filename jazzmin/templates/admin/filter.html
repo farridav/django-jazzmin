@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="form-group">
-    <select class="form-control select2 select2-hidden-accessible search-filter" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
+    <select class="form-control search-filter" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
         <option value="">{{ title }}</option>
         <option value="">---------</option>
         {% for choice in choices %}

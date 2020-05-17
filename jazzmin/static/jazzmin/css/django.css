@@ -66,3 +66,17 @@ tr.djn-tr > .original {
 .tab-pane {
     overflow-x: auto;
 }
+
+table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after, table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc_disabled::after, table.dataTable thead .sorting_desc_disabled::after {
+    right: 0.5em;
+    content: "\2193";
+}
+
+
+.select2-container .select2-selection--single {
+    height: 40px !important;
+}
+
+#changelist-search .form-group {
+    margin-right: .5em;
+}

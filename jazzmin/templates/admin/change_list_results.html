@@ -1,4 +1,5 @@
 {% load i18n static %}
+
 {% if result_hidden_fields %}
 <div class="hiddenfields">
     {% for item in result_hidden_fields %}{{ item }}{% endfor %}
@@ -7,19 +8,6 @@
 {% if results %}
 <div class="col-sm-12">
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Responsive Hover Table</h3>
-
-            <div class="card-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="card-body table-responsive p-0">
             <table class="table table-striped">
                 <thead>
@@ -48,8 +36,13 @@
                             {% endif %}
                             {% if header.sorted %}
                             <a href="{{ header.url_remove }}">
-                                <div style="margin-top: .2em;" class="fa fa-times float-right"></div>
+                                <div style="margin-top: .2em;" class="fa fa-times float-right"> </div>
                             </a>
+                            {% if header.ascending %}
+                            <i style="margin-top: .2em;" class="fa fa-sort-alpha-down"> </i>
+                            {% else %}
+                            <i style="margin-top: .2em;" class="fa fa-sort-alpha-up"> </i>
+                            {% endif %}
                             {% endif %}
                         </div>
                     </th>
