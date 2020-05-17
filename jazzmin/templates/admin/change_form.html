@@ -46,43 +46,40 @@
         {% endif %}
 
         {% block field_sets %}
-            <div class="card card-primary card-outline card-outline-tabs">
-                <div class="card-header p-0 border-bottom-0">
-                    <ul class="nav nav-tabs" role="tablist">
-                        {% for fieldset in adminform %}
-                        <li class="nav-item{% if forloop.first %} active{% endif %}">
-                            <a class="nav-link active" data-toggle="pill" href="#{{ fieldset.name|default:"General"|slugify }}" role="tab">
-                                {{ fieldset.name|default:"General" }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                        {% for inline_admin_formset in inline_admin_formsets %}
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="pill" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" role="tab">
-                                {{ inline_admin_formset.opts.verbose_name_plural }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <div class="card-body">
-
-                    <div class="tab-content">
-                        {% for fieldset in adminform %}
-                        <div class="tab-pane fade{% if forloop.first %} active show{% endif %}" id="{{ fieldset.name|default:"General"|slugify }}" role="tabpanel">
-                            {% include "admin/includes/fieldset.html" %}
+            <div class="col-12">
+                <div class="card card-primary card-tabs">
+                    <div class="card-header p-0 pt-1">
+                        <ul class="nav nav-tabs" role="tablist">
+                            {% for fieldset in adminform %}
+                                <li class="nav-item">
+                                    <a id="{{ fieldset.name|default:"General"|slugify }}-tab" class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls={{ fieldset.name|default:"General"|slugify }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:"General"|slugify }}">{{ fieldset.name|default:"General" }}</a>
+                                </li>
+                            {% endfor %}
+                            {% for inline_admin_formset in inline_admin_formsets %}
+                                <li class="na">
+                                    <a id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab" class="nav-link" data-toggle="pill" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" aria-selected="false" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">{{ inline_admin_formset.opts.verbose_name_plural }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <br>
+                    <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-one-tabContent">
+                            {% for fieldset in adminform %}
+                                <div id="{{ fieldset.name|default:"General"|slugify }}" class="tab-pane fade{% if forloop.first %} active show{% endif %}" role="tabpanel" aria-labelledby="{{ fieldset.name|default:"General"|slugify }}-tab">
+                                    {% include "admin/includes/fieldset.html" %}
+                                </div>
+                            {% endfor %}
+                            {% for inline_admin_formset in inline_admin_formsets %}
+                                <div id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" class="tab-pane fade" role="tabpanel" aria-labelledby="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab">
+                                    {% include inline_admin_formset.opts.template %}
+                                </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-                        {% for inline_admin_formset in inline_admin_formsets %}
-                        <div class="tab-pane fade" id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" role="tabpanel">
-                            {% include inline_admin_formset.opts.template %}
-                        </div>
-                        {% endfor %}
                     </div>
                 </div>
-                <!-- /.card -->
             </div>
+
         {% endblock %}
 
 
@@ -93,7 +90,7 @@
         {% block after_related_objects %}{% endblock %}
 
         {% block submit_buttons_bottom %}
-        <div class="row col-8 float-right">
+        <div class="row col-6 float-right">
             {% submit_row %}
         </div>
         {% endblock %}
