@@ -76,18 +76,25 @@
                         {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
                     </div>
 
-                    <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
-                        {% if cl.formset %}
-                        <div>{{ cl.formset.management_form }}</div>
-                        {% endif %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+                                {% if cl.formset %}
+                                <div>{{ cl.formset.management_form }}</div>
+                                {% endif %}
 
-                        {% block result_list %}
-                        {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
-                        {% result_list cl %}
-                        {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
-                        {% endblock %}
+                                {% block result_list %}
+                                {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+                                {% result_list cl %}
+                                {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+                                {% endblock %}
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
                         {% block pagination %}{% pagination cl %}{% endblock %}
-                    </form>
+                    </div>
+
                 </div>
             </div>
         </div>

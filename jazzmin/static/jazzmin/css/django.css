@@ -80,3 +80,7 @@ table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after
 #changelist-search .form-group {
     margin-right: .5em;
 }
+
+.table tbody tr th {
+    padding-left: .75rem !important;
+}
