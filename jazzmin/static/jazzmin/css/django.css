@@ -84,3 +84,7 @@ table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after
 .table tbody tr th {
     padding-left: .75rem !important;
 }
+
+.select2.select2-container {
+    min-width: 150px;
+}
