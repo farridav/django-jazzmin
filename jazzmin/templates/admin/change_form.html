@@ -46,36 +46,49 @@
         {% endif %}
 
         {% block field_sets %}
-            <ul class="nav nav-tabs" role="tablist">
-                {% for fieldset in adminform %}
-                    <li class="nav-link{% if forloop.first %} active{% else %} d-none d-sm-inline-block{% endif %}"><a data-toggle="pill" role="tab" href="#{{ fieldset.name|default:"General"|slugify }}">{{ fieldset.name|default:"General" }}</a></li>
-                {% endfor %}
-                {% for inline_admin_formset in inline_admin_formsets %}
-                    <li><a data-toggle="tab" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">{{ inline_admin_formset.opts.verbose_name_plural }}</a></li>
-                {% endfor %}
-            </ul>
-            <br>
-            <div class="tab-content">
-                {% for fieldset in adminform %}
-                    <div id="{{ fieldset.name|default:"General"|slugify }}" class="tab-pane fade{% if forloop.first %} active show{% endif %}" role="tabpanel">
-                        {% include "admin/includes/fieldset.html" %}
+            <div class="card card-primary card-outline card-outline-tabs">
+                <div class="card-header p-0 border-bottom-0">
+                    <ul class="nav nav-tabs" role="tablist">
+                        {% for fieldset in adminform %}
+                        <li class="nav-item{% if forloop.first %} active{% endif %}">
+                            <a class="nav-link active" data-toggle="pill" href="#{{ fieldset.name|default:"General"|slugify }}" role="tab">
+                                {{ fieldset.name|default:"General" }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {% for inline_admin_formset in inline_admin_formsets %}
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" role="tab">
+                                {{ inline_admin_formset.opts.verbose_name_plural }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="tab-content">
+                        {% for fieldset in adminform %}
+                        <div class="tab-pane fade{% if forloop.first %} active show{% endif %}" id="{{ fieldset.name|default:"General"|slugify }}" role="tabpanel">
+                            {% include "admin/includes/fieldset.html" %}
+                        </div>
+                        {% endfor %}
+                        {% for inline_admin_formset in inline_admin_formsets %}
+                        <div class="tab-pane fade" id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" role="tabpanel">
+                            {% include inline_admin_formset.opts.template %}
+                        </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
-                {% for inline_admin_formset in inline_admin_formsets %}
-                    <div id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" class="tab-pane">
-                        {% include inline_admin_formset.opts.template %}
-                    </div>
-                {% endfor %}
+                </div>
+                <!-- /.card -->
             </div>
         {% endblock %}
 
+
         {% block after_field_sets %}{% endblock %}
 
-        {% block inline_field_sets %}
-        {% for inline_admin_formset in inline_admin_formsets %}
-            {% include inline_admin_formset.opts.template %}
-        {% endfor %}
-        {% endblock %}
+        {% block inline_field_sets %}{% endblock %}
 
         {% block after_related_objects %}{% endblock %}
 
