@@ -8,7 +8,7 @@
 {% block breadcrumbs %}
 <ol class="breadcrumb float-sm-right">
     <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
-    <li class="breadcrumb-item active">{% trans 'Dashboard' %}</li>
+    <li class="breadcrumb-item">{% trans 'Dashboard' %}</li>
 </ol>
 {% endblock %}
 
@@ -84,7 +84,13 @@
                 {% for entry in admin_log %}
                 <!-- timeline item -->
                 <div>
-                    <i class="fas fa-user bg-green"></i>
+                    {% if entry.is_change %}
+                        <i class="fas fa-edit bg-green"></i>
+                    {% elif entry.is_deletion %}
+                        <i class="fas fa-trash bg-red"></i>
+                    {% elif entry.is_addition %}
+                        <i class="fas fa-plus bg-blue"></i>
+                    {% endif %}
                     <div class="timeline-item">
                         <span class="time"><i class="fas fa-clock"></i> {{ entry.action_time|timesince }} Ago</span>
                         <h3 class="timeline-header no-border">
@@ -106,6 +112,9 @@
                 </div>
                 <!-- END timeline item -->
                 {% endfor %}
+                <div>
+                    <i class="fa fa-clock bg-gray"></i>
+                </div>
             </div>
             {% endif %}
         </div>
