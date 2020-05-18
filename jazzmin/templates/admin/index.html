@@ -46,9 +46,9 @@
                                     {% endif %}
                                     {% if model.admin_url %}
                                     {% if model.view_only %}
-                                    <a href="{{ model.admin_url }}" class="btn btn-sm btn-info btn-flat viewlink">{% trans 'View' %}</a>
+                                    <a href="{{ model.admin_url }}" class="btn btn-sm btn-outline-info btn-flat viewlink">{% trans 'View' %}</a>
                                     {% else %}
-                                    <a href="{{ model.admin_url }}" class="btn btn-sm btn-warning btn-flat changelink">{% trans 'Change' %}</a>
+                                    <a href="{{ model.admin_url }}" class="btn btn-sm btn-outline-info btn-flat changelink">{% trans 'Change' %}</a>
                                     {% endif %}
                                     {% endif %}
                                 </div>
