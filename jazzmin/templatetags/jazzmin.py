@@ -121,27 +121,27 @@ def jazzmin_paginator_number(cl, i):
     """
     if i == '.':
         return format_html(
-            '<li class="paginate_button">'
-            '<a href="javascript:void(0);" aria-controls="example2" data-dt-idx="3" tabindex="0">… </a>'
+            '<li class="page-item">'
+            '<a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>'
             '</li>'
         )
 
     elif i == cl.page_num:
         return format_html(("""
-            <li class="paginate_button active">
-            <a href="javascript:void(0);" aria-controls="example2" data-dt-idx="3" tabindex="0">{num}
+            <li class="page-item active">
+            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">{num}
             </a>
             </li>
         """.format(num=i + 1)))
 
     else:
         query_string = cl.get_query_string({PAGE_VAR: i})
-        classes = mark_safe(' class="end"' if i == cl.paginator.num_pages - 1 else '')
+        end = mark_safe('end' if i == cl.paginator.num_pages - 1 else '')
         return format_html(("""
-            <li class="paginate_button">
-            <a href="{query_string}" {classes} aria-controls="example2" data-dt-idx="3" tabindex="0">{num}</a>
+            <li class="page-item">
+            <a href="{query_string}" class="page-link {end}" data-dt-idx="3" tabindex="0">{num}</a>
             </li>
-        """).format(num=i + 1, query_string=query_string, classes=classes))
+        """).format(num=i + 1, query_string=query_string, end=end))
 
 
 @register.simple_tag
@@ -192,5 +192,4 @@ def debug(value):
     """
     Add in a breakpoint here and use filter in templates for debugging ;)
     """
-    import ipdb; ipdb.set_trace()  # NOQA E702
     return type(value)
