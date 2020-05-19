@@ -45,11 +45,11 @@
         {% endif %}
 
         {% block field_sets %}
-            <div class="col-10">
+            <div class="col-9">
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <div class="card-title">
-                            {{title}}{% block pretitle %}{% endblock %}
+                            {{ title }}{% block pretitle %}{% endblock %}
                         </div>
                     </div>
                     <div class="card-body">
@@ -90,7 +90,7 @@
         {% block after_related_objects %}{% endblock %}
 
         {% block submit_buttons_bottom %}
-        <div class="col-2">
+        <div class="col-3">
             {% submit_row %}
             {% block object-tools %}
                 {% if change %}
