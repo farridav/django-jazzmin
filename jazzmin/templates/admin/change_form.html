@@ -6,6 +6,11 @@
 {{ media }}
 {% endblock %}
 
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "jazzmin/css/app.css" %}">
+{% endblock %}
+
 {% block coltype %}colM{% endblock %}
 
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
@@ -22,21 +27,10 @@
 {% endblock %}
 {% endif %}
 
+{% block content_title %} {{ opts.verbose_name_plural|capfirst }} {% endblock %}
+
 {% block content %}
-<div class="col-10"></div>
-<div id="history-link" class="col-2 float-sm-right">
-    {% block object-tools %}
-        {% if change %}
-            {% if not is_popup %}
-                <ul class="object-tools">
-                    {% block object-tools-items %}
-                        {% change_form_object_tools %}
-                    {% endblock %}
-                </ul>
-            {% endif %}
-        {% endif %}
-    {% endblock %}
-</div>
+
 <div id="content-main" class="col-md-12">
     <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.model_name }}_form" novalidate>{% csrf_token %}{% block form_top %}{% endblock %}
         <div class="row">
@@ -51,9 +45,14 @@
         {% endif %}
 
         {% block field_sets %}
-            <div class="col-8">
-                <div class="card card-primary card-outline card-outline-tabs">
-                    <div class="card-header p-0 border-bottom-0">
+            <div class="col-10">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <div class="card-title">
+                            {{title}}{% block pretitle %}{% endblock %}
+                        </div>
+                    </div>
+                    <div class="card-body">
                         <ul class="nav nav-tabs" role="tablist">
                             {% for fieldset in adminform %}
                                 <li class="nav-item">
@@ -61,14 +60,12 @@
                                 </li>
                             {% endfor %}
                             {% for inline_admin_formset in inline_admin_formsets %}
-                                <li class="na">
+                                <li class="nav-item">
                                     <a id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab" class="nav-link" data-toggle="pill" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" aria-selected="false" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">{{ inline_admin_formset.opts.verbose_name_plural|title }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
-                    </div>
-                    <br>
-                    <div class="card-body">
+
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             {% for fieldset in adminform %}
                                 <div id="{{ fieldset.name|default:"General"|slugify }}" class="tab-pane fade{% if forloop.first %} active show{% endif %}" role="tabpanel" aria-labelledby="{{ fieldset.name|default:"General"|slugify }}-tab">
@@ -86,7 +83,6 @@
             </div>
         {% endblock %}
 
-
         {% block after_field_sets %}{% endblock %}
 
         {% block inline_field_sets %}{% endblock %}
@@ -94,8 +90,19 @@
         {% block after_related_objects %}{% endblock %}
 
         {% block submit_buttons_bottom %}
-        <div class="col-4">
+        <div class="col-2">
             {% submit_row %}
+            {% block object-tools %}
+                {% if change %}
+                    {% if not is_popup %}
+                        <ul class="object-tools">
+                            {% block object-tools-items %}
+                                {% change_form_object_tools %}
+                            {% endblock %}
+                        </ul>
+                    {% endif %}
+                {% endif %}
+            {% endblock %}
         </div>
         {% endblock %}
 

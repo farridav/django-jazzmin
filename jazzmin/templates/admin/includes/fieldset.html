@@ -1,7 +1,7 @@
-<fieldset class="box box-solid module aligned {{ fieldset.classes }}">
-    <div {% if fieldset.name %}class="box-body"{% endif %}>
+<fieldset class="card {{ fieldset.classes }}">
+    <div {% if fieldset.name %}class="card-body"{% endif %}>
         {% for line in fieldset %}
-        <div class="container-fluid form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
+        <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
             <div class="row">
                 {% for field in line %}
                     <label class="col-sm-2 text-right">
@@ -10,9 +10,9 @@
                         <span class="text-red">* </span>
                         {% endif %}
                     </label>
-                    <div class="col-sm-7" {% if not line.fields|length_is:'1' %} class="col-sm-10 fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}"{% elif field.is_checkbox %} class="col-sm-10 checkbox-row"{% endif %}>
+                    <div class="col-sm-10 {% if not line.fields|length_is:'1' %} fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}{% elif field.is_checkcard %} checkcard-row{% endif %}">
                         {% if field.is_readonly %}
-                        <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
+                            <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
                         {% else %}
                             {{ field.field }}
                         {% endif %}
@@ -20,7 +20,7 @@
                             {% if not line.fields|length_is:'1' and not field.is_readonly %}{{ field.errors }}{% endif %}
                         </div>
                         {% if field.field.help_text %}
-                        <div class="help-block">{{ field.field.help_text|safe }}</div>
+                            <div class="help-block">{{ field.field.help_text|safe }}</div>
                         {% endif %}
                         <div class="help-block text-red">
                             {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
