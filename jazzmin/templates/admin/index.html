@@ -82,7 +82,6 @@
             {% else %}
             <div class="timeline">
                 {% for entry in admin_log %}
-                <!-- timeline item -->
                 <div>
                     {% if entry.is_change %}
                         <i class="fas fa-edit bg-green"></i>
@@ -110,7 +109,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- END timeline item -->
                 {% endfor %}
                 <div>
                     <i class="fa fa-clock bg-gray"></i>
