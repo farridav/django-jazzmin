@@ -92,3 +92,7 @@ table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after
 .user-profile {
     font-size: 2.4em;
 }
+
+.date-heirarchy {
+    margin-right: 8px;
+}
