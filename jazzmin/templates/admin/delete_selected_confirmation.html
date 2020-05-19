@@ -24,14 +24,14 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="box box-danger">
-            <div class="box-header with-border">
-                <h4 class="box-title">
+        <div class="card card-danger">
+            <div class="card-header with-border">
+                <h4 class="card-title">
                     {% trans 'Delete multiple objects' %}
                 </h4>
             </div>
 
-            <div class="box-body">
+            <div class="card-body">
                 <div id="content-main">
                     {% if perms_lacking %}
                     <p>{% blocktrans %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktrans %}</p>
