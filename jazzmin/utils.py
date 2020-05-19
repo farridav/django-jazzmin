@@ -55,3 +55,22 @@ def get_admin_url(instance, **kwargs):
 
 def get_filter_id(spec):
     return getattr(spec, 'field_path', getattr(spec, 'parameter_name', spec.title))
+
+
+def get_custom_url(url):
+    """
+    Take in a custom url, and try to reverse it
+    """
+    if not url:
+        logger.warning('No url supplied in custom link')
+        return '#'
+
+    if '/' in url:
+        return url
+    try:
+        url = reverse(url)
+    except NoReverseMatch:
+        logger.warning('Couldnt reverse {url}'.format(url=url))
+        url = '#' + url
+
+    return url

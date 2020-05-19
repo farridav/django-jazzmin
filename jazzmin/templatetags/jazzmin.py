@@ -14,7 +14,7 @@ from django.utils.safestring import mark_safe
 from .. import version
 from ..compat import get_available_apps
 from ..settings import get_settings
-from ..utils import order_with_respect_to, get_filter_id, get_admin_url
+from ..utils import order_with_respect_to, get_filter_id, get_admin_url, get_custom_url
 
 User = get_user_model()
 register = Library()
@@ -66,7 +66,7 @@ def get_menu(context):
 
             allowed_models.append({
                 'name': custom_link.get('name'),
-                'admin_url': custom_link.get('url'),
+                'admin_url': get_custom_url(custom_link.get('url')),
                 'icon': custom_link.get('icon'),
             })
 
@@ -192,5 +192,4 @@ def debug(value):
     """
     Add in a breakpoint here and use filter in templates for debugging ;)
     """
-    import ipdb; ipdb.set_trace()
     return type(value)
