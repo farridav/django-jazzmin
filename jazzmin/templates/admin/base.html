@@ -34,9 +34,7 @@
     <div class="wrapper">
 
         {% if not is_popup %}
-        <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -50,7 +48,6 @@
                 {% endif %}
             </ul>
 
-            <!-- SEARCH FORM -->
             {% if jazzmin_settings.search_model %}
             <form action="{{ jazzmin_settings.search_url }}" method="GET" class="form-inline ml-3">
                 <div class="input-group input-group-sm">
@@ -64,10 +61,8 @@
             </form>
             {% endif %}
 
-            <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
 
-                <!-- Profile Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-user"> {{ request.user }}</i>
@@ -88,19 +83,14 @@
                 </li>
             </ul>
         </nav>
-        <!-- /.navbar -->
 
-        <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
             <a href="{% url 'admin:index' %}" class="brand-link">
                 <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">{{ jazzmin_settings.site_header }}</span>
             </a>
 
-            <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
                         {% if jazzmin_settings.user_avatar %}
@@ -116,7 +106,6 @@
 
                 {% get_menu as app_list %}
 
-                <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat nav-compact" data-widget="treeview" role="menu" data-accordion="false">
 
@@ -165,22 +154,16 @@
 
                     </ul>
                 </nav>
-                <!-- /.sidebar-menu -->
             </div>
-            <!-- /.sidebar -->
         </aside>
-        <!-- /Main Sidebar Container -->
         {% endif %}
 
-        <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 0px;"{% endif %}>
             {% block page_content %}
             {% endblock %}
         </div>
-        <!-- /.content-wrapper -->
 
         {% if not is_popup %}
-        <!-- Main Footer -->
         <footer class="main-footer">
             {% block footer %}
             {% endblock %}
@@ -188,9 +171,6 @@
         {% endif %}
 
     </div>
-    <!-- ./wrapper -->
-
-    <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
     <script src="{% static "adminlte/plugins/jquery/jquery.min.js" %}"></script>

@@ -11,7 +11,7 @@
     <title>{{ jazzmin_settings.site_title }} | {% trans 'Log in again' %}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
+    <!-- Bootstrap 4.5.0 -->
     <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href=//use.fontawesome.com/releases/v5.13.0/css/all.css">
@@ -35,16 +35,13 @@
         </a>
     </div>
 
-    <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">{{ jazzmin_settings.welcome_sign }}</p>
         <p class="text-center">{% trans "Thanks for spending some quality time with the Web site today." %}</p>
         <p class="text-center"><a class="btn btn-primary" href="{% url 'admin:index' %}">{% trans 'Log in again' %}</a>
         </p>
     </div>
-    <!-- /.login-box-body -->
 </div>
-<!-- /.login-box -->
 
 </body>
 </html>

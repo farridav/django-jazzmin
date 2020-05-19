@@ -6,25 +6,21 @@
 {% block title %}{{ title }} | {{ jazzmin_settings.site_title }}{% endblock %}
 
 {% block page_content %}
-<!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">{% block content_title %}{% endblock %}</h1>
-            </div><!-- /.col -->
+            </div>
             <div class="col-sm-6">
                 {% block breadcrumbs %}{% endblock %}
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+            </div>
+        </div>
+    </div>
 </div>
-<!-- /.content-header -->
 
-<!-- Main content -->
 <div class="content">
     <div class="container-fluid">
-        <!-- Content -->
         <section id="content" class="content">
             {% block messages %}
             {% for message in messages %}
@@ -55,19 +51,16 @@
                 {% block content %} {% endblock %}
             </div>
         </section>
-        <!-- END Content -->
-    </div><!-- /.container-fluid -->
+    </div>
 </div>
-<!-- /.content -->
 
 {% endblock %}
 
 {% block footer %}
-<!-- To the right -->
 <div class="float-right d-none d-sm-inline">
     <b>Jazzmin Version</b> {% get_jazzmin_version %}
 </div>
-<!-- Default to the left -->
+
 <strong>Copyright &copy; {% now 'Y' %} {{ jazzmin_settings.copyright }}.</strong> All rights reserved.
 {% endblock %}
 
