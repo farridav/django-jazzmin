@@ -1,13 +1,17 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+
+try:
+    from django.conf.urls import url, include
+except ImportError:
+    from django.conf.urls.defaults import url, include
 
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('make_messages/', views.make_messages, name='make_messages'),
+    url(r'admin/', admin.site.urls),
+    url(r'make_messages/', views.make_messages, name='make_messages'),
 ]
 
 if settings.DEBUG:
@@ -18,6 +22,6 @@ if 'debug_toolbar' in settings.INSTALLED_APPS:
     try:
         import debug_toolbar
 
-        urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
+        urlpatterns.append(url(r'__debug__/', include(debug_toolbar.urls)))
     except ImportError:
         pass

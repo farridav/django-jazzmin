@@ -48,9 +48,9 @@ def get_admin_url(instance, **kwargs):
             ), args=(instance.pk,))
 
     except NoReverseMatch:
-        logger.error(f'Couldnt reverse url from {instance}')
+        logger.error('Couldnt reverse url from {instance}'.format(instance=instance))
 
-    return f'{url}?{urlencode(kwargs)}'
+    return '{url}?{params}'.format(url=url, params=urlencode(kwargs))
 
 
 def get_filter_id(spec):

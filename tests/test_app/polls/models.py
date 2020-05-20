@@ -18,7 +18,7 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"{self.poll.text[:25]} - {self.choice_text[:25]}"
+        return self.poll.text[:25] + "-" + self.choice_text[:25]
 
 
 class Vote(models.Model):
@@ -27,4 +27,4 @@ class Vote(models.Model):
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.poll.text[:15]} - {self.choice.choice_text[:15]} - {self.user.username}'
+        return self.poll.text[:25] + "-" + self.choice_text[:25] + "-" + self.user.username
