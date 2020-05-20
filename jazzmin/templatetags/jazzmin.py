@@ -194,3 +194,10 @@ def debug(value):
     Add in a breakpoint here and use filter in templates for debugging ;)
     """
     return type(value)
+
+
+@register.simple_tag
+def sidebar_status(request):
+    if request.COOKIES.get('jazzy_menu', '') == 'closed':
+        return 'sidebar-collapse'
+    return ''
