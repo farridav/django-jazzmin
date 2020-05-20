@@ -1,6 +1,0 @@
-django-debug-toolbar  # unparallelled debugging in django
-werkzeug              # support for werkzeug debugger in runserver_plus
-ipython               # enhanced python shell
-ipdb                  # ipython breakpoints
-django-extensions     # Django Sugar for development
-faker                 # less fake fake data

@@ -20,7 +20,7 @@ DEFAULT_SETTINGS = {
     'site_logo': 'adminlte/img/AdminLTELogo.png',
 
     # Welcome text on the login screen
-    'welcome_sign': 'Welcome big dog',
+    'welcome_sign': 'Welcome',
 
     # Copyright on the footer
     'copyright': 'Acme Ltd',
@@ -60,7 +60,7 @@ DEFAULT_SETTINGS = {
 
 def get_settings():
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
-    user_settings = getattr(settings, 'JAZZMIN_SETTINGS', {})
+    user_settings = {x: y for x, y in getattr(settings, 'JAZZMIN_SETTINGS', {}).items() if y is not None}
     jazzmin_settings.update(user_settings)
 
     if jazzmin_settings['search_model']:

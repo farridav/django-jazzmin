@@ -65,6 +65,7 @@ def get_menu(context):
                     continue
 
             allowed_models.append({
+                'custom': True,
                 'name': custom_link.get('name'),
                 'admin_url': get_custom_url(custom_link.get('url')),
                 'icon': custom_link.get('icon'),

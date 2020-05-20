@@ -2,7 +2,7 @@ import os
 
 import django
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = 'x*za6xf&_80ofdpae!yzq61g9ffikkx9$*iygbl$j7rr4wlf8t'
 DEBUG = True
 
@@ -42,7 +42,7 @@ JAZZMIN_SETTINGS = {
     'skin': 'blue',
     'site_title': 'Polls Admin',
     'site_header': 'Polls',
-    'site_logo': 'img/logo.svg',
+    'site_logo': None,
     'welcome_sign': 'Welcome to polls',
     'copyright': 'Acme Ltd',
     'navigation_expanded': True,
