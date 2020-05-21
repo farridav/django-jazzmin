@@ -17,13 +17,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tests.test_app.polls.apps.PollsConfig',
-
-    'debug_toolbar',
-    'django_extensions',
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -74,8 +70,7 @@ TEMPLATES = [{
             'django.contrib.messages.context_processors.messages',
         ],
     },
-},
-]
+}]
 
 DATABASES = {
     'default': {
@@ -105,4 +100,10 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
+if not os.getenv('FAIL_INVALID_TEMPLATE_VARS'):
+    INSTALLED_APPS.extend([
+        'debug_toolbar',
+        'django_extensions',
+    ])
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}

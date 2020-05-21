@@ -2,7 +2,6 @@ import itertools
 import logging
 import urllib.parse
 
-import django
 from django.contrib.admin.views.main import PAGE_VAR
 from django.contrib.auth import get_user_model
 from django.template import Library
@@ -21,14 +20,12 @@ register = Library()
 logger = logging.getLogger(__name__)
 OPTIONS = get_settings()
 
-if django.VERSION < (1, 9):
-    simple_tag = register.assignment_tag
-else:
-    simple_tag = register.simple_tag
 
-
-@simple_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_menu(context):
+    """
+    Get the list of apps and models to render out in the side menu and on the dashboard page
+    """
     user = context.get('user')
     if not user:
         return []
@@ -81,28 +78,35 @@ def get_menu(context):
     return available_apps
 
 
-@register.filter
-def jazzmin_settings(key):
-    return OPTIONS.get(key)
-
-
 @register.simple_tag
 def get_jazzmin_settings():
+    """
+    Return Jazzmin settings
+    """
     return OPTIONS
 
 
 @register.simple_tag
-def admin_change_link(user):
+def admin_url(user):
+    """
+    Get the admin url for an object
+    """
     return get_admin_url(user)
 
 
 @register.simple_tag
 def get_jazzmin_version():
+    """
+    Get the version for this package
+    """
     return version
 
 
 @register.simple_tag
 def get_user_avatar(user):
+    """
+    For the given user, try to get the avatar image
+    """
     no_avatar = static("adminlte/img/user2-160x160.jpg")
 
     if not OPTIONS.get('user_avatar'):
@@ -155,7 +159,7 @@ def admin_extra_filters(cl):
 
 
 @register.simple_tag
-def jazzmin_admin_list_filter(cl, spec):
+def jazzmin_list_filter(cl, spec):
     tpl = get_template(spec.template)
     choices = list(spec.choices(cl))
     field_key = get_filter_id(spec)
@@ -198,6 +202,9 @@ def debug(value):
 
 @register.simple_tag
 def sidebar_status(request):
+    """
+    Check if our sidebar is open or closed
+    """
     if request.COOKIES.get('jazzy_menu', '') == 'closed':
         return 'sidebar-collapse'
     return ''
