@@ -1,109 +1,14 @@
-import random
-
 import pytest
-from django.utils import timezone
 
 from jazzmin.compat import reverse
-from tests.test_app.polls.models import Poll, Vote, Choice
+from tests.test_app.polls.models import Poll
 
-
-@pytest.fixture
-def test_data(transactional_db, admin_user):
-    dataset = {
-        'How much cheese can you eat?': ['loads', 'some', 'all of it'],
-        'Whats bigger than an elephant?': ['dog', 'a bigger elephant', 'mouldy cabbage']
-    }
-
-    polls = []
-    for question, answers in dataset.items():
-        poll = Poll.objects.create(owner=admin_user, text=question, pub_date=timezone.now())
-
-        choices = []
-        for answer in answers:
-            choices.append(Choice.objects.create(poll=poll, choice_text=answer))
-
-        for x in range(1, random.randint(2, 10)):
-            Vote.objects.create(user=admin_user, poll=poll, choice=random.choice(choices))
-
-        polls.append(poll)
-
-    return polls
-
-
-####################
-# Main admin views #
-####################
-@pytest.mark.django_db
-def test_login(client):
-    url = reverse('admin:login')
-
-    response = client.get(url)
-    templates_used = [t.name for t in response.templates]
-
-    assert response.status_code == 200
-    assert templates_used == ['admin/login.html']
-
-
-@pytest.mark.django_db
-def test_logout(admin_client):
-    url = reverse('admin:logout')
-
-    response = admin_client.get(url)
-    templates_used = [t.name for t in response.templates]
-
-    assert response.status_code == 200
-    assert templates_used == ['registration/logged_out.html']
-
-
-@pytest.mark.django_db
-def test_password_change(admin_client):
-    url = reverse('admin:password_change')
-
-    response = admin_client.get(url)
-    templates_used = [t.name for t in response.templates]
-
-    assert response.status_code == 200
-    assert set(templates_used) == {
-        'admin/base.html',
-        'admin/base_site.html',
-        'django/forms/widgets/attrs.html',
-        'django/forms/widgets/input.html',
-        'django/forms/widgets/password.html',
-        'registration/password_change_form.html'
-    }
-
-    response = admin_client.post(url, data={
-        'old_password': 'password',
-        'new_password1': 'PickleRick123!!',
-        'new_password2': 'PickleRick123!!'
-    }, follow=True)
-    templates_used = [t.name for t in response.templates]
-
-    assert 'Password change successful' in response.content.decode()
-    assert set(templates_used) == {
-        'registration/password_change_done.html',
-        'admin/base.html',
-        'admin/base_site.html'
-    }
-
-
-@pytest.mark.django_db
-def test_dashboard(admin_client):
-    url = reverse('admin:index')
-
-    response = admin_client.get(url)
-    templates_used = [t.name for t in response.templates]
-
-    assert response.status_code == 200
-    assert templates_used == ['admin/index.html', 'admin/base_site.html', 'admin/base.html']
-
-
-##############################
-# Admin views for our models #
-##############################
 
 @pytest.mark.django_db
 def test_detail(admin_client, test_data):
+    """
+    We can render the detail view
+    """
     url = reverse('admin:polls_poll_change', args=(test_data[0].pk,))
 
     response = admin_client.get(url)
@@ -162,8 +67,12 @@ def test_detail(admin_client, test_data):
 
     # TODO: post data and confirm we can change model instances
 
+
 @pytest.mark.django_db
 def test_list(admin_client, test_data):
+    """
+    We can render the list view
+    """
     url = reverse('admin:polls_poll_changelist')
 
     response = admin_client.get(url)
@@ -214,10 +123,66 @@ def test_list(admin_client, test_data):
 
 
 @pytest.mark.django_db
-def test_history():
-    pass
+def test_history(admin_client, test_data):
+    """
+    We can render the object history page
+    """
+    poll = test_data[0]
+    url = reverse('admin:polls_poll_history', args=(poll.pk,))
+
+    response = admin_client.get(url)
+    templates_used = [t.name for t in response.templates]
+
+    assert response.status_code == 200
+    render_counts = {x: templates_used.count(x) for x in set(templates_used)}
+
+    # The number of times each template was rendered
+    assert render_counts == {
+        'admin/object_history.html': 1,
+        'admin/base.html': 1,
+        'admin/base_site.html': 1
+    }
+
+    # The templates that were used
+    assert set(templates_used) == {
+        'admin/object_history.html',
+        'admin/base.html',
+        'admin/base_site.html'
+    }
 
 
 @pytest.mark.django_db
-def test_delete():
-    pass
+def test_delete(admin_client, test_data):
+    """
+    We can load the confirm delete page, and POST it, and it deletes our object
+    """
+    poll = test_data[0]
+    url = reverse('admin:polls_poll_delete', args=(poll.pk,))
+
+    response = admin_client.get(url)
+    templates_used = [t.name for t in response.templates]
+
+    assert response.status_code == 200
+    render_counts = {x: templates_used.count(x) for x in set(templates_used)}
+
+    # The number of times each template was rendered
+    assert render_counts == {
+        'admin/delete_confirmation.html': 1,
+        'admin/base_site.html': 1,
+        'admin/base.html': 1,
+        'admin/includes/object_delete_summary.html': 1
+    }
+
+    # The templates that were used
+    assert set(templates_used) == {
+        'admin/delete_confirmation.html',
+        'admin/base_site.html',
+        'admin/base.html',
+        'admin/includes/object_delete_summary.html'
+    }
+
+    response = admin_client.post(url, data={'post': 'yes'}, follow=True)
+
+    # We deleted our object, and are now back on the changelist
+    assert not Poll.objects.filter(id=poll.pk).exists()
+    assert response.resolver_match.url_name == 'polls_poll_changelist'
