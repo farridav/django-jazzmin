@@ -32,8 +32,8 @@ tr.djn-tr > .original {
 
 /* Checkbox selection table header */
 .djn-checkbox-select-all {
-    padding-right: 0px !important;
-    width: 0px;
+    padding-right: 0 !important;
+    width: 0;
 }
 
 .object-tools {
@@ -336,7 +336,7 @@ ul.timelist, .timelist li {
     top: -1px;
 }
 
-/* selector */
+/* Selectors - This needs some work TODO */
 
 .selector {
     width: 100%;
@@ -378,7 +378,6 @@ ul.timelist, .timelist li {
 .selector .selector-filter {
     background: white;
     border: 1px solid #ccc;
-    border-width: 0 1px;
     padding: 8px;
     color: #999;
     font-size: 10px;
