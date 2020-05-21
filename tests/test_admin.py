@@ -45,13 +45,46 @@ def test_login(client):
 
 
 @pytest.mark.django_db
-def test_logout(client):
-    pass
+def test_logout(admin_client):
+    url = reverse('admin:logout')
+
+    response = admin_client.get(url)
+    templates_used = [t.name for t in response.templates]
+
+    assert response.status_code == 200
+    assert templates_used == ['registration/logged_out.html']
 
 
 @pytest.mark.django_db
-def test_password_change(client):
-    pass
+def test_password_change(admin_client):
+    url = reverse('admin:password_change')
+
+    response = admin_client.get(url)
+    templates_used = [t.name for t in response.templates]
+
+    assert response.status_code == 200
+    assert set(templates_used) == {
+        'admin/base.html',
+        'admin/base_site.html',
+        'django/forms/widgets/attrs.html',
+        'django/forms/widgets/input.html',
+        'django/forms/widgets/password.html',
+        'registration/password_change_form.html'
+    }
+
+    response = admin_client.post(url, data={
+        'old_password': 'password',
+        'new_password1': 'PickleRick123!!',
+        'new_password2': 'PickleRick123!!'
+    }, follow=True)
+    templates_used = [t.name for t in response.templates]
+
+    assert 'Password change successful' in response.content.decode()
+    assert set(templates_used) == {
+        'registration/password_change_done.html',
+        'admin/base.html',
+        'admin/base_site.html'
+    }
 
 
 @pytest.mark.django_db
@@ -127,6 +160,7 @@ def test_detail(admin_client, test_data):
         'django/forms/widgets/time.html'
     }
 
+    # TODO: post data and confirm we can change model instances
 
 @pytest.mark.django_db
 def test_list(admin_client, test_data):
