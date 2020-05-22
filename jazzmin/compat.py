@@ -22,7 +22,7 @@ def get_available_apps(context):
 
         # Django 1.8 on rest of the pages
         if not available_apps and request:
-            template_response = admin.site(request.current_app).index(request)
+            template_response = admin.site.index(request)
             available_apps = template_response.context_data['app_list']
 
     if not available_apps:

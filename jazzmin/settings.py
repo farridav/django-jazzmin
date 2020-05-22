@@ -23,13 +23,13 @@ DEFAULT_SETTINGS = {
     'welcome_sign': 'Welcome',
 
     # Copyright on the footer
-    'copyright': 'Acme Ltd',
+    'copyright': '',
 
     # Whether to aut expand the menu
     'navigation_expanded': True,
 
     # The model admin to search from the search bar, search bar omitted if excluded
-    'search_model': 'profiles.Profile',
+    'search_model': None,
 
     # Field name on user model that contains avatar image
     'user_avatar': 'avatar',
@@ -41,14 +41,10 @@ DEFAULT_SETTINGS = {
     'hide_models': [],
 
     # List of apps to base menu ordering off of
-    'order_with_respect_to': ['profiles', 'devices'],
+    'order_with_respect_to': [],
 
     # Custom links to append to app groups, keyed on app name
-    'custom_links': {
-        'profiles': [
-            {'name': 'Custom link', 'url': '/', 'icon': 'fa-user', 'permissions': []}
-        ]
-    },
+    'custom_links': {},
 
     # Custom icons per app or model
     'icons': {

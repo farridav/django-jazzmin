@@ -3,7 +3,7 @@
 <form id="changelist-search" class="form-inline" method="GET">
     {% block filters %}
     {% if cl.has_filters %}
-    {% for spec in cl.filter_specs %}{% jazzmin_admin_list_filter cl spec %}{% endfor %}
+    {% for spec in cl.filter_specs %}{% jazzmin_list_filter cl spec %}{% endfor %}
     {% endif %}
     {% endblock %}
 

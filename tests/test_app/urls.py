@@ -10,6 +10,7 @@ except ImportError:
 from . import views
 
 urlpatterns = [
+    url(r'admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'admin/', admin.site.urls),
     url(r'make_messages/', views.make_messages, name='make_messages'),
 ]

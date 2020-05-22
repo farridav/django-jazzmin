@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.contrib.admin.models import LogEntry
+from django.utils.html import format_html
+from django.utils.timesince import timesince
 
 from .models import Poll, Choice, Vote
 
@@ -45,3 +48,28 @@ class ChoiceAdmin(admin.ModelAdmin):
 @admin.register(Vote)
 class VoteAdmin(admin.ModelAdmin):
     list_display = ('user', 'poll', 'choice')
+
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ('user', 'object', 'action_flag', 'change_message', 'modified')
+    readonly_fields = ['object', 'modified']
+    search_fields = ('user__email',)
+    date_hierarchy = 'action_time'
+    list_filter = ('action_flag', 'content_type__model')
+    list_per_page = 20
+
+    def object(self, obj):
+        url = obj.get_admin_url()
+        return format_html(
+            '<a href="{url}">{obj} [{model}]</a>'.format(
+                url=url, obj=obj.object_repr, model=obj.content_type.model
+            )
+        )
+
+    def modified(self, obj):
+        if not obj.action_time:
+            return 'Never'
+        return '{} ago'.format(timesince(obj.action_time))
+
+    modified.admin_order_field = 'action_time'

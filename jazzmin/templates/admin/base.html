@@ -78,7 +78,7 @@
                             <i class="fas fa-users mr-2"></i> {% trans 'Log out' %}
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="{% admin_change_link request.user %}" class="dropdown-item dropdown-footer">See Profile</a>
+                        <a href="{% admin_url request.user %}" class="dropdown-item dropdown-footer">See Profile</a>
                     </div>
                 </li>
             </ul>
@@ -100,7 +100,7 @@
                         {% endif %}
                     </div>
                     <div class="info">
-                        <a href="{% admin_change_link request.user %}" class="d-block">{{ request.user }}</a>
+                        <a href="{% admin_url request.user %}" class="d-block">{{ request.user }}</a>
                     </div>
                 </div>
 
