@@ -1,5 +1,5 @@
 <fieldset class="card {{ fieldset.classes }}">
-    <div {% if fieldset.name %}class="card-body"{% endif %}>
+    <div class="p-5{% if fieldset.name %} card-body{% endif %}">
         {% for line in fieldset %}
         <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
             <div class="row">
