@@ -31,3 +31,11 @@ def test_ui_customisations(admin_client):
     All UI settings work as expected
     """
     pass
+
+
+@pytest.mark.django_db
+def test_permissions_on_custom_links(admin_client):
+    """
+    We honour permissions for the rendering of custom links
+    """
+    pass

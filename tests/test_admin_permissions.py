@@ -24,3 +24,10 @@ def test_no_view_permission():
     When our user has no view permission, they dont see things they are not supposed to
     """
     pass
+
+
+def test_no_permission():
+    """
+    When our user has no permissions at all, they see no menu or dashboard
+    """
+    pass
