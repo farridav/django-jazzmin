@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 
 
@@ -8,6 +10,13 @@ class Poll(models.Model):
     text = models.TextField()
     pub_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
+
+    def get_absolute_url(self):
+        return reverse('admin:polls_poll_change', (self.pk,))
+
+    def clean(self):
+        if 'cheese' in self.text:
+            raise ValidationError('cheese cannot be in the poll text')
 
     def __str__(self):
         return self.text

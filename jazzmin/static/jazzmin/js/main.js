@@ -15,10 +15,17 @@ function eraseCookie(key) {
 }
 
 $(document).ready(function () {
+
+    // Set the currently active menu item based on the url
     $('a[href="' + window.location.pathname + '"]').addClass('active');
 
+    // Ensure all raw_id_fields have the search icon in them
+    $('.related-lookup').append('<i class="fa fa-search"></i>')
+
+    // Allow for styling of selects
     $('.actions select').addClass('form-control');
-    
+
+    // When we use the menu, store its state in a cookie to preserve it
     $('[data-widget=pushmenu]').bind('click', function () {
         var menuClosed = getCookie('jazzy_menu') === 'closed';
         if (!menuClosed) {
