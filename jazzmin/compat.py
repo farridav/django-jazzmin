@@ -11,6 +11,10 @@ logger = logging.getLogger(__name__)
 
 
 def get_available_apps(context):
+    """
+    TODO: Check this with all django versions, confirm it works as expected
+    """
+
     # Django 1.9+
     available_apps = context.get('available_apps', [])
     request = context.get('request')

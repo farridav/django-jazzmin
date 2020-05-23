@@ -79,7 +79,7 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         {% if perms|can_view_self %}
-                        <a href="{% url opts|admin_urlname:'change' request.user.pk|admin_urlquote %}" class="dropdown-item dropdown-footer">See Profile</a>
+                        <a href="{{ request.user|jazzy_admin_url }}" class="dropdown-item dropdown-footer">See Profile</a>
                         {% endif %}
                     </div>
                 </li>
@@ -103,7 +103,7 @@
                     </div>
                     <div class="info">
                         {% if perms|can_view_self %}
-                            <a href="{% url opts|admin_urlname:'change' request.user.pk|admin_urlquote %}" class="d-block">{{ request.user }}</a>
+                            <a href="{{ request.user|jazzy_admin_url }}" class="d-block">{{ request.user }}</a>
                         {% else %}
                             <span class="d-block" style="color: white;">{{ request.user }}</span>
                         {% endif %}

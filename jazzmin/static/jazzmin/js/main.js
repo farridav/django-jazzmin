@@ -9,11 +9,6 @@ function getCookie(key) {
     return keyValue ? keyValue[2] : null;
 }
 
-function eraseCookie(key) {
-    var keyValue = getCookie(key);
-    setCookie(key, keyValue, '-1');
-}
-
 function handleMenu() {
     $('[data-widget=pushmenu]').bind('click', function () {
         var menuClosed = getCookie('jazzy_menu') === 'closed';

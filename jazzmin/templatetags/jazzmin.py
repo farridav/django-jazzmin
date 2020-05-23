@@ -13,7 +13,7 @@ from django.utils.safestring import mark_safe
 from .. import version
 from ..compat import get_available_apps
 from ..settings import get_settings
-from ..utils import order_with_respect_to, get_filter_id, get_custom_url
+from ..utils import order_with_respect_to, get_filter_id, get_custom_url, get_admin_url
 
 User = get_user_model()
 register = Library()
@@ -57,9 +57,12 @@ def get_menu(context):
 
         for custom_link in OPTIONS.get('custom_links', {}).get(app_label, []):
 
+            perm_matches = []
             for perm in custom_link.get('permissions', []):
-                if not user.has_perm(perm):
-                    continue
+                perm_matches.append(user.has_perm(perm))
+
+            if not all(perm_matches):
+                continue
 
             allowed_models.append({
                 'custom': True,
@@ -182,6 +185,14 @@ def jazzmin_list_filter(cl, spec):
             i += 1
 
     return tpl.render({'field_name': field_key, 'title': spec.title, 'choices': choices, 'spec': spec, })
+
+
+@register.filter
+def jazzy_admin_url(value):
+    """
+    Get the admin url for a given object
+    """
+    return get_admin_url(value)
 
 
 @register.filter
