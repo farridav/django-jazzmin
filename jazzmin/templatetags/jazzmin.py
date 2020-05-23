@@ -13,7 +13,7 @@ from django.utils.safestring import mark_safe
 from .. import version
 from ..compat import get_available_apps
 from ..settings import get_settings
-from ..utils import order_with_respect_to, get_filter_id, get_admin_url, get_custom_url
+from ..utils import order_with_respect_to, get_filter_id, get_custom_url
 
 User = get_user_model()
 register = Library()
@@ -84,14 +84,6 @@ def get_jazzmin_settings():
     Return Jazzmin settings
     """
     return OPTIONS
-
-
-@register.simple_tag
-def admin_url(user):
-    """
-    Get the admin url for an object
-    """
-    return get_admin_url(user)
 
 
 @register.simple_tag
@@ -197,7 +189,6 @@ def debug(value):
     """
     Add in a breakpoint here and use filter in templates for debugging ;)
     """
-    import ipdb; ipdb.set_trace()
     return type(value)
 
 
@@ -209,3 +200,11 @@ def sidebar_status(request):
     if request.COOKIES.get('jazzy_menu', '') == 'closed':
         return 'sidebar-collapse'
     return ''
+
+
+@register.filter
+def can_view_self(perms):
+    view_perm = '{}.view_{}'.format(User._meta.app_label, User._meta.model_name)
+    change_perm = '{}.change_{}'.format(User._meta.app_label, User._meta.model_name)
+
+    return perms[User._meta.app_label][view_perm] or perms[User._meta.app_label][change_perm]

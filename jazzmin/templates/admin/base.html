@@ -1,4 +1,4 @@
-{% load i18n static jazzmin %}
+{% load i18n static jazzmin admin_urls %}
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 {% get_current_language_bidi as LANGUAGE_BIDI %}
@@ -78,7 +78,9 @@
                             <i class="fas fa-users mr-2"></i> {% trans 'Log out' %}
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="{% admin_url request.user %}" class="dropdown-item dropdown-footer">See Profile</a>
+                        {% if perms|can_view_self %}
+                        <a href="{% url opts|admin_urlname:'change' request.user.pk|admin_urlquote %}" class="dropdown-item dropdown-footer">See Profile</a>
+                        {% endif %}
                     </div>
                 </li>
             </ul>
@@ -100,7 +102,11 @@
                         {% endif %}
                     </div>
                     <div class="info">
-                        <a href="{% admin_url request.user %}" class="d-block">{{ request.user }}</a>
+                        {% if perms|can_view_self %}
+                            <a href="{% url opts|admin_urlname:'change' request.user.pk|admin_urlquote %}" class="d-block">{{ request.user }}</a>
+                        {% else %}
+                            <span class="d-block" style="color: white;">{{ request.user }}</span>
+                        {% endif %}
                     </div>
                 </div>
 

@@ -14,6 +14,29 @@ function eraseCookie(key) {
     setCookie(key, keyValue, '-1');
 }
 
+function handleMenu() {
+    $('[data-widget=pushmenu]').bind('click', function () {
+        var menuClosed = getCookie('jazzy_menu') === 'closed';
+        if (!menuClosed) {
+            setCookie('jazzy_menu', 'closed');
+        } else {
+            setCookie('jazzy_menu', 'open');
+        }
+    });
+}
+
+function handleTabs() {
+    var url = document.location.toString();
+    if (url.match('#')) {
+        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+    }
+
+    // Change hash for page-reload
+    $('.nav-tabs a').on('shown.bs.tab', function (e) {
+        window.location.hash = e.target.hash;
+    })
+}
+
 $(document).ready(function () {
 
     // Set the currently active menu item based on the url
@@ -26,13 +49,7 @@ $(document).ready(function () {
     $('.actions select').addClass('form-control');
 
     // When we use the menu, store its state in a cookie to preserve it
-    $('[data-widget=pushmenu]').bind('click', function () {
-        var menuClosed = getCookie('jazzy_menu') === 'closed';
-        if (!menuClosed) {
-            setCookie('jazzy_menu', 'closed');
-        } else {
-            setCookie('jazzy_menu', 'open');
-        }
-    });
-
+    handleMenu();
+    // Ensure we preserve the tab the user was on using the url hash, even on page reload
+    handleTabs();
 });
