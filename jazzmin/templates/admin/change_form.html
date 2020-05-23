@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_urls static admin_modify %}
+{% load i18n admin_urls static admin_modify jazzmin %}
 
 {% block extrahead %}{{ block.super }}
 <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
@@ -28,16 +28,22 @@
 
 <div id="content-main" class="col-md-12">
     <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.model_name }}_form" novalidate>{% csrf_token %}{% block form_top %}{% endblock %}
-        <div class="row">
+
+    {% if errors %}
+        <div class="callout callout-danger">
+            {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+        </div>
+        {% for error in adminform.form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <i class="icon fa fa-ban"></i>{{ error|capfirst }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
         {% if is_popup %}<input type="hidden" name="{{ is_popup_var }}" value="1">{% endif %}
         {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
-        {% if save_on_top %}{% block submit_buttons_top %}{% submit_row %}{% endblock %}{% endif %}
-        {% if errors %}
-            <p class="errornote">
-            {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
-            </p>
-            {{ adminform.form.non_field_errors }}
-        {% endif %}
 
         {% block field_sets %}
             <div class="col-9">

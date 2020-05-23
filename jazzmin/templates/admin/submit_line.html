@@ -5,7 +5,7 @@
     <div class="card-header">
         <h3 class="card-title">
             <i class="fas fa-edit"></i>
-            Actions
+            {%  trans 'Actions' %}
         </h3>
     </div>
     <div class="card-body">
@@ -27,7 +27,7 @@
         {% if show_save_as_new %}
             <div class="row">
                 <div class="form-group col-12">
-                    <input type="submit" class="btn btn-outline-info" value="{% trans 'Save as new' %}" name="_saveasnew">
+                    <input type="submit" class="btn btn-outline-info form-control" value="{% trans 'Save as new' %}" name="_saveasnew">
                 </div>
             </div>
         {% endif %}
