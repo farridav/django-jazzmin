@@ -114,13 +114,12 @@
         {% endblock %}
 
         {% block admin_change_form_document_ready %}
-            <script type="text/javascript"
-                    id="django-admin-form-add-constants"
-                    src="{% static 'admin/js/change_form.js' %}"
+            <script type="text/javascript" id="django-admin-form-add-constants" src="{% static 'admin/js/change_form.js' %}"
                     {% if adminform and add %}
                         data-model-name="{{ opts.model_name }}"
                     {% endif %}>
             </script>
+            <script type="text/javascript" id="jazzmin-jazzy-fields" src="{% static 'jazzmin/js/change_form.js' %}"
         {% endblock %}
 
         {# JavaScript for prepopulated fields #}
