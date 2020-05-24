@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'admin/', admin.site.urls),
     url(r'make_messages/', views.make_messages, name='make_messages'),
+    url(r'500/', views.five_hundred, name='500'),
+    url(r'404/', views.four_oh_four, name='404'),
 ]
 
 if settings.DEBUG:

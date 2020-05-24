@@ -51,7 +51,10 @@ JAZZMIN_SETTINGS = {
     'order_with_respect_to': ['accounts', 'polls'],
     'custom_links': {
         'polls': [
-            {'name': 'Make Messages', 'url': 'make_messages', 'icon': 'fa-comments', 'permissions': []}
+            {
+                'name': 'Make Messages', 'url': 'make_messages', 'icon': 'fa-comments',
+                'permissions': ['user.view_polls']
+            }
         ]
     },
     'icons': {

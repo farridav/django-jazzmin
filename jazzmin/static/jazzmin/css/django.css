@@ -551,3 +551,6 @@ input[type="checkbox"] {
     margin-top: 7px;
 }
 
+.help-block {
+    font-size: .7em;
+}
