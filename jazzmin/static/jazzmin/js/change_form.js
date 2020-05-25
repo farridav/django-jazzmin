@@ -1,4 +1,4 @@
-function prependCalendarIcon() {
+function jazzDatetimeFields() {
 
     $(".datetime").each(function(index, element) {
         var vDateField = $(element).find('input.vDateField')[0];
@@ -21,7 +21,14 @@ function prependCalendarIcon() {
     });
 }
 
-$(document).ready(function() {
-    prependCalendarIcon();
-});
+function jazzIcons() {
+    setTimeout(function(){
+        $(".date-icon").attr("class", "fa fa-calendar");
+        $(".clock-icon").attr("class", "fa fa-clock");
+    }, 500);
+}
 
+$(document).ready(function() {
+    jazzDatetimeFields();
+    jazzIcons();
+});
