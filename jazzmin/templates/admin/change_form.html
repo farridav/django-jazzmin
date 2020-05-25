@@ -119,7 +119,6 @@
                         data-model-name="{{ opts.model_name }}"
                     {% endif %}>
             </script>
-            <script type="text/javascript" id="jazzmin-jazzy-fields" src="{% static 'jazzmin/js/change_form.js' %}"
         {% endblock %}
 
         {# JavaScript for prepopulated fields #}
@@ -128,4 +127,8 @@
     </form>
 </div>
 
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript" id="jazzmin-jazzy-fields" src="{% static 'jazzmin/js/change_form.js' %}"></script>
 {% endblock %}
