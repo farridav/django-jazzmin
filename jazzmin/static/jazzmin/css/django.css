@@ -351,11 +351,6 @@ ul.timelist, .timelist li {
     color: #3f8cff;
 }
 
-.datetimeshortcuts .date-icon {
-    background: url(../img/icon-calendar.svg) 0 0 no-repeat;
-    top: -1px;
-}
-
 /* Selectors - This needs some work TODO */
 
 .selector {

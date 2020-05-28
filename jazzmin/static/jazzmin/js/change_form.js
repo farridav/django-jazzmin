@@ -25,7 +25,7 @@ function jazzIcons() {
     setTimeout(function(){
         $(".date-icon").attr("class", "fa fa-calendar");
         $(".clock-icon").attr("class", "fa fa-clock");
-    }, 500);
+    }, 200);
 }
 
 $(document).ready(function() {
