@@ -552,5 +552,7 @@ input[type="checkbox"] {
 }
 
 .help-block {
-    font-size: .7em;
+    font-size: .8em;
+    color: #859099;
+    font-style: italic;
 }
