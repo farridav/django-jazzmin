@@ -357,9 +357,24 @@ ul.timelist, .timelist li {
     padding: 2px;
 }
 
-.datetimeshortcuts .date-icon {
-    background: url(../img/icon-calendar.svg) 0 0 no-repeat;
-    top: -1px;
+.datetimeshortcuts {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: .375rem .75rem;
+    line-height: 1;
+    background-color: #f5dd5d;
+    border: 1px solid #ced4da;
+    border-radius: 0 .25rem .25rem 0;
+}
+
+.datetimeshortcuts a {
+    color: #222529;
+}
+
+.datetimeshortcuts a:hover {
+    color: #3f8cff;
 }
 
 /* Selectors - This needs some work TODO */
