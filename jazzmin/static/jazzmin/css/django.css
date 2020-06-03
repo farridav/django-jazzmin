@@ -76,11 +76,11 @@ tr.djn-tr > .original {
     background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right .75rem center/8px 10px;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .075);
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .tab-pane {
@@ -119,7 +119,7 @@ table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after
 
 /* APP.CSS */
 
-.vTextField, .vURLField, .vBigIntegerField, .vDateField, .vTimeField {
+.vTextField, .vURLField, .vBigIntegerField {
     display: block;
     width: 100%;
     height: calc(2.25rem + 2px);
@@ -137,12 +137,7 @@ table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after
 }
 
 .vDateField {
-    width: auto;
     margin-bottom: 5px;
-}
-
-.vTimeField {
-    width: auto;
 }
 
 .vLargeTextField {
@@ -345,36 +340,6 @@ form select {
 .calendar-cancel a {
     color: black;
     display: block;
-}
-
-ul.timelist, .timelist li {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.timelist a {
-    padding: 2px;
-}
-
-.datetimeshortcuts {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: .375rem .75rem;
-    line-height: 1;
-    background-color: #f5dd5d;
-    border: 1px solid #ced4da;
-    border-radius: 0 .25rem .25rem 0;
-}
-
-.datetimeshortcuts a {
-    color: #222529;
-}
-
-.datetimeshortcuts a:hover {
-    color: #3f8cff;
 }
 
 /* Selectors - This needs some work TODO */
@@ -592,8 +557,33 @@ input[type="checkbox"] {
     margin-top: 7px;
 }
 
-.help-block {
+.help-block, .timezonewarning {
     font-size: .8em;
     color: #859099;
     font-style: italic;
+}
+
+.dashboard tbody tr:first-child td {
+    border-top: none;
+}
+
+.vTimeField {
+    margin-top: 10px;
+}
+
+.vTimeField, .vDateField {
+    min-width: 200px;
+}
+
+.date-icon::before, .clock-icon::before {
+    font-family: "Font Awesome 5 Free" !important;
+}
+
+.timelist li {
+    list-style-type: none;
+}
+
+.timelist {
+    margin: 0;
+    padding: 0;
 }
