@@ -26,7 +26,7 @@ def test_detail(admin_client, test_data):
         'admin/edit_inline/tabular.html': 1,
         'admin/includes/fieldset.html': 2,
         'admin/prepopulated_fields_js.html': 1,
-        'admin/submit_line.html': 2,
+        'admin/submit_line.html': 1,
         'admin/widgets/foreign_key_raw_id.html': 1,
         'admin/widgets/split_datetime.html': 1,
         'django/forms/widgets/attrs.html': 35,

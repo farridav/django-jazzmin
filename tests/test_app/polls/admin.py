@@ -6,7 +6,7 @@ from django.utils.timesince import timesince
 from .models import Poll, Choice, Vote
 
 
-class ChoiceInline(admin.StackedInline):
+class ChoiceInline(admin.TabularInline):
     model = Choice
 
 
