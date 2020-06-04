@@ -118,10 +118,12 @@ table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after
 }
 
 /* APP.CSS */
-
 .vTextField, .vURLField, .vBigIntegerField {
     display: block;
     width: 100%;
+}
+
+.vTextField, .vURLField, .vBigIntegerField, .vForeignKeyRawIdAdminField, .vDateField, .vTimeField {
     height: calc(2.25rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -136,8 +138,9 @@ table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-.vDateField {
+.vDateField, .vTimeField {
     margin-bottom: 5px;
+    display: inline-block;
 }
 
 .vLargeTextField {
