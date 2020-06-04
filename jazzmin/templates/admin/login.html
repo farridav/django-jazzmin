@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="{% static "adminlte/plugins/fontawesome-free/css/all.min.css" %}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static "adminlte/css/adminlte.min.css" %}">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="{% static 'adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
     <!-- Custom fixes for django -->
     <link rel="stylesheet" href="{% static "jazzmin/css/django.css" %}">
 
@@ -80,15 +78,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">
-                                {% trans 'Remember me' %}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-4">
+                    <div class=col-12>
                         <button type="submit" class="btn btn-primary btn-block">{% trans "Log in" %}</button>
                     </div>
                 </div>

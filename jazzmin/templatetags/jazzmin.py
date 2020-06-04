@@ -244,3 +244,24 @@ def can_view_self(perms):
     change_perm = '{}.change_{}'.format(User._meta.app_label, User._meta.model_name)
 
     return perms[User._meta.app_label][view_perm] or perms[User._meta.app_label][change_perm]
+
+
+@register.simple_tag
+def header_class(header, forloop):
+    classes = []
+    sorted, asc, desc = header.get('sorted'), header.get('ascending'), header.get('descending')
+
+    if forloop['counter0'] == 0:
+        classes.append("djn-checkbox-select-all")
+
+    if not header['sortable']:
+        return ' '.join(classes)
+
+    if sorted and asc:
+        classes.append("sorting_asc")
+    elif sorted and desc:
+        classes.append("sorting_desc")
+    else:
+        classes.append("sorting")
+
+    return ' '.join(classes)

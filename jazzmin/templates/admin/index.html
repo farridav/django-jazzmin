@@ -7,28 +7,21 @@
 
 {% block breadcrumbs %}
     <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item">
-            <a href="{% url 'admin:index' %}">
-                <i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}
-            </a>
-        </li>
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
         <li class="breadcrumb-item">{% trans 'Dashboard' %}</li>
     </ol>
 {% endblock %}
 
 
 {% block content %}
-
     {% get_side_menu as dashboard_list %}
-
     {% if dashboard_list %}
         {% widthratio dashboard_list|length 2 1 as middle %}
     {% endif %}
 
-    <div class="col-lg-9 col-sm-12 col-xs-12">
+    <div class="col-md-9 col-sm-12">
         <div class="row">
-            <div class="col-md-6 col-sm-12 col-xs-12">
-
+            <div class="col-md-6 col-sm-12">
                 {% for app in dashboard_list %}
                     <div class="card card-primary card-outline">
                         <div class="card-header">
@@ -40,11 +33,7 @@
                                 {% for model in app.models %}
                                     <tr>
                                         <td>
-                                            {% if model.admin_url %}
-                                                <a href="{{ model.admin_url }}">{{ model.name }}</a>
-                                            {% else %}
-                                                {{ model.name }}
-                                            {% endif %}
+                                            {% if model.admin_url %}<a href="{{ model.admin_url }}">{{ model.name }}</a>{% else %}{{ model.name }}{% endif %}
                                         </td>
                                         <td>
                                             <div class="btn-group float-right">
@@ -55,14 +44,7 @@
                                                     {% if model.view_only %}
                                                         <a href="{{ model.admin_url }}" class="btn btn-sm btn-outline-info btn-flat viewlink">{% trans 'View' %}</a>
                                                     {% else %}
-                                                        <a href="{{ model.admin_url }}"
-                                                           class="btn btn-sm btn-outline-info btn-flat changelink">
-                                                            {% if model.custom %}
-                                                                {% trans 'Go' %}
-                                                            {% else %}
-                                                                {% trans 'Change' %}
-                                                            {% endif %}
-                                                        </a>
+                                                        <a href="{{ model.admin_url }}" class="btn btn-sm btn-outline-info btn-flat changelink">{% if model.custom %}{% trans 'Go' %}{% else %}{% trans 'Change' %}{% endif %}</a>
                                                     {% endif %}
                                                 {% endif %}
                                             </div>
@@ -76,16 +58,15 @@
 
                     {% if forloop.counter == middle|add:"0" %}
                     </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-12">
                     {% endif %}
 
                 {% endfor %}
                 </div>
-
         </div>
 
     </div>
-    <div class="col-lg-3 col-sm-12 col-xs-12">
+    <div class="col-md-3 col-sm-12">
         <div id="content-related">
             <div class="module" id="recent-actions-module">
                 <h3>{% trans 'Recent actions' %}</h3>

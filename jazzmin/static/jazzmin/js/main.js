@@ -28,7 +28,12 @@ function handleTabs() {
 
     // Change hash for page-reload
     $('.nav-tabs a').on('shown.bs.tab', function (e) {
-        window.location.hash = e.target.hash;
+        e.preventDefault();
+        if (history.pushState) {
+            history.pushState(null, null, e.target.hash);
+        } else {
+            location.hash = e.target.hash;
+        }
     })
 }
 

@@ -10,7 +10,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="form-group col-12">
+            <div class="form-group col-md-12">
                 {% if show_save %}
                     <input type="submit" value="{% trans 'Save' %}" class="btn btn-success form-control" name="_save">
                 {% endif %}
@@ -18,7 +18,7 @@
         </div>
         {% if show_delete_link and original %}
             <div class="row">
-                <div class="form-group col-12">
+                <div class="form-group col-md-12">
                     {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
                     <a href="{% add_preserved_filters delete_url %}" class="btn btn-danger form-control">{% trans "Delete" %}</a>
                 </div>
@@ -26,27 +26,27 @@
         {% endif %}
         {% if show_save_as_new %}
             <div class="row">
-                <div class="form-group col-12">
+                <div class="form-group col-md-12">
                     <input type="submit" class="btn btn-outline-info form-control" value="{% trans 'Save as new' %}" name="_saveasnew">
                 </div>
             </div>
         {% endif %}
         {% if show_save_and_add_another %}
             <div class="row">
-                <div class="form-group col-12">
+                <div class="form-group col-md-12">
                     <input type="submit" class="btn btn-outline-info form-control" value="{% trans 'Save and add another' %}" name="_addanother">
                 </div>
             </div>
         {% endif %}
         {% if show_save_and_continue %}
             <div class="row">
-                <div class="form-group col-12">
+                <div class="form-group col-md-12">
                     <input type="submit" class="btn btn-outline-info form-control" value="{% if can_change %}{% trans 'Save and continue editing' %}{% else %}{% trans 'Save and view' %}{% endif %}" name="_continue"></div>
             </div>
         {% endif %}
         {% if show_close %}
             <div class="row">
-                <div class="form-group col-12">
+                <div class="form-group col-md-12">
                     <a href="{% url opts|admin_urlname:'changelist' %}" class="btn btn-outline-danger form-control">{% trans 'Close' %}</a>
                 </div>
             </div>
