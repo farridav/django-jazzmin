@@ -50,13 +50,25 @@ JAZZMIN_SETTINGS = {
     'hide_models': [],
     'order_with_respect_to': ['accounts', 'polls'],
     'custom_links': {
-        'polls': [
-            {
-                'name': 'Make Messages', 'url': 'make_messages', 'icon': 'fa-comments',
-                'permissions': ['user.view_polls']
-            }
-        ]
+        'polls': [{
+            'name': 'Make Messages', 'url': 'make_messages', 'icon': 'fa-comments',
+            'permissions': ['polls.view_polls']
+        }]
     },
+    'topmenu_links': [
+
+        # Url that gets reversed (Permissions can be added)
+        {'name': 'Home', 'url': 'admin:index', 'permissions': ['auth.view_user']},
+
+        # external url that opens in a new window (Permissions can be added)
+        {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
+
+        # model admin to link to (Permissions checked against model)
+        {'model': 'auth.User'},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        {'app': 'polls'},
+    ],
     'icons': {
         'auth': 'fa-people',
         'auth.user': 'fa-user',

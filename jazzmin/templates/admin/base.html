@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{% static "jazzmin/css/django.css" %}">
 
     {% if jazzmin_settings.skin %}
-    <!-- TODO: Add in skin support here -->
+        <!-- TODO: Add in skin support here -->
     {% endif %}
 
     <!-- Google Font: Source Sans Pro -->
@@ -29,36 +29,58 @@
 
     {% block extrahead %} {% endblock %}
 </head>
-<body class="hold-transition sidebar-mini {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
+<body class="hold-transition {% if jazzmin_settings.show_sidebar %}{% else %}no-sidebar{% endif %} {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
 
-    <div class="wrapper">
+<div class="wrapper">
 
-        {% if not is_popup %}
+    {% if not is_popup %}
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <ul class="navbar-nav">
+
+                {% if jazzmin_settings.show_sidebar %}
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-
-                {% if topmenu %}
-                <!-- TODO: Add in top menu support here -->
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Home</a>
-                </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'admin:index' %}" class="brand-link" style="padding: 0">
+                            <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8; margin: 0 0 0 5px;">
+                        </a>
+                    </li>
                 {% endif %}
+
+                {% get_top_menu user as top_menu %}
+                {% for link in top_menu %}
+                    <li class="nav-item d-none d-sm-inline-block{% if link.app %} dropdown{% endif %}">
+                        {% if link.app %}
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                {{ link.name }}
+                            </a>
+                            <div class="dropdown-menu">
+                                {% for child in link.app_children %}
+                                    <a class="dropdown-item" href="{{ child.url }}">{{ child.name }}</a>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <a href="{{ link.url }}" class="nav-link"
+                               {% if link.new_window %}target="_blank"{% endif %}>{{ link.name }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
             </ul>
 
             {% if jazzmin_settings.search_model %}
-            <form action="{{ jazzmin_settings.search_url }}" method="GET" class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" name="q" type="search" placeholder="{% trans 'Search' %} {{ jazzmin_settings.search_name }}..." aria-label="{% trans 'Search' %} {{ jazzmin_settings.search_name }}...">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
+                <form action="{{ jazzmin_settings.search_url }}" method="GET" class="form-inline ml-3">
+                    <div class="input-group input-group-sm">
+                        <input class="form-control form-control-navbar" name="q" type="search" placeholder="{% trans 'Search' %} {{ jazzmin_settings.search_name }}..." aria-label="{% trans 'Search' %} {{ jazzmin_settings.search_name }}...">
+                        <div class="input-group-append">
+                            <button class="btn btn-navbar" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
             {% endif %}
 
             <ul class="navbar-nav ml-auto">
@@ -79,115 +101,125 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         {% if perms|can_view_self %}
-                        <a href="{{ request.user|jazzy_admin_url }}" class="dropdown-item dropdown-footer">See Profile</a>
+                            <a href="{{ request.user|jazzy_admin_url }}" class="dropdown-item dropdown-footer">See
+                                Profile</a>
                         {% endif %}
                     </div>
                 </li>
             </ul>
         </nav>
 
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="{% url 'admin:index' %}" class="brand-link">
-                <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">{{ jazzmin_settings.site_header }}</span>
-            </a>
+        {% if jazzmin_settings.show_sidebar %}
+            <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                <a href="{% url 'admin:index' %}" class="brand-link">
+                    <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo"
+                         class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <span class="brand-text font-weight-light">{{ jazzmin_settings.site_header }}</span>
+                </a>
 
-            <div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        {% if jazzmin_settings.user_avatar %}
-                        <img src="{% get_user_avatar request.user %}" width="160px" class="img-circle elevation-2" alt="User Image">
-                        {% else %}
-                        <i class="fas fa-inverse user-profile fa-user-circle"></i>
-                        {% endif %}
+                <div class="sidebar">
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            {% if jazzmin_settings.user_avatar %}
+                                <img src="{% get_user_avatar request.user %}" width="160px"
+                                     class="img-circle elevation-2" alt="User Image">
+                            {% else %}
+                                <i class="fas fa-inverse user-profile fa-user-circle"></i>
+                            {% endif %}
+                        </div>
+                        <div class="info">
+                            {% if perms|can_view_self %}
+                                <a href="{{ request.user|jazzy_admin_url }}" class="d-block">{{ request.user }}</a>
+                            {% else %}
+                                <span class="d-block" style="color: white;">{{ request.user }}</span>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="info">
-                        {% if perms|can_view_self %}
-                            <a href="{{ request.user|jazzy_admin_url }}" class="d-block">{{ request.user }}</a>
-                        {% else %}
-                            <span class="d-block" style="color: white;">{{ request.user }}</span>
-                        {% endif %}
-                    </div>
-                </div>
 
-                {% get_menu as app_list %}
+                    {% get_side_menu as side_menu_list %}
 
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat nav-compact" data-widget="treeview" role="menu" data-accordion="false">
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat nav-compact"
+                            data-widget="treeview" role="menu" data-accordion="false">
 
-                        <li class="nav-item">
-                            <a href="{% url 'admin:index' %}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{% url 'admin:index' %}" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
 
-                        {% if jazzmin_settings.navigation_expanded %}
-                        {% for app in app_list %}
-                        <li class="nav-header">{{ app.name }}</li>
-                        {% for model in app.models %}
-                        <li class="nav-item">
-                            <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
-                                <i class="far nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
-                                <p>{{ model.name }}</p>
-                            </a>
-                        </li>
-                        {% endfor %}
-                        {% endfor %}
-                        {% else %}
-                        {% for app in app_list %}
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
-                                <p>
-                                    {{ app.name|truncatechars:21 }}
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview" style="display: none;">
-                                {% for model in app.models %}
-                                <li class="nav-item">
-                                    <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
-                                        <i class="far nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
-                                        <p>{{ model.name }}</p>
-                                    </a>
-                                </li>
+                            {% if jazzmin_settings.navigation_expanded %}
+                                {% for app in side_menu_list %}
+                                    <li class="nav-header">{{ app.name }}</li>
+                                    {% for model in app.models %}
+                                        <li class="nav-item">
+                                            <a href="
+                                                {% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
+                                                <i class="far nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                                <p>{{ model.name }}</p>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
                                 {% endfor %}
-                            </ul>
-                        </li>
-                        {% endfor %}
-                        {% endif %}
+                            {% else %}
+                                {% for app in side_menu_list %}
+                                    <li class="nav-item has-treeview">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon fas {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                            <p>
+                                                {{ app.name|truncatechars:21 }}
+                                                <i class="fas fa-angle-left right"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview" style="display: none;">
+                                            {% for model in app.models %}
+                                                <li class="nav-item">
+                                                    <a href="
+                                                            {% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}"
+                                                       class="nav-link">
+                                                        <i class="far nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                                        <p>{{ model.name }}</p>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
 
-                    </ul>
-                </nav>
-            </div>
-        </aside>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
         {% endif %}
 
-        <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 0px;"{% endif %}>
-            {% block page_content %}
-            {% endblock %}
-        </div>
+    {% endif %}
 
-        {% if not is_popup %}
+    <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 0px;"{% endif %}>
+        {% block page_content %}
+        {% endblock %}
+    </div>
+
+    {% if not is_popup %}
         <footer class="main-footer">
             {% block footer %}
             {% endblock %}
         </footer>
-        {% endif %}
+    {% endif %}
 
-    </div>
+</div>
 
-    <!-- jQuery -->
-    <script src="{% static "adminlte/plugins/jquery/jquery.min.js" %}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{% static "adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
-    <!-- AdminLTE App -->
-    <script src="{% static "adminlte/js/adminlte.min.js" %}"></script>
-    <!-- Django customisations -->
-    <script src="{% static "jazzmin/js/main.js" %}"></script>
+<!-- jQuery -->
+<script src="{% static "adminlte/plugins/jquery/jquery.min.js" %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static "adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static "adminlte/js/adminlte.min.js" %}"></script>
+<!-- Django customisations -->
+<script src="{% static "jazzmin/js/main.js" %}"></script>
 
-    {% block extrajs %}{% endblock %}
+{% block extrajs %}{% endblock %}
 
 </body>
 </html>
