@@ -591,3 +591,15 @@ input[type="checkbox"] {
 body.no-sidebar .content-wrapper, body.no-sidebar .main-footer, body.no-sidebar .main-header {
     margin-left: 0;
 }
+
+.vCheckboxLabel.inline {
+    vertical-align: top;
+    padding-top: 1px;
+    color: red;
+    font-style: italic;
+    padding-left: 3px;
+}
+
+.inline-related .card-header > span {
+    float: right;
+}

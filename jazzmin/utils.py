@@ -90,7 +90,7 @@ def get_model_meta(model_str):
     """
     app, model = model_str.split('.')
     Model = apps.get_registered_model(app, model)
-    return Model._meta.verbose_name_plural.title()
+    return Model._meta
 
 
 def get_app_admin_urls(app):

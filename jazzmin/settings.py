@@ -77,7 +77,7 @@ def get_settings():
         if 'url' in link:
             link['url'] = get_custom_url(link['url'])
         elif 'model' in link:
-            link['name'] = get_model_meta(link['model'])
+            link['name'] = get_model_meta(link['model']).verbose_name_plural.title()
             link['url'] = get_admin_url(link['model'])
         elif 'app' in link:
             link['name'] = link['app'].title()
