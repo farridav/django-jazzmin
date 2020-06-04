@@ -1,3 +1,4 @@
+import copy
 import itertools
 import logging
 import urllib.parse
@@ -11,9 +12,8 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from .. import version
-from ..compat import get_available_apps
 from ..settings import get_settings
-from ..utils import order_with_respect_to, get_filter_id, get_custom_url, get_admin_url
+from ..utils import order_with_respect_to, get_filter_id, get_custom_url, get_admin_url, get_model_permissions
 
 User = get_user_model()
 register = Library()
@@ -22,7 +22,7 @@ OPTIONS = get_settings()
 
 
 @register.simple_tag(takes_context=True)
-def get_menu(context):
+def get_side_menu(context):
     """
     Get the list of apps and models to render out in the side menu and on the dashboard page
     """
@@ -30,16 +30,11 @@ def get_menu(context):
     if not user:
         return []
 
-    permissions = set()
-    for permission in user.get_all_permissions():
-        app_label, model = permission.split('.')
-        model = model.split('_')[1]
-        permissions.add('{app_label}.{model}'.format(app_label=app_label, model=model))
+    model_permissions = get_model_permissions(user)
 
-    available_apps = []
-    all_apps = get_available_apps(context)
-
-    for app in all_apps:
+    menu = []
+    available_apps = copy.deepcopy(context.get('available_apps', []))
+    for app in available_apps:
         app_label = app['app_label'].lower()
         if app_label in OPTIONS['hide_apps']:
             continue
@@ -47,7 +42,7 @@ def get_menu(context):
         allowed_models = []
         for model in app.get('models', []):
             model_str = '{app_label}.{model}'.format(app_label=app_label, model=model["object_name"]).lower()
-            if model_str not in permissions:
+            if model_str not in model_permissions:
                 continue
             if model_str in OPTIONS.get('hide_models', []):
                 continue
@@ -73,12 +68,42 @@ def get_menu(context):
 
         if len(allowed_models):
             app['models'] = allowed_models
-            available_apps.append(app)
+            menu.append(app)
 
     if OPTIONS.get('order_with_respect_to'):
-        available_apps = order_with_respect_to(available_apps, OPTIONS['order_with_respect_to'])
+        menu = order_with_respect_to(menu, OPTIONS['order_with_respect_to'])
 
-    return available_apps
+    return menu
+
+
+@register.simple_tag
+def get_top_menu(user):
+    if not user:
+        return []
+
+    model_permissions = get_model_permissions(user)
+
+    menu = []
+    for item in get_settings().get('topmenu_links', []):
+
+        perm_matches = []
+        for perm in item.get('permissions', []):
+            perm_matches.append(user.has_perm(perm))
+
+        if not all(perm_matches):
+            continue
+
+        if item.get('model') and item.get('model').lower() not in model_permissions:
+            continue
+
+        if item.get('app'):
+            item['app_children'] = list(filter(lambda x: x['model'] in model_permissions, item['app_children']))
+            if len(item['app_children']) == 0:
+                continue
+
+        menu.append(item)
+
+    return menu
 
 
 @register.simple_tag
@@ -219,3 +244,24 @@ def can_view_self(perms):
     change_perm = '{}.change_{}'.format(User._meta.app_label, User._meta.model_name)
 
     return perms[User._meta.app_label][view_perm] or perms[User._meta.app_label][change_perm]
+
+
+@register.simple_tag
+def header_class(header, forloop):
+    classes = []
+    sorted, asc, desc = header.get('sorted'), header.get('ascending'), header.get('descending')
+
+    if forloop['counter0'] == 0:
+        classes.append("djn-checkbox-select-all")
+
+    if not header['sortable']:
+        return ' '.join(classes)
+
+    if sorted and asc:
+        classes.append("sorting_asc")
+    elif sorted and desc:
+        classes.append("sorting_desc")
+    else:
+        classes.append("sorting")
+
+    return ' '.join(classes)

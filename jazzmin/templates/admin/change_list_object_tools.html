@@ -2,9 +2,9 @@
 
 {% block object-tools-items %}
     {% if has_add_permission %}
-    {% url cl.opts|admin_urlname:'add' as add_url %}
-    <a href="{% add_preserved_filters add_url is_popup to_field %}" class="btn btn-success float-right">
-        {% blocktrans with cl.opts.verbose_name as name %}<i class="fa fa-plus-circle"></i> &nbsp; Add {{ name }}{% endblocktrans %}
-    </a>
+        {% url cl.opts|admin_urlname:'add' as add_url %}
+        <a href="{% add_preserved_filters add_url is_popup to_field %}" class="btn btn-success float-right">
+            {% blocktrans with cl.opts.verbose_name as name %}<i class="fa fa-plus-circle"></i> &nbsp; Add {{ name }}{% endblocktrans %}
+        </a>
     {% endif %}
 {% endblock %}

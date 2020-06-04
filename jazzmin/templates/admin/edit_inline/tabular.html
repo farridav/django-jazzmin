@@ -1,7 +1,5 @@
 {% load i18n admin_urls static admin_modify %}
-<div class="js-inline-admin-formset inline-group" id="{{ inline_admin_formset.formset.prefix }}-group"
-     data-inline-type="tabular"
-     data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
+<div class="js-inline-admin-formset inline-group" id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="tabular" data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
     <div class="tabular inline-related {% if forloop.last %}last-related{% endif %}">
         {{ inline_admin_formset.formset.management_form }}
         <fieldset class="module {{ inline_admin_formset.classes }}">
@@ -12,8 +10,11 @@
                         <th class="original">#</th>
                         {% for field in inline_admin_formset.fields %}
                             {% if not field.widget.is_hidden %}
-                                <th class="column-{{ field.name }}{% if field.required %} required{% endif %}">{{ field.label|capfirst }}
-                                    {% if field.help_text %}&nbsp;<img src="{% static "admin/img/icon-unknown.svg" %}" class="help help-tooltip" width="10" height="10" alt="({{ field.help_text|striptags }})" title="{{ field.help_text|striptags }}">{% endif %}
+                                <th class="column-{{ field.name }}{% if field.required %} required{% endif %}">
+                                    {{ field.label|capfirst }}
+                                    {% if field.help_text %}&nbsp;
+                                        <img src="{% static "admin/img/icon-unknown.svg" %}" class="help help-tooltip" width="10" height="10" alt="({{ field.help_text|striptags }})" title="{{ field.help_text|striptags }}">
+                                    {% endif %}
                                 </th>
                             {% endif %}
                         {% endfor %}

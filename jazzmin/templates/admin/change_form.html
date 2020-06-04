@@ -2,123 +2,151 @@
 {% load i18n admin_urls static admin_modify jazzmin %}
 
 {% block extrahead %}{{ block.super }}
-<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
-{{ media }}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    {{ media }}
 {% endblock %}
 
 {% block coltype %}colM{% endblock %}
 
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
 
-
 {% if not is_popup %}
-{% block breadcrumbs %}
-<ol class="breadcrumb float-sm-right">
-    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a></li>
-    <li class="breadcrumb-item">{% if has_view_permission %}<a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %}</li>
-    <li class="breadcrumb-item active">{% if add %}{% blocktrans with name=opts.verbose_name %}Add {{ name }}{% endblocktrans %}{% else %}{{ original|truncatewords:"18" }}{% endif %}</li>
-</ol>
-{% endblock %}
+    {% block breadcrumbs %}
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a></li>
+            <li class="breadcrumb-item">
+                {% if has_view_permission %}
+                    <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+                {% else %}
+                    {{ opts.verbose_name_plural|capfirst }}
+                {% endif %}
+            </li>
+            <li class="breadcrumb-item active">
+                {% if add %}
+                    {% blocktrans with name=opts.verbose_name %}Add {{ name }}{% endblocktrans %}
+                {% else %}
+                    {{ original|truncatewords:"18" }}
+                {% endif %}
+            </li>
+        </ol>
+    {% endblock %}
 {% endif %}
 
 {% block content_title %} {{ opts.verbose_name_plural|capfirst }} {% endblock %}
 
 {% block content %}
 
-<div id="content-main" class="col-md-12">
-    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.model_name }}_form" novalidate>{% csrf_token %}{% block form_top %}{% endblock %}
+    <div id="content-main" class=col-12>
+        <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.model_name }}_form" novalidate>
+            {% csrf_token %}
+            {% block form_top %}{% endblock %}
 
-    {% if errors %}
-        <div class="callout callout-danger">
-            {% if errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
-        </div>
-        {% for error in adminform.form.non_field_errors %}
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <i class="icon fa fa-ban"></i>{{ error|capfirst }}
-            </div>
-        {% endfor %}
-    {% endif %}
-
-    <div class="row">
-        {% if is_popup %}<input type="hidden" name="{{ is_popup_var }}" value="1">{% endif %}
-        {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
-
-        {% block field_sets %}
-            <div class="col-9">
-                <div class="card card-primary card-outline">
-                    <div class="card-header">
-                        <div class="card-title">
-                            {{ title }}{% block pretitle %}{% endblock %}
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <ul class="nav nav-tabs" role="tablist">
-                            {% for fieldset in adminform %}
-                                <li class="nav-item">
-                                    <a id="{{ fieldset.name|default:"General"|slugify }}-tab" class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls={{ fieldset.name|default:"General"|slugify }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:"General"|slugify }}">{{ fieldset.name|default:"General"|title }}</a>
-                                </li>
-                            {% endfor %}
-                            {% for inline_admin_formset in inline_admin_formsets %}
-                                <li class="nav-item">
-                                    <a id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab" class="nav-link" data-toggle="pill" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" aria-selected="false" href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">{{ inline_admin_formset.opts.verbose_name_plural|title }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-
-                        <div class="tab-content" id="custom-tabs-one-tabContent">
-                            {% for fieldset in adminform %}
-                                <div id="{{ fieldset.name|default:"General"|slugify }}" class="tab-pane fade{% if forloop.first %} active show{% endif %}" role="tabpanel" aria-labelledby="{{ fieldset.name|default:"General"|slugify }}-tab">
-                                    {% include "admin/includes/fieldset.html" %}
-                                </div>
-                            {% endfor %}
-                            {% for inline_admin_formset in inline_admin_formsets %}
-                                <div id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}" class="tab-pane fade" role="tabpanel" aria-labelledby="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab">
-                                    {% include inline_admin_formset.opts.template %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endblock %}
-
-        {% block after_field_sets %}{% endblock %}
-
-        {% block inline_field_sets %}{% endblock %}
-
-        {% block after_related_objects %}{% endblock %}
-
-        {% block submit_buttons_bottom %}
-        <div class="col-3">
-            {% submit_row %}
-            {% block object-tools %}
-                {% if change %}
-                    {% if not is_popup %}
-                        <ul class="object-tools">
-                            {% block object-tools-items %}
-                                {% change_form_object_tools %}
-                            {% endblock %}
-                        </ul>
+            {% if errors %}
+                <div class="callout callout-danger">
+                    {% if errors|length == 1 %}
+                        {% trans "Please correct the error below." %}
+                    {% else %}
+                        {% trans "Please correct the errors below." %}
                     {% endif %}
-                {% endif %}
-            {% endblock %}
-        </div>
-        {% endblock %}
+                </div>
+                {% for error in adminform.form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <i class="icon fa fa-ban"></i>{{ error|capfirst }}
+                    </div>
+                {% endfor %}
+            {% endif %}
 
-        {% block admin_change_form_document_ready %}
-            <script type="text/javascript" id="django-admin-form-add-constants" src="{% static 'admin/js/change_form.js' %}"
-                    {% if adminform and add %}
-                        data-model-name="{{ opts.model_name }}"
-                    {% endif %}>
-            </script>
-        {% endblock %}
+            <div class="row">
+                {% if is_popup %}<input type="hidden" name="{{ is_popup_var }}" value="1">{% endif %}
+                {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
 
-        {# JavaScript for prepopulated fields #}
-        {% prepopulated_fields_js %}
-        </div>
-    </form>
-</div>
+                {% block field_sets %}
+                    <div class="col-md-9 col-sm-12">
+                        <div class="card card-primary card-outline">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    {{ title }}{% block pretitle %}{% endblock %}
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    {% for fieldset in adminform %}
+                                        <li class="nav-item">
+                                            <a id="{{ fieldset.name|default:"General"|slugify }}-tab"
+                                               class="nav-link{% if forloop.first %} active{% endif %}"
+                                               data-toggle="pill" role="tab"
+                                               aria-controls={{ fieldset.name|default:"General"|slugify }}" aria-selected="
+                                               {% if forloop.first %}true{% else %}false{% endif %}"
+                                            href="#{{ fieldset.name|default:"General"|slugify }}">{{ fieldset.name|default:"General"|title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    {% for inline_admin_formset in inline_admin_formsets %}
+                                        <li class="nav-item">
+                                            <a id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab"
+                                               class="nav-link" data-toggle="pill" role="tab"
+                                               aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}"
+                                               aria-selected="false"
+                                               href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">
+                                                {{ inline_admin_formset.opts.verbose_name_plural|title }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                                <div class="tab-content" id="custom-tabs-one-tabContent">
+                                    {% for fieldset in adminform %}
+                                        <div id="{{ fieldset.name|default:"General"|slugify }}"
+                                             class="tab-pane fade{% if forloop.first %} active show{% endif %}"
+                                             role="tabpanel"
+                                             aria-labelledby="{{ fieldset.name|default:"General"|slugify }}-tab">
+                                            {% include "admin/includes/fieldset.html" %}
+                                        </div>
+                                    {% endfor %}
+                                    {% for inline_admin_formset in inline_admin_formsets %}
+                                        <div id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}"
+                                             class="tab-pane fade" role="tabpanel"
+                                             aria-labelledby="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab">
+                                            {% include inline_admin_formset.opts.template %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+
+                {% block after_field_sets %}{% endblock %}
+
+                {% block inline_field_sets %}{% endblock %}
+
+                {% block after_related_objects %}{% endblock %}
+
+                {% block submit_buttons_bottom %}
+                    <div class="col-md-3 col-sm-12">
+                        {% submit_row %}
+                        {% block object-tools %}
+                            {% if change %}
+                                {% if not is_popup %}
+                                    <ul class="object-tools">
+                                        {% block object-tools-items %}
+                                            {% change_form_object_tools %}
+                                        {% endblock %}
+                                    </ul>
+                                {% endif %}
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% block admin_change_form_document_ready %}
+                    <script type="text/javascript" id="django-admin-form-add-constants" src="{% static 'admin/js/change_form.js' %}" {% if adminform and add %}data-model-name="{{ opts.model_name }}"{% endif %}></script>
+                {% endblock %}
+
+                {% prepopulated_fields_js %}
+            </div>
+        </form>
+    </div>
 
 {% endblock %}

@@ -3,7 +3,7 @@ import copy
 from django.conf import settings
 from django.contrib.admin import AdminSite
 
-from .utils import get_admin_url
+from .utils import get_admin_url, get_custom_url, get_model_meta, get_app_admin_urls
 
 DEFAULT_SETTINGS = {
     # Choose from black, black-light, blue, blue-light, green, green-light, purple, purple-light
@@ -25,22 +25,32 @@ DEFAULT_SETTINGS = {
     # Copyright on the footer
     'copyright': '',
 
-    # Whether to aut expand the menu
-    'navigation_expanded': True,
-
     # The model admin to search from the search bar, search bar omitted if excluded
     'search_model': None,
 
     # Field name on user model that contains avatar image
     'user_avatar': 'avatar',
 
-    # Hide these apps when generating menu
+    # Links to put along the top menu
+    'topmenu_links': [],
+
+    #############
+    # Side Menu #
+    #############
+
+    # Whether to display the side menu
+    'show_sidebar': True,
+
+    # Whether to aut expand the menu
+    'navigation_expanded': True,
+
+    # Hide these apps when generating side menu
     'hide_apps': [],
 
-    # Hide these models when generating menu
+    # Hide these models when generating side menu
     'hide_models': [],
 
-    # List of apps to base menu ordering off of
+    # List of apps to base side menu ordering off of
     'order_with_respect_to': [],
 
     # Custom links to append to app groups, keyed on app name
@@ -62,6 +72,16 @@ def get_settings():
     if jazzmin_settings['search_model']:
         jazzmin_settings['search_url'] = get_admin_url(jazzmin_settings['search_model'].lower())
         jazzmin_settings['search_name'] = jazzmin_settings['search_model'].split('.')[-1] + 's'
+
+    for link in jazzmin_settings.get('topmenu_links', []):
+        if 'url' in link:
+            link['url'] = get_custom_url(link['url'])
+        elif 'model' in link:
+            link['name'] = get_model_meta(link['model'])
+            link['url'] = get_admin_url(link['model'])
+        elif 'app' in link:
+            link['name'] = link['app'].title()
+            link['app_children'] = get_app_admin_urls(link['app'])
 
     jazzmin_settings['hide_apps'] = [x.lower() for x in jazzmin_settings['hide_apps']]
     jazzmin_settings['hide_models'] = [x.lower() for x in jazzmin_settings['hide_models']]

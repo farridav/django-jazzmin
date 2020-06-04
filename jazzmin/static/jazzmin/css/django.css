@@ -587,3 +587,7 @@ input[type="checkbox"] {
     margin: 0;
     padding: 0;
 }
+
+body.no-sidebar .content-wrapper, body.no-sidebar .main-footer, body.no-sidebar .main-header {
+    margin-left: 0;
+}
