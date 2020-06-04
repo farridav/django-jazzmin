@@ -1,11 +1,10 @@
 {% load i18n admin_urls static %}
 <div class="js-inline-admin-formset inline-group" id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="stacked" data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
-    <fieldset class="module {{ inline_admin_formset.classes }} card card-primary card-outline">
+    <fieldset class="module {{ inline_admin_formset.classes }} card card-outline">
         <div class="card-header with-border">
             <h2 class="card-title">{{ inline_admin_formset.opts.verbose_name_plural|capfirst }}</h2>
         </div>
         <div class="card-body">
-            <div class="card-group">
                 {{ inline_admin_formset.formset.management_form }}
                 {{ inline_admin_formset.formset.non_form_errors }}
 
@@ -50,7 +49,6 @@
                         </div>
                     </div>
                 {% endfor %}
-            </div>
         </div>
     </fieldset>
 </div>
