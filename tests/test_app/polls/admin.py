@@ -8,6 +8,7 @@ from .models import Poll, Choice, Vote
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
+    show_change_link = True
 
 
 @admin.register(Poll)
