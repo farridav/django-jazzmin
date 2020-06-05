@@ -12,7 +12,7 @@ class Poll(models.Model):
     active = models.BooleanField(default=True)
 
     def get_absolute_url(self):
-        return reverse('admin:polls_poll_change', args=(self.pk,))
+        return reverse('admin:polls_poll_change', kwargs={'object_id': self.pk})
 
     def clean(self):
         if 'cheese' in self.text:
