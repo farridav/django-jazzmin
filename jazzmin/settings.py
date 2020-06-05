@@ -6,10 +6,6 @@ from django.contrib.admin import AdminSite
 from .utils import get_admin_url, get_custom_url, get_model_meta, get_app_admin_urls
 
 DEFAULT_SETTINGS = {
-    # Choose from black, black-light, blue, blue-light, green, green-light, purple, purple-light
-    # red, red-light, yellow, yellow-light
-    'skin': 'blue',
-
     # title of the window
     'site_title': AdminSite.site_title,
 
@@ -56,9 +52,9 @@ DEFAULT_SETTINGS = {
     # Custom links to append to app groups, keyed on app name
     'custom_links': {},
 
-    # Custom icons per app or model
+    # Custom icons per model in the side menu See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
+    # for a list of icon classes
     'icons': {
-        'auth': 'fa-people',
         'auth.user': 'fa-user',
     }
 }

@@ -14,6 +14,9 @@ Installation
 
 Setup & configuration
 =====================
+
+See the test_app (https://github.com/farridav/django-jazzmin/tests/test_app/settings.py) for a full implementation
+
 ::
 
     # settings.py
@@ -27,52 +30,69 @@ Setup & configuration
 
 
     JAZZMIN_SETTINGS = {
-        # Choose from black, black-light, blue, blue-light, green, green-light, purple, purple-light,
-        # red, red-light, yellow, yellow-light
-        'skin': 'blue',
-
         # title of the window
-        'site_title': 'Django Admin',
+        'site_title': 'Polls Admin',
 
         # Title on the login screen
-        'site_header': 'Django',
+        'site_header': 'Polls',
 
         # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-        'site_logo': 'jazzmin/img/default-log.svg',
+        'site_logo': None,
 
         # Welcome text on the login screen
-        'welcome_sign': 'Welcome',
+        'welcome_sign': 'Welcome to polls',
 
         # Copyright on the footer
         'copyright': 'Acme Ltd',
 
-        # Wether to aut expand the menu
-        'navigation_expanded': True,
-
         # The model admin to search from the search bar, search bar omitted if excluded
-        'search_model': 'profiles.Profile',
+        'search_model': 'auth.User',
 
         # Field name on user model that contains avatar image
-        'user_avatar': 'avatar',
+        'user_avatar': None,
 
-        # Hide these apps when generating menu
-        'hide_apps': ['auth'],
+        # Links to put along the top menu
+        'topmenu_links': [
 
-        # Hide these models when generating menu
-        'hide_models': ['auth.user'],
+            # Url that gets reversed (Permissions can be added)
+            {'name': 'Home', 'url': 'admin:index', 'permissions': ['auth.view_user']},
 
-        # List of apps to base menu ordering off of
-        'order_with_respect_to': ['first_app', 'second_app'],
+            # external url that opens in a new window (Permissions can be added)
+            {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
+
+            # model admin to link to (Permissions checked against model)
+            {'model': 'auth.User'},
+
+            # App with dropdown menu to all its models pages (Permissions checked against models)
+            {'app': 'polls'},
+        ],
+
+        # Whether to display the side menu
+        'show_sidebar': True,
+
+        # Whether to aut expand the menu
+        'navigation_expanded': True,
+
+        # Hide these apps when generating side menu
+        'hide_apps': [],
+
+        # Hide these models when generating side menu
+        'hide_models': [],
+
+        # List of apps to base side menu ordering off of
+        'order_with_respect_to': ['accounts', 'polls'],
 
         # Custom links to append to app groups, keyed on app name
         'custom_links': {
-            'first_app': [
-                {'name': 'Custom link', 'url': '/', 'icon': 'fa-user', 'permissions': []}
-            ]
+            'polls': [{
+                'name': 'Make Messages', 'url': 'make_messages', 'icon': 'fa-comments',
+                'permissions': ['polls.view_polls']
+            }]
         },
 
+        # Custom icons per model in the side menu See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
+        # for a list of icon classes
         'icons': {
-            'auth': 'fa-people',
             'auth.user': 'fa-user',
         }
     }
@@ -85,4 +105,6 @@ See https://github.com/farridav/django-jazzmin
 
 Thanks
 ------
-- Original Package https://github.com/wuyue92tree/django-adminlte-ui
+This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that we refactored so much we thought it
+deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, we are still patching into that
+project were possible, but this project is taking a slightly different direction.

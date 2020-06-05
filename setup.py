@@ -19,6 +19,6 @@ setup(
     zip_safe=False,
     entry_points={},
     install_requires=[
-        'django>=1.7',
+        'django>=2',
     ]
 )
