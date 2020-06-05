@@ -10,3 +10,5 @@
 /test-reports
 __pycache__
 _resource
+admin_templates
+*.sqlite3
