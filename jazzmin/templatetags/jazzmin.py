@@ -265,14 +265,3 @@ def header_class(header, forloop):
         classes.append("sorting")
 
     return ' '.join(classes)
-
-
-@register.simple_tag
-def strip_collapse_class(classes):
-    """
-    Remove collapse class from CSS class list
-    """
-    if type(classes) == str:
-        classes = classes.replace('collapse', '')
-
-    return classes
