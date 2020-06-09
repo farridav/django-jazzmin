@@ -56,6 +56,9 @@ DEFAULT_SETTINGS = {
     # Custom links to append to app groups, keyed on app name
     'custom_links': {},
 
+    # Whether to show the UI customiser on the sidebar
+    'show_ui_builder': True,
+
     # Custom icons per model in the side menu See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
     # for a list of icon classes
     'icons': {

@@ -34,7 +34,7 @@
 <div class="wrapper">
 
     {% if not is_popup %}
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="jazzy-topmenu">
             <ul class="navbar-nav">
 
                 {% if jazzmin_settings.show_sidebar %}
@@ -43,7 +43,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a href="{% url 'admin:index' %}" class="brand-link" style="padding: 0">
+                        <a href="{% url 'admin:index' %}" class="brand-link">
                             <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8; margin: 0 0 0 5px;">
                         </a>
                     </li>
@@ -103,14 +103,21 @@
                         {% endif %}
                     </div>
                 </li>
+                {% if jazzmin_settings.show_ui_builder %}
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </nav>
 
         {% if jazzmin_settings.show_sidebar %}
             {% get_side_menu as side_menu_list %}
 
-            <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <a href="{% url 'admin:index' %}" class="brand-link">
+            <aside class="main-sidebar sidebar-dark-primary elevation-4" id="jazzy-sidemenu">
+                <a href="{% url 'admin:index' %}" class="brand-link" id="jazzy-logo">
                     <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light">{{ jazzmin_settings.site_header }}</span>
                 </a>
@@ -134,8 +141,7 @@
                     </div>
 
                     <nav class="mt-2">
-                        <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat nav-compact"
-                            data-widget="treeview" role="menu" data-accordion="false">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                             <li class="nav-item">
                                 <a href="{% url 'admin:index' %}" class="nav-link">
@@ -194,6 +200,9 @@
             {% block footer %}
             {% endblock %}
         </footer>
+        {% if jazzmin_settings.show_ui_builder %}
+            {% include 'jazzmin/includes/ui_builder_panel.html' %}
+        {% endif %}
     {% endif %}
 
 </div>
@@ -209,6 +218,10 @@
 
 {% if jazzmin_settings.custom_js %}
 <script src="{% static jazzmin_settings.custom_js %}"></script>
+{% endif %}
+
+{% if jazzmin_settings.show_ui_builder %}
+<script src="{% static "jazzmin/js/ui-builder.js" %}"></script>
 {% endif %}
 
 {% block extrajs %}{% endblock %}
