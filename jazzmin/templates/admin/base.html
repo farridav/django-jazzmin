@@ -19,8 +19,8 @@
     <!-- Custom fixes for django -->
     <link rel="stylesheet" href="{% static "jazzmin/css/django.css" %}">
 
-    {% if jazzmin_settings.skin %}
-        <!-- TODO: Add in skin support here -->
+    {% if jazzmin_settings.custom_css %}
+        <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
     {% endif %}
 
     <!-- Google Font: Source Sans Pro -->
@@ -85,7 +85,7 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-user"> {{ request.user }}</i>
+                        <i class="fa fa-user"> {{ request.user }}</i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <span class="dropdown-header">{% trans 'Account' %}</span>
@@ -150,7 +150,7 @@
                                     {% for model in app.models %}
                                         <li class="nav-item">
                                             <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
-                                                <i class="far nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                                <i class="fa nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
                                                 <p>{{ model.name }}</p>
                                             </a>
                                         </li>
@@ -167,7 +167,7 @@
                                             {% for model in app.models %}
                                                 <li class="nav-item">
                                                     <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
-                                                        <i class="far nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                                        <i class="fa nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
                                                         <p>{{ model.name }}</p>
                                                     </a>
                                                 </li>
@@ -206,6 +206,10 @@
 <script src="{% static "adminlte/js/adminlte.min.js" %}"></script>
 <!-- Django customisations -->
 <script src="{% static "jazzmin/js/main.js" %}"></script>
+
+{% if jazzmin_settings.custom_js %}
+<script src="{% static jazzmin_settings.custom_js %}"></script>
+{% endif %}
 
 {% block extrajs %}{% endblock %}
 
