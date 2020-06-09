@@ -116,7 +116,7 @@
         {% if jazzmin_settings.show_sidebar %}
             {% get_side_menu as side_menu_list %}
 
-            <aside class="main-sidebar sidebar-dark-primary elevation-4" id="jazzy-sidemenu">
+            <aside class="main-sidebar elevation-4 sidebar-dark-primary" id="jazzy-sidemenu">
                 <a href="{% url 'admin:index' %}" class="brand-link" id="jazzy-logo">
                     <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light">{{ jazzmin_settings.site_header }}</span>
@@ -206,6 +206,27 @@
     {% endif %}
 
 </div>
+
+{% if jazzmin_settings.show_ui_builder %}
+<div id="codeBox" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">UI Configuration</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Copy this info your settings file to persist these UI changes</p>
+                <pre><code></code></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endif %}
 
 <!-- jQuery -->
 <script src="{% static "adminlte/plugins/jquery/jquery.min.js" %}"></script>

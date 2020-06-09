@@ -75,7 +75,7 @@
             return (className.match (/(^|\s)navbar-\S+/g) || []).join(' ');
         }).addClass('navbar-expand ' +  newClasses);
 
-        window.ui_changes['topmenu'] = newClasses.split(' ');
+        window.ui_changes['topmenu'] = newClasses;
     });
 
     $('#accent-colours div').on('click', function () {
@@ -85,17 +85,17 @@
             return (className.match (/(^|\s)accent-\S+/g) || []).join(' ');
         }).addClass(newClasses);
 
-        window.ui_changes['accent'] = newClasses.split(' ');
+        window.ui_changes['accent'] = newClasses;
     });
 
     $('#dark-sidebar-variants div, #light-sidebar-variants div').on('click', function () {
         var newClasses = $(this).data('classes');
 
         $('aside#jazzy-sidemenu').removeClass (function (index, className) {
-            return (className.match (/(^|\s)sidebar-\S+/g) || []).join(' ');
+            return (className.match (/(^|\s)sidebar-[\S|-]+/g) || []).join(' ');
         }).addClass(newClasses);
 
-        window.ui_changes['sidemenu'] = newClasses.split(' ');
+        window.ui_changes['sidemenu'] = newClasses.trim();
     });
 
     $('#brand-logo-variants div').on('click', function () {
@@ -105,7 +105,19 @@
             return (className.match (/(^|\s)navbar-\S+/g) || []).join(' ');
         }).addClass(newClasses);
 
-        window.ui_changes['brand_colour'] = newClasses.split(' ');
+        window.ui_changes['brand_colour'] = newClasses;
+    });
+
+    $("#codeBox").on('show.bs.modal', function () {
+        $('.modal-body code', this).html(
+            'JAZZMIN_UI_TWEAKS = ' + JSON.stringify(
+                window.ui_changes, null, 4
+            ).replace(
+                /true/g, 'True'
+            ).replace(
+                /false/g, 'False'
+            )
+        );
     });
 
 })(jQuery)
