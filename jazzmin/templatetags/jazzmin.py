@@ -265,3 +265,15 @@ def header_class(header, forloop):
         classes.append("sorting")
 
     return ' '.join(classes)
+
+
+@register.simple_tag()
+def safe_classes(classes):
+    """
+    Remove reserved classes from CSS class list
+    """
+    if type(classes) == str:
+        classes = classes.split(' ')
+
+    excluded = ['collapse']
+    return ' '.join([x for x in classes if x not in excluded])
