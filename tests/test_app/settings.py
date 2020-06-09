@@ -74,6 +74,10 @@ JAZZMIN_SETTINGS = {
         {'app': 'polls'},
     ],
 
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    'custom_css': None,
+    'custom_js': None,
+
     # Whether to display the side menu
     'show_sidebar': True,
 

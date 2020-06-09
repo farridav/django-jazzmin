@@ -12,7 +12,7 @@ DEFAULT_SETTINGS = {
     # Title on the login screen
     'site_header': AdminSite.site_header,
 
-    # square logo to use for your site, must be present in static files, used for favicon and brand on top left
+    # Relative path to logo for your site, used for favicon and brand on top left (must be present in static files)
     'site_logo': 'adminlte/img/AdminLTELogo.png',
 
     # Welcome text on the login screen
@@ -29,6 +29,10 @@ DEFAULT_SETTINGS = {
 
     # Links to put along the top menu
     'topmenu_links': [],
+
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    'custom_css': None,
+    'custom_js': None,
 
     #############
     # Side Menu #

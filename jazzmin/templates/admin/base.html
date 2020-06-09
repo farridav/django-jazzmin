@@ -19,8 +19,8 @@
     <!-- Custom fixes for django -->
     <link rel="stylesheet" href="{% static "jazzmin/css/django.css" %}">
 
-    {% if jazzmin_settings.skin %}
-        <!-- TODO: Add in skin support here -->
+    {% if jazzmin_settings.custom_css %}
+        <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
     {% endif %}
 
     <!-- Google Font: Source Sans Pro -->
@@ -206,6 +206,10 @@
 <script src="{% static "adminlte/js/adminlte.min.js" %}"></script>
 <!-- Django customisations -->
 <script src="{% static "jazzmin/js/main.js" %}"></script>
+
+{% if jazzmin_settings.custom_js %}
+<script src="{% static jazzmin_settings.custom_js %}"></script>
+{% endif %}
 
 {% block extrajs %}{% endblock %}
 
