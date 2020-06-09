@@ -1,5 +1,5 @@
 {% load jazzmin %}
-<div class="card {% safe_classes fieldset.classes %}">
+<div class="card {% strip_collapse_class fieldset.classes %}">
     <div class="p-5{% if fieldset.name %} card-body{% endif %}">
         {% for line in fieldset %}
         <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
