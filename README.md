@@ -1,7 +1,7 @@
 # Django jazzmin (Jazzy Admin)
 Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin looky jazzy
 
-Support for custom or generated menus on the left or the top. 
+Support for custom or generated menus on the left or the top.
 
 ## Screenshots
 
@@ -21,15 +21,6 @@ Support for custom or generated menus on the left or the top.
 ```
 pip install django-jazzmin
 ```
-
-## UI Tweaks
-Jazzmin has a built in UI configurator, mimicked from https://adminlte.io/themes/v3/index3.html, add `'show_ui_builder': True`
-to your `JAZZMIN_SETTINGS` dict within your django settings, and there will be an icon in the top right of the screen that 
-allows you to customise the interface, then generate the code required to persist those changes.
-
-For more advanced tweaks and customisation, _without_ needing to overide the admin templates, you can pass a relative path 
-to a custom CSS or JS file e.g `custom_css': 'common/css/main.css'` or `'custom_js': 'common/js/main.js'` into your jazzmin 
-settings (Ensure these files can be found by the static file finder).
 
 ## Setup & configuration
 
@@ -134,9 +125,18 @@ JAZZMIN_SETTINGS = {
 }
 ```
 
+## UI Tweaks
+Jazzmin has a built in UI configurator, mimicked from https://adminlte.io/themes/v3/index3.html, add `'show_ui_builder': True`
+to your `JAZZMIN_SETTINGS` dict within your django settings, and there will be an icon in the top right of the screen that
+allows you to customise the interface, then generate the code required to persist those changes.
+
+For more advanced tweaks and customisation, _without_ needing to override the admin templates, you can pass a relative path
+to a custom CSS or JS file e.g `custom_css': 'common/css/main.css'` or `'custom_js': 'common/js/main.js'` into your jazzmin
+settings (Ensure these files can be found by the static file finder).
+
 # Thanks
-This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that we refactored so much we thought it 
-deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, we are still patching into that 
+This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that we refactored so much we thought it
+deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, we are still patching into that
 project were possible, but this project is taking a slightly different direction.
 
 - Based on AdminLTE 3: https://adminlte.io/

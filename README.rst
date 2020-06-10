@@ -2,8 +2,8 @@ Django jazzmin (Jazzy Admin)
 ============================
 Drop-in theme for django admin, that utilises AdminLTE & Bootstrap to make yo' admin looky jazzy
 
-This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that I refactored so much I thought it 
-deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, I am still patching into that 
+This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that I refactored so much I thought it
+deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, I am still patching into that
 project were possible, but this project is taking a slightly different direction.
 
 Installation
@@ -11,6 +11,7 @@ Installation
 ::
 
     pip install django-jazzmin
+
 
 Setup & configuration
 =====================
@@ -116,6 +117,17 @@ implementation
             'auth.user': 'fa-user',
         }
     }
+
+
+UI Tweaks
+=========
+Jazzmin has a built in UI configurator, mimicked from https://adminlte.io/themes/v3/index3.html, add `'show_ui_builder': True`
+to your `JAZZMIN_SETTINGS` dict within your django settings, and there will be an icon in the top right of the screen that
+allows you to customise the interface, then generate the code required to persist those changes.
+
+For more advanced tweaks and customisation, _without_ needing to override the admin templates, you can pass a relative path
+to a custom CSS or JS file e.g `custom_css': 'common/css/main.css'` or `'custom_js': 'common/js/main.js'` into your jazzmin
+settings (Ensure these files can be found by the static file finder).
 
 
 Screenshots
