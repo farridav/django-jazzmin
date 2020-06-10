@@ -15,7 +15,8 @@ Installation
 Setup & configuration
 =====================
 
-See the test_app (https://github.com/farridav/django-jazzmin/tests/test_app/settings.py) for a full implementation
+See the test_app (https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L39) for a full
+implementation
 
 ::
 
@@ -51,6 +52,10 @@ See the test_app (https://github.com/farridav/django-jazzmin/tests/test_app/sett
         # Field name on user model that contains avatar image
         'user_avatar': None,
 
+        ############
+        # Top Menu #
+        ############
+
         # Links to put along the top menu
         'topmenu_links': [
 
@@ -66,6 +71,21 @@ See the test_app (https://github.com/farridav/django-jazzmin/tests/test_app/sett
             # App with dropdown menu to all its models pages (Permissions checked against models)
             {'app': 'polls'},
         ],
+
+        #############
+        # UI Tweaks #
+        #############
+
+        # Relative paths to custom CSS/JS scripts (must be present in static files)
+        'custom_css': None,
+        'custom_js': None,
+
+        # Whether to show the UI customizer on the sidebar
+        'show_ui_builder': False,
+
+        #############
+        # Side Menu #
+        #############
 
         # Whether to display the side menu
         'show_sidebar': True,

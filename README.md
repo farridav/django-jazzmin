@@ -22,6 +22,15 @@ Support for custom or generated menus on the left or the top.
 pip install django-jazzmin
 ```
 
+## UI Tweaks
+Jazzmin has a built in UI configurator, mimicked from https://adminlte.io/themes/v3/index3.html, add `'show_ui_builder': True`
+to your `JAZZMIN_SETTINGS` dict within your django settings, and there will be an icon in the top right of the screen that 
+allows you to customise the interface, then generate the code required to persist those changes.
+
+For more advanced tweaks and customisation, _without_ needing to overide the admin templates, you can pass a relative path 
+to a custom CSS or JS file e.g `custom_css': 'common/css/main.css'` or `'custom_js': 'common/js/main.js'` into your jazzmin 
+settings (Ensure these files can be found by the static file finder).
+
 ## Setup & configuration
 
 See the [test_app](./tests/test_app/settings.py) for a full implementation
@@ -59,6 +68,10 @@ JAZZMIN_SETTINGS = {
     # Field name on user model that contains avatar image
     'user_avatar': None,
 
+    ############
+    # Top Menu #
+    ############
+
     # Links to put along the top menu
     'topmenu_links': [
 
@@ -74,6 +87,21 @@ JAZZMIN_SETTINGS = {
         # App with dropdown menu to all its models pages (Permissions checked against models)
         {'app': 'polls'},
     ],
+
+    #############
+    # UI Tweaks #
+    #############
+
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    'custom_css': None,
+    'custom_js': None,
+
+    # Whether to show the UI customizer on the sidebar
+    'show_ui_builder': False,
+
+    #############
+    # Side Menu #
+    #############
 
     # Whether to display the side menu
     'show_sidebar': True,
@@ -110,3 +138,7 @@ JAZZMIN_SETTINGS = {
 This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that we refactored so much we thought it 
 deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, we are still patching into that 
 project were possible, but this project is taking a slightly different direction.
+
+- Based on AdminLTE 3: https://adminlte.io/
+- Using Bootstrap 4: https://getbootstrap.com/
+- Using Font Awesome 5: https://fontawesome.com/

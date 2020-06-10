@@ -51,12 +51,18 @@ def test_password_change(admin_client):
 
     assert response.status_code == 200
     assert set(templates_used) == {
-        'admin/base.html',
+        'registration/password_change_form.html',
         'admin/base_site.html',
-        'django/forms/widgets/attrs.html',
-        'django/forms/widgets/input.html',
+        'admin/base.html',
         'django/forms/widgets/password.html',
-        'registration/password_change_form.html'
+        'django/forms/widgets/input.html',
+        'django/forms/widgets/attrs.html',
+        'django/forms/widgets/password.html',
+        'django/forms/widgets/input.html',
+        'django/forms/widgets/attrs.html',
+        'django/forms/widgets/password.html',
+        'django/forms/widgets/input.html',
+        'django/forms/widgets/attrs.html',
     }
 
     response = admin_client.post(url, data={

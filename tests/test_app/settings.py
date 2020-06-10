@@ -58,6 +58,10 @@ JAZZMIN_SETTINGS = {
     # Field name on user model that contains avatar image
     'user_avatar': None,
 
+    ############
+    # Top Menu #
+    ############
+
     # Links to put along the top menu
     'topmenu_links': [
 
@@ -74,9 +78,20 @@ JAZZMIN_SETTINGS = {
         {'app': 'polls'},
     ],
 
+    #############
+    # UI Tweaks #
+    #############
+
     # Relative paths to custom CSS/JS scripts (must be present in static files)
     'custom_css': None,
     'custom_js': None,
+
+    # Whether to show the UI customizer on the sidebar
+    'show_ui_builder': False,
+
+    #############
+    # Side Menu #
+    #############
 
     # Whether to display the side menu
     'show_sidebar': True,
