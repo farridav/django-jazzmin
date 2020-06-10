@@ -12,13 +12,14 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from .. import version
-from ..settings import get_settings
+from ..settings import get_settings, get_ui_tweaks
 from ..utils import order_with_respect_to, get_filter_id, get_custom_url, get_admin_url, get_model_permissions
 
 User = get_user_model()
 register = Library()
 logger = logging.getLogger(__name__)
 OPTIONS = get_settings()
+UI_TWEAKS = get_ui_tweaks()
 
 
 @register.simple_tag(takes_context=True)
@@ -112,6 +113,20 @@ def get_jazzmin_settings():
     Return Jazzmin settings
     """
     return OPTIONS
+
+
+@register.simple_tag
+def get_jazzmin_ui_tweaks():
+    """
+    Return Jazzmin ui tweaks
+
+    Find all the places references in ui-builder.js
+
+    and get template variables in there
+
+    ensure we have sane defaults
+    """
+    return UI_TWEAKS
 
 
 @register.simple_tag
