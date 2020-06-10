@@ -87,7 +87,7 @@ JAZZMIN_SETTINGS = {
     'custom_js': None,
 
     # Whether to show the UI customizer on the sidebar
-    'show_ui_builder': False,
+    'show_ui_builder': True,
 
     #############
     # Side Menu #
@@ -99,10 +99,10 @@ JAZZMIN_SETTINGS = {
     # Whether to aut expand the menu
     'navigation_expanded': True,
 
-    # Hide these apps when generating side menu
+    # Hide these apps when generating side menu e.g (auth)
     'hide_apps': [],
 
-    # Hide these models when generating side menu
+    # Hide these models when generating side menu (e.g auth.user)
     'hide_models': [],
 
     # List of apps to base side menu ordering off of

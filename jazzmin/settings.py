@@ -55,10 +55,10 @@ DEFAULT_SETTINGS = {
     # Whether to aut expand the menu
     'navigation_expanded': True,
 
-    # Hide these apps when generating side menu
+    # Hide these apps when generating side menu e.g (auth)
     'hide_apps': [],
 
-    # Hide these models when generating side menu
+    # Hide these models when generating side menu (e.g auth.user)
     'hide_models': [],
 
     # List of apps to base side menu ordering off of
