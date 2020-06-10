@@ -1,0 +1,9 @@
+site_name: Jazzmin
+nav:
+    - Home: index.md
+    - Installation: installation.md
+    - Configuration: configuration.md
+    - Development: development.md
+    - Issues: issues.md
+    - Credits: credits.md
+theme: readthedocs
