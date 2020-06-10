@@ -3,6 +3,7 @@
 
     window.ui_changes = window.ui_changes || {}
 
+    // Toggles
     $('#body-small-text').on('click', function () {
         var $elem = $('body');
         $elem.toggleClass('text-sm');
@@ -71,7 +72,19 @@
         window.ui_changes['navbar_small_text'] = this.checked;
     });
 
+    $('#brand-small-text').on('click', function () {
+        var $elem = $('#jazzy-logo');
+
+        $elem.toggleClass('text-sm');
+        window.ui_changes['brand_small_text'] = this.checked;
+    });
+
+    // Colour pickers
     $('#navbar-variants div').on('click', function () {
+        $(this).removeClass('inactive').addClass('active').parent().find(
+            'div'
+        ).not(this).removeClass('active').addClass('inactive');
+
         var $elem = $('nav#jazzy-navbar');
         var newClasses = $(this).data('classes');
 
@@ -83,6 +96,10 @@
     });
 
     $('#accent-colours div').on('click', function () {
+        $(this).removeClass('inactive').addClass('active').parent().find(
+            'div'
+        ).not(this).removeClass('active').addClass('inactive');
+
         var $elem = $('body');
         var newClasses = $(this).data('classes');
 
@@ -94,6 +111,10 @@
     });
 
     $('#dark-sidebar-variants div, #light-sidebar-variants div').on('click', function () {
+        $(this).removeClass('inactive').addClass('active').parent().find(
+            'div'
+        ).not(this).removeClass('active').addClass('inactive');
+
         var $elem = $('aside#jazzy-sidebar');
         var newClasses = $(this).data('classes');
 
@@ -104,14 +125,11 @@
         window.ui_changes['sidebar'] = newClasses.trim();
     });
 
-    $('#brand-small-text').on('click', function () {
-        var $elem = $('#jazzy-logo');
-
-        $elem.toggleClass('text-sm');
-        window.ui_changes['brand_small_text'] = this.checked;
-    });
-
     $('#brand-logo-variants div').on('click', function () {
+        $(this).removeClass('inactive').addClass('active').parent().find(
+            'div'
+        ).not(this).removeClass('active').addClass('inactive');
+
         var $elem = $('#jazzy-logo');
         var newClasses = $(this).data('classes');
 
@@ -120,7 +138,8 @@
         }).addClass(newClasses);
 
         if (newClasses === "") {
-            newClasses = false
+            newClasses = false;
+            $(this).parent().find('div').removeClass('active inactive');
         }
 
         window.ui_changes['brand_colour'] = newClasses;

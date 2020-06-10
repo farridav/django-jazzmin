@@ -620,3 +620,12 @@ body.no-sidebar .content-wrapper, body.no-sidebar .main-footer, body.no-sidebar 
 .control-sidebar-content label {
     vertical-align: top;
 }
+
+.ui-customiser .menu-items div.inactive {
+    opacity: 0.3;
+}
+
+.ui-customiser .menu-items div.active {
+    opacity: 1;
+    border: 1px solid white;
+}
