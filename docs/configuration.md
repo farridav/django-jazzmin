@@ -13,7 +13,7 @@ JAZZMIN_SETTINGS = {
     'site_header': 'Polls',
 
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-    'site_logo': None,
+    'site_logo': 'polls/img/logo.png',
 
     # Welcome text on the login screen
     'welcome_sign': 'Welcome to polls',
@@ -31,28 +31,16 @@ JAZZMIN_SETTINGS = {
     'topmenu_links': [
 
         # Url that gets reversed (Permissions can be added)
-        {
-            'name': 'Home', 
-            'url': 'admin:index', 
-            'permissions': ['auth.view_user']
-        },
+        {'name': 'Home',  'url': 'admin:index', 'permissions': ['auth.view_user']},
 
         # external url that opens in a new window (Permissions can be added)
-        {
-            'name': 'Support', 
-            'url': 'https://github.com/farridav/django-jazzmin/issues', 
-            'new_window': True
-        },
+        {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
 
         # model admin to link to (Permissions checked against model)
-        {
-            'model': 'auth.User'
-        },
+        {'model': 'auth.User'},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
-        {
-            'app': 'polls'
-        },
+        {'app': 'polls'},
     ],
 
     # Whether to display the side menu

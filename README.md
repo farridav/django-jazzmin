@@ -1,10 +1,24 @@
 # Django jazzmin (Jazzy Admin)
+
+[![Documentation Status](https://readthedocs.org/projects/django-jazzmin/badge/?version=latest)](http://django-jazzmin.readthedocs.io/?badge=latest)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+[![PyPI download month](https://img.shields.io/pypi/dm/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
+[![PyPI version fury.io](https://badge.fury.io/py/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
+[![Coverage Status](https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=master)](https://coveralls.io/github/farridav/django-jazzmin?branch=master)
+
 Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin looky jazzy
 
-Support for custom or generated menus on the left or the top.
+## Installation
+```
+pip install django-jazzmin
+```
+
+## Documentation
+See [Documentation](https://django-jazzmin.readthedocs.io/) or [Test App](./tests/test_app/settings.py)
 
 ## Features
-- drop-in, configure only if you want to
+- Drop-in, configure only if you want to
 - Customisable side menu
 - Customisable top menu
 - Customisable UI (via Live UI changes, or custom CSS/JS)
@@ -24,15 +38,10 @@ Support for custom or generated menus on the left or the top.
 ## Login view
 ![login](docs/img/login.png)
 
-## Installation
-```
-pip install django-jazzmin
-```
+## UI Customiser
+![login](docs/img/ui_customiser.png)
 
-## Setup & configuration
-See [test_app](./tests/test_app/settings.py) or [docs](https://django-jazzmin.readthedocs.io/)
-
-# Thanks
+## Thanks
 This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that we refactored so much we thought it
 deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, we are still patching into that
 project were possible, but this project is taking a slightly different direction.

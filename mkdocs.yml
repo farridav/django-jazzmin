@@ -1,6 +1,6 @@
 site_name: Jazzmin
 nav:
-    - Installation: installation.md
+    - Home: index.md
     - Configuration: configuration.md
     - Development: development.md
 theme: readthedocs

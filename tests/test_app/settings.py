@@ -44,7 +44,7 @@ JAZZMIN_SETTINGS = {
     'site_header': 'Polls',
 
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-    'site_logo': None,
+    'site_logo': 'polls/img/logo.png',
 
     # Welcome text on the login screen
     'welcome_sign': 'Welcome to polls',
@@ -161,6 +161,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

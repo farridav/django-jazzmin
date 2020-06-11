@@ -8,6 +8,7 @@ from jazzmin import version
 setup(
     name='django-jazzmin',
     version=version,
+    python_requires='>3.5',
     url='https://github.com/farridav/django-jazzmin',
     description='Django admin theme based adminlte & bootstrap',
     long_description=open('README.rst').read(),
