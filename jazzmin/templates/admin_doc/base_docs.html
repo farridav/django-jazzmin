@@ -11,5 +11,17 @@
         padding: 20px;
     }
 </style>
+{% endblock %}
 
+{% block content %}
+{% block alerts %}{% endblock %}
+<div id="content-main" class=col-12>
+  <div class="col-12">
+    <div class="card card-primary card-outline">
+      <div class="card-body pad table-responsive">
+          {% block docs_content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
