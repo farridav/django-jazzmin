@@ -119,12 +119,6 @@ def get_jazzmin_settings():
 def get_jazzmin_ui_tweaks():
     """
     Return Jazzmin ui tweaks
-
-    Find all the places references in ui-builder.js
-
-    and get template variables in there
-
-    ensure we have sane defaults
     """
     return UI_TWEAKS
 
