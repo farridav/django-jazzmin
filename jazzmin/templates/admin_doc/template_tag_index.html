@@ -1,4 +1,4 @@
-{% extends "admin/base_site.html" %}
+{% extends "admin_doc/base_docs.html" %}
 {% load i18n %}
 
 {% block coltype %}colSM{% endblock %}
@@ -13,17 +13,6 @@
 
 {% block title %}{% trans 'Template tags' %}{% endblock %}
 {% block content_title %}{% trans 'Template tag documentation' %}{% endblock %}
-
-{% block extrastyle %}
-
-<style>
-    .literal-block {
-        background: #272822;
-        color: #f8f8f2;
-    }
-</style>
-
-{% endblock %}
 
 {% block content %}
 
