@@ -141,13 +141,19 @@ def get_settings():
         if 'url' in link:
             link['url'] = get_custom_url(link['url'])
         elif 'model' in link:
-            link['name'] = get_model_meta(link['model']).verbose_name_plural.title()
+            model_meta = get_model_meta(link['model'])
+            link['name'] = model_meta.verbose_name_plural.title() if model_meta else link['model']
             link['url'] = get_admin_url(link['model'])
         elif 'app' in link:
             link['name'] = link['app'].title()
             link['app_children'] = get_app_admin_urls(link['app'])
 
+    if type(jazzmin_settings['hide_apps']) == str:
+        jazzmin_settings['hide_apps'] = [jazzmin_settings['hide_apps']]
     jazzmin_settings['hide_apps'] = [x.lower() for x in jazzmin_settings['hide_apps']]
+
+    if type(jazzmin_settings['hide_models']) == str:
+        jazzmin_settings['hide_models'] = [jazzmin_settings['hide_models']]
     jazzmin_settings['hide_models'] = [x.lower() for x in jazzmin_settings['hide_models']]
 
     return jazzmin_settings

@@ -1,49 +1,99 @@
 import pytest
+from bs4 import BeautifulSoup
 from django.urls import reverse
+
+from tests.utils import parse_sidemenu, user_with_permissions, parse_topmenu
 
 
 @pytest.mark.django_db
-def test_side_menu(admin_client):
+def test_side_menu(admin_client, settings):
     """
     All menu tweaking settings work as expected
     """
     url = reverse('admin:index')
 
     response = admin_client.get(url)
-    app_list = response.context['app_list']
 
-    # TODO: override settings, and confirm that our app_list is built the way we want it to
-    # given that app_list is what builds out the menu and the dashboard
-    assert app_list is not None
+    assert parse_sidemenu(response) == {
+        'Global': ['/admin/'],
+        'Polls': ['/admin/polls/choice/', '/admin/polls/poll/', '/admin/polls/vote/', '/make_messages/'],
+        'Administration': ['/admin/admin/logentry/'],
+        'Authentication and Authorization': ['/admin/auth/group/', '/admin/auth/user/']
+    }
+
+    settings.JAZZMIN_SETTINGS['hide_models'] = ['auth.user']
+    response = admin_client.get(url)
+
+    assert parse_sidemenu(response) == {
+        'Global': ['/admin/'],
+        'Polls': ['/admin/polls/choice/', '/admin/polls/poll/', '/admin/polls/vote/', '/make_messages/'],
+        'Administration': ['/admin/admin/logentry/'],
+        'Authentication and Authorization': ['/admin/auth/group/']
+    }
 
 
-@pytest.mark.skip
-def test_update_site_logo(admin_client):
+@pytest.mark.django_db
+def test_update_site_logo(admin_client, settings):
     """
     We can add a site logo, and it renders out
     """
-    pass
+    url = reverse('admin:index')
+
+    settings.JAZZMIN_SETTINGS['site_logo'] = 'polls/img/logo.png'
+    response = admin_client.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    assert soup.find('a', class_="brand-link").find('img')['src'] == '/static/polls/img/logo.png'
 
 
-@pytest.mark.skip
-def test_ui_customisations(admin_client):
+@pytest.mark.django_db
+def test_permissions_on_custom_links(client, settings):
     """
-    All UI settings work as expected
+    we honour permissions for the rendering of custom links
     """
-    pass
+    user = user_with_permissions()
+    user2 = user_with_permissions('polls.view_poll')
+
+    url = reverse('admin:index')
+
+    settings.JAZZMIN_SETTINGS['custom_links'] = {
+        'polls': [{
+            'name': 'Make Messages', 'url': 'make_messages',
+            'icon': 'fa-comments', 'permissions': ['polls.view_poll']
+        }]
+    }
+
+    client.force_login(user)
+    response = client.get(url)
+    assert parse_sidemenu(response) == {'Global': ['/admin/']}
+
+    client.force_login(user2)
+    response = client.get(url)
+    assert parse_sidemenu(response) == {'Global': ['/admin/'], 'Polls': ['/admin/polls/poll/', '/make_messages/']}
 
 
-@pytest.mark.skip
-def test_permissions_on_custom_links(admin_client):
-    """
-    We honour permissions for the rendering of custom links
-    """
-    pass
-
-
-@pytest.mark.skip
-def test_top_menu(admin_client):
+def test_top_menu(admin_client, settings):
     """
     Top menu renders out as expected
     """
-    pass
+    url = reverse('admin:index')
+
+    settings.JAZZMIN_SETTINGS['topmenu_links'] = [
+        {'name': 'Home', 'url': 'admin:index', 'permissions': ['auth.view_user']},
+        {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
+        {'model': 'auth.User'},
+        {'app': 'polls'},
+    ]
+
+    response = admin_client.get(url)
+
+    assert parse_topmenu(response) == [
+        {'name': 'Home', 'link': '/admin/'},
+        {'name': 'Support', 'link': 'https://github.com/farridav/django-jazzmin/issues'},
+        {'name': 'Users', 'link': '/admin/auth/user/'},
+        {'name': 'Polls', 'link': '#', 'children': [
+            {'name': 'Polls', 'link': '/admin/polls/poll/'},
+            {'name': 'Choices', 'link': '/admin/polls/choice/'},
+            {'name': 'Votes', 'link': '/admin/polls/vote/'},
+        ]}
+    ]
