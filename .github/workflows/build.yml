@@ -14,6 +14,8 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.5, 3.6, 3.7, 3.8]
+    env:
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
@@ -30,26 +32,3 @@ jobs:
 
       - name: Test with tox
         run: tox
-
-      - name: Upload coverage
-        uses: actions/upload-artifact@v1
-        with:
-          name: coverage
-          path: .coverage
-
-  finish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-
-      - uses: actions/download-artifact@v1
-        with:
-          name: coverage
-
-      - name: Publish to Coveralls
-        run: |
-          pip install -U pip python-coveralls
-          COVERALLS_REPO_TOKEN=${{ secrets.COVERALLS_REPO_TOKEN }} coveralls
