@@ -14,50 +14,48 @@
 {% block title %}{% trans 'Template filters' %}{% endblock %}
 {% block content_title %}{% trans 'Template filters' %}{% endblock %}
 
-{% block content %}
+{% block docs_content %}
 
-<div id="content-main" class=col-12>
-  <div class="col-12">
-    <div class="card card-primary card-outline">
-      <div class="card-body pad table-responsive">
+{% regroup filters|dictsort:"library" by library as filter_libraries %}
 
-        {% regroup filters|dictsort:"library" by library as filter_libraries %}
+    <div id="accordion">
+
         {% for library in filter_libraries %}
-        <div class="module">
-            <h2>{% firstof library.grouper _("Built-in filters") %}</h2>
-            {% if library.grouper %}<p class="small quiet">{% blocktrans with code="{"|add:"% load "|add:library.grouper|add:" %"|add:"}" %}To use these filters, put <code>{{ code }}</code> in your template before using the filter.{% endblocktrans %}</p><hr>{% endif %}
-            {% for filter in library.list|dictsort:"name" %}
-            <h3 id="{{ library.grouper|default:"built_in" }}-{{ filter.name }}">{{ filter.name }}</h3>
-            {{ filter.title }}
-            {{ filter.body }}
-            {% if not forloop.last %}<hr>{% endif %}
-            {% endfor %}
+        <div class="card card-primary">
+          <div class="card-header">
+            <h2 class="card-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ library.grouper }}" class="" aria-expanded="true">
+                    {% firstof library.grouper _("Built-in filters") %}
+                </a>
+            </h2>
+          </div>
+
+          <div id="collapse-{{ library.grouper }}" class="panel-collapse in collapse{% if forloop.first %} show{% endif %}" style="">
+            <div class="card-body">
+
+              {% for view in ns_views.list|dictsort:"url" %}
+                  {% ifchanged %}
+                  <h4><a href="{% url 'django-admindocs-views-detail' view=view.full_name %}">{{ view.url }}</a></h4>
+                  <p class="small quiet">{% blocktrans with view.full_name as full_name and view.url_name as url_name %}
+                      View function: <code>{{ full_name }}</code>. Name: <code>{{ url_name }}</code>.
+                  {% endblocktrans %}</p>
+                  <p>{{ view.title }}</p>
+                  <hr>
+                  {% endifchanged %}
+              {% endfor %}
+
+              {% if library.grouper %}<p class="small quiet">{% blocktrans with code="{"|add:"% load "|add:library.grouper|add:" %"|add:"}" %}To use these filters, put <code>{{ code }}</code> in your template before using the filter.{% endblocktrans %}</p><hr>{% endif %}
+
+              {% for filter in library.list|dictsort:"name" %}
+                <h4 id="{{ library.grouper|default:"built_in" }}-{{ filter.name }}">{{ filter.name }}</h4>
+                {{ filter.title }}
+                {{ filter.body }}
+                {% if not forloop.last %}<hr>{% endif %}
+              {% endfor %}
+            </div>
+          </div>
         </div>
         {% endfor %}
 
-      </div>
     </div>
-  </div>
-</div>
-
-{% endblock %}
-
-{% block sidebar %}
-
-<div id="content-related">
-
-{% regroup filters|dictsort:"library" by library as filter_libraries %}
-{% for library in filter_libraries %}
-<div class="module">
-    <h2>{% firstof library.grouper _("Built-in filters") %}</h2>
-    <ul>
-    {% for filter in library.list|dictsort:"name" %}
-        <li><a href="#{{ library.grouper|default:"built_in" }}-{{ filter.name }}">{{ filter.name }}</a></li>
-    {% endfor %}
-    </ul>
-</div>
-{% endfor %}
-
-</div>
-
 {% endblock %}
