@@ -44,7 +44,7 @@ JAZZMIN_SETTINGS = {
     'site_header': 'Polls',
 
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-    'site_logo': None,
+    'site_logo': 'polls/img/logo.png',
 
     # Welcome text on the login screen
     'welcome_sign': 'Welcome to polls',
@@ -99,10 +99,10 @@ JAZZMIN_SETTINGS = {
     # Whether to aut expand the menu
     'navigation_expanded': True,
 
-    # Hide these apps when generating side menu
+    # Hide these apps when generating side menu e.g (auth)
     'hide_apps': [],
 
-    # Hide these models when generating side menu
+    # Hide these models when generating side menu (e.g auth.user)
     'hide_models': [],
 
     # List of apps to base side menu ordering off of
@@ -161,6 +161,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

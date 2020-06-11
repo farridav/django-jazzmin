@@ -1,142 +1,60 @@
 Django jazzmin (Jazzy Admin)
 ============================
-Drop-in theme for django admin, that utilises AdminLTE & Bootstrap to make yo' admin looky jazzy
 
-This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that I refactored so much I thought it
-deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, I am still patching into that
-project were possible, but this project is taking a slightly different direction.
+.. image:: https://readthedocs.org/projects/django-jazzmin/badge/?version=latest
+   :target: http://django-jazzmin.readthedocs.io/?badge=latest
+.. image:: https://img.shields.io/badge/Made%20with-Python-1f425f.svg
+   :target: https://www.python.org/
+.. image:: https://img.shields.io/pypi/dm/django-jazzmin.svg
+   :target: https://pypi.python.org/pypi/django-jazzmin/
+.. image:: https://badge.fury.io/py/django-jazzmin.svg
+   :target: https://pypi.python.org/pypi/django-jazzmin/
+.. image:: https://img.shields.io/pypi/pyversions/django-jazzmin.svg
+   :target: https://pypi.python.org/pypi/django-jazzmin/
+.. image:: https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=master
+   :target: https://coveralls.io/github/farridav/django-jazzmin?branch=master
 
-Installation
-============
-::
+Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy
 
-    pip install django-jazzmin
+Documentation
+-------------
+See https://django-jazzmin.readthedocs.io also see `Test App`_
 
-
-Setup & configuration
-=====================
-
-See the test_app (https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L39) for a full
-implementation
-
-::
-
-    # settings.py
-
-    INSTALLED_APPS = [
-        # Place before admin
-        'jazzmin',
-        'django.contrib.admin',
-        [...]
-    ]
-
-
-    JAZZMIN_SETTINGS = {
-        # title of the window
-        'site_title': 'Polls Admin',
-
-        # Title on the login screen
-        'site_header': 'Polls',
-
-        # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-        'site_logo': None,
-
-        # Welcome text on the login screen
-        'welcome_sign': 'Welcome to polls',
-
-        # Copyright on the footer
-        'copyright': 'Acme Ltd',
-
-        # The model admin to search from the search bar, search bar omitted if excluded
-        'search_model': 'auth.User',
-
-        # Field name on user model that contains avatar image
-        'user_avatar': None,
-
-        ############
-        # Top Menu #
-        ############
-
-        # Links to put along the top menu
-        'topmenu_links': [
-
-            # Url that gets reversed (Permissions can be added)
-            {'name': 'Home', 'url': 'admin:index', 'permissions': ['auth.view_user']},
-
-            # external url that opens in a new window (Permissions can be added)
-            {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
-
-            # model admin to link to (Permissions checked against model)
-            {'model': 'auth.User'},
-
-            # App with dropdown menu to all its models pages (Permissions checked against models)
-            {'app': 'polls'},
-        ],
-
-        #############
-        # UI Tweaks #
-        #############
-
-        # Relative paths to custom CSS/JS scripts (must be present in static files)
-        'custom_css': None,
-        'custom_js': None,
-
-        # Whether to show the UI customizer on the sidebar
-        'show_ui_builder': False,
-
-        #############
-        # Side Menu #
-        #############
-
-        # Whether to display the side menu
-        'show_sidebar': True,
-
-        # Whether to aut expand the menu
-        'navigation_expanded': True,
-
-        # Hide these apps when generating side menu
-        'hide_apps': [],
-
-        # Hide these models when generating side menu
-        'hide_models': [],
-
-        # List of apps to base side menu ordering off of
-        'order_with_respect_to': ['accounts', 'polls'],
-
-        # Custom links to append to app groups, keyed on app name
-        'custom_links': {
-            'polls': [{
-                'name': 'Make Messages', 'url': 'make_messages', 'icon': 'fa-comments',
-                'permissions': ['polls.view_polls']
-            }]
-        },
-
-        # Custom icons per model in the side menu See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
-        # for a list of icon classes
-        'icons': {
-            'auth.user': 'fa-user',
-        }
-    }
-
-
-UI Tweaks
-=========
-Jazzmin has a built in UI configurator, mimicked from https://adminlte.io/themes/v3/index3.html, add `'show_ui_builder': True`
-to your `JAZZMIN_SETTINGS` dict within your django settings, and there will be an icon in the top right of the screen that
-allows you to customise the interface, then generate the code required to persist those changes.
-
-For more advanced tweaks and customisation, _without_ needing to override the admin templates, you can pass a relative path
-to a custom CSS or JS file e.g `custom_css': 'common/css/main.css'` or `'custom_js': 'common/js/main.js'` into your jazzmin
-settings (Ensure these files can be found by the static file finder).
-
+Features
+--------
+- Drop-in admin skin, all configuration optional
+- Customisable `side menu`_
+- Customisable `top menu`_
+- Customisable UI (via `Live UI changes`_, or `custom CSS/JS`_)
+- Based on the latest `adminlte`_ + `bootstrap`_
 
 Screenshots
 -----------
 
-See https://github.com/farridav/django-jazzmin
+Dashboard
+~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/dashboard.png
 
-Thanks
-------
-This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that we refactored so much we thought it
-deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, we are still patching into that
-project were possible, but this project is taking a slightly different direction.
+List view
+~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/list_view.png
+
+Detail view
+~~~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/detail_view.png
+
+Login view
+~~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/login.png
+
+UI Customiser
+~~~~~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/ui_customiser.png
+
+.. _adminlte: https://adminlte.io/
+.. _bootstrap: https://getbootstrap.com
+.. _Test App: https://github.com/farridav/django-jazzmin/tree/master/tests/test_app
+.. _top menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L61
+.. _side menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L92
+.. _Live UI changes: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L90
+.. _custom CSS/JS: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L86

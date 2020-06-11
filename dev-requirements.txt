@@ -16,3 +16,4 @@ ipython               # enhanced python shell
 ipdb                  # ipython breakpoints
 django-extensions     # Django Sugar for development
 faker                 # less fake fake data
+coveralls             # Publish code coverage to coveralls

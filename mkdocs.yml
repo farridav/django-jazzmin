@@ -1,0 +1,6 @@
+site_name: Jazzmin
+nav:
+    - Home: index.md
+    - Configuration: configuration.md
+    - Development: development.md
+theme: readthedocs
