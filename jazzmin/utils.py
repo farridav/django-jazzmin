@@ -26,7 +26,7 @@ def order_with_respect_to(first, reference):
 
 def get_admin_url(instance, **kwargs):
     """
-    Return the admin URL for the given instance, model class or <app>/<model> string
+    Return the admin URL for the given instance, model class or <app>.<model> string
     """
     url = '#'
 
@@ -52,7 +52,7 @@ def get_admin_url(instance, **kwargs):
                 app_label=app_label, model_name=model_name
             ), args=(instance.pk,))
 
-    except NoReverseMatch:
+    except (NoReverseMatch, ValueError):
         logger.error('Couldnt reverse url from {instance}'.format(instance=instance))
 
     if kwargs:
@@ -88,9 +88,12 @@ def get_model_meta(model_str):
     """
     Get the plural name
     """
-    app, model = model_str.split('.')
-    Model = apps.get_registered_model(app, model)
-    return Model._meta
+    try:
+        app, model = model_str.split('.')
+        Model = apps.get_registered_model(app, model)
+        return Model._meta
+    except (ValueError, LookupError):
+        return None
 
 
 def get_app_admin_urls(app):
@@ -118,16 +121,8 @@ def get_app_admin_urls(app):
     return models
 
 
-def get_model_permissions(user):
+def get_view_permissions(user):
     """
-    Create model permissions from the users permissions,
-
-    e.g having any of auth.view_user, auth.change_user, auth.delete_user will grant you auth.user
+    Get model names based on a users view permissions
     """
-    permissions = set()
-    for permission in user.get_all_permissions():
-        app_label, model = permission.split('.')
-        model = model.split('_')[1]
-        permissions.add('{app_label}.{model}'.format(app_label=app_label, model=model))
-
-    return permissions
+    return {x.replace('view_', '') for x in user.get_all_permissions() if 'view' in x}

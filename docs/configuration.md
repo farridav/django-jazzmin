@@ -64,7 +64,7 @@ JAZZMIN_SETTINGS = {
             'name': 'Make Messages', 
             'url': 'make_messages', 
             'icon': 'fa-comments',
-            'permissions': ['polls.view_polls']
+            'permissions': ['polls.view_poll']
         }]
     },
 
@@ -115,7 +115,7 @@ Example:
             'icon': 'fa-comments',                  
             
             # a list of permissions the user must have to see this link (optional)
-            'permissions': ['polls.view_polls']     
+            'permissions': ['polls.view_poll']     
         }]
     },
 
