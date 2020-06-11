@@ -13,13 +13,11 @@ from django.utils.safestring import mark_safe
 
 from .. import version
 from ..settings import get_settings, get_ui_tweaks
-from ..utils import order_with_respect_to, get_filter_id, get_custom_url, get_admin_url, get_model_permissions
+from ..utils import order_with_respect_to, get_filter_id, get_custom_url, get_admin_url, get_view_permissions
 
 User = get_user_model()
 register = Library()
 logger = logging.getLogger(__name__)
-OPTIONS = get_settings()
-UI_TWEAKS = get_ui_tweaks()
 
 
 @register.simple_tag(takes_context=True)
@@ -27,17 +25,19 @@ def get_side_menu(context):
     """
     Get the list of apps and models to render out in the side menu and on the dashboard page
     """
+
     user = context.get('user')
     if not user:
         return []
 
-    model_permissions = get_model_permissions(user)
+    model_permissions = get_view_permissions(user)
+    options = get_settings()
 
     menu = []
     available_apps = copy.deepcopy(context.get('available_apps', []))
     for app in available_apps:
         app_label = app['app_label'].lower()
-        if app_label in OPTIONS['hide_apps']:
+        if app_label in options['hide_apps']:
             continue
 
         allowed_models = []
@@ -45,13 +45,13 @@ def get_side_menu(context):
             model_str = '{app_label}.{model}'.format(app_label=app_label, model=model["object_name"]).lower()
             if model_str not in model_permissions:
                 continue
-            if model_str in OPTIONS.get('hide_models', []):
+            if model_str in options.get('hide_models', []):
                 continue
 
-            model['icon'] = OPTIONS.get('icons', {}).get(model_str)
+            model['icon'] = options.get('icons', {}).get(model_str)
             allowed_models.append(model)
 
-        for custom_link in OPTIONS.get('custom_links', {}).get(app_label, []):
+        for custom_link in options.get('custom_links', {}).get(app_label, []):
 
             perm_matches = []
             for perm in custom_link.get('permissions', []):
@@ -71,8 +71,8 @@ def get_side_menu(context):
             app['models'] = allowed_models
             menu.append(app)
 
-    if OPTIONS.get('order_with_respect_to'):
-        menu = order_with_respect_to(menu, OPTIONS['order_with_respect_to'])
+    if options.get('order_with_respect_to'):
+        menu = order_with_respect_to(menu, options['order_with_respect_to'])
 
     return menu
 
@@ -82,10 +82,11 @@ def get_top_menu(user):
     if not user:
         return []
 
-    model_permissions = get_model_permissions(user)
+    model_permissions = get_view_permissions(user)
+    options = get_settings()
 
     menu = []
-    for item in get_settings().get('topmenu_links', []):
+    for item in options.get('topmenu_links', []):
 
         perm_matches = []
         for perm in item.get('permissions', []):
@@ -112,7 +113,7 @@ def get_jazzmin_settings():
     """
     Return Jazzmin settings
     """
-    return OPTIONS
+    return get_settings()
 
 
 @register.simple_tag
@@ -120,7 +121,7 @@ def get_jazzmin_ui_tweaks():
     """
     Return Jazzmin ui tweaks
     """
-    return UI_TWEAKS
+    return get_ui_tweaks()
 
 
 @register.simple_tag
@@ -137,11 +138,12 @@ def get_user_avatar(user):
     For the given user, try to get the avatar image
     """
     no_avatar = static("adminlte/img/user2-160x160.jpg")
+    options = get_settings()
 
-    if not OPTIONS.get('user_avatar'):
+    if not options.get('user_avatar'):
         return no_avatar
 
-    avatar_field = getattr(user, OPTIONS['user_avatar'], None)
+    avatar_field = getattr(user, options['user_avatar'], None)
     if avatar_field:
         return avatar_field.url
 
