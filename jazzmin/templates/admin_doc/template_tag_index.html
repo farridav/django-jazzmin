@@ -18,32 +18,30 @@
 
 {% regroup tags|dictsort:"library" by library as tag_libraries %}
 
-<div id="accordion">
-
-  {% for library in tag_libraries %}
-  <div class="card card-primary">
-    <div class="card-header">
-      <h2 class="card-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ library.grouper }}" class="" aria-expanded="true">
-          {% firstof library.grouper _("Built-in tags") %}
-        </a>
-      </h2>
+  <div class="row">
+    <div class="col-4 col-sm-2">
+      <div class="nav flex-column nav-tabs h-100" id="tabs-tab" role="tablist" aria-orientation="vertical">
+        {% for library in tag_libraries %}
+          <h6><a class="nav-link" id="tabs-{% firstof library.grouper built_in_tags %}-tab" data-toggle="pill" href="#tabs-{% firstof library.grouper built_in_tags %}" role="tab" aria-controls="tabs-{% firstof library.grouper built_in_tags %}" aria-selected="true">{% firstof library.grouper _("Built-in tags") %}</a></h6>
+        {% endfor %}
+      </div>
     </div>
 
-    <div id="collapse-{{ library.grouper }}" class="panel-collapse in collapse{% if forloop.first %} show{% endif %}" style="">
-      <div class="card-body">
-
-        {% if library.grouper %}<p class="small quiet">{% blocktrans with code="{"|add:"% load "|add:library.grouper|add:" %"|add:"}" %}To use these tags, put <code>{{ code }}</code> in your template before using the tag.{% endblocktrans %}</p><hr>{% endif %}
-        {% for tag in library.list|dictsort:"name" %}
-          <h3 id="{{ library.grouper|default:"built_in" }}-{{ tag.name }}">{{ tag.name }}</h3>
-          <h6 style="font-style: italic;">{{ tag.title|striptags }}</h6>
-            {{ tag.body }}
-          {% if not forloop.last %}<hr>{% endif %}
+    <div class="col-7 col-sm-9">
+      <div class="tab-content" id="tabs-tabContent">
+        {% for library in tag_libraries %}
+        <div class="tab-pane text-left fade{% if forloop.first %} show active{% endif %}" id="tabs-{% firstof library.grouper built_in_tags %}" role="tabpanel" aria-labelledby="tabs-{% firstof library.grouper built_in_tags %}-tab">
+          {% if library.grouper %}<p class="small quiet">{% blocktrans with code="{"|add:"% load "|add:library.grouper|add:" %"|add:"}" %}To use these tags, put <code>{{ code }}</code> in your template before using the tag.{% endblocktrans %}</p><hr>{% endif %}
+          {% for tag in library.list|dictsort:"name" %}
+            <h3 id="{{ library.grouper|default:"built_in" }}-{{ tag.name }}">{{ tag.name }}</h3>
+            <h6 style="font-style: italic;">{{ tag.title|striptags }}</h6>
+              {{ tag.body }}
+            {% if not forloop.last %}<hr>{% endif %}
+          {% endfor %}
+        </div>
         {% endfor %}
       </div>
     </div>
   </div>
-  {% endfor %}
 
-</div>
 {% endblock %}
