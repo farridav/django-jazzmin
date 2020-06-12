@@ -86,7 +86,7 @@ def get_custom_url(url):
 
 def get_model_meta(model_str):
     """
-    Get the plural name
+    Get model meta class
     """
     try:
         app, model = model_str.split('.')
@@ -126,3 +126,49 @@ def get_view_permissions(user):
     Get model names based on a users view permissions
     """
     return {x.replace('view_', '') for x in user.get_all_permissions() if 'view' in x}
+
+
+def make_menu(user, links, allow_appmenus=True):
+    """
+    Make a menu from a list of user supplied links
+    """
+    if not user:
+        return []
+
+    model_permissions = get_view_permissions(user)
+
+    menu = []
+    for link in links:
+
+        perm_matches = []
+        for perm in link.get('permissions', []):
+            perm_matches.append(user.has_perm(perm))
+
+        if not all(perm_matches):
+            continue
+
+        if 'url' in link:
+            link['url'] = get_custom_url(link['url'])
+
+        elif 'model' in link:
+            if link['model'].lower() not in model_permissions:
+                continue
+
+            model_meta = get_model_meta(link['model'])
+            link['name'] = model_meta.verbose_name_plural.title() if model_meta else link['model']
+            link['url'] = get_admin_url(link['model'])
+
+        elif 'app' in link and allow_appmenus:
+            link['name'] = link['app'].title()
+            link['app_children'] = list(
+                filter(lambda x: x['model'] in model_permissions, get_app_admin_urls(link['app']))
+            )
+            if len(link['app_children']) == 0:
+                continue
+
+        else:
+            continue
+
+        menu.append(link)
+
+    return menu

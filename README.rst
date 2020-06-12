@@ -25,6 +25,7 @@ Features
 - Drop-in admin skin, all configuration optional
 - Customisable `side menu`_
 - Customisable `top menu`_
+- Customisable `user menu`_
 - Customisable UI (via `Live UI changes`_, or `custom CSS/JS`_)
 - Based on the latest `adminlte`_ + `bootstrap`_
 
@@ -54,7 +55,8 @@ UI Customiser
 .. _adminlte: https://adminlte.io/
 .. _bootstrap: https://getbootstrap.com
 .. _Test App: https://github.com/farridav/django-jazzmin/tree/master/tests/test_app
-.. _top menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L61
+.. _top menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L62
 .. _side menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L92
-.. _Live UI changes: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L90
-.. _custom CSS/JS: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L86
+.. _user menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L86
+.. _Live UI changes: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L133
+.. _custom CSS/JS: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L129

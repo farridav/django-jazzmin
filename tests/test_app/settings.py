@@ -79,15 +79,14 @@ JAZZMIN_SETTINGS = {
     ],
 
     #############
-    # UI Tweaks #
+    # User Menu #
     #############
 
-    # Relative paths to custom CSS/JS scripts (must be present in static files)
-    'custom_css': None,
-    'custom_js': None,
-
-    # Whether to show the UI customizer on the sidebar
-    'show_ui_builder': False,
+    # Additional links to include in the user menu on the top right ('app' url type is not allowed)
+    'usermenu_links': [
+        {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
+        {'model': 'auth.user'}
+    ],
 
     #############
     # Side Menu #
@@ -120,7 +119,18 @@ JAZZMIN_SETTINGS = {
     # for a list of icon classes
     'icons': {
         'auth.user': 'fa-user',
-    }
+    },
+
+    #############
+    # UI Tweaks #
+    #############
+
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    'custom_css': None,
+    'custom_js': None,
+
+    # Whether to show the UI customizer on the sidebar
+    'show_ui_builder': False,
 }
 
 TEMPLATES = [{

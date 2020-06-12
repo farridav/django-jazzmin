@@ -634,7 +634,7 @@ body.no-sidebar .content-wrapper, body.no-sidebar .main-footer, body.no-sidebar 
     word-break: break-word;
 }
 
-.brand-link {
+.navbar-nav .brand-link {
     padding-top: 3px;
 }
 

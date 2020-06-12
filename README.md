@@ -21,6 +21,7 @@ See [Documentation](https://django-jazzmin.readthedocs.io/) or [Test App](./test
 - Drop-in, configure only if you want to
 - Customisable side menu
 - Customisable top menu
+- Customisable user menu
 - Customisable UI (via Live UI changes, or custom CSS/JS)
 - Based on the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 

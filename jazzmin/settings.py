@@ -3,7 +3,7 @@ import copy
 from django.conf import settings
 from django.contrib.admin import AdminSite
 
-from .utils import get_admin_url, get_custom_url, get_model_meta, get_app_admin_urls
+from .utils import get_admin_url, get_model_meta
 
 DEFAULT_SETTINGS = {
     # title of the window
@@ -35,15 +35,11 @@ DEFAULT_SETTINGS = {
     'topmenu_links': [],
 
     #############
-    # UI Tweaks #
+    # User Menu #
     #############
 
-    # Relative paths to custom CSS/JS scripts (must be present in static files)
-    'custom_css': None,
-    'custom_js': None,
-
-    # Whether to show the UI customizer on the sidebar
-    'show_ui_builder': False,
+    # Additional links to include in the user menu on the top right ('app' url type is not allowed)
+    'usermenu_links': [],
 
     #############
     # Side Menu #
@@ -71,7 +67,18 @@ DEFAULT_SETTINGS = {
     # for a list of icon classes
     'icons': {
         'auth.user': 'fa-user',
-    }
+    },
+
+    #############
+    # UI Tweaks #
+    #############
+
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    'custom_css': None,
+    'custom_js': None,
+
+    # Whether to show the UI customizer on the sidebar
+    'show_ui_builder': False,
 }
 
 #######################################
@@ -133,21 +140,16 @@ def get_settings():
     user_settings = {x: y for x, y in getattr(settings, 'JAZZMIN_SETTINGS', {}).items() if y is not None}
     jazzmin_settings.update(user_settings)
 
+    # Extract search url from search model
     if jazzmin_settings['search_model']:
         jazzmin_settings['search_url'] = get_admin_url(jazzmin_settings['search_model'].lower())
-        jazzmin_settings['search_name'] = jazzmin_settings['search_model'].split('.')[-1] + 's'
+        model_meta = get_model_meta(jazzmin_settings['search_model'])
+        if model_meta:
+            jazzmin_settings['search_name'] = model_meta.verbose_name_plural.title()
+        else:
+            jazzmin_settings['search_name'] = jazzmin_settings['search_model'].split('.')[-1] + 's'
 
-    for link in jazzmin_settings.get('topmenu_links', []):
-        if 'url' in link:
-            link['url'] = get_custom_url(link['url'])
-        elif 'model' in link:
-            model_meta = get_model_meta(link['model'])
-            link['name'] = model_meta.verbose_name_plural.title() if model_meta else link['model']
-            link['url'] = get_admin_url(link['model'])
-        elif 'app' in link:
-            link['name'] = link['app'].title()
-            link['app_children'] = get_app_admin_urls(link['app'])
-
+    # Deal with single strings in hide_apps/hide_models and make sure we lower case 'em
     if type(jazzmin_settings['hide_apps']) == str:
         jazzmin_settings['hide_apps'] = [jazzmin_settings['hide_apps']]
     jazzmin_settings['hide_apps'] = [x.lower() for x in jazzmin_settings['hide_apps']]
