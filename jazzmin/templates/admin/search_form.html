@@ -1,6 +1,6 @@
 {% load i18n static admin_list jazzmin %}
 
-<form id="changelist-search" class="form-inline" method="GET">
+<form id="changelist-search" class="form-inline mt-sm-2" method="GET">
     {% block filters %}
         {% if cl.has_filters %}
             {% for spec in cl.filter_specs %}{% jazzmin_list_filter cl spec %}{% endfor %}
