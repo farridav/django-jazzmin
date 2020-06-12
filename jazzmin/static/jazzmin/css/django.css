@@ -629,3 +629,15 @@ body.no-sidebar .content-wrapper, body.no-sidebar .main-footer, body.no-sidebar 
     opacity: 1;
     border: 1px solid white;
 }
+
+.timeline-item {
+    word-break: break-word;
+}
+
+.brand-link {
+    padding-top: 3px;
+}
+
+.breadcrumb {
+    margin-top: 5px;
+}
