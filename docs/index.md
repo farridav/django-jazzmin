@@ -12,7 +12,7 @@ customise, including a built-in UI customizer
 - Customisable side menu
 - Customisable top menu
 - Customisable user menu
-- responsive
+- Responsive
 - Customisable UI (via Live UI changes, or custom CSS/JS)
 - Based on the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 

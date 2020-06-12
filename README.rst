@@ -30,7 +30,7 @@ Features
 - Customisable `user menu`_
 - Search bar for any given model admin
 - Customisable UI (via `Live UI changes`_, or `custom CSS/JS`_)
-- responsive
+- Responsive
 - Based on the latest `adminlte`_ + `bootstrap`_
 
 Screenshots
