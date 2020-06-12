@@ -5,12 +5,14 @@ from setuptools import setup, find_packages
 
 from jazzmin import version
 
+REQUIRED_PYTHON = (3, 5)
+
 setup(
     name='django-jazzmin',
     version=version,
     python_requires='>3.5',
     url='https://github.com/farridav/django-jazzmin',
-    description='Django admin theme based adminlte & bootstrap',
+    description="Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy",
     long_description=open('README.rst').read(),
     author='farridav',
     maintainer='farridav',
