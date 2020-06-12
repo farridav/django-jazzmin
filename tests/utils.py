@@ -43,7 +43,8 @@ def parse_sidemenu(response):
 
     for li in soup.find(id='jazzy-sidebar').find('ul').find_all('li'):
         if 'nav-header' in li['class']:
-            current_app = li.contents[0]
+            current_app = li.text.strip()
+
         elif 'nav-item' in li['class']:
             href = li.find('a')['href']
             menu[current_app].append(href)
@@ -65,11 +66,25 @@ def parse_topmenu(response):
         if type(anchor.contents[0]) == Tag:
             continue
 
-        item = {'name': anchor.contents[0].strip(), 'link': anchor['href']}
+        item = {'name': anchor.text.strip(), 'link': anchor['href']}
         dropdown = li.find('div', class_='dropdown-menu')
         if dropdown:
-            item['children'] = [{'name': a.contents[0], 'link': a['href']} for a in dropdown.find_all('a')]
+            item['children'] = [{'name': a.text.strip(), 'link': a['href']} for a in dropdown.find_all('a')]
 
+        menu.append(item)
+
+    return menu
+
+
+def parse_usermenu(response):
+    """
+    Convert the user menu to a list of dicts representing menus
+    """
+    menu = []
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    for link in soup.find(id='jazzy-usermenu').find_all('a'):
+        item = {'name': link.text.strip(), 'link': link['href']}
         menu.append(item)
 
     return menu

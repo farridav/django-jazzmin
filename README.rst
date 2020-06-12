@@ -23,10 +23,14 @@ See https://django-jazzmin.readthedocs.io also see `Test App`_
 Features
 --------
 - Drop-in admin skin, all configuration optional
+- Select2 drop-downs
+- Bootstrap 4 & AdminLTE UI components
 - Customisable `side menu`_
 - Customisable `top menu`_
 - Customisable `user menu`_
+- Search bar for any given model admin
 - Customisable UI (via `Live UI changes`_, or `custom CSS/JS`_)
+- responsive
 - Based on the latest `adminlte`_ + `bootstrap`_
 
 Screenshots
@@ -51,6 +55,15 @@ Login view
 UI Customiser
 ~~~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/ui_customiser.png
+
+Mobile/Tablet layouts
+~~~~~~~~~~~~~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/dashboard_mobile.png
+.. image:: https://django-jazzmin.readthedocs.io/img/dashboard_table.png
+
+Admin Docs (if installed)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/admin_docs.png
 
 .. _adminlte: https://adminlte.io/
 .. _bootstrap: https://getbootstrap.com
