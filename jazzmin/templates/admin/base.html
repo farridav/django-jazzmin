@@ -85,9 +85,11 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link btn" data-toggle="dropdown" href="#">
-                        {{ request.user }} <i class="far fa-user pr-2" aria-hidden="true"></i>
+                    {% if perms|can_view_self %}
+                    <a class="nav-link btn" data-toggle="dropdown" href="#" title="{{ request.user }}">
+                        <i class="far fa-user pr-2" aria-hidden="true"></i>
                     </a>
+                    {% endif %}
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <span class="dropdown-header">{% trans 'Account' %}</span>
                         <div class="dropdown-divider"></div>
