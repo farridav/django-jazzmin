@@ -23,8 +23,17 @@ class Poll(models.Model):
 
 
 class Choice(models.Model):
+    """
+    This model is just great
+    """
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=255)
+
+    def choice_text_with_cheese(self, cheese='Cheddar'):
+        """
+        It appends some cheese to your choice, as cheese is always a good choice
+        """
+        return '{} and {}'.format(self.choice_text, cheese)
 
     def __str__(self):
         return self.choice_text[:25]

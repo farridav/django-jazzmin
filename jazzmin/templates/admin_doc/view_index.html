@@ -1,0 +1,57 @@
+{% extends "admin_doc/base_docs.html" %}
+{% load i18n %}
+
+{% block coltype %}colSM{% endblock %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'django-admindocs-docroot' %}">{% trans 'Documentation' %}</a></li>
+    <li class="breadcrumb-item active">{% trans 'Views' %}</li>
+</ol>
+{% endblock %}
+
+{% block title %}{% trans 'Views' %}{% endblock %}
+{% block content_title %}{% trans 'Views documentation' %}{% endblock %}
+
+{% block docs_content %}
+
+{% regroup views|dictsort:'namespace' by namespace as views_by_ns %}
+
+<div id="accordion">
+
+  {% for ns_views in views_by_ns %}
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 id="ns|{{ ns_views.grouper }}" class="card-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ ns_views.grouper }}" class="" aria-expanded="true">
+              {% if ns_views.grouper %}
+                  {% blocktrans with ns_views.grouper as name %}Views by namespace {{ name }}{% endblocktrans %}
+              {% else %}
+                  {% blocktrans %}Views by empty namespace{% endblocktrans %}
+              {% endif %}
+            </a>
+        </h3>
+      </div>
+
+      <div id="collapse-{{ ns_views.grouper }}" class="panel-collapse in collapse{% if forloop.first %} show{% endif %}" style="">
+        <div class="card-body">
+
+          {% for view in ns_views.list|dictsort:"url" %}
+              {% ifchanged %}
+              <h4><a href="{% url 'django-admindocs-views-detail' view=view.full_name %}">{{ view.url }}</a></h4>
+              <p class="small quiet">{% blocktrans with view.full_name as full_name and view.url_name as url_name %}
+                  View function: <code>{{ full_name }}</code>. Name: <code>{{ url_name }}</code>.
+              {% endblocktrans %}</p>
+              <p>{{ view.title }}</p>
+              <hr>
+              {% endifchanged %}
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  </div>
+{% endblock %}

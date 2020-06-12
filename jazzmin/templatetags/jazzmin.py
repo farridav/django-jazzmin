@@ -3,6 +3,7 @@ import itertools
 import logging
 import urllib.parse
 
+from django.conf import settings
 from django.contrib.admin.views.main import PAGE_VAR
 from django.contrib.auth import get_user_model
 from django.template import Library
@@ -276,3 +277,8 @@ def header_class(header, forloop):
         classes.append("sorting")
 
     return ' '.join(classes)
+
+
+@register.filter
+def app_is_installed(app):
+    return app in settings.INSTALLED_APPS

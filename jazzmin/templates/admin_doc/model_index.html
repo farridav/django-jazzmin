@@ -1,0 +1,58 @@
+{% extends "admin_doc/base_docs.html" %}
+{% load i18n %}
+
+{% block coltype %}colSM{% endblock %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'django-admindocs-docroot' %}">{% trans 'Documentation' %}</a></li>
+    <li class="breadcrumb-item active">{% trans 'Models' %}</li>
+</ol>
+{% endblock %}
+
+{% block title %}{% trans 'Models' %}{% endblock %}
+{% block content_title %}{% trans 'Models' %}{% endblock %}
+
+{% block content %}
+
+{% regroup models by app_config as grouped_models %}
+
+<div id="content-main" class=col-12>
+  <div class="col-12">
+    <div class="card card-primary card-outline">
+      <div class="card-body pad table-responsive">
+
+            {% for group in grouped_models %}
+            <div class="module">
+                <h5 id="app-{{ group.grouper.label }}">{{ group.grouper.verbose_name }} ({{ group.grouper.name }})</h5>
+
+                <table class="table table-hover text-nowrap">
+                    {% for model in group.list %}
+                        <tr>
+                            <th><a href="{% url 'django-admindocs-models-detail' app_label=model.app_label model_name=model.model_name %}">{{ model.object_name }}</a></th>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+    <div id="content-related" class="sidebar">
+        <div class="module">
+            <h2>{% trans 'Model groups' %}</h2>
+            <ul>
+            {% regroup models by app_config as grouped_models %}
+            {% for group in grouped_models %}
+                <li><a href="#app-{{ group.grouper.label }}">{{ group.grouper.verbose_name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
