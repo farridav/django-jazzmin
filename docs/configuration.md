@@ -139,6 +139,17 @@ the screen that allows you to customise the interface.
 When your happy with your customisations, press the "Show Code" button, and it will give you a code snippet to put 
 into your settings that will persist these customisations beyond page refresh.
 
+### Admin docs
+
+If you want to make use of `'django.contrib.admin'`, Jazzmin has it all jazzed up to get the best of it! Just install
+the application under `INSTALLED_APPS` and a book icon will show up on the top navigation menu to access the docs.
+
+![icon](./img/docs/docs_index.png)
+
+![icon](./img/docs/docs_template_tags_index.png)
+
+![icon](./img/docs/docs_model_detail.png)
+
 ### DIY with custom CSS/JS
 
 If there are things you need to do with CSS/JS, but want to avoid overriding the templates yourself, you can include a 
