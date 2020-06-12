@@ -84,6 +84,22 @@
 
             <ul class="navbar-nav ml-auto">
 
+                {% if jazzmin_settings.show_ui_builder %}
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+                {% endif %}
+                {% app_is_installed 'django.contrib.admindocs' as admindocs_is_installed %}
+                {% if admindocs_is_installed %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'django-admindocs-docroot' %}" role="button">
+                        <i class="fas fa-book"></i>
+                    </a>
+                </li>
+                {% endif %}
+
                 <li class="nav-item dropdown">
                     {% if perms|can_view_self %}
                     <a class="nav-link btn" data-toggle="dropdown" href="#" title="{{ request.user }}">
@@ -106,21 +122,6 @@
                         {% endif %}
                     </div>
                 </li>
-                {% if jazzmin_settings.show_ui_builder %}
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                        <i class="fas fa-th-large"></i>
-                    </a>
-                </li>
-                {% endif %}
-                {% app_is_installed 'django.contrib.admindocs' as admindocs_is_installed %}
-                {% if admindocs_is_installed %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'django-admindocs-docroot' %}" role="button">
-                        <i class="fas fa-book"></i>
-                    </a>
-                </li>
-                {% endif %}
             </ul>
         </nav>
 
