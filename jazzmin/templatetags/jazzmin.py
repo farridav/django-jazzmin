@@ -279,6 +279,6 @@ def header_class(header, forloop):
     return ' '.join(classes)
 
 
-@register.simple_tag
+@register.filter
 def app_is_installed(app):
     return app in settings.INSTALLED_APPS
