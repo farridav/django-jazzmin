@@ -28,5 +28,11 @@
         <p>{{ meta.Templates }}</p>
     {% endif %}
 
-    <p class="small"><a href="{% url 'django-admindocs-views-index' %}">&lsaquo; {% trans 'Back to View documentation' %}</a></p>
+    <div class="row">
+        <div class="col-lg-3 col-sm-1"></div>
+        <div class="col-lg-6 col-sm-10">
+            <a class="btn btn-block btn-outline-info" href="{% url 'django-admindocs-views-index' %}">{% trans 'Back to View documentation' %}</a>
+        </div>
+        <div class="col-lg-3 col-sm-1"></div>
+    </div>
 {% endblock %}
