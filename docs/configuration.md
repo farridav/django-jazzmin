@@ -27,6 +27,10 @@ JAZZMIN_SETTINGS = {
     # Field name on user model that contains avatar image
     'user_avatar': None,
 
+    ############
+    # Top Menu #
+    ############
+
     # Links to put along the top menu
     'topmenu_links': [
 
@@ -42,6 +46,20 @@ JAZZMIN_SETTINGS = {
         # App with dropdown menu to all its models pages (Permissions checked against models)
         {'app': 'polls'},
     ],
+
+    #############
+    # User Menu #
+    #############
+
+    # Additional links to include in the user menu on the top right ('app' url type is not allowed)
+    'usermenu_links': [
+        {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
+        {'model': 'auth.user'}
+    ],
+
+    #############
+    # Side Menu #
+    #############
 
     # Whether to display the side menu
     'show_sidebar': True,
@@ -85,6 +103,11 @@ You can enable the top menu by specifying `'topmenu_links'` in your `JAZZMIN_SET
 
 The top menu can be styled with the UI Customiser (See below)
 
+## User menu
+You can add links to the user menu on the top right of the screen using the `'usermenu_links'` settings key, the format 
+of these links is the same as with top menu (above), though submenus via 'app' are not currently supported and will not 
+be rendered.
+    
 ## Side menu
 
 ### How its generated
@@ -98,7 +121,7 @@ model is like `auth.user`
 Ordering of the menu can be done using `order_with_respect_to`, which is a list of apps you want to base the ordering off 
 of, it can be a partial list 
 
-### Adding custom links
+### Side menu custom links
 
 Custom links can be added using `custom_links`, this is a dictionary of links, keyed on the app they will live under. 
 Example:

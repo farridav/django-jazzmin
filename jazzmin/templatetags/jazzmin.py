@@ -14,7 +14,9 @@ from django.utils.safestring import mark_safe
 
 from .. import version
 from ..settings import get_settings, get_ui_tweaks
-from ..utils import order_with_respect_to, get_filter_id, get_custom_url, get_admin_url, get_view_permissions
+from ..utils import (
+    order_with_respect_to, get_filter_id, get_custom_url, get_admin_url, get_view_permissions, make_menu
+)
 
 User = get_user_model()
 register = Library()
@@ -80,33 +82,20 @@ def get_side_menu(context):
 
 @register.simple_tag
 def get_top_menu(user):
-    if not user:
-        return []
-
-    model_permissions = get_view_permissions(user)
+    """
+    Produce the menu for the top nav bar
+    """
     options = get_settings()
+    return make_menu(user, options.get('topmenu_links', []))
 
-    menu = []
-    for item in options.get('topmenu_links', []):
 
-        perm_matches = []
-        for perm in item.get('permissions', []):
-            perm_matches.append(user.has_perm(perm))
-
-        if not all(perm_matches):
-            continue
-
-        if item.get('model') and item.get('model').lower() not in model_permissions:
-            continue
-
-        if item.get('app'):
-            item['app_children'] = list(filter(lambda x: x['model'] in model_permissions, item['app_children']))
-            if len(item['app_children']) == 0:
-                continue
-
-        menu.append(item)
-
-    return menu
+@register.simple_tag
+def get_user_menu(user):
+    """
+    Produce the menu for the user dropdown
+    """
+    options = get_settings()
+    return make_menu(user, options.get('usermenu_links', []), allow_appmenus=False)
 
 
 @register.simple_tag
@@ -253,9 +242,8 @@ def sidebar_status(request):
 @register.filter
 def can_view_self(perms):
     view_perm = '{}.view_{}'.format(User._meta.app_label, User._meta.model_name)
-    change_perm = '{}.change_{}'.format(User._meta.app_label, User._meta.model_name)
 
-    return perms[User._meta.app_label][view_perm] or perms[User._meta.app_label][change_perm]
+    return perms[User._meta.app_label][view_perm]
 
 
 @register.simple_tag

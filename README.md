@@ -7,7 +7,7 @@
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
 [![Coverage Status](https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=master)](https://coveralls.io/github/farridav/django-jazzmin?branch=master)
 
-Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin looky jazzy
+Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy
 
 ## Installation
 ```
@@ -21,6 +21,7 @@ See [Documentation](https://django-jazzmin.readthedocs.io/) or [Test App](./test
 - Drop-in, configure only if you want to
 - Customisable side menu
 - Customisable top menu
+- Customisable user menu
 - Customisable UI (via Live UI changes, or custom CSS/JS)
 - Based on the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 

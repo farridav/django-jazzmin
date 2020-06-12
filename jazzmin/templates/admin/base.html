@@ -105,7 +105,7 @@
                         <i class="far fa-user pr-2" aria-hidden="true"></i>
                     </a>
                     {% endif %}
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left" id="jazzy-usermenu">
                         <span class="dropdown-header">{% trans 'Account' %}</span>
                         <div class="dropdown-divider"></div>
                         <a href="{% url 'admin:password_change' %}" class="dropdown-item">
@@ -119,6 +119,13 @@
                         {% if perms|can_view_self %}
                             <a href="{{ request.user|jazzy_admin_url }}" class="dropdown-item dropdown-footer">See Profile</a>
                         {% endif %}
+                        {% get_user_menu user as user_menu %}
+                        {% for link in user_menu %}
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ link.url }}" class="dropdown-item" {% if link.new_window %}target="_blank"{% endif %}>
+                                <i class="fas {% if link.icon %}{{ link.icon }}{% else %}fa-circle{% endif %} mr-2"></i> {% trans link.name %}
+                            </a>
+                        {% endfor %}
                     </div>
                 </li>
             </ul>

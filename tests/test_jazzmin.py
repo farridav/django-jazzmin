@@ -2,7 +2,7 @@ import pytest
 from bs4 import BeautifulSoup
 from django.urls import reverse
 
-from tests.utils import parse_sidemenu, user_with_permissions, parse_topmenu
+from tests.utils import parse_sidemenu, user_with_permissions, parse_topmenu, parse_usermenu
 
 
 @pytest.mark.django_db
@@ -72,6 +72,7 @@ def test_permissions_on_custom_links(client, settings):
     assert parse_sidemenu(response) == {'Global': ['/admin/'], 'Polls': ['/admin/polls/poll/', '/make_messages/']}
 
 
+@pytest.mark.django_db
 def test_top_menu(admin_client, settings):
     """
     Top menu renders out as expected
@@ -96,4 +97,30 @@ def test_top_menu(admin_client, settings):
             {'name': 'Choices', 'link': '/admin/polls/choice/'},
             {'name': 'Votes', 'link': '/admin/polls/vote/'},
         ]}
+    ]
+
+
+@pytest.mark.django_db
+def test_user_menu(admin_user, client, settings):
+    """
+    The User menu renders out as expected
+    """
+    url = reverse('admin:index')
+
+    settings.JAZZMIN_SETTINGS['usermenu_links'] = [
+        {'name': 'Home', 'url': 'admin:index', 'permissions': ['auth.view_user']},
+        {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
+        {'model': 'auth.User'},
+    ]
+
+    client.force_login(admin_user)
+    response = client.get(url)
+
+    assert parse_usermenu(response) == [
+        {'link': '/admin/password_change/', 'name': 'Change password'},
+        {'link': '/admin/logout/', 'name': 'Log out'},
+        {'link': '/admin/auth/user/{}/change/'.format(admin_user.pk), 'name': 'See Profile'},
+        {'link': '/admin/', 'name': 'Home'},
+        {'link': 'https://github.com/farridav/django-jazzmin/issues', 'name': 'Support'},
+        {'link': '/admin/auth/user/', 'name': 'Users'}
     ]

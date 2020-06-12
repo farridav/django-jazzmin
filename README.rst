@@ -23,9 +23,14 @@ See https://django-jazzmin.readthedocs.io also see `Test App`_
 Features
 --------
 - Drop-in admin skin, all configuration optional
+- Select2 drop-downs
+- Bootstrap 4 & AdminLTE UI components
 - Customisable `side menu`_
 - Customisable `top menu`_
+- Customisable `user menu`_
+- Search bar for any given model admin
 - Customisable UI (via `Live UI changes`_, or `custom CSS/JS`_)
+- Responsive
 - Based on the latest `adminlte`_ + `bootstrap`_
 
 Screenshots
@@ -51,10 +56,20 @@ UI Customiser
 ~~~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/ui_customiser.png
 
+Mobile/Tablet layouts
+~~~~~~~~~~~~~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/dashboard_mobile.png
+.. image:: https://django-jazzmin.readthedocs.io/img/dashboard_table.png
+
+Admin Docs (if installed)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/admin_docs.png
+
 .. _adminlte: https://adminlte.io/
 .. _bootstrap: https://getbootstrap.com
 .. _Test App: https://github.com/farridav/django-jazzmin/tree/master/tests/test_app
-.. _top menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L61
+.. _top menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L62
 .. _side menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L92
-.. _Live UI changes: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L90
-.. _custom CSS/JS: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L86
+.. _user menu: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L86
+.. _Live UI changes: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L133
+.. _custom CSS/JS: https://github.com/farridav/django-jazzmin/blob/master/tests/test_app/settings.py#L129
