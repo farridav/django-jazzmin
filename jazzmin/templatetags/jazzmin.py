@@ -5,8 +5,11 @@ import logging
 import urllib.parse
 
 from django.conf import settings
+from django.contrib.admin.models import LogEntry
 from django.contrib.admin.views.main import PAGE_VAR
 from django.contrib.auth import get_user_model
+from django.contrib.auth.context_processors import PermWrapper
+from django.http import HttpRequest
 from django.template import Library
 from django.template.loader import get_template
 from django.templatetags.static import static
@@ -233,7 +236,7 @@ def debug(value):
 
 
 @register.simple_tag
-def sidebar_status(request):
+def sidebar_status(request: HttpRequest) -> str:
     """
     Check if our sidebar is open or closed
     """
@@ -243,14 +246,20 @@ def sidebar_status(request):
 
 
 @register.filter
-def can_view_self(perms):
+def can_view_self(perms: PermWrapper) -> bool:
+    """
+    Determines whether a user has sufficient permissions to view its own profile
+    """
     view_perm = '{}.view_{}'.format(User._meta.app_label, User._meta.model_name)
 
     return perms[User._meta.app_label][view_perm]
 
 
 @register.simple_tag
-def header_class(header, forloop):
+def header_class(header: dict, forloop: dict) -> str:
+    """
+    Adds CSS classes to header HTML element depending on its attributes
+    """
     classes = []
     sorted, asc, desc = header.get('sorted'), header.get('ascending'), header.get('descending')
 
@@ -271,12 +280,18 @@ def header_class(header, forloop):
 
 
 @register.filter
-def app_is_installed(app):
+def app_is_installed(app: str) -> bool:
+    """
+    Checks if an app has been installed under INSTALLED_APPS on the project settings
+    """
     return app in settings.INSTALLED_APPS
 
 
 @register.simple_tag
-def action_message_to_list(action) -> list:
+def action_message_to_list(action: LogEntry) -> list:
+    """
+    Retrieves a formatted list with all actions taken by a user given a log entry object
+    """
     messages = []
     if action.change_message and action.change_message[0] == '[':
         try:
@@ -329,7 +344,10 @@ def action_message_to_list(action) -> list:
 
 
 @register.filter
-def get_action_icon(message):
+def get_action_icon(message: str) -> str:
+    """
+    Retrieves action given a certain action
+    """
     if message.startswith('Added'):
         return "plus-circle"
     elif message.startswith('Deleted'):
@@ -339,7 +357,10 @@ def get_action_icon(message):
 
 
 @register.filter
-def get_action_color(message):
+def get_action_color(message: str) -> str:
+    """
+    Retrieves color given a certain action
+    """
     if message.startswith('Added'):
         return "success"
     elif message.startswith('Deleted'):
@@ -349,7 +370,10 @@ def get_action_color(message):
 
 
 @register.filter
-def style_bold_first_word(message):
+def style_bold_first_word(message: str) -> str:
+    """
+    Wraps first word in a message with <strong> HTML element
+    """
     message_words = message.split()
     message_words[0] = '<strong>{}</strong>'.format(message_words[0])
 
