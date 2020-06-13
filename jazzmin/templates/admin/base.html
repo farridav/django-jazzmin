@@ -115,10 +115,6 @@
                         <a href="{% url 'admin:logout' %}" class="dropdown-item">
                             <i class="fas fa-users mr-2"></i> {% trans 'Log out' %}
                         </a>
-                        <div class="dropdown-divider"></div>
-                        {% if perms|can_view_self %}
-                            <a href="{{ request.user|jazzy_admin_url }}" class="dropdown-item dropdown-footer">See Profile</a>
-                        {% endif %}
                         {% get_user_menu user as user_menu %}
                         {% for link in user_menu %}
                             <div class="dropdown-divider"></div>
@@ -126,6 +122,10 @@
                                 <i class="fas {% if link.icon %}{{ link.icon }}{% else %}fa-circle{% endif %} mr-2"></i> {% trans link.name %}
                             </a>
                         {% endfor %}
+                        <div class="dropdown-divider"></div>
+                        {% if perms|can_view_self %}
+                            <a href="{{ request.user|jazzy_admin_url }}" class="dropdown-item dropdown-footer">See Profile</a>
+                        {% endif %}
                     </div>
                 </li>
             </ul>

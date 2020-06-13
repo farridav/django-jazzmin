@@ -33,8 +33,10 @@ customise, including a built-in UI customizer
 ### UI Customiser
 ![UI Customiser](./img/ui_customiser.png)
 
-### Mobile/Tablet layouts
+### Mobile layout
 ![Admin docs](./img/dashboard_mobile.png)
+
+### Tablet layout
 ![Admin docs](./img/dashboard_tablet.png)
 
 ### Admin docs (if installed)

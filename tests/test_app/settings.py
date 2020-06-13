@@ -177,6 +177,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 if not os.getenv('FAIL_INVALID_TEMPLATE_VARS'):
+    os.environ.setdefault("WERKZEUG_DEBUG_PIN", "off")
     INSTALLED_APPS.extend([
         'debug_toolbar',
         'django_extensions',

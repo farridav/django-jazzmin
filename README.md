@@ -40,7 +40,16 @@ See [Documentation](https://django-jazzmin.readthedocs.io/) or [Test App](./test
 ![login](docs/img/login.png)
 
 ## UI Customiser
-![login](docs/img/ui_customiser.png)
+![ui_customiser](docs/img/ui_customiser.png)
+
+## Mobile layout
+![mobile](docs/img/dashboard_mobile.png)
+
+## Tablet layout
+![tablet](docs/img/dashboard_tablet.png)
+
+## Admin Docs (if installed)
+![admin_docs](docs/img/admin_docs.png)
 
 ## Thanks
 This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that we refactored so much we thought it
