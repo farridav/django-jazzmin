@@ -27,6 +27,9 @@ customise, including a built-in UI customizer
 ### Detail view
 ![form page](./img/detail_view.png)
 
+### History page
+![form page](./img/history_page.png)
+
 ### Login view
 ![login](./img/login.png)
 
