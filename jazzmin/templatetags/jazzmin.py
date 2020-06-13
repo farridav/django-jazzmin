@@ -366,7 +366,7 @@ def get_action_color(message: str) -> str:
     elif message.startswith('Deleted'):
         return "danger"
     else:
-        return "warning"
+        return "blue"
 
 
 @register.filter
@@ -375,6 +375,10 @@ def style_bold_first_word(message: str) -> str:
     Wraps first word in a message with <strong> HTML element
     """
     message_words = message.split()
+
+    if not len(message_words):
+        return ''
+
     message_words[0] = '<strong>{}</strong>'.format(message_words[0])
 
     message = ' '.join([word for word in message_words])
