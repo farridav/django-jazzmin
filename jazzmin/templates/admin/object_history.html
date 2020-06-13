@@ -25,42 +25,43 @@
             <div class="card-body">
                 <div id="content-main">
                     <div class="module">
-                        {% if action_list %}
-                        <table id="change-history" class="table table-bordered table-hover dataTable">
-                            <thead>
-                            <tr>
-                                <th scope="col">{% trans 'Date/time' %}</th>
-                                <th scope="col">{% trans 'User' %}</th>
-                                <th scope="col">{% trans 'Action' %}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+
+                        <div class="timeline">
+
                             {% for action in action_list %}
-                            <tr>
-                                <th scope="row">{{ action.action_time|date:"DATETIME_FORMAT" }}</th>
-                                <td>{{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}</td>
-                                <td>
-                                    <ul style="list-style: none;">
-                                        {% action_message_to_list action as action_message_list %}
-                                        {% for action_message in action_message_list %}
-                                            <li>
-                                                <div class="row">
-                                                    <p class="text-{{ action_message|get_action_color }}">
-                                                        <i class="fa fa-{{ action_message|get_action_icon }}"></i>
-                                                    </p>
-                                                    <p style="margin-left: 1rem">{{ action_message|style_bold_first_word }}</p>
-                                                </div>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </td>
-                            </tr>
+                              <div class="time-label">
+                                <span class="bg-info">{{ action.action_time|date:"DATETIME_FORMAT" }}</span>
+                              </div>
+
+                                {% action_message_to_list action as action_message_list %}
+                                {% for action_message in action_message_list %}
+                                  <div>
+                                    <i class="fas fa-{{ action_message|get_action_icon }} bg-{{ action_message|get_action_color }}"></i>
+                                    <div class="timeline-item">
+                                      <h3 class="timeline-header no-border">
+                                          <a href="{% url 'admin:auth_user_change' action.user.id %}" target="_blank">
+                                              {{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}
+                                          </a>
+                                          {{ action_message|style_bold_first_word }}
+                                      </h3>
+                                    </div>
+                                  </div>
+                                {% endfor %}
+
                             {% endfor %}
-                            </tbody>
-                        </table>
-                        {% else %}
-                        <p>{% trans "This object doesn't have a change history. It probably wasn't added via this admin site." %}</p>
-                        {% endif %}
+
+                          <div>
+                            <i class="fas fa-clock bg-gray"></i>
+                              {% if not action_list %}
+                                <div class="timeline-item">
+                                    <h3 class="timeline-header no-border">
+                                        {% trans "This object doesn't have a change history. It probably wasn't added via this admin site." %}
+                                    </h3>
+                                </div>
+                              {% endif %}
+                          </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
