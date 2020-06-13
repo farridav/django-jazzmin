@@ -1,10 +1,10 @@
 # Django jazzmin (Jazzy Admin)
 
-[![Documentation Status](https://readthedocs.org/projects/django-jazzmin/badge/?version=latest)](http://django-jazzmin.readthedocs.io/?badge=latest)
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![PyPI download month](https://img.shields.io/pypi/dm/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
-[![PyPI version fury.io](https://badge.fury.io/py/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
+[![Docs](https://readthedocs.org/projects/django-jazzmin/badge/?version=latest)](http://django-jazzmin.readthedocs.io/?badge=latest)
+![PyPI download month](https://img.shields.io/pypi/dm/django-jazzmin.svg)
+[![PyPI version](https://badge.fury.io/py/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
+![Python versions](https://img.shields.io/pypi/pyversions/django-jazzmin.svg)
+![Django Versions](https://img.shields.io/pypi/djversions/django-jazzmin.svg)
 [![Coverage Status](https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=master)](https://coveralls.io/github/farridav/django-jazzmin?branch=master)
 
 Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy

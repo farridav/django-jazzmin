@@ -3,14 +3,11 @@ Django jazzmin (Jazzy Admin)
 
 .. image:: https://readthedocs.org/projects/django-jazzmin/badge/?version=latest
    :target: http://django-jazzmin.readthedocs.io/?badge=latest
-.. image:: https://img.shields.io/badge/Made%20with-Python-1f425f.svg
-   :target: https://www.python.org/
 .. image:: https://img.shields.io/pypi/dm/django-jazzmin.svg
-   :target: https://pypi.python.org/pypi/django-jazzmin/
 .. image:: https://badge.fury.io/py/django-jazzmin.svg
    :target: https://pypi.python.org/pypi/django-jazzmin/
 .. image:: https://img.shields.io/pypi/pyversions/django-jazzmin.svg
-   :target: https://pypi.python.org/pypi/django-jazzmin/
+.. image:: https://img.shields.io/pypi/djversions/django-jazzmin.svg
 .. image:: https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=master
    :target: https://coveralls.io/github/farridav/django-jazzmin?branch=master
 
