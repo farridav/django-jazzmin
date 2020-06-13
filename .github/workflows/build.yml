@@ -1,6 +1,6 @@
 ---
 
-name: Python package
+name: Build
 on:
   push:
     branches: [master]

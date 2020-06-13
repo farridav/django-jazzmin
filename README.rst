@@ -56,10 +56,13 @@ UI Customiser
 ~~~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/ui_customiser.png
 
-Mobile/Tablet layouts
-~~~~~~~~~~~~~~~~~~~~~
+Mobile layout
+~~~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/dashboard_mobile.png
-.. image:: https://django-jazzmin.readthedocs.io/img/dashboard_table.png
+
+Tablet layout
+~~~~~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/dashboard_tablet.png
 
 Admin Docs (if installed)
 ~~~~~~~~~~~~~~~~~~~~~~~~~

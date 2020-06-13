@@ -95,6 +95,9 @@ JAZZMIN_SETTINGS = {
 ```
 
 ## Top menu
+
+![Top Menu](./img/top_menu.png)
+
 You can enable the top menu by specifying `'topmenu_links'` in your `JAZZMIN_SETTINGS`, this is a list made up of one of:
 
  - app (creates a dropdown of modeladmin links)
@@ -107,8 +110,12 @@ The top menu can be styled with the UI Customiser (See below)
 You can add links to the user menu on the top right of the screen using the `'usermenu_links'` settings key, the format 
 of these links is the same as with top menu (above), though submenus via 'app' are not currently supported and will not 
 be rendered.
+
+![User Menu](./img/user_menu.png)
     
 ## Side menu
+
+![Side Menu](./img/side_menu.png)
 
 ### How its generated
 
@@ -134,7 +141,7 @@ Example:
             # url name e.g `admin:index`, relative urls e.g `/admin/index` or absolute urls e.g `https://domain.com/admin/index`
             'url': 'make_messages',                 
             
-            # any font-awesome icon, [see list here](https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/) (optional)
+            # any font-awesome icon, see list here https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/ (optional)
             'icon': 'fa-comments',                  
             
             # a list of permissions the user must have to see this link (optional)
@@ -142,10 +149,8 @@ Example:
         }]
     },
 
-!!! note
-
-    The app list you generate for the side menu, is shared with the dashboard, so any changes you make to it, will be 
-    reflected there
+#### note
+The app list you generate for the side menu, is shared with the dashboard, so any changes you make to it, will be reflected there
 
 ## UI Tweaks
 
@@ -172,4 +177,4 @@ custom CSS and/or JS file, just pass a relative path to your files e.g:
 'custom_js': 'common/js/main.js'
  ```
 
-Into your jazzmin settings (Ensure these files can be found by the static file finder), and the 
+Into your jazzmin settings (Ensure these files can be found by the static file finder)

@@ -119,8 +119,8 @@ def test_user_menu(admin_user, client, settings):
     assert parse_usermenu(response) == [
         {'link': '/admin/password_change/', 'name': 'Change password'},
         {'link': '/admin/logout/', 'name': 'Log out'},
-        {'link': '/admin/auth/user/{}/change/'.format(admin_user.pk), 'name': 'See Profile'},
         {'link': '/admin/', 'name': 'Home'},
         {'link': 'https://github.com/farridav/django-jazzmin/issues', 'name': 'Support'},
-        {'link': '/admin/auth/user/', 'name': 'Users'}
+        {'link': '/admin/auth/user/', 'name': 'Users'},
+        {'link': '/admin/auth/user/{}/change/'.format(admin_user.pk), 'name': 'See Profile'},
     ]
