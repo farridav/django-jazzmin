@@ -17,3 +17,4 @@ jobs:
         heroku_email: ${secrets.HEROKU_EMAIL}
         heroku_app_name: django-jazzmin
         buildpack: heroku/python
+        appdir: tests/test_app/
