@@ -1,5 +1,6 @@
 import copy
 import itertools
+import json
 import logging
 import urllib.parse
 
@@ -11,6 +12,8 @@ from django.template.loader import get_template
 from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+from django.utils.text import get_text_list
+from django.utils.translation import gettext
 
 from .. import version
 from ..settings import get_settings, get_ui_tweaks
@@ -270,3 +273,86 @@ def header_class(header, forloop):
 @register.filter
 def app_is_installed(app):
     return app in settings.INSTALLED_APPS
+
+
+@register.simple_tag
+def action_message_to_list(action) -> list:
+    messages = []
+    if action.change_message and action.change_message[0] == '[':
+        try:
+            change_message = json.loads(action.change_message)
+        except json.JSONDecodeError:
+            return [action.change_message]
+
+        for sub_message in change_message:
+            if 'added' in sub_message:
+                if sub_message['added']:
+                    sub_message['added']['name'] = gettext(sub_message['added']['name'])
+                    messages.append(gettext('Added {name} “{object}”.').format(
+                        **sub_message['added'])
+                    )
+                else:
+                    messages.append(gettext('Added.'))
+
+            elif 'changed' in sub_message:
+                sub_message['changed']['fields'] = get_text_list(
+                    [
+                        gettext(field_name)
+                        for field_name in sub_message['changed']['fields']
+                    ],
+                    gettext('and')
+                )
+                if 'name' in sub_message['changed']:
+                    sub_message['changed']['name'] = gettext(
+                        sub_message['changed']['name']
+                    )
+                    messages.append(
+                        gettext('Changed {fields} for {name} “{object}”.').format(
+                            **sub_message['changed']
+                        )
+                    )
+                else:
+                    messages.append(
+                        gettext('Changed {fields}.').format(
+                            **sub_message['changed']
+                        )
+                    )
+
+            elif 'deleted' in sub_message:
+                sub_message['deleted']['name'] = gettext(sub_message['deleted']['name'])
+                messages.append(
+                    gettext('Deleted {name} “{object}”.').format(
+                        **sub_message['deleted']
+                    )
+                )
+    return messages if len(messages) else [action.change_message]
+
+
+@register.filter
+def get_action_icon(message):
+    if message.startswith('Added'):
+        return "plus-circle"
+    elif message.startswith('Deleted'):
+        return "trash"
+    else:
+        return "edit"
+
+
+@register.filter
+def get_action_color(message):
+    if message.startswith('Added'):
+        return "success"
+    elif message.startswith('Deleted'):
+        return "danger"
+    else:
+        return "warning"
+
+
+@register.filter
+def style_bold_first_word(message):
+    message_words = message.split()
+    message_words[0] = '<strong>{}</strong>'.format(message_words[0])
+
+    message = ' '.join([word for word in message_words])
+
+    return format_html(message)
