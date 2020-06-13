@@ -59,3 +59,11 @@ project were possible, but this project is taking a slightly different direction
 - Based on AdminLTE 3: https://adminlte.io/
 - Using Bootstrap 4: https://getbootstrap.com/
 - Using Font Awesome 5: https://fontawesome.com/
+
+
+
+TODO:
+    - whitenoise in test app, and gunicorn and postgres
+    - add cron for reset
+    - keep it clean
+    
