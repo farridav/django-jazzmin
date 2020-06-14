@@ -79,31 +79,44 @@
                         {% for entry in admin_log %}
                             <div>
                                 {% if entry.is_change %}
-                                    <i class="fas fa-edit bg-green"></i>
+                                    <i class="fas fa-edit bg-blue"></i>
                                 {% elif entry.is_deletion %}
-                                    <i class="fas fa-trash bg-red"></i>
+                                    <i class="fas fa-trash bg-danger"></i>
                                 {% elif entry.is_addition %}
-                                    <i class="fas fa-plus bg-blue"></i>
+                                    <i class="fas fa-plus-circle bg-success"></i>
                                 {% endif %}
+
                                 <div class="timeline-item">
-                                    <span class="time"><i class="fas fa-clock"></i> {{ entry.action_time|timesince }} Ago</span>
+                                    <span class="time"><i class="fas fa-clock"></i>  {{ entry.action_time|timesince }} ago</span>
                                     <h3 class="timeline-header no-border">
                                         {% if entry.is_deletion or not entry.get_admin_url %}
                                             {{ entry.object_repr }}
                                         {% else %}
                                             <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
                                         {% endif %}
+
                                         {% if entry.model %}
-                                            <span class="mini quiet">{% filter capfirst %}
-                                                {{ entry.model }}{% endfilter %}
+                                            <span class="mini quiet">
+                                                {% filter capfirst %}
+                                                    {{ entry.model }}
+                                                {% endfilter %}
                                             </span>
-                                        {% else %}
-                                            <span class="mini quiet">{% trans 'Unknown content' %}</span>
                                         {% endif %}
                                     </h3>
-                                    <div class="timeline-body">
-                                        {{ entry }}
-                                    </div>
+                                    {% if not entry.is_deletion %}
+                                        <div class="timeline-body">
+                                            {% if entry.is_addition %}
+                                                {{ entry }}
+                                            {% else %}
+                                                <ul style="list-style: none; padding: 0;">
+                                                    {% action_message_to_list entry as action_message_list %}
+                                                    {% for action_message in action_message_list %}
+                                                        <li>{{ action_message|style_bold_first_word }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}

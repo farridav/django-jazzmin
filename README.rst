@@ -45,6 +45,10 @@ Detail view
 ~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/detail_view.png
 
+History page
+~~~~~~~~~~~~
+.. image:: https://django-jazzmin.readthedocs.io/img/history_page.png
+
 Login view
 ~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/login.png

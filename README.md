@@ -36,6 +36,9 @@ See [Documentation](https://django-jazzmin.readthedocs.io/) or [Test App](./test
 ## Detail view
 ![form page](docs/img/detail_view.png)
 
+## History page
+![form page](docs/img/history_page.png)
+
 ## Login view
 ![login](docs/img/login.png)
 

@@ -1,16 +1,22 @@
 import copy
 import itertools
+import json
 import logging
 import urllib.parse
 
 from django.conf import settings
+from django.contrib.admin.models import LogEntry
 from django.contrib.admin.views.main import PAGE_VAR
 from django.contrib.auth import get_user_model
+from django.contrib.auth.context_processors import PermWrapper
+from django.http import HttpRequest
 from django.template import Library
 from django.template.loader import get_template
 from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+from django.utils.text import get_text_list
+from django.utils.translation import gettext
 
 from .. import version
 from ..settings import get_settings, get_ui_tweaks
@@ -230,7 +236,7 @@ def debug(value):
 
 
 @register.simple_tag
-def sidebar_status(request):
+def sidebar_status(request: HttpRequest) -> str:
     """
     Check if our sidebar is open or closed
     """
@@ -240,14 +246,20 @@ def sidebar_status(request):
 
 
 @register.filter
-def can_view_self(perms):
+def can_view_self(perms: PermWrapper) -> bool:
+    """
+    Determines whether a user has sufficient permissions to view its own profile
+    """
     view_perm = '{}.view_{}'.format(User._meta.app_label, User._meta.model_name)
 
     return perms[User._meta.app_label][view_perm]
 
 
 @register.simple_tag
-def header_class(header, forloop):
+def header_class(header: dict, forloop: dict) -> str:
+    """
+    Adds CSS classes to header HTML element depending on its attributes
+    """
     classes = []
     sorted, asc, desc = header.get('sorted'), header.get('ascending'), header.get('descending')
 
@@ -268,5 +280,107 @@ def header_class(header, forloop):
 
 
 @register.filter
-def app_is_installed(app):
+def app_is_installed(app: str) -> bool:
+    """
+    Checks if an app has been installed under INSTALLED_APPS on the project settings
+    """
     return app in settings.INSTALLED_APPS
+
+
+@register.simple_tag
+def action_message_to_list(action: LogEntry) -> list:
+    """
+    Retrieves a formatted list with all actions taken by a user given a log entry object
+    """
+    messages = []
+    if action.change_message and action.change_message[0] == '[':
+        try:
+            change_message = json.loads(action.change_message)
+        except json.JSONDecodeError:
+            return [action.change_message]
+
+        for sub_message in change_message:
+            if 'added' in sub_message:
+                if sub_message['added']:
+                    sub_message['added']['name'] = gettext(sub_message['added']['name'])
+                    messages.append(gettext('Added {name} “{object}”.').format(
+                        **sub_message['added'])
+                    )
+                else:
+                    messages.append(gettext('Added.'))
+
+            elif 'changed' in sub_message:
+                sub_message['changed']['fields'] = get_text_list(
+                    [
+                        gettext(field_name)
+                        for field_name in sub_message['changed']['fields']
+                    ],
+                    gettext('and')
+                )
+                if 'name' in sub_message['changed']:
+                    sub_message['changed']['name'] = gettext(
+                        sub_message['changed']['name']
+                    )
+                    messages.append(
+                        gettext('Changed {fields} for {name} “{object}”.').format(
+                            **sub_message['changed']
+                        )
+                    )
+                else:
+                    messages.append(
+                        gettext('Changed {fields}.').format(
+                            **sub_message['changed']
+                        )
+                    )
+
+            elif 'deleted' in sub_message:
+                sub_message['deleted']['name'] = gettext(sub_message['deleted']['name'])
+                messages.append(
+                    gettext('Deleted {name} “{object}”.').format(
+                        **sub_message['deleted']
+                    )
+                )
+    return messages if len(messages) else [action.change_message]
+
+
+@register.filter
+def get_action_icon(message: str) -> str:
+    """
+    Retrieves action given a certain action
+    """
+    if message.startswith('Added'):
+        return "plus-circle"
+    elif message.startswith('Deleted'):
+        return "trash"
+    else:
+        return "edit"
+
+
+@register.filter
+def get_action_color(message: str) -> str:
+    """
+    Retrieves color given a certain action
+    """
+    if message.startswith('Added'):
+        return "success"
+    elif message.startswith('Deleted'):
+        return "danger"
+    else:
+        return "blue"
+
+
+@register.filter
+def style_bold_first_word(message: str) -> str:
+    """
+    Wraps first word in a message with <strong> HTML element
+    """
+    message_words = message.split()
+
+    if not len(message_words):
+        return ''
+
+    message_words[0] = '<strong>{}</strong>'.format(message_words[0])
+
+    message = ' '.join([word for word in message_words])
+
+    return format_html(message)
