@@ -239,7 +239,7 @@ form select {
 
 .calendar td.selected a {
     background: #3C8DBC;
-    color: #fff;
+    color: #fff !important;
 }
 
 .calendar td.nonday {
