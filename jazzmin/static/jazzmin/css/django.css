@@ -64,7 +64,8 @@ tr.djn-tr > .original {
 }
 
 .related-widget-wrapper select {
-    height: calc(2.25rem + 2px);
+    width: 90%;
+    height: auto;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
