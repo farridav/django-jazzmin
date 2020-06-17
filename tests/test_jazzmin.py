@@ -18,7 +18,14 @@ def test_side_menu(admin_client, settings):
 
     assert parse_sidemenu(response) == {
         'Global': ['/admin/'],
-        'Polls': ['/admin/polls/choice/', '/admin/polls/poll/', '/admin/polls/vote/', '/make_messages/'],
+        'Polls': [
+            '/admin/polls/campaign/',
+            '/admin/polls/cheese/',
+            '/admin/polls/choice/',
+            '/admin/polls/poll/',
+            '/admin/polls/vote/',
+            '/make_messages/'
+        ],
         'Administration': ['/admin/admin/logentry/'],
         'Authentication and Authorization': ['/admin/auth/group/', '/admin/auth/user/']
     }
@@ -28,7 +35,14 @@ def test_side_menu(admin_client, settings):
 
     assert parse_sidemenu(response) == {
         'Global': ['/admin/'],
-        'Polls': ['/admin/polls/choice/', '/admin/polls/poll/', '/admin/polls/vote/', '/make_messages/'],
+        'Polls': [
+            '/admin/polls/campaign/',
+            '/admin/polls/cheese/',
+            '/admin/polls/choice/',
+            '/admin/polls/poll/',
+            '/admin/polls/vote/',
+            '/make_messages/'
+        ],
         'Administration': ['/admin/admin/logentry/'],
         'Authentication and Authorization': ['/admin/auth/group/']
     }
@@ -95,9 +109,11 @@ def test_top_menu(admin_client, settings):
         {'name': 'Support', 'link': 'https://github.com/farridav/django-jazzmin/issues'},
         {'name': 'Users', 'link': '/admin/auth/user/'},
         {'name': 'Polls', 'link': '#', 'children': [
-            {'name': 'Polls', 'link': '/admin/polls/poll/'},
-            {'name': 'Choices', 'link': '/admin/polls/choice/'},
-            {'name': 'Votes', 'link': '/admin/polls/vote/'},
+            {'name': 'Polls', 'link': reverse('admin:polls_poll_changelist')},
+            {'name': 'Choices', 'link': reverse('admin:polls_choice_changelist')},
+            {'name': 'Votes', 'link': reverse('admin:polls_vote_changelist')},
+            {'name': 'Cheeses', 'link': reverse('admin:polls_cheese_changelist')},
+            {'name': 'Campaigns', 'link': reverse('admin:polls_campaign_changelist')}
         ]}
     ]
 

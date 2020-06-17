@@ -64,23 +64,18 @@ tr.djn-tr > .original {
 }
 
 .related-widget-wrapper select {
-    display: inline-block;
-    width: 100%;
-    height: calc(2.25rem + 2px);
-    padding: .375rem 1.75rem .375rem .75rem;
+    width: 90%;
+    height: auto;
+    padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #495057;
-    vertical-align: middle;
-    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right .75rem center/8px 10px;
+    background-color: #fff;
+    background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .075);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .tab-pane {
@@ -245,7 +240,7 @@ form select {
 
 .calendar td.selected a {
     background: #3C8DBC;
-    color: #fff;
+    color: #fff !important;
 }
 
 .calendar td.nonday {

@@ -46,3 +46,35 @@ class Vote(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Cheese(models.Model):
+    name = models.CharField(max_length=40)
+    stinky = models.BooleanField(
+        default=False,
+        help_text='Determines whether the cheese is stinky or not'
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class Campaign(models.Model):
+    polls = models.ManyToManyField(
+        Poll,
+        related_name='campaigns',
+        help_text='The polls this campaign is part to'
+    )
+    cheese = models.ManyToManyField(
+        Cheese,
+        related_name='campaigns',
+        help_text='The cheese that this campaign is fighting for'
+    )
+    promoter = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        help_text='The user promoting this campaign'
+    )
+
+    def __str__(self):
+        return str(self.id)
