@@ -22,51 +22,59 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-12">
-        <div class="card card-danger card-outline">
-            <div class="card-header with-border">
-                <h4 class="card-title">
-                    {% trans 'Delete multiple objects' %}
-                </h4>
-            </div>
+<div class="col-12">
+    <div class="card card-danger card-outline">
+        <div class="card-header with-border">
+            <h4 class="card-title">
+                {% trans 'Delete multiple objects' %}
+            </h4>
+        </div>
 
-            <div class="card-body">
-                <div id="content-main">
-                    {% if perms_lacking %}
-                        <p>{% blocktrans %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktrans %}</p>
-                        <ol>
-                            {% for obj in perms_lacking %}
-                            <li>{{ obj }}</li>
-                            {% endfor %}
-                        </ol>
-                        {% elif protected %}
-                        <p>{% blocktrans %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktrans %}</p>
-                        <ol>
-                            {% for obj in protected %}
-                            <li>{{ obj }}</li>
-                            {% endfor %}
-                        </ol>
-                    {% else %}
-                        <p>{% blocktrans %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktrans %}</p>
-                        {% include "admin/includes/object_delete_summary.html" %}
-                        <h4>{% trans "Objects" %}</h4>
-                        {% for deletable_object in deletable_objects %}
-                        <ol>{{ deletable_object|unordered_list }}</ol>
+        <div class="card-body">
+            <div id="content-main">
+                {% if perms_lacking %}
+                    <p>{% blocktrans %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktrans %}</p>
+                    <ol>
+                        {% for obj in perms_lacking %}
+                        <li>{{ obj }}</li>
                         {% endfor %}
-                        <form method="post">{% csrf_token %}
-                            <div>
+                    </ol>
+                {% elif protected %}
+                    <p>{% blocktrans %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktrans %}</p>
+                    <ol>
+                        {% for obj in protected %}
+                        <li>{{ obj }}</li>
+                        {% endfor %}
+                    </ol>
+                {% else %}
+                    <p>{% blocktrans %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktrans %}</p>
+                    <div class="row">
+                        <div class="col-12 col-sm-9">
+                            <h4>{% trans "Objects" %}</h4>
+                            {% for deletable_object in deletable_objects %}
+                                <ol>{{ deletable_object|unordered_list }}</ol>
+                            {% endfor %}
+                        </div>
+                        <div class="col-12 col-sm-3">
+                            {% include "admin/includes/object_delete_summary.html" %}
+                            <hr />
+                            <form method="post">
+                                {% csrf_token %}
                                 {% for obj in queryset %}
-                                <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
+                                    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
                                 {% endfor %}
                                 <input type="hidden" name="action" value="delete_selected">
                                 <input type="hidden" name="post" value="yes">
-                                <input type="submit" class="btn btn-danger" value="{% trans "Yes, I'm sure" %}">
-                                <a href="#" class="btn btn-default cancel-link">{% trans "No, take me back" %}</a>
-                            </div>
-                        </form>
-                    {% endif %}
-                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-danger form-control" value="{% trans "Yes, I'm sure" %}">
+                                </div>
+                                <div class="form-group">
+                                    <a href="#" class="btn btn-default cancel-link form-control">{% trans "No, take me back" %}</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

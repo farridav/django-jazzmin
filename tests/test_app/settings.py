@@ -39,7 +39,7 @@ JAZZMIN_SETTINGS = {
     # title of the window
     'site_title': 'Polls Admin',
 
-    # Title on the login screen
+    # Title on the brand, and the login screen (19 chars max)
     'site_header': 'Polls',
 
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
@@ -181,3 +181,4 @@ if DEBUG and not TEST:
 if not DEBUG and not TEST:
     MIDDLEWARE.insert(1, 'django.middleware.security.SecurityMiddleware')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    JAZZMIN_SETTINGS['welcome_sign'] = 'Username: test@test.com, Password: test (Data resets nightly)'

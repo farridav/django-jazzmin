@@ -9,7 +9,7 @@ JAZZMIN_SETTINGS = {
     # title of the window
     'site_title': 'Polls Admin',
 
-    # Title on the login screen
+    # Title on the brand, and the login screen (19 chars max)
     'site_header': 'Polls',
 
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left

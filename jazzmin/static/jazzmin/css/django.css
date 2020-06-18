@@ -641,3 +641,7 @@ body.no-sidebar .content-wrapper, body.no-sidebar .main-footer, body.no-sidebar 
 .breadcrumb {
     margin-top: 5px;
 }
+
+.login-box, .register-box {
+    width: auto;
+}
