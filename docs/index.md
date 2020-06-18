@@ -5,7 +5,7 @@ customise, including a built-in UI customizer
 
 ## Features
 
-- Drop-in, configure only if you want to
+- Drop-in admin skin, all configuration optional
 - Select2 drop-downs
 - Bootstrap 4 & AdminLTE UI components
 - Search bar for any given model admin
@@ -15,6 +15,15 @@ customise, including a built-in UI customizer
 - Responsive
 - Customisable UI (via Live UI changes, or custom CSS/JS)
 - Based on the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
+
+## Demo
+Live demo https://django-jazzmin.herokuapp.com/admin
+
+**Username**: test@test.com
+
+**Password**: test
+
+*Note: Data resets nightly*
 
 ## Screenshots
 

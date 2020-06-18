@@ -17,6 +17,16 @@ Documentation
 -------------
 See https://django-jazzmin.readthedocs.io also see `Test App`_
 
+Demo
+----
+Live demo https://django-jazzmin.herokuapp.com/admin
+
+**Username**: test@test.com
+
+**Password**: test
+
+*Note: Data resets nightly*
+
 Features
 --------
 - Drop-in admin skin, all configuration optional

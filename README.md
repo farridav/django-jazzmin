@@ -17,8 +17,17 @@ pip install django-jazzmin
 ## Documentation
 See [Documentation](https://django-jazzmin.readthedocs.io/) or [Test App](./tests/test_app/settings.py)
 
+## Demo
+Live demo https://django-jazzmin.herokuapp.com/admin
+
+**Username**: test@test.com
+
+**Password**: test
+
+*Note: Data resets nightly*
+
 ## Features
-- Drop-in, configure only if you want to
+- Drop-in admin skin, all configuration optional
 - Customisable side menu
 - Customisable top menu
 - Customisable user menu
