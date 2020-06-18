@@ -16,14 +16,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Cheese',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=40)),
-                ('stinky', models.BooleanField(default=False, help_text='Determines whether the cheese is stinky or not')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Choice',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -53,14 +45,5 @@ class Migration(migrations.Migration):
             model_name='choice',
             name='poll',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.Poll'),
-        ),
-        migrations.CreateModel(
-            name='Campaign',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cheese', models.ManyToManyField(help_text='The cheese that this campaign is fighting for', related_name='campaigns', to='polls.Cheese')),
-                ('polls', models.ManyToManyField(help_text='The polls this campaign is part to', related_name='campaigns', to='polls.Poll')),
-                ('promoter', models.ForeignKey(help_text='The user promoting this campaign', on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
         ),
     ]

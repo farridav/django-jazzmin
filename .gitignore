@@ -12,3 +12,4 @@ __pycache__
 _resource
 admin_templates
 *.sqlite3
+tests/test_app/static/
