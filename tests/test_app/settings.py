@@ -179,6 +179,6 @@ if DEBUG and not TEST:
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
 
 if not DEBUG and not TEST:
-    MIDDLEWARE.insert(1, 'django.middleware.security.SecurityMiddleware')
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     JAZZMIN_SETTINGS['welcome_sign'] = 'Username: test@test.com, Password: test (Data resets nightly)'
