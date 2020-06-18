@@ -5,13 +5,17 @@
         <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
             <div class="row">
                 {% for field in line %}
-                    <label class="col-sm-2 text-right">
+                    <label class="{% if not line.fields|length_is:'1' and forloop.counter != 1 %}  col-auto {% else %} col-sm-2 {% endif %} text-right">
                         {{ field.field.label }}
                         {% if field.field.field.required %}
                         <span class="text-red">* </span>
                         {% endif %}
                     </label>
-                    <div class="col-sm-10 {% if not line.fields|length_is:'1' %} fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}{% elif field.is_checkcard %} checkcard-row{% endif %}">
+                    <div class="{% if not line.fields|length_is:'1' %} col-auto  fieldBox {% else %} col-sm-10 {% endif %}
+                                 {% if field.field.name %} field-{{ field.field.name }}{% endif %}
+                                 {% if not field.is_readonly and field.errors %} errors{% endif %}
+                                 {% if field.field.is_hidden %} hidden {% endif %}
+                                 {% if field.is_checkcard %} checkcard-row{% endif %}">
                         {% if field.is_readonly %}
                             <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
                         {% else %}
