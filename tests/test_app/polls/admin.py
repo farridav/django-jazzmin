@@ -3,6 +3,7 @@ from django.contrib.admin.models import LogEntry
 from django.utils.html import format_html
 from django.utils.timesince import timesince
 
+from tests.test_app.polls.models import Campaign, Cheese
 from .models import Poll, Choice, Vote
 
 
@@ -44,6 +45,7 @@ class ChoiceAdmin(admin.ModelAdmin):
     list_display = ('poll', 'choice_text')
     list_per_page = 20
     list_editable = ('choice_text',)
+    autocomplete_fields = ('poll',)
 
 
 @admin.register(Vote)
@@ -74,3 +76,16 @@ class LogEntryAdmin(admin.ModelAdmin):
         return '{} ago'.format(timesince(obj.action_time))
 
     modified.admin_order_field = 'action_time'
+
+
+@admin.register(Cheese)
+class CampaignAdmin(admin.ModelAdmin):
+    list_display = ('name', 'stinky')
+    is_editable = ('name', 'stinky')
+
+
+@admin.register(Campaign)
+class CampaignAdmin(admin.ModelAdmin):
+    list_display = ('id', 'promoter' )
+    search_fields = ('promoter__email', 'promoter__username')
+    autocomplete_fields = ('polls', 'promoter', )

@@ -9,7 +9,7 @@ DEFAULT_SETTINGS = {
     # title of the window
     'site_title': AdminSite.site_title,
 
-    # Title on the login screen
+    # Title on the brand, and the login screen (19 chars max)
     'site_header': AdminSite.site_header,
 
     # Relative path to logo for your site, used for favicon and brand on top left (must be present in static files)

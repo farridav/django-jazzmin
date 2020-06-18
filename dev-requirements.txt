@@ -9,7 +9,6 @@ pytest-django         # Django integration for pytest
 tox-gh-actions        # Github actions support for tox
 coverage              # Measure code coverage durign tests
 tox                   # Test runner for python packages
-tox-pyenv             # pyenv support for tox
 django-debug-toolbar  # unparallelled debugging in django
 werkzeug              # support for werkzeug debugger in runserver_plus
 ipython               # enhanced python shell
@@ -18,3 +17,4 @@ django-extensions     # Django Sugar for development
 faker                 # less fake fake data
 coveralls             # Publish code coverage to coveralls
 beautifulsoup4        # Structure HTML documents into navigable things for test assertions
+dj-database-url       # Parsing of database urls

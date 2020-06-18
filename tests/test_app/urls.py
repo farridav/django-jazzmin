@@ -1,6 +1,8 @@
 from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
+from django.urls import re_path
+from django.views.generic import RedirectView
+from django.views.static import serve
 
 try:
     from django.conf.urls import url, include
@@ -10,16 +12,16 @@ except ImportError:
 from . import views
 
 urlpatterns = [
+    url(r'^$', RedirectView.as_view(pattern_name='admin:index', permanent=False)),
     url(r'admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'admin/', admin.site.urls),
     url(r'make_messages/', views.make_messages, name='make_messages'),
-    url(r'500/', views.five_hundred, name='500'),
-    url(r'404/', views.four_oh_four, name='404'),
 ]
 
 if settings.DEBUG:
-    urlpatterns.extend(static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))
-    urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+    urlpatterns.append(
+        re_path(r'^static/(?P<path>.*)$', serve, kwargs={'document_root': settings.STATIC_ROOT})
+    )
 
 if 'debug_toolbar' in settings.INSTALLED_APPS:
     try:

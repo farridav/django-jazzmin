@@ -119,22 +119,23 @@
 
                 {% block after_related_objects %}{% endblock %}
 
-                {% block submit_buttons_bottom %}
-                    <div class="col-12 col-lg-3">
+                <div class="col-12 col-lg-3">
+                    {% block submit_buttons_bottom %}
                         {% submit_row %}
                         {% block object-tools %}
                             {% if change %}
                                 {% if not is_popup %}
-                                    <ul class="object-tools">
+                                    <div class="object-tools">
                                         {% block object-tools-items %}
                                             {% change_form_object_tools %}
+                                            {% block extra_actions %}{% endblock %}
                                         {% endblock %}
-                                    </ul>
+                                    </div>
                                 {% endif %}
                             {% endif %}
                         {% endblock %}
-                    </div>
-                {% endblock %}
+                    {% endblock %}
+                </div>
 
                 {% block admin_change_form_document_ready %}
                     <script type="text/javascript" id="django-admin-form-add-constants" src="{% static 'admin/js/change_form.js' %}" {% if adminform and add %}data-model-name="{{ opts.model_name }}"{% endif %}></script>
