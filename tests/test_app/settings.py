@@ -1,13 +1,15 @@
 import os
 
-import django
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SECRET_KEY = 'x*za6xf&_80ofdpae!yzq61g9ffikkx9$*iygbl$j7rr4wlf8t'
-DEBUG = True
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'not-secret-at-all')
+DEBUG = bool(int(os.getenv('DEBUG', 1)))
+TEST = os.getenv('FAIL_INVALID_TEMPLATE_VARS')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
+    # Keep this above 'django.contrib.admin'
     'jazzmin',
 
     'django.contrib.admin',
@@ -31,16 +33,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if django.VERSION < (2, 0):
-    MIDDLEWARE_CLASSES = MIDDLEWARE
-
 ROOT_URLCONF = 'tests.test_app.urls'
 
 JAZZMIN_SETTINGS = {
     # title of the window
     'site_title': 'Polls Admin',
 
-    # Title on the login screen
+    # Title on the brand, and the login screen (19 chars max)
     'site_header': 'Polls',
 
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
@@ -148,13 +147,10 @@ TEMPLATES = [{
 }]
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'TEST': {
-            'NAME': ':memory:'
-        }
-    }
+    'default': dj_database_url.config(
+        env='DATABASE_URL', conn_max_age=500,
+        default='sqlite:///{}'.format(os.path.join(BASE_DIR, 'db.sqlite3'))
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -176,11 +172,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-if not os.getenv('FAIL_INVALID_TEMPLATE_VARS'):
+if DEBUG and not TEST:
     os.environ.setdefault("WERKZEUG_DEBUG_PIN", "off")
-    INSTALLED_APPS.extend([
-        'debug_toolbar',
-        'django_extensions',
-    ])
+    INSTALLED_APPS.extend(['debug_toolbar', 'django_extensions'])
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
+
+if not DEBUG and not TEST:
+    MIDDLEWARE.insert(1, 'django.middleware.security.SecurityMiddleware')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    JAZZMIN_SETTINGS['welcome_sign'] = 'Username: test@test.com, Password: test (Data resets nightly)'

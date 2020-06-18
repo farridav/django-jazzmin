@@ -1,7 +1,12 @@
 {% load i18n %}
 <h4>{% trans "Summary" %}</h4>
-<ol>
+<table class="table table-striped">
+    <tbody>
     {% for model_name, object_count in model_count %}
-        <li>{{ model_name|capfirst }}: {{ object_count }}</li>
+        <tr>
+            <td>{{ model_name|capfirst }}</td>
+            <td>{{ object_count }}</td>
+        </tr>
     {% endfor %}
-</ol>
+    </tbody>
+</table>

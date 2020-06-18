@@ -40,7 +40,7 @@
                         <li>{{ obj }}</li>
                         {% endfor %}
                     </ol>
-                    {% elif protected %}
+                {% elif protected %}
                     <p>{% blocktrans with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would require deleting the following protected related objects:{% endblocktrans %}</p>
                     <ol>
                         {% for obj in protected %}
@@ -49,18 +49,26 @@
                     </ol>
                 {% else %}
                     <p>{% blocktrans with escaped_object=object %}Are you sure you want to delete the {{ object_name }} "{{ escaped_object }}"? All of the following related items will be deleted:{% endblocktrans %}</p>
-                    {% include "admin/includes/object_delete_summary.html" %}
-                    <h4>{% trans "Objects" %}</h4>
-                    <ol>{{ deleted_objects|unordered_list }}</ol>
-                    <form method="post">{% csrf_token %}
-                        <div>
-                            <input type="hidden" name="post" value="yes">
-                            {% if is_popup %}<input type="hidden" name="{{ is_popup_var }}" value="1">{% endif %}
-                            {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
-                            <input type="submit" class="btn btn-danger"  value="{% trans "Yes, I'm sure" %}">
-                            <a href="#" class="btn btn-default cancel-link">{% trans "No, take me back" %}</a>
+                    <div class="row">
+                        <div class="col-12 col-sm-9">
+                            <h4>{% trans "Objects" %}</h4>
+                            <ol>{{ deleted_objects|unordered_list }}</ol>
                         </div>
-                    </form>
+                        <div class="col-12 col-sm-3">
+                            {% include "admin/includes/object_delete_summary.html" %}
+                            <form method="post">{% csrf_token %}
+                                <input type="hidden" name="post" value="yes">
+                                {% if is_popup %}<input type="hidden" name="{{ is_popup_var }}" value="1">{% endif %}
+                                {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-danger form-control" value="{% trans "Yes, I'm sure" %}">
+                                </div>
+                                <div class="form-group">
+                                    <a href="#" class="btn btn-default cancel-link form-control">{% trans "No, take me back" %}</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
         </div>

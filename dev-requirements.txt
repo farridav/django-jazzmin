@@ -17,3 +17,4 @@ django-extensions     # Django Sugar for development
 faker                 # less fake fake data
 coveralls             # Publish code coverage to coveralls
 beautifulsoup4        # Structure HTML documents into navigable things for test assertions
+dj-database-url       # Parsing of database urls

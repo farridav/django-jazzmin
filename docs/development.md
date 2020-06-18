@@ -15,7 +15,7 @@ Setup db tables etc.
 
 Generate test data
 
-    python tests/test_app/manage.py seeder
+    python tests/test_app/manage.py loaddata initial_data
 
 Run development server (with werkzeug debugger)
 
