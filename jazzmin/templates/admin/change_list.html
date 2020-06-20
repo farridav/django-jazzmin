@@ -112,6 +112,7 @@
 {% endblock %}
 
 {% block extrajs %}
+    {{  block.super }}
     <script type="text/javascript" src="{% static 'adminlte/plugins/select2/js/select2.min.js' %}"></script>
     <script>
         $.fn.search_filters = function () {
