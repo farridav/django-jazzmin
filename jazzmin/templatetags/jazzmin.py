@@ -235,6 +235,14 @@ def debug(value):
     return type(value)
 
 
+@register.filter
+def as_json(value):
+    """
+    Take the given item and dump it out as JSON
+    """
+    return json.dumps(value)
+
+
 @register.simple_tag
 def sidebar_status(request: HttpRequest) -> str:
     """

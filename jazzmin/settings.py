@@ -162,9 +162,9 @@ def get_settings():
 
 
 def get_ui_tweaks():
-    ui_tweaks = copy.deepcopy(DEFAULT_UI_TWEAKS)
-    ui_tweaks.update(getattr(settings, 'JAZZMIN_UI_TWEAKS', {}))
-    ui_tweaks = {x: y for x, y in ui_tweaks.items() if y not in (None, "", False)}
+    raw_tweaks = copy.deepcopy(DEFAULT_UI_TWEAKS)
+    raw_tweaks.update(getattr(settings, 'JAZZMIN_UI_TWEAKS', {}))
+    tweaks = {x: y for x, y in raw_tweaks.items() if y not in (None, "", False)}
 
     bool_map = {
         "navbar_small_text": 'text-sm',
@@ -181,13 +181,14 @@ def get_ui_tweaks():
     }
 
     for key, value in bool_map.items():
-        if key in ui_tweaks:
-            ui_tweaks[key] = value
+        if key in tweaks:
+            tweaks[key] = value
 
     def classes(*args):
-        return ' '.join([ui_tweaks.get(arg, '') for arg in args if arg]).strip()
+        return ' '.join([tweaks.get(arg, '') for arg in args if arg]).strip()
 
     return {
+        'raw': raw_tweaks,
         'body_classes': classes('accent', 'body_small_text'),
         'sidebar_classes': classes('sidebar', 'sidebar_disable_expand'),
         'navbar_classes': classes('navbar', 'no_nav_border', 'navbar_small_text'),

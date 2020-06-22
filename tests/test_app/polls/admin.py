@@ -79,13 +79,13 @@ class LogEntryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Cheese)
-class CampaignAdmin(admin.ModelAdmin):
+class CheeseAdmin(admin.ModelAdmin):
     list_display = ('name', 'stinky')
     is_editable = ('name', 'stinky')
 
 
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
-    list_display = ('id', 'promoter' )
+    list_display = ('id', 'promoter')
     search_fields = ('promoter__email', 'promoter__username')
-    autocomplete_fields = ('polls', 'promoter', )
+    autocomplete_fields = ('polls', 'promoter',)

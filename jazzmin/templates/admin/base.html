@@ -319,6 +319,9 @@
 {% endif %}
 
 {% if jazzmin_settings.show_ui_builder %}
+<script>
+    window.ui_changes = {{ jazzmin_ui.raw|as_json|safe }};
+</script>
 <script src="{% static "jazzmin/js/ui-builder.js" %}"></script>
 {% endif %}
 
