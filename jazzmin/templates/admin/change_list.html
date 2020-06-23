@@ -52,8 +52,9 @@
             </div>
 
             <div class="card-body">
-                <div id="content-main">
-                    {% if cl.formset and cl.formset.errors %}
+                <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %}enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+                    <div id="content-main">
+                        {% if cl.formset and cl.formset.errors %}
                         <p class="errornote">
                             {% if cl.formset.total_error_count == 1 %}
                                 {% trans "Please correct the error below." %}
@@ -62,11 +63,10 @@
                             {% endif %}
                         </p>
                         {{ cl.formset.non_form_errors }}
-                    {% endif %}
-                    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+                        {% endif %}
+                        <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
                         <div class="row">
                             <div class="col-12">
-                                <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %}enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
                                     {% if cl.formset %}
                                         <div>{{ cl.formset.management_form }}</div>
                                     {% endif %}
@@ -96,14 +96,14 @@
                                             </div>
                                         {% endif %}
                                     {% endblock %}
-                                </form>
                             </div>
                         </div>
                         <div class="row">
                             {% block pagination %}{% pagination cl %}{% endblock %}
                         </div>
                     </div>
-                </div>
+                    </div>
+                </form>
             </div>
 
         </div>
