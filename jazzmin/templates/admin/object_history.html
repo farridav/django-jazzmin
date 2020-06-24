@@ -39,7 +39,7 @@
                                     <i class="fas fa-{{ action_message|get_action_icon }} bg-{{ action_message|get_action_color }}"></i>
                                     <div class="timeline-item">
                                       <h3 class="timeline-header no-border">
-                                          <a href="{% url 'admin:auth_user_change' action.user.id %}" target="_blank">
+                                          <a href="{% jazzy_admin_url action.user %}" target="_blank">
                                               {{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}
                                           </a>
                                           {{ action_message|style_bold_first_word }}
