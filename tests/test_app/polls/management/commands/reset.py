@@ -8,11 +8,11 @@ class Command(BaseCommand):
     """
 
     def handle(self, *args, **options):
-        call_command('migrate')
+        call_command("migrate")
 
         User.objects.all().delete()
         Group.objects.all().delete()
 
-        call_command('loaddata', 'initial_data')
+        call_command("loaddata", "initial_data")
 
-        self.stdout.write('All Data reset')
+        self.stdout.write("All Data reset")

@@ -10,11 +10,11 @@ def test_no_delete_permission(client):
     """
     When our user has no delete permission, they dont see things they are not supposed to
     """
-    user = user_with_permissions('polls.view_poll')
-    poll = Poll.objects.create(owner=user, text='question')
+    user = user_with_permissions("polls.view_poll")
+    poll = Poll.objects.create(owner=user, text="question")
 
-    url = reverse('admin:polls_poll_change', args=(poll.pk,))
-    delete_url = reverse('admin:polls_poll_delete', args=(poll.pk,))
+    url = reverse("admin:polls_poll_change", args=(poll.pk,))
+    delete_url = reverse("admin:polls_poll_delete", args=(poll.pk,))
     client.force_login(user)
 
     response = client.get(url)
@@ -26,9 +26,9 @@ def test_no_add_permission(client):
     """
     When our user has no add permission, they dont see things they are not supposed to
     """
-    user = user_with_permissions('polls.view_poll')
-    url = reverse('admin:polls_poll_changelist')
-    add_url = reverse('admin:polls_poll_add')
+    user = user_with_permissions("polls.view_poll")
+    url = reverse("admin:polls_poll_changelist")
+    add_url = reverse("admin:polls_poll_add")
 
     client.force_login(user)
     response = client.get(url)
@@ -41,13 +41,13 @@ def test_no_view_permission(client):
     """
     When our user has no view permission, they dont see things they are not supposed to
     """
-    user = user_with_permissions('polls.change_poll')
+    user = user_with_permissions("polls.change_poll")
 
-    url = reverse('admin:index')
+    url = reverse("admin:index")
     client.force_login(user)
 
     response = client.get(url)
-    assert parse_sidemenu(response) == {'Global': ['/admin/']}
+    assert parse_sidemenu(response) == {"Global": ["/admin/"]}
 
 
 @pytest.mark.django_db
@@ -57,8 +57,8 @@ def test_no_permission(client):
     """
     user = user_with_permissions()
 
-    url = reverse('admin:index')
+    url = reverse("admin:index")
     client.force_login(user)
 
     response = client.get(url)
-    assert parse_sidemenu(response) == {'Global': ['/admin/']}
+    assert parse_sidemenu(response) == {"Global": ["/admin/"]}
