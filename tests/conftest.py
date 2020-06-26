@@ -9,8 +9,8 @@ from tests.test_app.polls.models import Poll, Vote, Choice
 @pytest.fixture
 def test_data(transactional_db, admin_user):
     dataset = {
-        'How much cheese can you eat?': ['loads', 'some', 'all of it'],
-        'Whats bigger than an elephant?': ['dog', 'a bigger elephant', 'mouldy cabbage']
+        "How much cheese can you eat?": ["loads", "some", "all of it"],
+        "Whats bigger than an elephant?": ["dog", "a bigger elephant", "mouldy cabbage"],
     }
 
     polls = []

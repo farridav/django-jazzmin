@@ -12,21 +12,19 @@ except ImportError:
 from . import views
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(pattern_name='admin:index', permanent=False)),
-    url(r'admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'admin/', admin.site.urls),
-    url(r'make_messages/', views.make_messages, name='make_messages'),
+    url(r"^$", RedirectView.as_view(pattern_name="admin:index", permanent=False)),
+    url(r"admin/doc/", include("django.contrib.admindocs.urls")),
+    url(r"admin/", admin.site.urls),
+    url(r"make_messages/", views.make_messages, name="make_messages"),
 ]
 
 if settings.DEBUG:
-    urlpatterns.append(
-        re_path(r'^static/(?P<path>.*)$', serve, kwargs={'document_root': settings.STATIC_ROOT})
-    )
+    urlpatterns.append(re_path(r"^static/(?P<path>.*)$", serve, kwargs={"document_root": settings.STATIC_ROOT}))
 
-if 'debug_toolbar' in settings.INSTALLED_APPS:
+if "debug_toolbar" in settings.INSTALLED_APPS:
     try:
         import debug_toolbar
 
-        urlpatterns.append(url(r'__debug__/', include(debug_toolbar.urls)))
+        urlpatterns.append(url(r"__debug__/", include(debug_toolbar.urls)))
     except ImportError:
         pass

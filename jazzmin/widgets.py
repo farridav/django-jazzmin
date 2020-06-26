@@ -16,7 +16,7 @@ class JazzminSelectMultiple(SelectMultiple):
     template_name = "jazzmin/widgets/select.html"
 
     def build_attrs(self, base_attrs, extra_attrs=None):
-        extra_attrs['multiple'] = 'multiple'
+        extra_attrs["multiple"] = "multiple"
         return {**base_attrs, **(extra_attrs or {})}
 
     @property
