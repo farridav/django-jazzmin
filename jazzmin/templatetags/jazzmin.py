@@ -20,9 +20,7 @@ from django.utils.translation import gettext
 
 from .. import version
 from ..settings import get_settings, get_ui_tweaks
-from ..utils import (
-    order_with_respect_to, get_filter_id, get_custom_url, get_admin_url, get_view_permissions, make_menu
-)
+from ..utils import order_with_respect_to, get_filter_id, get_admin_url, get_view_permissions, make_menu
 
 User = get_user_model()
 register = Library()
@@ -35,7 +33,7 @@ def get_side_menu(context):
     Get the list of apps and models to render out in the side menu and on the dashboard page
     """
 
-    user = context.get('user')
+    user = context.get("user")
     if not user:
         return []
 
@@ -43,45 +41,38 @@ def get_side_menu(context):
     options = get_settings()
 
     menu = []
-    available_apps = copy.deepcopy(context.get('available_apps', []))
+    available_apps = copy.deepcopy(context.get("available_apps", []))
+    custom_links = {
+        app_name: make_menu(user, links, options, allow_appmenus=False)
+        for app_name, links in options.get("custom_links", {}).items()
+    }
+
     for app in available_apps:
-        app_label = app['app_label'].lower()
-        if app_label in options['hide_apps']:
+        app_label = app["app_label"].lower()
+        app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
+        if app_label in options["hide_apps"]:
             continue
 
-        allowed_models = []
-        for model in app.get('models', []):
-            model_str = '{app_label}.{model}'.format(app_label=app_label, model=model["object_name"]).lower()
+        menu_items = []
+        for model in app.get("models", []):
+            model_str = "{app_label}.{model}".format(app_label=app_label, model=model["object_name"]).lower()
             if model_str not in model_permissions:
                 continue
-            if model_str in options.get('hide_models', []):
+            if model_str in options.get("hide_models", []):
                 continue
 
-            model['icon'] = options.get('icons', {}).get(model_str)
-            allowed_models.append(model)
+            model["url"] = model["admin_url"]
+            model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
+            menu_items.append(model)
 
-        for custom_link in options.get('custom_links', {}).get(app_label, []):
+        menu_items.extend(custom_links.get(app_label, []))
 
-            perm_matches = []
-            for perm in custom_link.get('permissions', []):
-                perm_matches.append(user.has_perm(perm))
-
-            if not all(perm_matches):
-                continue
-
-            allowed_models.append({
-                'custom': True,
-                'name': custom_link.get('name'),
-                'admin_url': get_custom_url(custom_link.get('url')),
-                'icon': custom_link.get('icon'),
-            })
-
-        if len(allowed_models):
-            app['models'] = allowed_models
+        if len(menu_items):
+            app["models"] = menu_items
             menu.append(app)
 
-    if options.get('order_with_respect_to'):
-        menu = order_with_respect_to(menu, options['order_with_respect_to'])
+    if options.get("order_with_respect_to"):
+        menu = order_with_respect_to(menu, options["order_with_respect_to"])
 
     return menu
 
@@ -92,7 +83,7 @@ def get_top_menu(user):
     Produce the menu for the top nav bar
     """
     options = get_settings()
-    return make_menu(user, options.get('topmenu_links', []))
+    return make_menu(user, options.get("topmenu_links", []), options, allow_appmenus=True)
 
 
 @register.simple_tag
@@ -101,7 +92,7 @@ def get_user_menu(user):
     Produce the menu for the user dropdown
     """
     options = get_settings()
-    return make_menu(user, options.get('usermenu_links', []), allow_appmenus=False)
+    return make_menu(user, options.get("usermenu_links", []), options, allow_appmenus=False)
 
 
 @register.simple_tag
@@ -136,10 +127,10 @@ def get_user_avatar(user):
     no_avatar = static("adminlte/img/user2-160x160.jpg")
     options = get_settings()
 
-    if not options.get('user_avatar'):
+    if not options.get("user_avatar"):
         return no_avatar
 
-    avatar_field = getattr(user, options['user_avatar'], None)
+    avatar_field = getattr(user, options["user_avatar"], None)
     if avatar_field:
         return avatar_field.url
 
@@ -151,29 +142,35 @@ def jazzmin_paginator_number(cl, i):
     """
     Generate an individual page index link in a paginated list.
     """
-    if i == '.':
-        return format_html(
-            '<li class="page-item">'
-            '<a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>'
-            '</li>'
-        )
+    if i == ".":
+        html_str = """
+            <li class="page-item">
+            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>
+            </li>
+        """
 
     elif i == cl.page_num:
-        return format_html(("""
+        html_str = """
             <li class="page-item active">
             <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">{num}
             </a>
             </li>
-        """.format(num=i + 1)))
+        """.format(
+            num=i + 1
+        )
 
     else:
         query_string = cl.get_query_string({PAGE_VAR: i})
-        end = mark_safe('end' if i == cl.paginator.num_pages - 1 else '')
-        return format_html(("""
+        end = mark_safe("end" if i == cl.paginator.num_pages - 1 else "")
+        html_str = """
             <li class="page-item">
             <a href="{query_string}" class="page-link {end}" data-dt-idx="3" tabindex="0">{num}</a>
             </li>
-        """).format(num=i + 1, query_string=query_string, end=end))
+        """.format(
+            num=i + 1, query_string=query_string, end=end
+        )
+
+    return format_html(html_str)
 
 
 @register.simple_tag
@@ -192,16 +189,16 @@ def jazzmin_list_filter(cl, spec):
     field_key = get_filter_id(spec)
     matched_key = field_key
     for choice in choices:
-        query_string = choice['query_string'][1:]
+        query_string = choice["query_string"][1:]
         query_parts = urllib.parse.parse_qs(query_string)
 
-        value = ''
+        value = ""
         matches = {}
         for key in query_parts.keys():
             if key == field_key:
                 value = query_parts[key][0]
                 matched_key = key
-            elif key.startswith(field_key + '__') or '__' + field_key + '__' in key:
+            elif key.startswith(field_key + "__") or "__" + field_key + "__" in key:
                 value = query_parts[key][0]
                 matched_key = key
 
@@ -212,11 +209,11 @@ def jazzmin_list_filter(cl, spec):
         i = 0
         for key, value in matches.items():
             if i == 0:
-                choice['name'] = key
-                choice['value'] = value
+                choice["name"] = key
+                choice["value"] = value
             i += 1
 
-    return tpl.render({'field_name': field_key, 'title': spec.title, 'choices': choices, 'spec': spec, })
+    return tpl.render({"field_name": field_key, "title": spec.title, "choices": choices, "spec": spec,})
 
 
 @register.filter
@@ -248,9 +245,9 @@ def sidebar_status(request: HttpRequest) -> str:
     """
     Check if our sidebar is open or closed
     """
-    if request.COOKIES.get('jazzy_menu', '') == 'closed':
-        return 'sidebar-collapse'
-    return ''
+    if request.COOKIES.get("jazzy_menu", "") == "closed":
+        return "sidebar-collapse"
+    return ""
 
 
 @register.filter
@@ -258,7 +255,7 @@ def can_view_self(perms: PermWrapper) -> bool:
     """
     Determines whether a user has sufficient permissions to view its own profile
     """
-    view_perm = '{}.view_{}'.format(User._meta.app_label, User._meta.model_name)
+    view_perm = "{}.view_{}".format(User._meta.app_label, User._meta.model_name)
 
     return perms[User._meta.app_label][view_perm]
 
@@ -269,13 +266,13 @@ def header_class(header: dict, forloop: dict) -> str:
     Adds CSS classes to header HTML element depending on its attributes
     """
     classes = []
-    sorted, asc, desc = header.get('sorted'), header.get('ascending'), header.get('descending')
+    sorted, asc, desc = header.get("sorted"), header.get("ascending"), header.get("descending")
 
-    if forloop['counter0'] == 0:
+    if forloop["counter0"] == 0:
         classes.append("djn-checkbox-select-all")
 
-    if not header['sortable']:
-        return ' '.join(classes)
+    if not header["sortable"]:
+        return " ".join(classes)
 
     if sorted and asc:
         classes.append("sorting_asc")
@@ -284,7 +281,7 @@ def header_class(header: dict, forloop: dict) -> str:
     else:
         classes.append("sorting")
 
-    return ' '.join(classes)
+    return " ".join(classes)
 
 
 @register.filter
@@ -301,53 +298,33 @@ def action_message_to_list(action: LogEntry) -> list:
     Retrieves a formatted list with all actions taken by a user given a log entry object
     """
     messages = []
-    if action.change_message and action.change_message[0] == '[':
+    if action.change_message and action.change_message[0] == "[":
         try:
             change_message = json.loads(action.change_message)
         except json.JSONDecodeError:
             return [action.change_message]
 
         for sub_message in change_message:
-            if 'added' in sub_message:
-                if sub_message['added']:
-                    sub_message['added']['name'] = gettext(sub_message['added']['name'])
-                    messages.append(gettext('Added {name} “{object}”.').format(
-                        **sub_message['added'])
-                    )
+            if "added" in sub_message:
+                if sub_message["added"]:
+                    sub_message["added"]["name"] = gettext(sub_message["added"]["name"])
+                    messages.append(gettext("Added {name} “{object}”.").format(**sub_message["added"]))
                 else:
-                    messages.append(gettext('Added.'))
+                    messages.append(gettext("Added."))
 
-            elif 'changed' in sub_message:
-                sub_message['changed']['fields'] = get_text_list(
-                    [
-                        gettext(field_name)
-                        for field_name in sub_message['changed']['fields']
-                    ],
-                    gettext('and')
+            elif "changed" in sub_message:
+                sub_message["changed"]["fields"] = get_text_list(
+                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]], gettext("and")
                 )
-                if 'name' in sub_message['changed']:
-                    sub_message['changed']['name'] = gettext(
-                        sub_message['changed']['name']
-                    )
-                    messages.append(
-                        gettext('Changed {fields} for {name} “{object}”.').format(
-                            **sub_message['changed']
-                        )
-                    )
+                if "name" in sub_message["changed"]:
+                    sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])
+                    messages.append(gettext("Changed {fields} for {name} “{object}”.").format(**sub_message["changed"]))
                 else:
-                    messages.append(
-                        gettext('Changed {fields}.').format(
-                            **sub_message['changed']
-                        )
-                    )
+                    messages.append(gettext("Changed {fields}.").format(**sub_message["changed"]))
 
-            elif 'deleted' in sub_message:
-                sub_message['deleted']['name'] = gettext(sub_message['deleted']['name'])
-                messages.append(
-                    gettext('Deleted {name} “{object}”.').format(
-                        **sub_message['deleted']
-                    )
-                )
+            elif "deleted" in sub_message:
+                sub_message["deleted"]["name"] = gettext(sub_message["deleted"]["name"])
+                messages.append(gettext("Deleted {name} “{object}”.").format(**sub_message["deleted"]))
     return messages if len(messages) else [action.change_message]
 
 
@@ -356,9 +333,9 @@ def get_action_icon(message: str) -> str:
     """
     Retrieves action given a certain action
     """
-    if message.startswith('Added'):
+    if message.startswith("Added"):
         return "plus-circle"
-    elif message.startswith('Deleted'):
+    elif message.startswith("Deleted"):
         return "trash"
     else:
         return "edit"
@@ -369,9 +346,9 @@ def get_action_color(message: str) -> str:
     """
     Retrieves color given a certain action
     """
-    if message.startswith('Added'):
+    if message.startswith("Added"):
         return "success"
-    elif message.startswith('Deleted'):
+    elif message.startswith("Deleted"):
         return "danger"
     else:
         return "blue"
@@ -385,10 +362,10 @@ def style_bold_first_word(message: str) -> str:
     message_words = message.split()
 
     if not len(message_words):
-        return ''
+        return ""
 
-    message_words[0] = '<strong>{}</strong>'.format(message_words[0])
+    message_words[0] = "<strong>{}</strong>".format(message_words[0])
 
-    message = ' '.join([word for word in message_words])
+    message = " ".join([word for word in message_words])
 
     return format_html(message)

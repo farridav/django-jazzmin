@@ -52,13 +52,13 @@
 
                 {% get_top_menu user as top_menu %}
                 {% for link in top_menu %}
-                    <li class="nav-item d-none d-sm-inline-block{% if link.app %} dropdown{% endif %}">
-                        {% if link.app %}
+                    <li class="nav-item d-none d-sm-inline-block{% if link.children %} dropdown{% endif %}">
+                        {% if link.children %}
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ link.name }}
                             </a>
                             <div class="dropdown-menu">
-                                {% for child in link.app_children %}
+                                {% for child in link.children %}
                                     <a class="dropdown-item" href="{{ child.url }}">{{ child.name }}</a>
                                 {% endfor %}
                             </div>
@@ -119,7 +119,7 @@
                         {% for link in user_menu %}
                             <div class="dropdown-divider"></div>
                             <a href="{{ link.url }}" class="dropdown-item" {% if link.new_window %}target="_blank"{% endif %}>
-                                <i class="fas {% if link.icon %}{{ link.icon }}{% else %}fa-circle{% endif %} mr-2"></i> {% trans link.name %}
+                                <i class="fas {{ link.icon }} mr-2"></i> {% trans link.name %}
                             </a>
                         {% endfor %}
                         <div class="dropdown-divider"></div>
@@ -173,8 +173,8 @@
                                     <li class="nav-header">{{ app.name }}</li>
                                     {% for model in app.models %}
                                         <li class="nav-item">
-                                            <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
-                                                <i class="fa nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                            <a href="{% if model.url %}{{ model.url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
+                                                <i class="fa nav-icon {{ model.icon }}"></i>
                                                 <p>{{ model.name }}</p>
                                             </a>
                                         </li>
@@ -184,14 +184,14 @@
                                 {% for app in side_menu_list %}
                                     <li class="nav-item has-treeview">
                                         <a href="#" class="nav-link">
-                                            <i class="nav-icon fas {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                            <i class="nav-icon fas {{ app.icon }}"></i>
                                             <p>{{ app.name|truncatechars:21 }} <i class="fas fa-angle-left right"></i></p>
                                         </a>
                                         <ul class="nav nav-treeview" style="display: none;">
                                             {% for model in app.models %}
                                                 <li class="nav-item">
-                                                    <a href="{% if model.admin_url %}{{ model.admin_url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
-                                                        <i class="fa nav-icon {% if model.icon %} {{ model.icon }} {% else %}fa-circle{% endif %}"></i>
+                                                    <a href="{% if model.url %}{{ model.url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
+                                                        <i class="fa nav-icon {{ model.icon }}"></i>
                                                         <p>{{ model.name }}</p>
                                                     </a>
                                                 </li>
