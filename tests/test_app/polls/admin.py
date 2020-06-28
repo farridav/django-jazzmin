@@ -97,7 +97,6 @@ class AllFieldsAdmin(admin.ModelAdmin):
         "text",
         "slug",
         "email",
-        "file_path",
         "float",
         "decimal",
         "integer",
@@ -106,12 +105,14 @@ class AllFieldsAdmin(admin.ModelAdmin):
         "positive_integer",
         "boolean",
         "null_boolean",
-        "duration",
-        "identifier",
-        "generic_ip_address",
+        "file",
+        "file_path",
         "date",
         "date_time",
         "time",
+        "duration",
+        "identifier",
+        "generic_ip_address",
     )
     list_editable = (
         "char",
@@ -126,12 +127,12 @@ class AllFieldsAdmin(admin.ModelAdmin):
         "positive_integer",
         "boolean",
         "null_boolean",
-        "duration",
-        "identifier",
-        "generic_ip_address",
         "date",
         "date_time",
         "time",
+        "duration",
+        "identifier",
+        "generic_ip_address",
     )
     list_filter = (
         "char",
@@ -146,11 +147,59 @@ class AllFieldsAdmin(admin.ModelAdmin):
         "positive_integer",
         "boolean",
         "null_boolean",
-        "duration",
-        "identifier",
-        "generic_ip_address",
         "date",
         "date_time",
         "time",
+        "duration",
+        "identifier",
+        "generic_ip_address",
     )
     list_display_links = ("id",)
+    fieldsets = (
+        ("char", {
+            "fields": (
+                "char",
+                "text",
+                "slug",
+                "email",
+            )
+        }),
+        ("number", {
+            "fields": (
+                "float",
+                "decimal",
+                "integer",
+                "small_integer",
+                "big_integer",
+                "positive_integer",
+            )
+        }),
+        ("boolean", {
+            "fields": (
+                "boolean",
+                "null_boolean",
+            )
+        }),
+        ("file", {
+            "classes": ("collapse",),
+            "fields": (
+                "file",
+                "file_path",
+            )
+        }),
+        ("time", {
+            "fields": (
+                "date",
+                "date_time",
+                "time",
+            )
+        }),
+        ("other", {
+            "classes": ("collapse",),
+            "fields": (
+                "duration",
+                "identifier",
+                "generic_ip_address",
+            )
+        }),
+    )
