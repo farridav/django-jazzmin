@@ -1,6 +1,7 @@
 import uuid
 from decimal import Decimal
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -136,12 +137,21 @@ class AllFields(models.Model):
         help_text="This is how TimeFields look like..."
     )
 
+    # Files
+    file_path = models.FilePathField(
+        path=settings.BASE_DIR,
+        help_text="This is how FilePathFields look like..."
+    )
+    file = models.FileField(
+        upload_to='files',
+        blank=True,
+        null=True,
+        help_text="This is how FileFields look like..."
+    )
+
     # Other
     duration = models.DurationField(
         default=1, help_text="This is how DurationFields look like..."
-    )
-    file_path = models.FilePathField(
-        path="/", help_text="This is how FilePathFields look like..."
     )
     identifier = models.UUIDField(
         default=uuid.uuid1(), help_text="This is how UUIDFields look like..."

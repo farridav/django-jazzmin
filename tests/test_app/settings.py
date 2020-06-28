@@ -156,7 +156,7 @@ JAZZMIN_SETTINGS = {
     },
     # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
     # for a list of icon classes
-    "icons": {"auth": "fa-users-cog", "auth.user": "fa-user", "auth.Group": "fa-users",},
+    "icons": {"auth": "fa-users-cog", "auth.user": "fa-user", "auth.Group": "fa-users"},
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fa-chevron-circle-right",
     "default_icon_children": "fa-circle",
