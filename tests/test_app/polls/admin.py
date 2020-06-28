@@ -3,7 +3,7 @@ from django.contrib.admin.models import LogEntry
 from django.utils.html import format_html
 from django.utils.timesince import timesince
 
-from tests.test_app.polls.models import Campaign, Cheese
+from tests.test_app.polls.models import Campaign, Cheese, AllFields
 from .models import Poll, Choice, Vote
 
 
