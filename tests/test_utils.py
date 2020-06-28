@@ -70,11 +70,30 @@ def test_get_app_admin_urls():
     We can get all the admin urls for an app
     """
     assert get_app_admin_urls("polls") == [
-        {"model": "polls.poll", "name": "Polls", "url": reverse("admin:polls_poll_changelist")},
-        {"model": "polls.choice", "name": "Choices", "url": reverse("admin:polls_choice_changelist")},
-        {"model": "polls.vote", "name": "Votes", "url": reverse("admin:polls_vote_changelist")},
-        {"model": "polls.cheese", "name": "Cheeses", "url": reverse("admin:polls_cheese_changelist")},
-        {"model": "polls.campaign", "name": "Campaigns", "url": reverse("admin:polls_campaign_changelist")},
+        {
+            "model": "polls.poll", "name": "Polls",
+            "url": reverse("admin:polls_poll_changelist")
+        },
+        {
+            "model": "polls.choice", "name": "Choices",
+            "url": reverse("admin:polls_choice_changelist")
+        },
+        {
+            "model": "polls.vote", "name": "Votes",
+            "url": reverse("admin:polls_vote_changelist")
+        },
+        {
+            "model": "polls.cheese", "name": "Cheeses",
+            "url": reverse("admin:polls_cheese_changelist")
+        },
+        {
+            "model": "polls.campaign", "name": "Campaigns",
+            "url": reverse("admin:polls_campaign_changelist")
+        },
+        {
+            "model": "polls.allfields", "name": "Allfields",
+            "url": reverse("admin:polls_allfields_changelist")
+        },
     ]
 
     assert get_app_admin_urls("nothing") == []

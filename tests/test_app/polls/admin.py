@@ -3,7 +3,7 @@ from django.contrib.admin.models import LogEntry
 from django.utils.html import format_html
 from django.utils.timesince import timesince
 
-from tests.test_app.polls.models import Campaign, Cheese
+from tests.test_app.polls.models import Campaign, Cheese, AllFields
 from .models import Poll, Choice, Vote
 
 
@@ -87,3 +87,70 @@ class CampaignAdmin(admin.ModelAdmin):
         "polls",
         "promoter",
     )
+
+
+@admin.register(AllFields)
+class AllFieldsAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "char",
+        "text",
+        "slug",
+        "email",
+        "file_path",
+        "float",
+        "decimal",
+        "integer",
+        "small_integer",
+        "big_integer",
+        "positive_integer",
+        "boolean",
+        "null_boolean",
+        "duration",
+        "identifier",
+        "generic_ip_address",
+        "date",
+        "date_time",
+        "time",
+    )
+    list_editable = (
+        "char",
+        "text",
+        "slug",
+        "email",
+        "float",
+        "decimal",
+        "integer",
+        "small_integer",
+        "big_integer",
+        "positive_integer",
+        "boolean",
+        "null_boolean",
+        "duration",
+        "identifier",
+        "generic_ip_address",
+        "date",
+        "date_time",
+        "time",
+    )
+    list_filter = (
+        "char",
+        "text",
+        "slug",
+        "email",
+        "float",
+        "decimal",
+        "integer",
+        "small_integer",
+        "big_integer",
+        "positive_integer",
+        "boolean",
+        "null_boolean",
+        "duration",
+        "identifier",
+        "generic_ip_address",
+        "date",
+        "date_time",
+        "time",
+    )
+    list_display_links = ("id",)

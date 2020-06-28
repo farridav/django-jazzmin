@@ -82,7 +82,11 @@ tr.djn-tr > .original {
     overflow-x: auto;
 }
 
-table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after, table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc_disabled::after, table.dataTable thead .sorting_desc_disabled::after {
+table.dataTable thead .sorting::after,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after,
+table.dataTable thead .sorting_asc_disabled::after,
+table.dataTable thead .sorting_desc_disabled::after {
     right: 0.5em;
     content: "\2193";
 }
@@ -113,12 +117,35 @@ table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after
 }
 
 /* APP.CSS */
-.vTextField, .vURLField, .vBigIntegerField {
+
+.form-group div .vTextField,
+.form-group div .vLargeTextField,
+.form-group div .vURLField,
+.form-group div .vBigIntegerField,
+.form-group div.field-duration input[type="text"],
+.form-group div.field-identifier input[type="text"],
+.form-group div.field-generic_ip_address input[type="text"],
+.form-group .field-null_boolean select,
+.form-group .field-file_path select {
     display: block;
     width: 100%;
 }
 
-.vTextField, .vURLField, .vBigIntegerField, .vForeignKeyRawIdAdminField, .vDateField, .vTimeField {
+.vTextField,
+.vLargeTextField,
+.vURLField,
+.vIntegerField,
+.vBigIntegerField,
+.vForeignKeyRawIdAdminField,
+.vDateField,
+.vTimeField,
+.field-float input[type="number"],
+.field-decimal input[type="number"],
+.field-duration input[type="text"],
+.field-identifier input[type="text"],
+.field-generic_ip_address input[type="text"],
+.field-null_boolean select,
+.field-file_path select {
     height: calc(2.25rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -139,18 +166,7 @@ table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after
 }
 
 .vLargeTextField {
-    width: 100%;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-
-form select {
-    width: auto;
-    height: 34px;
+    height: auto;
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
@@ -524,31 +540,8 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
     display: none;
 }
 
-input[type="number"], input[type="password"] {
-    width: auto;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-
-input[type="password"] {
+#user_form input[type="password"] {
     width: 100%;
-}
-
-
-input[type="checkbox"] {
-    width: auto;
-    height: 26px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    border: 1px solid #ccc;
 }
 
 .control-label {
@@ -586,7 +579,9 @@ input[type="checkbox"] {
     padding: 0;
 }
 
-body.no-sidebar .content-wrapper, body.no-sidebar .main-footer, body.no-sidebar .main-header {
+body.no-sidebar .content-wrapper,
+body.no-sidebar .main-footer,
+body.no-sidebar .main-header {
     margin-left: 0;
 }
 
