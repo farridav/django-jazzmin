@@ -19,6 +19,7 @@ def test_side_menu(admin_client, settings):
     assert parse_sidemenu(response) == {
         "Global": ["/admin/"],
         "Polls": [
+            "/admin/polls/allfields/",
             "/admin/polls/campaign/",
             "/admin/polls/cheese/",
             "/admin/polls/choice/",
@@ -36,6 +37,7 @@ def test_side_menu(admin_client, settings):
     assert parse_sidemenu(response) == {
         "Global": ["/admin/"],
         "Polls": [
+            "/admin/polls/allfields/",
             "/admin/polls/campaign/",
             "/admin/polls/cheese/",
             "/admin/polls/choice/",
@@ -111,11 +113,30 @@ def test_top_menu(admin_client, settings):
             "name": "Polls",
             "link": "#",
             "children": [
-                {"name": "Polls", "link": reverse("admin:polls_poll_changelist")},
-                {"name": "Choices", "link": reverse("admin:polls_choice_changelist")},
-                {"name": "Votes", "link": reverse("admin:polls_vote_changelist")},
-                {"name": "Cheeses", "link": reverse("admin:polls_cheese_changelist")},
-                {"name": "Campaigns", "link": reverse("admin:polls_campaign_changelist")},
+                {
+                    "name": "Polls",
+                    "link": reverse("admin:polls_poll_changelist")
+                },
+                {
+                    "name": "Choices",
+                    "link": reverse("admin:polls_choice_changelist")
+                },
+                {
+                    "name": "Votes",
+                    "link": reverse("admin:polls_vote_changelist")
+                },
+                {
+                    "name": "Cheeses",
+                    "link": reverse("admin:polls_cheese_changelist")
+                },
+                {
+                    "name": "Campaigns",
+                    "link": reverse("admin:polls_campaign_changelist")
+                },
+                {
+                    "name": "Allfields",
+                    "link": reverse("admin:polls_allfields_changelist")
+                },
             ],
         },
     ]
