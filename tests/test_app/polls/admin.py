@@ -132,3 +132,17 @@ class AllFieldsAdmin(admin.ModelAdmin):
 
     def get_list_filter(self, request):
         return self.all_fields
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = defaultdict(list)
+        disallowed = ['id']
+        fields = AllFields._meta.fields + AllFields._meta.many_to_many
+
+        for field in fields:
+            if field.name in disallowed:
+                continue
+            fieldsets[field.formfield().__class__.__name__].append(field.name)
+
+        return (
+            (name, {"fields": fields}) for name, fields in fieldsets.items()
+        )

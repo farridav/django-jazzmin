@@ -121,11 +121,11 @@ table.dataTable thead .sorting_desc_disabled::after {
 .change-form #content-main .card-body input[type="number"],
 .change-form #content-main .card-body input[type="text"],
 .change-form #content-main .card-body input[type="password"],
+.change-form #content-main .card-body input[type="email"],
 .change-form #content-main .card-body textarea,
 .change-form #content-main .card-body select {
     display: block;
     width: 100%;
-    height: calc(2.25rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -137,6 +137,10 @@ table.dataTable thead .sorting_desc_disabled::after {
     border-radius: .25rem;
     box-shadow: inset 0 0 0 transparent;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.change-form #content-main .card-body .related-widget-wrapper select[multiple] {
+    min-height: 150px;
 }
 
 .vDateField, .vTimeField {
@@ -413,10 +417,10 @@ table.dataTable thead .sorting_desc_disabled::after {
 
 .selector ul.selector-chooser {
     float: left;
-    width: 4%;
+    width: 1%;
     background-color: #eee;
     border-radius: 10px;
-    margin: 10em 0 0;
+    margin: 4% 1% 0 1%;
     padding: 0;
 }
 
