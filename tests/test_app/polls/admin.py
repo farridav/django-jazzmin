@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.utils.html import format_html
@@ -14,7 +16,10 @@ class ChoiceInline(admin.TabularInline):
 
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
-    fieldsets = (("general", {"fields": ("owner",)}), ("other", {"fields": ("text", "pub_date", "active")}))
+    fieldsets = (
+        ("general", {"fields": ("owner",)}),
+        ("other", {"fields": ("text", "pub_date", "active")}),
+    )
     raw_id_fields = ("owner",)
     list_display = ("owner", "text", "pub_date", "active")
     list_display_links = ()
@@ -52,7 +57,13 @@ class VoteAdmin(admin.ModelAdmin):
 
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
-    list_display = ("user", "object", "action_flag", "change_message", "modified")
+    list_display = (
+        "user",
+        "object",
+        "action_flag",
+        "change_message",
+        "modified",
+    )
     readonly_fields = ["object", "modified"]
     search_fields = ("user__email",)
     date_hierarchy = "action_time"
@@ -62,7 +73,9 @@ class LogEntryAdmin(admin.ModelAdmin):
     def object(self, obj):
         url = obj.get_admin_url()
         return format_html(
-            '<a href="{url}">{obj} [{model}]</a>'.format(url=url, obj=obj.object_repr, model=obj.content_type.model)
+            '<a href="{url}">{obj} [{model}]</a>'.format(
+                url=url, obj=obj.object_repr, model=obj.content_type.model
+            )
         )
 
     def modified(self, obj):
@@ -91,115 +104,31 @@ class CampaignAdmin(admin.ModelAdmin):
 
 @admin.register(AllFields)
 class AllFieldsAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "char",
-        "text",
-        "slug",
-        "email",
-        "float",
-        "decimal",
-        "integer",
-        "small_integer",
-        "big_integer",
-        "positive_integer",
-        "boolean",
-        "null_boolean",
-        "file",
-        "file_path",
-        "date",
-        "date_time",
-        "time",
-        "duration",
-        "identifier",
-        "generic_ip_address",
-    )
-    list_editable = (
-        "char",
-        "text",
-        "slug",
-        "email",
-        "float",
-        "decimal",
-        "integer",
-        "small_integer",
-        "big_integer",
-        "positive_integer",
-        "boolean",
-        "null_boolean",
-        "date",
-        "date_time",
-        "time",
-        "duration",
-        "identifier",
-        "generic_ip_address",
-    )
-    list_filter = (
-        "char",
-        "text",
-        "slug",
-        "email",
-        "float",
-        "decimal",
-        "integer",
-        "small_integer",
-        "big_integer",
-        "positive_integer",
-        "boolean",
-        "null_boolean",
-        "date",
-        "date_time",
-        "time",
-        "duration",
-        "identifier",
-        "generic_ip_address",
-    )
+    filter_vertical = ("many_to_many_vertical",)
+    autocomplete_fields = ("foreign_key_autocomplete",)
+    raw_id_fields = ("foreign_key_by_id",)
     list_display_links = ("id",)
-    fieldsets = (
-        ("char", {
-            "fields": (
-                "char",
-                "text",
-                "slug",
-                "email",
-            )
-        }),
-        ("number", {
-            "fields": (
-                "float",
-                "decimal",
-                "integer",
-                "small_integer",
-                "big_integer",
-                "positive_integer",
-            )
-        }),
-        ("boolean", {
-            "fields": (
-                "boolean",
-                "null_boolean",
-            )
-        }),
-        ("file", {
-            "classes": ("collapse",),
-            "fields": (
-                "file",
-                "file_path",
-            )
-        }),
-        ("time", {
-            "fields": (
-                "date",
-                "date_time",
-                "time",
-            )
-        }),
-        ("other", {
-            "classes": ("collapse",),
-            "fields": (
-                "duration",
-                "identifier",
-                "generic_ip_address",
-            )
-        }),
-    )
+
+    @property
+    def all_fields(self):
+        fields = [field.name for field in AllFields._meta.fields]
+        many_to_many = [field.name for field in AllFields._meta.many_to_many]
+        return list(self.readonly_fields) + fields + many_to_many
+
+    @property
+    def list_display(self):
+        fields = self.all_fields
+        fields.remove('many_to_many')
+        fields.remove('many_to_many_vertical')
+        return fields
+
+    @property
+    def list_editable(self):
+        fields = self.all_fields
+        fields.remove('id')
+        fields.remove('many_to_many')
+        fields.remove('many_to_many_vertical')
+        return fields
+
+    def get_list_filter(self, request):
+        return self.all_fields
