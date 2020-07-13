@@ -33,17 +33,24 @@ def get_admin_url(instance, **kwargs):
 
         if type(instance) == str:
             app_label, model_name = instance.lower().split(".")
-            url = reverse("admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name))
+            url = reverse(
+                "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name)
+            )
 
         # Model class
         elif instance.__class__ == ModelBase:
             app_label, model_name = instance._meta.app_label, instance._meta.model_name
-            url = reverse("admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name))
+            url = reverse(
+                "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name)
+            )
 
         # Model instance
         elif instance.__class__.__class__ == ModelBase and isinstance(instance, instance.__class__):
             app_label, model_name = instance._meta.app_label, instance._meta.model_name
-            url = reverse("admin:{app_label}_{model_name}_change".format(app_label=app_label, model_name=model_name), args=(instance.pk,),)
+            url = reverse(
+                "admin:{app_label}_{model_name}_change".format(app_label=app_label, model_name=model_name),
+                args=(instance.pk,),
+            )
 
     except (NoReverseMatch, ValueError):
         logger.error("Couldnt reverse url from {instance}".format(instance=instance))
