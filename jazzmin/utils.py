@@ -3,8 +3,7 @@ from urllib.parse import urlencode
 
 from django.apps import apps
 from django.db.models.base import ModelBase
-
-from jazzmin.compat import reverse, NoReverseMatch
+from jazzmin.compat import NoReverseMatch, reverse
 
 logger = logging.getLogger(__name__)
 
@@ -181,7 +180,7 @@ def make_menu(user, links, options, allow_appmenus=True):
         # App links
         elif "app" in link and allow_appmenus:
             children = [
-                {"name": child["name"], "url": child["url"], "children": None}
+                {"name": child.get("verbose_name", child["name"]), "url": child["url"], "children": None}
                 for child in get_app_admin_urls(link["app"])
                 if child["model"] in model_permissions
             ]
