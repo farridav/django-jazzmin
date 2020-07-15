@@ -51,6 +51,7 @@ DEFAULT_SETTINGS = {
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fa-chevron-circle-right",
     "default_icon_children": "fa-circle",
+    "display_inlines_in_tabs": True,
     #############
     # UI Tweaks #
     #############
