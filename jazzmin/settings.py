@@ -68,7 +68,9 @@ DEFAULT_SETTINGS = {
     # - vertical_tabs
     # - accordion
     # - carousel
-    "changeview_format": "horizontal_tabs",
+    "changeform_format": "horizontal_tabs",
+    # override change forms on a per modeladmin basis
+    "changeform_format_overrides": {},
 }
 
 #######################################
@@ -135,6 +137,11 @@ def get_settings():
 
     # Ensure icon model names and classes are lower case
     jazzmin_settings["icons"] = {x.lower(): y.lower() for x, y in jazzmin_settings.get("icons", {}).items()}
+
+    # ensure all model names are lower cased
+    jazzmin_settings["changeform_format_overrides"] = {
+        x.lower(): y.lower() for x, y in jazzmin_settings.get("changeform_format_overrides", {}).items()
+    }
 
     return jazzmin_settings
 

@@ -72,19 +72,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                {% if jazzmin_settings.changeview_format == 'single' or not adminform|has_fieldsets and inline_admin_formsets|length == 0 %}
-                                    {% include "jazzmin/includes/single.html" %}
-                                {% elif jazzmin_settings.changeview_format == 'carousel' %}
-                                    {% include "jazzmin/includes/carousel.html" %}
-                                {% elif jazzmin_settings.changeview_format == 'accordion' %}
-                                    {% include "jazzmin/includes/accordion.html" %}
-                                {% elif jazzmin_settings.changeview_format == 'horizontal_tabs' %}
-                                    {% include "jazzmin/includes/horizontal_tabs.html" %}
-                                {% elif jazzmin_settings.changeview_format == 'vertical_tabs' %}
-                                    {% include "jazzmin/includes/veritcal_tabs.html" %}
-                                {% else %}
-                                    {% include "jazzmin/includes/horizontal_tabs.html" %}
-                                {% endif %}
+                                {% get_changeform_template adminform as changeform_template %}
+                                {% include changeform_template %}
                             </div>
                         </div>
                     </div>

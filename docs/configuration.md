@@ -115,7 +115,9 @@ JAZZMIN_SETTINGS = {
     # - vertical_tabs
     # - accordion
     # - carousel
-    "changeview_format": "horizontal_tabs",
+    "changeform_format": "horizontal_tabs",
+    # override change forms on a per modeladmin basis
+    "changeform_format_overrides": {"auth.user": "accordion", "auth.group": "vertical_tabs",},
 }
 ```
 
@@ -177,12 +179,20 @@ Example:
 #### note
 The app list you generate for the side menu, is shared with the dashboard, so any changes you make to it, will be reflected there
 
-## Change form display
-We have a few different styles for a model admins change form, currently, when applied, it affects all model admin change forms, 
-though there are plans to allow overiding on a per model basis, like with other settings.
+## Change form templates
+We have a few different styles for a model admins change form controlled via the `changeform_format`, this can be applied 
+globally via `changeform_format`, and overriden on a per model basis using `changeform_format_overrides`, which accepts 
+a dictionary mapping of model names to changeform templates e.g:
+
+    "changeform_format": "horizontal_tabs",
+    # override change forms on a per modeladmin basis
+    "changeform_format_overrides": {"auth.user": "accordion", "auth.group": "vertical_tabs",},
+
+Will use `horizontal_tabs` throughout the admin, but use the `accordion` template on the user model admin, and 
+`vertical_tabs` on the group model admin.
 
 The default style is vertical tabs, *unless* you have no fieldsets and no inlines, in which case you will get the basic single form 
-rendered out, See [Django docs](https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets) 
+rendered out, See [Django docs on fieldset](https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets) 
 on how to add fieldsets to your admin classes.
 
 See below for the different styles:

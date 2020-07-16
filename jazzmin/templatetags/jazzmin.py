@@ -5,6 +5,7 @@ import logging
 import urllib.parse
 
 from django.conf import settings
+from django.contrib.admin.helpers import AdminForm
 from django.contrib.admin.models import LogEntry
 from django.contrib.admin.views.main import PAGE_VAR
 from django.contrib.auth import get_user_model
@@ -254,6 +255,40 @@ def as_json(value):
     Take the given item and dump it out as JSON
     """
     return json.dumps(value)
+
+
+@register.simple_tag
+def get_changeform_template(adminform: AdminForm) -> str:
+    """
+    Go get the correct change form template based on the modeladmin being used,
+    the default template, or the overriden one for this modeladmin
+    """
+    options = get_settings()
+    template_map = {
+        "single": "jazzmin/includes/single.html",
+        "carousel": "jazzmin/includes/carousel.html",
+        "accordion": "jazzmin/includes/accordion.html",
+        "horizontal_tabs": "jazzmin/includes/horizontal_tabs.html",
+        "vertical_tabs": "jazzmin/includes/vertical_tabs.html",
+    }
+    fieldsets = adminform.model_admin.fieldsets
+    has_fieldsets = fieldsets and len(fieldsets) > 1
+    inlines = adminform.model_admin.inlines
+    has_inlines = inlines and len(inlines) > 1
+    model = adminform.model_admin.model
+    model_name = "{}.{}".format(model._meta.app_label, model._meta.model_name).lower()
+
+    format = options.get("changeform_format", "")
+    if model_name in options.get("changeform_format_overrides", {}):
+        format = options["changeform_format_overrides"][model_name]
+
+    if not has_fieldsets and not has_inlines:
+        return template_map.get("single")
+
+    if not format or format not in template_map.keys():
+        return template_map.get("horizontal_tabs")
+
+    return template_map.get(format)
 
 
 @register.simple_tag
