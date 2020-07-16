@@ -113,6 +113,7 @@ JAZZMIN_SETTINGS = {
     "search_model": "auth.User",
     # Field name on user model that contains avatar image
     "user_avatar": None,
+    "display_inlines_in_tabs": False,
     ############
     # Top Menu #
     ############
@@ -168,6 +169,11 @@ JAZZMIN_SETTINGS = {
     "custom_js": None,
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": False,
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options (single/tabs)
+    "changeview_format": "tabs",
 }
 
 if not DEBUG and not TEST:

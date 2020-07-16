@@ -64,6 +64,9 @@ $(document).ready(function () {
     // Allow for styling of selects
     $('.actions select').addClass('form-control');
 
+    // Style the inline fieldset button
+    $('.inline-related fieldset.module .add-row a').addClass('btn btn-sm btn-default float-right');
+
     // When we use the menu, store its state in a cookie to preserve it
     handleMenu();
     // Ensure we preserve the tab the user was on using the url hash, even on page reload

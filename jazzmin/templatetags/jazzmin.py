@@ -20,7 +20,13 @@ from django.utils.translation import gettext
 
 from .. import version
 from ..settings import get_settings, get_ui_tweaks
-from ..utils import order_with_respect_to, get_filter_id, get_admin_url, get_view_permissions, make_menu
+from ..utils import (
+    order_with_respect_to,
+    get_filter_id,
+    get_admin_url,
+    get_view_permissions,
+    make_menu,
+)
 
 User = get_user_model()
 register = Library()
@@ -225,6 +231,16 @@ def jazzy_admin_url(value):
 
 
 @register.filter
+def has_fieldsets(value):
+    """
+    Do we have fieldsets
+    """
+    fieldsets = value.model_admin.fieldsets
+    has_fieldsets = fieldsets and len(fieldsets) > 1
+    return True if has_fieldsets else False
+
+
+@register.filter
 def debug(value):
     """
     Add in a breakpoint here and use filter in templates for debugging ;)
@@ -266,7 +282,11 @@ def header_class(header: dict, forloop: dict) -> str:
     Adds CSS classes to header HTML element depending on its attributes
     """
     classes = []
-    sorted, asc, desc = header.get("sorted"), header.get("ascending"), header.get("descending")
+    sorted, asc, desc = (
+        header.get("sorted"),
+        header.get("ascending"),
+        header.get("descending"),
+    )
 
     if forloop["counter0"] == 0:
         classes.append("djn-checkbox-select-all")
@@ -314,7 +334,7 @@ def action_message_to_list(action: LogEntry) -> list:
 
             elif "changed" in sub_message:
                 sub_message["changed"]["fields"] = get_text_list(
-                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]], gettext("and")
+                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]], gettext("and"),
                 )
                 if "name" in sub_message["changed"]:
                     sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])

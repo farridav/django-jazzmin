@@ -72,13 +72,23 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                {% if adminform.fieldsets|length == 1 and inline_admin_formsets|length == 0 or not jazzmin_settings.display_inlines_in_tabs %}
+                                {% if jazzmin_settings.changeview_format == 'single' or not adminform|has_fieldsets and inline_admin_formsets|length == 0 %}
                                     {% for fieldset in adminform %}
-                                        {% include "admin/includes/fieldset.html" with single=True %}
+                                        {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
                                     {% endfor %}
+
                                     {% for inline_admin_formset in inline_admin_formsets %}
-                                        {% include inline_admin_formset.opts.template %}
+                                        {% if adminform|has_fieldsets %}
+                                        <div class="card">
+                                            <div class="card-body">
+                                                {% include inline_admin_formset.opts.template %}
+                                            </div>
+                                        </div>
+                                        {% else %}
+                                            {% include inline_admin_formset.opts.template %}
+                                        {% endif %}
                                     {% endfor %}
+
                                 {% else %}
                                     <ul class="nav nav-tabs" role="tablist">
                                         {% for fieldset in adminform %}
@@ -99,13 +109,13 @@
                                         {% endfor %}
                                     </ul>
 
-                                    <div class="tab-content" id="custom-tabs-one-tabContent">
+                                    <div class="tab-content">
                                         {% for fieldset in adminform %}
                                             <div id="{{ fieldset.name|default:"General"|slugify }}"
                                                  class="tab-pane fade{% if forloop.first %} active show{% endif %}"
                                                  role="tabpanel"
                                                  aria-labelledby="{{ fieldset.name|default:"General"|slugify }}-tab">
-                                                {% include "admin/includes/fieldset.html" %}
+                                                {% include "admin/includes/fieldset.html" with card=True %}
                                             </div>
                                         {% endfor %}
                                         {% for inline_admin_formset in inline_admin_formsets %}

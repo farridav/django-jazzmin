@@ -1,45 +1,45 @@
 {% load jazzmin %}
-{% if not single %}
+{% if card %}
 <div class="card {{ fieldset.classes|cut:"collapse" }}">
     <div class="p-5{% if fieldset.name %} card-body{% endif %}">
 {% endif %}
 
-{% for line in fieldset %}
-<div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
-    <div class="row">
-        {% for field in line %}
-            <label class="{% if not line.fields|length_is:'1' and forloop.counter != 1 %}col-auto {% else %}col-sm-2 {% endif %}text-left">
-                {{ field.field.label }}
-                {% if field.field.field.required %}
-                <span class="text-red">* </span>
-                {% endif %}
-            </label>
-            <div class="{% if not line.fields|length_is:'1' %} col-auto  fieldBox {% else %} col-sm-10 {% endif %}
-                         {% if field.field.name %} field-{{ field.field.name }}{% endif %}
-                         {% if not field.is_readonly and field.errors %} errors{% endif %}
-                         {% if field.field.is_hidden %} hidden {% endif %}
-                         {% if field.is_checkcard %} checkcard-row{% endif %}">
-                {% if field.is_readonly %}
-                    <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
-                {% else %}
-                    {{ field.field }}
-                {% endif %}
-                <div class="help-block red">
-                    {% if not line.fields|length_is:'1' and not field.is_readonly %}{{ field.errors }}{% endif %}
+    {% for line in fieldset %}
+    <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
+        <div class="row">
+            {% for field in line %}
+                <label class="{% if not line.fields|length_is:'1' and forloop.counter != 1 %}col-auto {% else %}col-sm-2 {% endif %}text-left">
+                    {{ field.field.label }}
+                    {% if field.field.field.required %}
+                    <span class="text-red">* </span>
+                    {% endif %}
+                </label>
+                <div class="{% if not line.fields|length_is:'1' %} col-auto  fieldBox {% else %} col-sm-10 {% endif %}
+                             {% if field.field.name %} field-{{ field.field.name }}{% endif %}
+                             {% if not field.is_readonly and field.errors %} errors{% endif %}
+                             {% if field.field.is_hidden %} hidden {% endif %}
+                             {% if field.is_checkcard %} checkcard-row{% endif %}">
+                    {% if field.is_readonly %}
+                        <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
+                    {% else %}
+                        {{ field.field }}
+                    {% endif %}
+                    <div class="help-block red">
+                        {% if not line.fields|length_is:'1' and not field.is_readonly %}{{ field.errors }}{% endif %}
+                    </div>
+                    {% if field.field.help_text %}
+                        <div class="help-block">{{ field.field.help_text|safe }}</div>
+                    {% endif %}
+                    <div class="help-block text-red">
+                        {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
+                    </div>
                 </div>
-                {% if field.field.help_text %}
-                    <div class="help-block">{{ field.field.help_text|safe }}</div>
-                {% endif %}
-                <div class="help-block text-red">
-                    {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</div>
-{% endfor %}
+    {% endfor %}
 
-{% if not single %}
+{% if card %}
     </div>
 </div>
 {% endif %}

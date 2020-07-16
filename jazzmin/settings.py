@@ -60,6 +60,11 @@ DEFAULT_SETTINGS = {
     "custom_js": None,
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": False,
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options (single/tabs)
+    "changeview_format": "tabs",
 }
 
 #######################################
