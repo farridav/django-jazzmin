@@ -173,7 +173,7 @@ JAZZMIN_SETTINGS = {
     # Change view #
     ###############
     # Render out the change view as a single form, or in tabs, current options (single/tabs)
-    "changeview_format": "accordion",
+    "changeview_format": "carousel",
     "changeview_settings": ["open"],
 }
 

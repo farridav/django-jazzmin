@@ -130,6 +130,44 @@
 
                                     </div>
 
+                                {% elif jazzmin_settings.changeview_format == 'carousel' %}
+
+                                    <div id="carousel" class="carousel slide" data-ride="false" data-wrap="false" data-keyboard="true" data-interval="false">
+                                        <div class="carousel-inner">
+                                            {% for fieldset in adminform %}
+                                                <div class="carousel-item {% if forloop.first %}active{% endif %}" data-label="{{ fieldset.name|default:"General"|title }}">
+                                                    {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
+                                                </div>
+                                            {% endfor %}
+                                            {% for inline_admin_formset in inline_admin_formsets %}
+                                                <div class="carousel-item" data-label="{{ inline_admin_formset.opts.verbose_name_plural|title }}">
+                                                    {% include inline_admin_formset.opts.template %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <ol class="carousel-indicators">
+                                            {% for fieldset in adminform %}
+                                                <li data-target="#carousel" data-slide-to="{{ forloop.counter0 }}"></li>
+                                            {% endfor %}
+
+                                            {% for inline_admin_formset in inline_admin_formsets %}
+                                                <li data-target="#carousel" data-slide-to="{{ adminform.fieldsets|length|add:forloop.counter0 }}"></li>
+                                            {% endfor %}
+                                        </ol>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <a href="#carousel" role="button" data-slide="prev"><i class="fas fa-arrow-left"></i></a>
+                                            </div>
+                                            <div class="col-sm-8 text-center">
+                                                <p class="carousel-fieldset-label">
+                                                    {{ adminform.fieldsets.0.0|default:"General"|title }}
+                                                </p>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <a class="float-right" href="#carousel" role="button" data-slide="next"><i class="fas fa-arrow-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 {% else %}
                                     <ul class="nav nav-tabs" role="tablist">
                                         {% for fieldset in adminform %}

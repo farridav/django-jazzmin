@@ -67,6 +67,12 @@ $(document).ready(function () {
     // Style the inline fieldset button
     $('.inline-related fieldset.module .add-row a').addClass('btn btn-sm btn-default float-right');
 
+    $('#carousel').on('slide.bs.carousel', function (e) {
+        if (e.relatedTarget.dataset.hasOwnProperty("label")) {
+            $('#carousel .carousel-fieldset-label').text(e.relatedTarget.dataset.label);
+        }
+    })
+
     // When we use the menu, store its state in a cookie to preserve it
     handleMenu();
     // Ensure we preserve the tab the user was on using the url hash, even on page reload

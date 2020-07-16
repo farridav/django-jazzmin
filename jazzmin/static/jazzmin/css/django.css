@@ -645,3 +645,11 @@ body.no-sidebar .main-header {
 #accordion .accordion-header {
     cursor: pointer;
 }
+
+.carousel-indicators li {
+    background-color: #007bfe;
+}
+
+.carousel-indicators {
+    position: initial;
+}
