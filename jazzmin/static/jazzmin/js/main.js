@@ -21,9 +21,17 @@ function handleMenu() {
 }
 
 function handleTabs() {
-    var url = document.location.toString();
-    if (url.match('#')) {
-        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+    var errors = $('.change-form .tab-content .errorlist li');
+    var hash = document.location.hash;
+
+    // If we have errors, open that tab first
+    if (errors.length) {
+        var tabId = errors.eq(0).closest('.tab-pane').attr('id');
+        $('.nav-tabs a[href="#' + tabId + '"]').tab('show');
+
+    // If we have a tab hash, open that
+    } else if (hash) {
+        $('.nav-tabs a[href="' + hash + '"]').tab('show');
     }
 
     // Change hash for page-reload
@@ -67,7 +75,7 @@ $(document).ready(function () {
     // Style the inline fieldset button
     $('.inline-related fieldset.module .add-row a').addClass('btn btn-sm btn-default float-right');
 
-    $('#carousel').on('slide.bs.carousel', function (e) {
+    $('#jazzy-carousel').on('slide.bs.carousel', function (e) {
         if (e.relatedTarget.dataset.hasOwnProperty("label")) {
             $('#carousel .carousel-fieldset-label').text(e.relatedTarget.dataset.label);
         }
@@ -75,6 +83,7 @@ $(document).ready(function () {
 
     // When we use the menu, store its state in a cookie to preserve it
     handleMenu();
+
     // Ensure we preserve the tab the user was on using the url hash, even on page reload
     handleTabs();
 });
