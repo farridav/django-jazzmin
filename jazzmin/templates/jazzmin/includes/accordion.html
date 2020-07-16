@@ -1,7 +1,7 @@
-<div id="accordion">
+<div id="jazzy-accordion">
     {% for fieldset in adminform %}
         <div class="card card-default">
-            <div class="card-header accordion-header" data-toggle="collapse" data-parent="#accordion" data-target="#{{ fieldset.name|default:"General"|slugify }}-tab">
+            <div class="card-header accordion-header" data-toggle="collapse" data-parent="#jazzy-accordion" data-target="#{{ fieldset.name|default:"General"|slugify }}-tab">
                 <h4 class="card-title">
                     {{ fieldset.name|default:"General"|title }}
                 </h4>
@@ -16,7 +16,7 @@
 
     {% for inline_admin_formset in inline_admin_formsets %}
         <div class="card card-default">
-            <div class="card-header accordion-header" data-toggle="collapse" data-parent="#accordion" data-target="#{{ inline_admin_formset.opts.verbose_name|slugify }}-tab">
+            <div class="card-header accordion-header" data-toggle="collapse" data-parent="#jazzy-accordion" data-target="#{{ inline_admin_formset.opts.verbose_name|slugify }}-tab">
                 <h4 class="card-title">
                     {{ inline_admin_formset.opts.verbose_name_plural|title }}
                 </h4>

@@ -637,19 +637,19 @@ body.no-sidebar .main-header {
 }
 
 
-#accordion .accordion-header:hover {
+#jazzy-accordion .accordion-header:hover {
     background: #007bff;
     color: white;
 }
 
-#accordion .accordion-header {
+#jazzy-accordion .accordion-header {
     cursor: pointer;
 }
 
-.carousel-indicators li {
+#jazzy-carousel .carousel-indicators li {
     background-color: #007bfe;
 }
 
-.carousel-indicators {
+#jazzy-carousel .carousel-indicators {
     position: initial;
 }

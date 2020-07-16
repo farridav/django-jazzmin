@@ -18,7 +18,7 @@
 
 {% regroup views|dictsort:'namespace' by namespace as views_by_ns %}
 
-<div id="accordion">
+<div id="jazzy-accordion">
 
   {% for ns_views in views_by_ns %}
     <div class="card card-primary">
