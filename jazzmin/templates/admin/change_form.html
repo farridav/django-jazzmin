@@ -72,141 +72,19 @@
                                 </div>
                             </div>
                             <div class="card-body">
-
                                 {% if jazzmin_settings.changeview_format == 'single' or not adminform|has_fieldsets and inline_admin_formsets|length == 0 %}
-
-                                    {% for fieldset in adminform %}
-                                        {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
-                                    {% endfor %}
-
-                                    {% for inline_admin_formset in inline_admin_formsets %}
-                                        {% if adminform|has_fieldsets %}
-                                        <div class="card">
-                                            <div class="card-header">
-                                                {{ inline_admin_formset.opts.verbose_name_plural|title }}
-                                            </div>
-                                            <div class="card-body">
-                                                {% include inline_admin_formset.opts.template %}
-                                            </div>
-                                        </div>
-                                        {% else %}
-                                            <h6><strong>{{ inline_admin_formset.opts.verbose_name_plural|title }}</strong></h6>
-                                            {% include inline_admin_formset.opts.template %}
-                                        {% endif %}
-                                    {% endfor %}
-
-                                {% elif jazzmin_settings.changeview_format == 'accordion' %}
-
-                                    <div id="accordion">
-                                        {% for fieldset in adminform %}
-                                            <div class="card card-default">
-                                                <div class="card-header accordion-header" data-toggle="collapse" data-parent="#accordion" data-target="#{{ fieldset.name|default:"General"|slugify }}-tab">
-                                                    <h4 class="card-title">
-                                                        {{ fieldset.name|default:"General"|title }}
-                                                    </h4>
-                                                </div>
-                                                <div id="{{ fieldset.name|default:"General"|slugify }}-tab" class="panel-collapse in {% if "open" in  jazzmin_settings.changeview_settings %}show{% else %}collapse{% endif %}">
-                                                    <div class="card-body">
-                                                        {% include "admin/includes/fieldset.html" with card=False %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-
-                                        {% for inline_admin_formset in inline_admin_formsets %}
-                                            <div class="card card-default">
-                                                <div class="card-header accordion-header" data-toggle="collapse" data-parent="#accordion" data-target="#{{ inline_admin_formset.opts.verbose_name|slugify }}-tab">
-                                                    <h4 class="card-title">
-                                                        {{ inline_admin_formset.opts.verbose_name_plural|title }}
-                                                    </h4>
-                                                </div>
-                                                <div id="{{ inline_admin_formset.opts.verbose_name|slugify }}-tab" class="panel-collapse in {% if "open" in  jazzmin_settings.changeview_settings %}show{% else %}collapse{% endif %}">
-                                                    <div class="card-body">
-                                                        {% include inline_admin_formset.opts.template %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-
-                                    </div>
-
+                                    {% include "jazzmin/includes/single.html" %}
                                 {% elif jazzmin_settings.changeview_format == 'carousel' %}
-
-                                    <div id="carousel" class="carousel slide" data-ride="false" data-wrap="false" data-keyboard="true" data-interval="false">
-                                        <div class="row">
-                                            <div class="col-sm-2">
-                                                <a href="#carousel" role="button" data-slide="prev" class="btn btn-outline-primary"><i class="fas fa-arrow-left"></i></a>
-                                            </div>
-                                            <div class="col-sm-8 text-center">
-                                                <p class="carousel-fieldset-label">
-                                                    {{ adminform.fieldsets.0.0|default:"General"|title }}
-                                                </p>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <a href="#carousel" role="button" data-slide="next" class="btn btn-outline-primary float-right"><i class="fas fa-arrow-right"></i></a>
-                                            </div>
-                                        </div>
-                                        <ol class="carousel-indicators">
-                                            {% for fieldset in adminform %}
-                                                <li data-target="#carousel" data-slide-to="{{ forloop.counter0 }}"></li>
-                                            {% endfor %}
-
-                                            {% for inline_admin_formset in inline_admin_formsets %}
-                                                <li data-target="#carousel" data-slide-to="{{ adminform.fieldsets|length|add:forloop.counter0 }}"></li>
-                                            {% endfor %}
-                                        </ol>
-                                        <div class="carousel-inner">
-                                            {% for fieldset in adminform %}
-                                                <div class="carousel-item {% if forloop.first %}active{% endif %}" data-label="{{ fieldset.name|default:"General"|title }}">
-                                                    {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
-                                                </div>
-                                            {% endfor %}
-                                            {% for inline_admin_formset in inline_admin_formsets %}
-                                                <div class="carousel-item" data-label="{{ inline_admin_formset.opts.verbose_name_plural|title }}">
-                                                    {% include inline_admin_formset.opts.template %}
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
+                                    {% include "jazzmin/includes/carousel.html" %}
+                                {% elif jazzmin_settings.changeview_format == 'accordion' %}
+                                    {% include "jazzmin/includes/accordion.html" %}
+                                {% elif jazzmin_settings.changeview_format == 'horizontal_tabs' %}
+                                    {% include "jazzmin/includes/horizontal_tabs.html" %}
+                                {% elif jazzmin_settings.changeview_format == 'vertical_tabs' %}
+                                    {% include "jazzmin/includes/veritcal_tabs.html" %}
                                 {% else %}
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        {% for fieldset in adminform %}
-                                            <li class="nav-item">
-                                                <a id="{{ fieldset.name|default:"General"|slugify }}-tab" class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls="{{ fieldset.name|default:"General"|slugify }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:"General"|slugify }}">{{ fieldset.name|default:"General"|title }}</a>
-                                            </li>
-                                        {% endfor %}
-                                        {% for inline_admin_formset in inline_admin_formsets %}
-                                            <li class="nav-item">
-                                                <a id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab"
-                                                   class="nav-link" data-toggle="pill" role="tab"
-                                                   aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}"
-                                                   aria-selected="false"
-                                                   href="#{{ inline_admin_formset.opts.verbose_name_plural|slugify }}">
-                                                    {{ inline_admin_formset.opts.verbose_name_plural|title }}
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-
-                                    <div class="tab-content">
-                                        {% for fieldset in adminform %}
-                                            <div id="{{ fieldset.name|default:"General"|slugify }}"
-                                                 class="tab-pane fade{% if forloop.first %} active show{% endif %}"
-                                                 role="tabpanel"
-                                                 aria-labelledby="{{ fieldset.name|default:"General"|slugify }}-tab">
-                                                {% include "admin/includes/fieldset.html" with card=True %}
-                                            </div>
-                                        {% endfor %}
-                                        {% for inline_admin_formset in inline_admin_formsets %}
-                                            <div id="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}"
-                                                 class="tab-pane fade" role="tabpanel"
-                                                 aria-labelledby="{{ inline_admin_formset.opts.verbose_name_plural|slugify }}-tab">
-                                                {% include inline_admin_formset.opts.template %}
-                                            </div>
-                                        {% endfor %}
-                                    </div>
+                                    {% include "jazzmin/includes/horizontal_tabs.html" %}
                                 {% endif %}
-
                             </div>
                         </div>
                     </div>

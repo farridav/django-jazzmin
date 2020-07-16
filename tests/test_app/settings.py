@@ -89,7 +89,7 @@ if DEBUG and not TEST:
     os.environ.setdefault("WERKZEUG_DEBUG_PIN", "off")
     INSTALLED_APPS.extend(["debug_toolbar", "django_extensions"])
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
+    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: False}
 
 if not DEBUG and not TEST:
     MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
@@ -113,7 +113,6 @@ JAZZMIN_SETTINGS = {
     "search_model": "auth.User",
     # Field name on user model that contains avatar image
     "user_avatar": None,
-    "display_inlines_in_tabs": False,
     ############
     # Top Menu #
     ############
@@ -172,9 +171,13 @@ JAZZMIN_SETTINGS = {
     ###############
     # Change view #
     ###############
-    # Render out the change view as a single form, or in tabs, current options (single/tabs)
-    "changeview_format": "carousel",
-    "changeview_settings": ["open"],
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - accordion
+    # - carousel
+    "changeview_format": "horizontal_tabs",
 }
 
 if not DEBUG and not TEST:

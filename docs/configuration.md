@@ -95,7 +95,27 @@ JAZZMIN_SETTINGS = {
     },
     # Icons that are used when one is not manually specified
     'default_icon_parents': 'fa-chevron-circle-right',
-    'default_icon_children': 'fa-circle'
+    'default_icon_children': 'fa-circle',
+
+    #############
+    # UI Tweaks #
+    #############
+    # Relative paths to custom CSS/JS scripts (must be present in static files)
+    "custom_css": None,
+    "custom_js": None,
+    # Whether to show the UI customizer on the sidebar
+    "show_ui_builder": False,
+
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - accordion
+    # - carousel
+    "changeview_format": "horizontal_tabs",
 }
 ```
 
@@ -156,6 +176,45 @@ Example:
 
 #### note
 The app list you generate for the side menu, is shared with the dashboard, so any changes you make to it, will be reflected there
+
+## Change form display
+We have a few different styles for a model admins change form, currently, when applied, it affects all model admin change forms, 
+though there are plans to allow overiding on a per model basis, like with other settings.
+
+The default style is vertical tabs, *unless* you have no fieldsets and no inlines, in which case you will get the basic single form 
+rendered out, See [Django docs](https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets) 
+on how to add fieldsets to your admin classes.
+
+See below for the different styles:
+
+### Single page (`single`)
+Render the form out in one page, including inlines, plain and simple, closest to the original Django admin change form
+
+![Single](./img/changeform_single.png)
+
+### Horizontal tabs (`horizontal_tabs`)
+Puts all fieldsets and inlines into tab panes with horizontal nav tab controls, this is the default view for change 
+forms that have fieldsets. or an inline
+
+![Horizontal tabs](./img/changeform_horizontal_tabs.png)
+
+### Vertical tabs (`vertical_tabs`)
+Puts each fieldset or inline in a separate pane, controlled by vertical tabs on the left hand side.
+
+Future enhancement: Allow tabs to be on the left or right
+
+![Vertical tabs](./img/changeform_vertical_tabs.png)
+
+### Accordion (`accordion`)
+Puts all fieldsets and inlines in bootstrap collapsables in an accordion, allows many collapsables to be open at the 
+same time, the first accordion is opened
+
+![Accordion](./img/changeform_accordion.png)
+
+### Carousel (`carousel`)
+Puts fieldsets and inlines into a bootstrap carousel, and allows paginaton with previous/nect buttons, as well as an indicators.
+
+![Carousel](./img/changeform_carousel.png)
 
 ## UI Tweaks
 

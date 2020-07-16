@@ -51,7 +51,6 @@ DEFAULT_SETTINGS = {
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fa-chevron-circle-right",
     "default_icon_children": "fa-circle",
-    "display_inlines_in_tabs": True,
     #############
     # UI Tweaks #
     #############
@@ -63,8 +62,13 @@ DEFAULT_SETTINGS = {
     ###############
     # Change view #
     ###############
-    # Render out the change view as a single form, or in tabs, current options (single/tabs)
-    "changeview_format": "tabs",
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - accordion
+    # - carousel
+    "changeview_format": "horizontal_tabs",
 }
 
 #######################################

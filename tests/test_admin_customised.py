@@ -39,6 +39,7 @@ def test_detail(admin_client, test_data):
         "django/forms/widgets/text.html": 7,
         "django/forms/widgets/textarea.html": 1,
         "django/forms/widgets/time.html": 2,
+        "jazzmin/includes/horizontal_tabs.html": 1,
     }
 
     # The templates that were used
@@ -63,6 +64,7 @@ def test_detail(admin_client, test_data):
         "django/forms/widgets/text.html",
         "django/forms/widgets/textarea.html",
         "django/forms/widgets/time.html",
+        "jazzmin/includes/horizontal_tabs.html",
     }
 
     # TODO: post data and confirm we can change model instances
