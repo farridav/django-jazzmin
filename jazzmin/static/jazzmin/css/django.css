@@ -635,3 +635,13 @@ body.no-sidebar .main-header {
 .login-box, .register-box {
     width: auto;
 }
+
+
+#accordion .accordion-header:hover {
+    background: #007bff;
+    color: white;
+}
+
+#accordion .accordion-header {
+    cursor: pointer;
+}

@@ -80,14 +80,53 @@
                                     {% for inline_admin_formset in inline_admin_formsets %}
                                         {% if adminform|has_fieldsets %}
                                         <div class="card">
+                                            <div class="card-header">
+                                                {{ inline_admin_formset.opts.verbose_name_plural|title }}
+                                            </div>
                                             <div class="card-body">
                                                 {% include inline_admin_formset.opts.template %}
                                             </div>
                                         </div>
                                         {% else %}
+                                            <h6><strong>{{ inline_admin_formset.opts.verbose_name_plural|title }}</strong></h6>
                                             {% include inline_admin_formset.opts.template %}
                                         {% endif %}
                                     {% endfor %}
+
+                                {% elif jazzmin_settings.changeview_format == 'accordion' %}
+
+                                    <div id="accordion">
+                                        {% for fieldset in adminform %}
+                                            <div class="card card-default">
+                                                <div class="card-header accordion-header" data-toggle="collapse" data-parent="#accordion" data-target="#{{ fieldset.name|default:"General"|slugify }}-tab">
+                                                    <h4 class="card-title">
+                                                        {{ fieldset.name|title }}
+                                                    </h4>
+                                                </div>
+                                                <div id="{{ fieldset.name|default:"General"|slugify }}-tab" class="panel-collapse in collapse">
+                                                    <div class="card-body">
+                                                        {% include "admin/includes/fieldset.html" with card=False %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+
+                                        {% for inline_admin_formset in inline_admin_formsets %}
+                                            <div class="card card-default">
+                                                <div class="card-header accordion-header" data-toggle="collapse" data-parent="#accordion" data-target="#{{ inline_admin_formset.opts.verbose_name|slugify }}-tab">
+                                                    <h4 class="card-title">
+                                                        {{ inline_admin_formset.opts.verbose_name_plural|title }}
+                                                    </h4>
+                                                </div>
+                                                <div id="{{ inline_admin_formset.opts.verbose_name|slugify }}-tab" class="panel-collapse in collapse">
+                                                    <div class="card-body">
+                                                        {% include inline_admin_formset.opts.template %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+
+                                    </div>
 
                                 {% else %}
                                     <ul class="nav nav-tabs" role="tablist">
