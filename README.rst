@@ -35,6 +35,7 @@ Features
 - Customisable `side menu`_
 - Customisable `top menu`_
 - Customisable `user menu`_
+- 4 different Change form templates (horizontal tabs, vertical tabs, carousel, accordion)
 - Search bar for any given model admin
 - Customisable UI (via `Live UI changes`_, or `custom CSS/JS`_)
 - Responsive
@@ -46,38 +47,75 @@ Screenshots
 Dashboard
 ~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/dashboard.png
+   :target: https://django-jazzmin.readthedocs.io/img/dashboard.png
 
 List view
 ~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/list_view.png
+   :target: https://django-jazzmin.readthedocs.io/img/list_view.png
 
-Detail view
-~~~~~~~~~~~
+Change form templates
+~~~~~~~~~~~~~~~~~~~~~
+
+Collapsed side menu
+^^^^^^^^^^^^^^^^^^^
 .. image:: https://django-jazzmin.readthedocs.io/img/detail_view.png
+   :target: https://django-jazzmin.readthedocs.io/img/detail_view.png
+
+Expanded side menu
+^^^^^^^^^^^^^^^^^^
+.. image:: https://django-jazzmin.readthedocs.io/img/changeform_single.png
+   :target: https://django-jazzmin.readthedocs.io/img/changeform_single.png
+
+Horizontal tabs
+^^^^^^^^^^^^^^^
+.. image:: https://django-jazzmin.readthedocs.io/img/changeform_horizontal_tabs.png
+   :target: https://django-jazzmin.readthedocs.io/img/changeform_horizontal_tabs.png
+
+Vertical tabs
+^^^^^^^^^^^^^
+.. image:: https://django-jazzmin.readthedocs.io/img/changeform_vertical_tabs.png
+   :target: https://django-jazzmin.readthedocs.io/img/changeform_vertical_tabs.png
+
+Accordion
+^^^^^^^^^
+.. image:: https://django-jazzmin.readthedocs.io/img/changeform_accordion.png
+   :target: https://django-jazzmin.readthedocs.io/img/changeform_accordion.png
+
+Carousel
+^^^^^^^^
+.. image:: https://django-jazzmin.readthedocs.io/img/changeform_carousel.png
+   :target: https://django-jazzmin.readthedocs.io/img/changeform_carousel.png
 
 History page
 ~~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/history_page.png
+   :target: https://django-jazzmin.readthedocs.io/img/history_page.png
 
 Login view
 ~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/login.png
+   :target: https://django-jazzmin.readthedocs.io/img/login.png
 
 UI Customiser
 ~~~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/ui_customiser.png
+   :target: https://django-jazzmin.readthedocs.io/img/ui_customiser.png
 
 Mobile layout
 ~~~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/dashboard_mobile.png
+   :target: https://django-jazzmin.readthedocs.io/img/dashboard_mobile.png
 
 Tablet layout
 ~~~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/dashboard_tablet.png
+   :target: https://django-jazzmin.readthedocs.io/img/dashboard_tablet.png
 
 Admin Docs (if installed)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 .. image:: https://django-jazzmin.readthedocs.io/img/admin_docs.png
+   :target: https://django-jazzmin.readthedocs.io/img/admin_docs.png
 
 .. _adminlte: https://adminlte.io/
 .. _bootstrap: https://getbootstrap.com
