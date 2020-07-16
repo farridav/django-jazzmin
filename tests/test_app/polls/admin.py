@@ -14,7 +14,7 @@ class ChoiceInline(admin.TabularInline):
 
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
-    fieldsets = (("general", {"fields": ("owner",)}), ("other", {"fields": ("text", "pub_date", "active")}))
+    # fieldsets = (("general", {"fields": ("owner",)}), ("other", {"fields": ("text", "pub_date", "active")}))
     raw_id_fields = ("owner",)
     list_display = ("owner", "text", "pub_date", "active")
     list_display_links = ()

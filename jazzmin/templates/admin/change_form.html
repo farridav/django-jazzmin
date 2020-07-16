@@ -72,7 +72,9 @@
                                 </div>
                             </div>
                             <div class="card-body">
+
                                 {% if jazzmin_settings.changeview_format == 'single' or not adminform|has_fieldsets and inline_admin_formsets|length == 0 %}
+
                                     {% for fieldset in adminform %}
                                         {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
                                     {% endfor %}
@@ -100,10 +102,10 @@
                                             <div class="card card-default">
                                                 <div class="card-header accordion-header" data-toggle="collapse" data-parent="#accordion" data-target="#{{ fieldset.name|default:"General"|slugify }}-tab">
                                                     <h4 class="card-title">
-                                                        {{ fieldset.name|title }}
+                                                        {{ fieldset.name|default:"General"|title }}
                                                     </h4>
                                                 </div>
-                                                <div id="{{ fieldset.name|default:"General"|slugify }}-tab" class="panel-collapse in collapse">
+                                                <div id="{{ fieldset.name|default:"General"|slugify }}-tab" class="panel-collapse in {% if "open" in  jazzmin_settings.changeview_settings %}show{% else %}collapse{% endif %}">
                                                     <div class="card-body">
                                                         {% include "admin/includes/fieldset.html" with card=False %}
                                                     </div>
@@ -118,7 +120,7 @@
                                                         {{ inline_admin_formset.opts.verbose_name_plural|title }}
                                                     </h4>
                                                 </div>
-                                                <div id="{{ inline_admin_formset.opts.verbose_name|slugify }}-tab" class="panel-collapse in collapse">
+                                                <div id="{{ inline_admin_formset.opts.verbose_name|slugify }}-tab" class="panel-collapse in {% if "open" in  jazzmin_settings.changeview_settings %}show{% else %}collapse{% endif %}">
                                                     <div class="card-body">
                                                         {% include inline_admin_formset.opts.template %}
                                                     </div>
