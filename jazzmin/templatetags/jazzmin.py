@@ -20,7 +20,7 @@ from django.utils.text import get_text_list
 from django.utils.translation import gettext
 
 from .. import version
-from ..settings import get_settings, get_ui_tweaks
+from ..settings import get_settings, get_ui_tweaks, CHANGEFORM_TEMPLATES
 from ..utils import (
     order_with_respect_to,
     get_filter_id,
@@ -264,17 +264,10 @@ def get_changeform_template(adminform: AdminForm) -> str:
     the default template, or the overriden one for this modeladmin
     """
     options = get_settings()
-    template_map = {
-        "single": "jazzmin/includes/single.html",
-        "carousel": "jazzmin/includes/carousel.html",
-        "accordion": "jazzmin/includes/accordion.html",
-        "horizontal_tabs": "jazzmin/includes/horizontal_tabs.html",
-        "vertical_tabs": "jazzmin/includes/vertical_tabs.html",
-    }
     fieldsets = adminform.model_admin.fieldsets
     has_fieldsets = fieldsets and len(fieldsets) > 1
     inlines = adminform.model_admin.inlines
-    has_inlines = inlines and len(inlines) > 1
+    has_inlines = inlines and len(inlines) > 0
     model = adminform.model_admin.model
     model_name = "{}.{}".format(model._meta.app_label, model._meta.model_name).lower()
 
@@ -283,12 +276,12 @@ def get_changeform_template(adminform: AdminForm) -> str:
         format = options["changeform_format_overrides"][model_name]
 
     if not has_fieldsets and not has_inlines:
-        return template_map.get("single")
+        return CHANGEFORM_TEMPLATES.get("single")
 
-    if not format or format not in template_map.keys():
-        return template_map.get("horizontal_tabs")
+    if not format or format not in CHANGEFORM_TEMPLATES.keys():
+        return CHANGEFORM_TEMPLATES.get("horizontal_tabs")
 
-    return template_map.get(format)
+    return CHANGEFORM_TEMPLATES.get(format)
 
 
 @register.simple_tag

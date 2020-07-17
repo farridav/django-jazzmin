@@ -111,6 +111,14 @@ DEFAULT_UI_TWEAKS = {
     "sidebar_nav_flat_style": False,
 }
 
+CHANGEFORM_TEMPLATES = {
+    "single": "jazzmin/includes/single.html",
+    "carousel": "jazzmin/includes/carousel.html",
+    "accordion": "jazzmin/includes/accordion.html",
+    "horizontal_tabs": "jazzmin/includes/horizontal_tabs.html",
+    "vertical_tabs": "jazzmin/includes/vertical_tabs.html",
+}
+
 
 def get_settings():
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
