@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 
-from tests.utils import parse_sidemenu, user_with_permissions, parse_topmenu, parse_usermenu
+from .utils import parse_sidemenu, user_with_permissions, parse_topmenu, parse_usermenu, override_jazzmin_settings
 
 
 @pytest.mark.django_db
@@ -28,7 +28,7 @@ def test_side_menu(admin_client, settings):
         "Authentication and Authorization": ["/admin/auth/group/", "/admin/auth/user/"],
     }
 
-    settings.JAZZMIN_SETTINGS["hide_models"] = ["auth.user"]
+    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(hide_models=["auth.user"])
     response = admin_client.get(url)
 
     assert parse_sidemenu(response) == {
@@ -57,11 +57,11 @@ def test_permissions_on_custom_links(client, settings):
 
     url = reverse("admin:index")
 
-    settings.JAZZMIN_SETTINGS["custom_links"] = {
+    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(custom_links={
         "polls": [
             {"name": "Make Messages", "url": "make_messages", "icon": "fa-comments", "permissions": ["polls.view_poll"]}
         ]
-    }
+    })
 
     client.force_login(user)
     response = client.get(url)
@@ -79,12 +79,12 @@ def test_top_menu(admin_client, settings):
     """
     url = reverse("admin:index")
 
-    settings.JAZZMIN_SETTINGS["topmenu_links"] = [
+    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(topmenu_links=[
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
         {"model": "auth.User"},
         {"app": "polls"},
-    ]
+    ])
 
     response = admin_client.get(url)
 
@@ -114,11 +114,11 @@ def test_user_menu(admin_user, client, settings):
     """
     url = reverse("admin:index")
 
-    settings.JAZZMIN_SETTINGS["usermenu_links"] = [
+    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(usermenu_links=[
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
         {"model": "auth.User"},
-    ]
+    ])
 
     client.force_login(admin_user)
     response = client.get(url)

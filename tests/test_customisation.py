@@ -8,6 +8,7 @@ from django.urls import reverse
 from jazzmin.settings import CHANGEFORM_TEMPLATES
 from tests.test_app.polls.admin import PollAdmin
 from tests.test_app.polls.models import Poll
+from tests.utils import override_jazzmin_settings
 
 
 @pytest.mark.django_db
@@ -35,7 +36,8 @@ def test_changeform_templates(admin_client, settings, config_value, template):
 
     url = reverse("admin:polls_poll_change", args=(poll.pk,))
 
-    settings.JAZZMIN_SETTINGS["changeform_format"] = config_value
+    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(changeform_format=config_value)
+
     response = admin_client.get(url)
     templates_used = [t.name for t in response.templates]
 
@@ -53,8 +55,9 @@ def test_changeform_template_override(admin_client, settings):
     polls_url = reverse("admin:polls_poll_change", args=(poll.pk,))
     users_url = reverse("admin:auth_user_change", args=(user.pk,))
 
-    settings.JAZZMIN_SETTINGS["changeform_format"] = "vertical_tabs"
-    settings.JAZZMIN_SETTINGS["changeform_format_overrides"] = {"polls.poll": "carousel"}
+    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
+        changeform_format="vertical_tabs", changeform_format_overrides={"polls.poll": "carousel"}
+    )
 
     response = admin_client.get(polls_url)
     templates_used = [t.name for t in response.templates]
