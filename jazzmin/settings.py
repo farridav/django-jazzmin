@@ -162,6 +162,13 @@ def get_ui_tweaks() -> Dict:
     raw_tweaks.update(getattr(settings, "JAZZMIN_UI_TWEAKS", {}))
     tweaks = {x: y for x, y in raw_tweaks.items() if y not in (None, "", False)}
 
+    # These options dont work well together
+    if tweaks.get("layout_boxed"):
+        if "navbar_fixed" in tweaks:
+            del tweaks["navbar_fixed"]
+        if "footer_fixed" in tweaks:
+            del tweaks["footer_fixed"]
+
     bool_map = {
         "navbar_small_text": "text-sm",
         "footer_small_text": "text-sm",
@@ -174,6 +181,12 @@ def get_ui_tweaks() -> Dict:
         "sidebar_nav_compact_style": "nav-compact",
         "sidebar_nav_legacy_style": "nav-legacy",
         "sidebar_nav_flat_style": "nav-flat",
+        "sidebar_colapsed": "sidebar-collapse",
+        "layout_boxed": "layout-boxed",
+        "sidebar_fixed": "layout-navbar-fixed",
+        "navbar_fixed": "layout-navbar-fixed",
+        "footer_fixed": "layout-footer-fixed",
+        "actions_sticky_top": "sticky-top",
     }
 
     for key, value in bool_map.items():
@@ -185,9 +198,18 @@ def get_ui_tweaks() -> Dict:
 
     return {
         "raw": raw_tweaks,
-        "body_classes": classes("accent", "body_small_text"),
+        "body_classes": classes(
+            "accent",
+            "body_small_text",
+            "navbar_fixed",
+            "footer_fixed",
+            "sidebar_colapsed",
+            "sidebar_fixed",
+            "layout_boxed",
+        ),
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_nav_border", "navbar_small_text"),
+        "actions_classes": classes("actions_sticky_top"),
         "sidebar_list_classes": classes(
             "sidebar_nav_small_text",
             "sidebar_nav_flat_style",

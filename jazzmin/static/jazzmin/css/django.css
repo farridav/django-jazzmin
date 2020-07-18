@@ -641,7 +641,6 @@ body.no-sidebar .main-header {
     width: auto;
 }
 
-
 #jazzy-collapsible .collapsible-header:hover {
     background: #007bff;
     color: white;
@@ -696,4 +695,12 @@ a.inline-deletelink {
     border-radius: 7px;
     color: white !important;
     border: 1px solid white;
+}
+
+#jazzy-actions.sticky-top {
+    top: 10px;
+}
+
+body.layout-navbar-fixed #jazzy-actions.sticky-top {
+    top: 67px;
 }
