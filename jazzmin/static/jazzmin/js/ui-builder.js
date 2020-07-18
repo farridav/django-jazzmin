@@ -58,11 +58,6 @@
             window.ui_changes['sidebar_fixed'] = this.checked;
         });
 
-        $('#sidebar-collapsed').on('click', function () {
-            $body.toggleClass('sidebar-collapse');
-            window.ui_changes['sidebar_colapsed'] = this.checked;
-        });
-
         $('#navbar-fixed').on('click', function () {
             $body.toggleClass('layout-navbar-fixed');
             if (this.checked) {$('#layout-boxed:checked').click();}
