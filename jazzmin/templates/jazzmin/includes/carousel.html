@@ -25,12 +25,12 @@
     </ol>
     <div class="carousel-inner">
         {% for fieldset in adminform %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-label="{{ fieldset.name|default:"General"|title }}">
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-carouselId="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:"General"|title }}" data-target="#{{ fieldset.name|default:"General"|slugify }}-tab">
                 {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
             </div>
         {% endfor %}
         {% for inline_admin_formset in inline_admin_formsets %}
-            <div class="carousel-item" data-label="{{ inline_admin_formset.opts.verbose_name_plural|title }}">
+            <div class="carousel-item" data-label="{{ inline_admin_formset.opts.verbose_name_plural|title }}" data-target="#{{ inline_admin_formset.opts.verbose_name|slugify }}-tab">
                 {% include inline_admin_formset.opts.template %}
             </div>
         {% endfor %}
