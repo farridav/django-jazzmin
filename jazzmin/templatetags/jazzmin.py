@@ -313,6 +313,7 @@ def sidebar_status(request: HttpRequest) -> str:
     """
     Check if our sidebar is open or closed
     """
+
     if request.COOKIES.get("jazzy_menu", "") == "closed":
         return "sidebar-collapse"
     return ""

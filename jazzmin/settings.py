@@ -90,6 +90,7 @@ DEFAULT_SETTINGS = {
 # Use the UI builder to generate this #
 #######################################
 
+
 DEFAULT_UI_TWEAKS = {
     # Small text on the top navbar
     "navbar_small_text": False,
@@ -107,6 +108,14 @@ DEFAULT_UI_TWEAKS = {
     "navbar": "navbar-white navbar-light",
     # topmenu border
     "no_navbar_border": False,
+    # Make the top navbar sticky, keeping it in view as you scroll
+    "navbar_fixed": False,
+    # Whether to constrain the page to a box (leaving big margins at the side)
+    "layout_boxed": False,
+    # Make the footer sticky, keeping it in view all the time
+    "footer_fixed": False,
+    # Make the sidebar sticky, keeping it in view as you scroll
+    "sidebar_fixed": False,
     # sidemenu colour
     "sidebar": "sidebar-dark-primary",
     # sidemenu small text
@@ -209,6 +218,13 @@ def get_ui_tweaks() -> Dict:
     raw_tweaks.update(getattr(settings, "JAZZMIN_UI_TWEAKS", {}))
     tweaks = {x: y for x, y in raw_tweaks.items() if y not in (None, "", False)}
 
+    # These options dont work well together
+    if tweaks.get("layout_boxed"):
+        if "navbar_fixed" in tweaks:
+            del tweaks["navbar_fixed"]
+        if "footer_fixed" in tweaks:
+            del tweaks["footer_fixed"]
+
     bool_map = {
         "navbar_small_text": "text-sm",
         "footer_small_text": "text-sm",
@@ -221,6 +237,11 @@ def get_ui_tweaks() -> Dict:
         "sidebar_nav_compact_style": "nav-compact",
         "sidebar_nav_legacy_style": "nav-legacy",
         "sidebar_nav_flat_style": "nav-flat",
+        "layout_boxed": "layout-boxed",
+        "sidebar_fixed": "layout-fixed",
+        "navbar_fixed": "layout-navbar-fixed",
+        "footer_fixed": "layout-footer-fixed",
+        "actions_sticky_top": "sticky-top",
     }
 
     for key, value in bool_map.items():
@@ -238,10 +259,19 @@ def get_ui_tweaks() -> Dict:
 
     return {
         "raw": raw_tweaks,
+<<<<<<< HEAD
         "theme": static(THEMES[theme]),
         "body_classes": classes("accent", "body_small_text") + " theme-{}".format(theme),
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
+=======
+        "body_classes": classes(
+            "accent", "body_small_text", "navbar_fixed", "footer_fixed", "sidebar_fixed", "layout_boxed",
+        ),
+        "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
+        "navbar_classes": classes("navbar", "no_nav_border", "navbar_small_text"),
+        "actions_classes": classes("actions_sticky_top"),
+>>>>>>> 76d393c... Adds in new UI conifigurations via customiser
         "sidebar_list_classes": classes(
             "sidebar_nav_small_text",
             "sidebar_nav_flat_style",

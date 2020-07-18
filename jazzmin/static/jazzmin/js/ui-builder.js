@@ -7,6 +7,7 @@
     const $sidebar = $('aside#jazzy-sidebar');
     const $navbar = $('nav#jazzy-navbar');
     const $logo = $('#jazzy-logo');
+    const $actions = $('#jazzy-actions');
 
     window.ui_changes = window.ui_changes || {};
 
@@ -50,6 +51,39 @@
         $('#main-sidebar-disable-hover-focus-auto-expand').on('click', function () {
             $sidebar.toggleClass('sidebar-no-expand');
             window.ui_changes['sidebar_disable_expand'] = this.checked;
+        });
+
+        $('#sidebar-fixed').on('click', function () {
+            $body.toggleClass('layout-fixed');
+            window.ui_changes['sidebar_fixed'] = this.checked;
+        });
+
+        $('#navbar-fixed').on('click', function () {
+            $body.toggleClass('layout-navbar-fixed');
+            if (this.checked) {$('#layout-boxed:checked').click();}
+            window.ui_changes['navbar_fixed'] = this.checked;
+        });
+
+        $('#footer-fixed').on('click', function () {
+            $body.toggleClass('layout-footer-fixed');
+            if (this.checked) {$('#layout-boxed:checked').click();}
+            window.ui_changes['footer_fixed'] = this.checked;
+        });
+
+        $('#layout-boxed').on('click', function () {
+            $body.toggleClass('layout-boxed');
+
+            // We cannot combine these options with layout boxed
+            if (this.checked) {
+                $('#navbar-fixed:checked').click();
+                $('#footer-fixed:checked').click();
+            }
+            window.ui_changes['layout_boxed'] = this.checked;
+        });
+
+        $('#actions-fixed').on('click', function () {
+            $actions.toggleClass('sticky-top');
+            window.ui_changes['actions_sticky_top'] = this.checked;
         });
 
         $('#no-navbar-border').on('click', function () {

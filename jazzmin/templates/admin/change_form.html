@@ -92,21 +92,23 @@
                 {% block after_related_objects %}{% endblock %}
 
                 <div class="col-12 col-lg-3">
-                    {% block submit_buttons_bottom %}
-                        {% submit_row %}
-                        {% block object-tools %}
-                            {% if change %}
-                                {% if not is_popup %}
-                                    <div class="object-tools">
-                                        {% block object-tools-items %}
-                                            {% change_form_object_tools %}
-                                            {% block extra_actions %}{% endblock %}
-                                        {% endblock %}
-                                    </div>
+                    <div id="jazzy-actions" class="{{ jazzmin_ui.actions_classes }}">
+                        {% block submit_buttons_bottom %}
+                            {% submit_row %}
+                            {% block object-tools %}
+                                {% if change %}
+                                    {% if not is_popup %}
+                                        <div class="object-tools">
+                                            {% block object-tools-items %}
+                                                {% change_form_object_tools %}
+                                                {% block extra_actions %}{% endblock %}
+                                            {% endblock %}
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
+                            {% endblock %}
                         {% endblock %}
-                    {% endblock %}
+                    </div>
                 </div>
 
                 {% block admin_change_form_document_ready %}
