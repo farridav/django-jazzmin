@@ -637,12 +637,12 @@ body.no-sidebar .main-header {
 }
 
 
-#jazzy-accordion .accordion-header:hover {
+#jazzy-collapsible .collapsible-header:hover {
     background: #007bff;
     color: white;
 }
 
-#jazzy-accordion .accordion-header {
+#jazzy-collapsible .collapsible-header {
     cursor: pointer;
 }
 

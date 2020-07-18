@@ -35,7 +35,7 @@ Features
 - Customisable `side menu`_
 - Customisable `top menu`_
 - Customisable `user menu`_
-- 4 different Change form templates (horizontal tabs, vertical tabs, carousel, accordion)
+- 4 different Change form templates (horizontal tabs, vertical tabs, carousel, collapsible)
 - Search bar for any given model admin
 - Customisable UI (via `Live UI changes`_, or `custom CSS/JS`_)
 - Responsive
@@ -77,10 +77,10 @@ Vertical tabs
 .. image:: https://django-jazzmin.readthedocs.io/img/changeform_vertical_tabs.png
    :target: https://django-jazzmin.readthedocs.io/img/changeform_vertical_tabs.png
 
-Accordion
+Collapsible
 ^^^^^^^^^
-.. image:: https://django-jazzmin.readthedocs.io/img/changeform_accordion.png
-   :target: https://django-jazzmin.readthedocs.io/img/changeform_accordion.png
+.. image:: https://django-jazzmin.readthedocs.io/img/changeform_collapsible.png
+   :target: https://django-jazzmin.readthedocs.io/img/changeform_collapsible.png
 
 Carousel
 ^^^^^^^^

@@ -175,11 +175,11 @@ JAZZMIN_SETTINGS = {
     # - single
     # - horizontal_tabs (default)
     # - vertical_tabs
-    # - accordion
+    # - collapsible
     # - carousel
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"auth.user": "accordion", "auth.group": "vertical_tabs",},
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
 }
 
 if not DEBUG and not TEST:

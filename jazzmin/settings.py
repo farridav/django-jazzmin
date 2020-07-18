@@ -66,7 +66,7 @@ DEFAULT_SETTINGS = {
     # - single
     # - horizontal_tabs (default)
     # - vertical_tabs
-    # - accordion
+    # - collapsible
     # - carousel
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
@@ -114,7 +114,7 @@ DEFAULT_UI_TWEAKS = {
 CHANGEFORM_TEMPLATES = {
     "single": "jazzmin/includes/single.html",
     "carousel": "jazzmin/includes/carousel.html",
-    "accordion": "jazzmin/includes/accordion.html",
+    "collapsible": "jazzmin/includes/collapsible.html",
     "horizontal_tabs": "jazzmin/includes/horizontal_tabs.html",
     "vertical_tabs": "jazzmin/includes/vertical_tabs.html",
 }

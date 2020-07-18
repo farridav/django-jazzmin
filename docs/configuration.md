@@ -113,11 +113,11 @@ JAZZMIN_SETTINGS = {
     # - single
     # - horizontal_tabs (default)
     # - vertical_tabs
-    # - accordion
+    # - collapsible
     # - carousel
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"auth.user": "accordion", "auth.group": "vertical_tabs",},
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
 }
 ```
 
@@ -186,9 +186,9 @@ a dictionary mapping of model names to changeform templates e.g:
 
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"auth.user": "accordion", "auth.group": "vertical_tabs",},
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
 
-Will use `horizontal_tabs` throughout the admin, but use the `accordion` template on the user model admin, and 
+Will use `horizontal_tabs` throughout the admin, but use the `collapsible` template on the user model admin, and 
 `vertical_tabs` on the group model admin.
 
 The default style is vertical tabs, *unless* you have no fieldsets and no inlines, in which case you will get the basic single form 
@@ -215,11 +215,11 @@ Future enhancement: Allow tabs to be on the left or right
 
 ![Vertical tabs](./img/changeform_vertical_tabs.png)
 
-### Accordion (`accordion`)
-Puts all fieldsets and inlines in bootstrap collapsables in an accordion, allows many collapsables to be open at the 
-same time, the first accordion is opened
+### Collapsible (`collapsible`)
+Puts all fieldsets and inlines in bootstrap collapsables in an collapsible, allows many collapsables to be open at the 
+same time, the first collapsible is opened
 
-![Accordion](./img/changeform_accordion.png)
+![Collapsible](./img/changeform_collapsible.png)
 
 ### Carousel (`carousel`)
 Puts fieldsets and inlines into a bootstrap carousel, and allows paginaton with previous/nect buttons, as well as an indicators.

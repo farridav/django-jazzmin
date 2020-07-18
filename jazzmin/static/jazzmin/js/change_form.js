@@ -70,14 +70,18 @@ function handleCollapsible($collapsible) {
 
     // Change hash for page-reload
     $collapsible.on('shown.bs.collapse', function (e) {
-        console.log('Update page hash here');
-    })
+        if (history.pushState) {
+            history.pushState(null, null, '#' + e.target.id);
+        } else {
+            location.hash = '#' + e.target.id;
+        }
+    });
 }
 
 $(document).ready(function () {
     const $carousel = $('#content-main form #jazzy-carousel');
     const $tabs = $('#content-main form #jazzy-tabs');
-    const $collapsible = $('#content-main form #jazzy-accordion');
+    const $collapsible = $('#content-main form #jazzy-collapsible');
 
     // Ensure all raw_id_fields have the search icon in them
     $('.related-lookup').append('<i class="fa fa-search"></i>')

@@ -31,7 +31,7 @@ Live demo https://django-jazzmin.herokuapp.com/admin
 - Customisable side menu
 - Customisable top menu
 - Customisable user menu
-- 4 different Change form templates (horizontal tabs, vertical tabs, carousel, accordion)
+- 4 different Change form templates (horizontal tabs, vertical tabs, carousel, collapsible)
 - Customisable UI (via Live UI changes, or custom CSS/JS)
 - Based on the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 
@@ -57,8 +57,8 @@ Live demo https://django-jazzmin.herokuapp.com/admin
 ### Vertical tabs
 ![Vertical tabs](docs/img/changeform_vertical_tabs.png)
 
-### Accordion
-![Accordion](docs/img/changeform_accordion.png)
+### Collapsible
+![Collapsible](docs/img/changeform_collapsible.png)
 
 ### Carousel
 ![Carousel](docs/img/changeform_carousel.png)
