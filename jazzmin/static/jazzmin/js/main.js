@@ -37,10 +37,26 @@ function handleTabs() {
     })
 }
 
-$(document).ready(function () {
+function setActiveLinks() {
+    /*
+     Set the currently active menu item based on the current url, or failing that, find the parent
+     item from the breadcrumbs
+     */
+    const url = window.location.pathname;
+    const $breadcrumb = $('.breadcrumb a').last();
+    const $link = $('a[href="' + url + '"]');
+    const $parent_link = $('a[href="' + $breadcrumb.attr('href') + '"]');
 
-    // Set the currently active menu item based on the url
-    $('a[href="' + window.location.pathname + '"]').addClass('active');
+    if ($link.length) {
+        $link.addClass('active');
+    } else if ($parent_link.length){
+        $parent_link.addClass('active');
+    }
+}
+
+$(document).ready(function () {
+    // Set active status on links
+    setActiveLinks()
 
     // Ensure all raw_id_fields have the search icon in them
     $('.related-lookup').append('<i class="fa fa-search"></i>')
