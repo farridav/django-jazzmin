@@ -89,7 +89,7 @@ if DEBUG and not TEST:
     os.environ.setdefault("WERKZEUG_DEBUG_PIN", "off")
     INSTALLED_APPS.extend(["debug_toolbar", "django_extensions"])
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
+    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: False}
 
 if not DEBUG and not TEST:
     MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
@@ -168,6 +168,18 @@ JAZZMIN_SETTINGS = {
     "custom_js": None,
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": False,
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - collapsible
+    # - carousel
+    "changeform_format": "horizontal_tabs",
+    # override change forms on a per modeladmin basis
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
 }
 
 if not DEBUG and not TEST:

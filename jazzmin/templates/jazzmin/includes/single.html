@@ -1,0 +1,21 @@
+{% load jazzmin %}
+
+{% for fieldset in adminform %}
+    {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
+{% endfor %}
+
+{% for inline_admin_formset in inline_admin_formsets %}
+    {% if adminform|has_fieldsets %}
+        <div class="card">
+            <div class="card-header">
+                {{ inline_admin_formset.opts.verbose_name_plural|title }}
+            </div>
+            <div class="card-body">
+                {% include inline_admin_formset.opts.template %}
+            </div>
+        </div>
+    {% else %}
+        <h6><strong>{{ inline_admin_formset.opts.verbose_name_plural|title }}</strong></h6>
+        {% include inline_admin_formset.opts.template %}
+    {% endif %}
+{% endfor %}

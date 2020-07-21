@@ -20,22 +20,6 @@ function handleMenu() {
     });
 }
 
-function handleTabs() {
-    var url = document.location.toString();
-    if (url.match('#')) {
-        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
-    }
-
-    // Change hash for page-reload
-    $('.nav-tabs a').on('shown.bs.tab', function (e) {
-        e.preventDefault();
-        if (history.pushState) {
-            history.pushState(null, null, e.target.hash);
-        } else {
-            location.hash = e.target.hash;
-        }
-    })
-}
 
 function setActiveLinks() {
     /*
@@ -58,14 +42,6 @@ $(document).ready(function () {
     // Set active status on links
     setActiveLinks()
 
-    // Ensure all raw_id_fields have the search icon in them
-    $('.related-lookup').append('<i class="fa fa-search"></i>')
-
-    // Allow for styling of selects
-    $('.actions select').addClass('form-control');
-
     // When we use the menu, store its state in a cookie to preserve it
     handleMenu();
-    // Ensure we preserve the tab the user was on using the url hash, even on page reload
-    handleTabs();
 });

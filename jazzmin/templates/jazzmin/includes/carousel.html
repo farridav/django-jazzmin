@@ -1,0 +1,38 @@
+{% load jazzmin %}
+
+<div id="jazzy-carousel" class="carousel slide" data-ride="false" data-wrap="false" data-keyboard="true" data-interval="false">
+    <div class="row">
+        <div class="col-sm-2">
+            <a href="#jazzy-carousel" role="button" data-slide="prev" class="btn btn-outline-primary"><i class="fas fa-arrow-left"></i></a>
+        </div>
+        <div class="col-sm-8 text-center">
+            <p class="carousel-fieldset-label">
+                {{ adminform.fieldsets.0.0|default:"General"|title }}
+            </p>
+        </div>
+        <div class="col-sm-2">
+            <a href="#jazzy-carousel" role="button" data-slide="next" class="btn btn-outline-primary float-right"><i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+    <ol class="carousel-indicators">
+        {% for fieldset in adminform %}
+            <li data-target="#jazzy-carousel" data-slide-to="{{ forloop.counter0 }}"></li>
+        {% endfor %}
+
+        {% for inline_admin_formset in inline_admin_formsets %}
+            <li data-target="#jazzy-carousel" data-slide-to="{{ adminform.fieldsets|length|add:forloop.counter0 }}"></li>
+        {% endfor %}
+    </ol>
+    <div class="carousel-inner">
+        {% for fieldset in adminform %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-carouselId="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:"General"|title }}" data-target="#{{ fieldset.name|default:"General"|slugify }}-tab">
+                {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
+            </div>
+        {% endfor %}
+        {% for inline_admin_formset in inline_admin_formsets %}
+            <div class="carousel-item" data-label="{{ inline_admin_formset.opts.verbose_name_plural|title }}" data-target="#{{ inline_admin_formset.opts.verbose_name|slugify }}-tab">
+                {% include inline_admin_formset.opts.template %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

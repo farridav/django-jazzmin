@@ -59,6 +59,18 @@ DEFAULT_SETTINGS = {
     "custom_js": None,
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": False,
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - collapsible
+    # - carousel
+    "changeform_format": "horizontal_tabs",
+    # override change forms on a per modeladmin basis
+    "changeform_format_overrides": {},
 }
 
 #######################################
@@ -99,6 +111,14 @@ DEFAULT_UI_TWEAKS = {
     "sidebar_nav_flat_style": False,
 }
 
+CHANGEFORM_TEMPLATES = {
+    "single": "jazzmin/includes/single.html",
+    "carousel": "jazzmin/includes/carousel.html",
+    "collapsible": "jazzmin/includes/collapsible.html",
+    "horizontal_tabs": "jazzmin/includes/horizontal_tabs.html",
+    "vertical_tabs": "jazzmin/includes/vertical_tabs.html",
+}
+
 
 def get_settings():
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
@@ -125,6 +145,11 @@ def get_settings():
 
     # Ensure icon model names and classes are lower case
     jazzmin_settings["icons"] = {x.lower(): y.lower() for x, y in jazzmin_settings.get("icons", {}).items()}
+
+    # ensure all model names are lower cased
+    jazzmin_settings["changeform_format_overrides"] = {
+        x.lower(): y.lower() for x, y in jazzmin_settings.get("changeform_format_overrides", {}).items()
+    }
 
     return jazzmin_settings
 

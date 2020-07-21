@@ -1,0 +1,32 @@
+<div id="jazzy-collapsible">
+    {% for fieldset in adminform %}
+        <div class="card card-default">
+            <div class="card-header collapsible-header" data-toggle="collapse" data-parent="#jazzy-collapsible" data-target="#{{ fieldset.name|default:"General"|slugify }}-tab">
+                <h4 class="card-title">
+                    {{ fieldset.name|default:"General"|title }}
+                </h4>
+            </div>
+            <div id="{{ fieldset.name|default:"General"|slugify }}-tab" class="panel-collapse in {% if forloop.first %}show{% else %}collapse{% endif %}">
+                <div class="card-body">
+                    {% include "admin/includes/fieldset.html" with card=False %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for inline_admin_formset in inline_admin_formsets %}
+        <div class="card card-default">
+            <div class="card-header collapsible-header" data-toggle="collapse" data-parent="#jazzy-collapsible" data-target="#{{ inline_admin_formset.opts.verbose_name|slugify }}-tab">
+                <h4 class="card-title">
+                    {{ inline_admin_formset.opts.verbose_name_plural|title }}
+                </h4>
+            </div>
+            <div id="{{ inline_admin_formset.opts.verbose_name|slugify }}-tab" class="panel-collapse in collapse">
+                <div class="card-body">
+                    {% include inline_admin_formset.opts.template %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>

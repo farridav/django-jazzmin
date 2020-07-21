@@ -5,6 +5,7 @@ import logging
 import urllib.parse
 
 from django.conf import settings
+from django.contrib.admin.helpers import AdminForm
 from django.contrib.admin.models import LogEntry
 from django.contrib.admin.views.main import PAGE_VAR
 from django.contrib.auth import get_user_model
@@ -19,8 +20,14 @@ from django.utils.text import get_text_list
 from django.utils.translation import gettext
 
 from .. import version
-from ..settings import get_settings, get_ui_tweaks
-from ..utils import order_with_respect_to, get_filter_id, get_admin_url, get_view_permissions, make_menu
+from ..settings import get_settings, get_ui_tweaks, CHANGEFORM_TEMPLATES
+from ..utils import (
+    order_with_respect_to,
+    get_filter_id,
+    get_admin_url,
+    get_view_permissions,
+    make_menu,
+)
 
 User = get_user_model()
 register = Library()
@@ -225,6 +232,16 @@ def jazzy_admin_url(value):
 
 
 @register.filter
+def has_fieldsets(value):
+    """
+    Do we have fieldsets
+    """
+    fieldsets = value.model_admin.fieldsets
+    has_fieldsets = fieldsets and len(fieldsets) > 1
+    return True if has_fieldsets else False
+
+
+@register.filter
 def debug(value):
     """
     Add in a breakpoint here and use filter in templates for debugging ;)
@@ -238,6 +255,33 @@ def as_json(value):
     Take the given item and dump it out as JSON
     """
     return json.dumps(value)
+
+
+@register.simple_tag
+def get_changeform_template(adminform: AdminForm) -> str:
+    """
+    Go get the correct change form template based on the modeladmin being used,
+    the default template, or the overriden one for this modeladmin
+    """
+    options = get_settings()
+    fieldsets = adminform.model_admin.fieldsets
+    has_fieldsets = fieldsets and len(fieldsets) > 1
+    inlines = adminform.model_admin.inlines
+    has_inlines = inlines and len(inlines) > 0
+    model = adminform.model_admin.model
+    model_name = "{}.{}".format(model._meta.app_label, model._meta.model_name).lower()
+
+    format = options.get("changeform_format", "")
+    if model_name in options.get("changeform_format_overrides", {}):
+        format = options["changeform_format_overrides"][model_name]
+
+    if not has_fieldsets and not has_inlines:
+        return CHANGEFORM_TEMPLATES.get("single")
+
+    if not format or format not in CHANGEFORM_TEMPLATES.keys():
+        return CHANGEFORM_TEMPLATES.get("horizontal_tabs")
+
+    return CHANGEFORM_TEMPLATES.get(format)
 
 
 @register.simple_tag
@@ -266,7 +310,11 @@ def header_class(header: dict, forloop: dict) -> str:
     Adds CSS classes to header HTML element depending on its attributes
     """
     classes = []
-    sorted, asc, desc = header.get("sorted"), header.get("ascending"), header.get("descending")
+    sorted, asc, desc = (
+        header.get("sorted"),
+        header.get("ascending"),
+        header.get("descending"),
+    )
 
     if forloop["counter0"] == 0:
         classes.append("djn-checkbox-select-all")
@@ -314,7 +362,7 @@ def action_message_to_list(action: LogEntry) -> list:
 
             elif "changed" in sub_message:
                 sub_message["changed"]["fields"] = get_text_list(
-                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]], gettext("and")
+                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]], gettext("and"),
                 )
                 if "name" in sub_message["changed"]:
                     sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])

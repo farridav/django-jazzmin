@@ -156,50 +156,10 @@ class AllFieldsAdmin(admin.ModelAdmin):
     )
     list_display_links = ("id",)
     fieldsets = (
-        ("char", {
-            "fields": (
-                "char",
-                "text",
-                "slug",
-                "email",
-            )
-        }),
-        ("number", {
-            "fields": (
-                "float",
-                "decimal",
-                "integer",
-                "small_integer",
-                "big_integer",
-                "positive_integer",
-            )
-        }),
-        ("boolean", {
-            "fields": (
-                "boolean",
-                "null_boolean",
-            )
-        }),
-        ("file", {
-            "classes": ("collapse",),
-            "fields": (
-                "file",
-                "file_path",
-            )
-        }),
-        ("time", {
-            "fields": (
-                "date",
-                "date_time",
-                "time",
-            )
-        }),
-        ("other", {
-            "classes": ("collapse",),
-            "fields": (
-                "duration",
-                "identifier",
-                "generic_ip_address",
-            )
-        }),
+        ("char", {"fields": ("char", "text", "slug", "email",)}),
+        ("number", {"fields": ("float", "decimal", "integer", "small_integer", "big_integer", "positive_integer",)}),
+        ("boolean", {"fields": ("boolean", "null_boolean",)}),
+        ("file", {"classes": ("collapse",), "fields": ("file", "file_path",)}),
+        ("time", {"fields": ("date", "date_time", "time",)}),
+        ("other", {"classes": ("collapse",), "fields": ("duration", "identifier", "generic_ip_address",)}),
     )

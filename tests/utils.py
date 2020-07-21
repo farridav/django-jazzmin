@@ -1,6 +1,8 @@
+import copy
 from collections import defaultdict
 
 from bs4 import BeautifulSoup, Tag
+from django.conf import settings
 from django.contrib.auth.models import User, Permission
 from faker import Faker
 
@@ -91,3 +93,10 @@ def parse_usermenu(response):
         menu.append(item)
 
     return menu
+
+
+def override_jazzmin_settings(**kwargs):
+    new_settings = copy.deepcopy(settings.JAZZMIN_SETTINGS)
+    for key, value in kwargs.items():
+        new_settings[key] = value
+    return new_settings

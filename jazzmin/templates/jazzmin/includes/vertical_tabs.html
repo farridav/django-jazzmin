@@ -1,0 +1,30 @@
+<div class="row" id="jazzy-tabs">
+    <div class="col-5 col-sm-3">
+        <div class="nav flex-column nav-tabs h-100" role="tablist" aria-orientation="vertical">
+            {% for fieldset in adminform %}
+                <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="pill" href="#{{ fieldset.name|default:"General"|slugify }}-tab" role="tab" aria-controls="{{ fieldset.name|default:"General"|slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                    {{ fieldset.name|default:"General"|title }}
+                </a>
+            {% endfor %}
+            {% for inline_admin_formset in inline_admin_formsets %}
+                <a class="nav-link" data-toggle="pill" href="#{{ inline_admin_formset.opts.verbose_name|slugify }}-tab" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name|slugify }}-tab" aria-selected="false">
+                    {{ inline_admin_formset.opts.verbose_name_plural|title }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-7 col-sm-9">
+        <div class="tab-content">
+            {% for fieldset in adminform %}
+                <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ fieldset.name|default:"General"|slugify }}-tab" role="tabpanel">
+                    {% include "admin/includes/fieldset.html" with card=True %}
+                </div>
+            {% endfor %}
+            {% for inline_admin_formset in inline_admin_formsets %}
+                <div class="tab-pane fade" id="{{ inline_admin_formset.opts.verbose_name|slugify }}-tab" role="tabpanel">
+                    {% include inline_admin_formset.opts.template %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
