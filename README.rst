@@ -78,7 +78,7 @@ Vertical tabs
    :target: https://django-jazzmin.readthedocs.io/img/changeform_vertical_tabs.png
 
 Collapsible
-^^^^^^^^^
+^^^^^^^^^^^
 .. image:: https://django-jazzmin.readthedocs.io/img/changeform_collapsible.png
    :target: https://django-jazzmin.readthedocs.io/img/changeform_collapsible.png
 
