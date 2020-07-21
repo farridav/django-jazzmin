@@ -216,13 +216,13 @@ Future enhancement: Allow tabs to be on the left or right
 ![Vertical tabs](./img/changeform_vertical_tabs.png)
 
 ### Collapsible (`collapsible`)
-Puts all fieldsets and inlines in bootstrap collapsables in an collapsible, allows many collapsables to be open at the 
+Puts all fieldsets and inlines in bootstrap collapsibles in an collapsible, allows many collapsibles to be open at the 
 same time, the first collapsible is opened
 
 ![Collapsible](./img/changeform_collapsible.png)
 
 ### Carousel (`carousel`)
-Puts fieldsets and inlines into a bootstrap carousel, and allows paginaton with previous/nect buttons, as well as an indicators.
+Puts fieldsets and inlines into a bootstrap carousel, and allows paginaton with previous/next buttons, as well as an indicators.
 
 ![Carousel](./img/changeform_carousel.png)
 
