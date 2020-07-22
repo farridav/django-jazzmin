@@ -5,6 +5,7 @@
 .idea
 .tox
 .venv
+.env
 /build
 /dist
 /test-reports
