@@ -2,6 +2,7 @@ import copy
 import itertools
 import json
 import logging
+import unidecode
 import urllib.parse
 
 from django.conf import settings
@@ -11,6 +12,7 @@ from django.contrib.admin.views.main import PAGE_VAR
 from django.contrib.auth import get_user_model
 from django.contrib.auth.context_processors import PermWrapper
 from django.http import HttpRequest
+from django.template import defaultfilters
 from django.template import Library
 from django.template.loader import get_template
 from django.templatetags.static import static
@@ -417,3 +419,8 @@ def style_bold_first_word(message: str) -> str:
     message = " ".join([word for word in message_words])
 
     return format_html(message)
+
+
+@register.filter
+def unicode_slugify(message: str) -> str:
+    return defaultfilters.slugify(unidecode.unidecode(message))
