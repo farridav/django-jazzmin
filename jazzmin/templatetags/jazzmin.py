@@ -301,8 +301,7 @@ def can_view_self(perms: PermWrapper) -> bool:
     """
     Determines whether a user has sufficient permissions to view its own profile
     """
-    view_perm = "{}.view_{}".format(User._meta.app_label, User._meta.model_name)
-
+    view_perm = "view_{}".format(User._meta.model_name)
     return perms[User._meta.app_label][view_perm]
 
 
