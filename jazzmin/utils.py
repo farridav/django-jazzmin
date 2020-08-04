@@ -189,8 +189,8 @@ def make_menu(user, links, options, allow_appmenus=True):
 
             menu.append(
                 {
-                    "name": apps.app_configs[link["app"]].verbose_name.title() 
-                            if hasattr(apps.app_configs[link["app"]], 'verbose_name') 
+                    "name": apps.app_configs[link["app"]].verbose_name.title() \
+                            if hasattr(apps.app_configs[link["app"]], 'verbose_name') \
                             else link["app"].title(),
                     "url": "#",
                     "children": children,
