@@ -23,6 +23,5 @@ setup(
     entry_points={},
     install_requires=[
         'django>=2',
-        'Unidecode',
     ]
 )
