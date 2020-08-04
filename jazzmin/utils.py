@@ -189,7 +189,7 @@ def make_menu(user, links, options, allow_appmenus=True):
 
             menu.append(
                 {
-                    "name": link["app"].title(),
+                    "name": getattr(apps.app_configs[link["app"]], "verbose_name", link["app"]).title(),
                     "url": "#",
                     "children": children,
                     "icon": options["icons"].get(link["app"], options["default_icon_children"]),
