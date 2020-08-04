@@ -16,7 +16,7 @@ from django.template.loader import get_template
 from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from django.utils.text import get_text_list
+from django.utils.text import get_text_list, slugify
 from django.utils.translation import gettext
 
 from .. import version
@@ -299,8 +299,7 @@ def can_view_self(perms: PermWrapper) -> bool:
     """
     Determines whether a user has sufficient permissions to view its own profile
     """
-    view_perm = "{}.view_{}".format(User._meta.app_label, User._meta.model_name)
-
+    view_perm = "view_{}".format(User._meta.model_name)
     return perms[User._meta.app_label][view_perm]
 
 
@@ -417,3 +416,8 @@ def style_bold_first_word(message: str) -> str:
     message = " ".join([word for word in message_words])
 
     return format_html(message)
+
+
+@register.filter
+def unicode_slugify(message: str) -> str:
+    return slugify(message, allow_unicode=True)
