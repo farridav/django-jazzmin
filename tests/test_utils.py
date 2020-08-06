@@ -1,4 +1,5 @@
 import pytest
+from django.db.models.functions import Upper
 from django.urls import reverse
 
 from jazzmin.utils import (
@@ -70,30 +71,12 @@ def test_get_app_admin_urls():
     We can get all the admin urls for an app
     """
     assert get_app_admin_urls("polls") == [
-        {
-            "model": "polls.poll", "name": "Polls",
-            "url": reverse("admin:polls_poll_changelist")
-        },
-        {
-            "model": "polls.choice", "name": "Choices",
-            "url": reverse("admin:polls_choice_changelist")
-        },
-        {
-            "model": "polls.vote", "name": "Votes",
-            "url": reverse("admin:polls_vote_changelist")
-        },
-        {
-            "model": "polls.cheese", "name": "Cheeses",
-            "url": reverse("admin:polls_cheese_changelist")
-        },
-        {
-            "model": "polls.campaign", "name": "Campaigns",
-            "url": reverse("admin:polls_campaign_changelist")
-        },
-        {
-            "model": "polls.allfields", "name": "Allfields",
-            "url": reverse("admin:polls_allfields_changelist")
-        },
+        {"model": "polls.poll", "name": "Polls", "url": reverse("admin:polls_poll_changelist")},
+        {"model": "polls.choice", "name": "Choices", "url": reverse("admin:polls_choice_changelist")},
+        {"model": "polls.vote", "name": "Votes", "url": reverse("admin:polls_vote_changelist")},
+        {"model": "polls.cheese", "name": "Cheeses", "url": reverse("admin:polls_cheese_changelist")},
+        {"model": "polls.campaign", "name": "Campaigns", "url": reverse("admin:polls_campaign_changelist")},
+        {"model": "polls.allfields", "name": "Allfields", "url": reverse("admin:polls_allfields_changelist")},
     ]
 
     assert get_app_admin_urls("nothing") == []
@@ -106,5 +89,17 @@ def test_get_model_permissions():
     """
 
     user = user_with_permissions("polls.view_poll", "polls.view_choice")
+
+    assert get_view_permissions(user) == {"polls.poll", "polls.choice"}
+
+
+@pytest.mark.django_db
+def test_get_model_permissions_lowercased():
+    """
+    When our permissions are upper cased (we had an app with an upper case letter) we still get user perms in lower case
+    """
+
+    user = user_with_permissions("polls.view_poll", "polls.view_choice")
+    user.user_permissions.update(codename=Upper("codename"))
 
     assert get_view_permissions(user) == {"polls.poll", "polls.choice"}

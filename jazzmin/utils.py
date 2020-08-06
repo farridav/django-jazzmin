@@ -127,7 +127,8 @@ def get_view_permissions(user):
     """
     Get model names based on a users view permissions
     """
-    return {x.replace("view_", "") for x in user.get_all_permissions() if "view" in x}
+    lower_perms = map(lambda x: x.lower(), user.get_all_permissions())
+    return {x.replace("view_", "") for x in lower_perms if "view" in x}
 
 
 def make_menu(user, links, options, allow_appmenus=True):
