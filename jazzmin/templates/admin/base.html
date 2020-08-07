@@ -107,7 +107,7 @@
                         <span class="dropdown-header">{% trans 'Account' %}</span>
                         <div class="dropdown-divider"></div>
                         <a href="{% url 'admin:password_change' %}" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> {% trans 'Change password' %}
+                            <i class="fas fa-key mr-2"></i> {% trans 'Change password' %}
                         </a>
                         <div class="dropdown-divider"></div>
                         <a href="{% url 'admin:logout' %}" class="dropdown-item">
@@ -122,7 +122,7 @@
                         {% endfor %}
                         <div class="dropdown-divider"></div>
                         {% if perms|can_view_self %}
-                            <a href="{{ request.user|jazzy_admin_url }}" class="dropdown-item dropdown-footer">See Profile</a>
+                            <a href="{{ request.user|jazzy_admin_url }}" class="dropdown-item dropdown-footer">{% trans 'See Profile' %}</a>
                         {% endif %}
                     </div>
                 </li>
@@ -268,10 +268,10 @@
     {% if not is_popup %}
         <footer class="main-footer {{ jazzmin_ui.footer_classes }}">
                 <div class="float-right d-none d-sm-inline">
-                    <b>Jazzmin Version</b> {% get_jazzmin_version %}
+                    <b>{% trans 'Jazzmin Version' %}</b> {% get_jazzmin_version %}
                 </div>
 
-                <strong>Copyright &copy; {% now 'Y' %} {{ jazzmin_settings.copyright }}.</strong> All rights reserved.
+                <strong>Copyright &copy; {% now 'Y' %} {{ jazzmin_settings.copyright }}.</strong> {% trans 'All rights reserved.' %}
 
         </footer>
         {% if jazzmin_settings.show_ui_builder %}
@@ -287,15 +287,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">UI Configuration</h4>
+                <h4 class="modal-title">{% trans 'UI Configuration' %}</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Copy this info your settings file to persist these UI changes</p>
+                <p>{% trans 'Copy this info your settings file to persist these UI changes' %}</p>
                 <pre><code></code></pre>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
             </div>
         </div>
 
