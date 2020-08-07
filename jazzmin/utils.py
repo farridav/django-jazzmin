@@ -204,6 +204,6 @@ def make_menu(user, links, options, allow_appmenus=True):
 
 def has_fieldsets_check(adminform: AdminForm) -> bool:
     fieldsets = adminform.fieldsets
-    if len(fieldsets) == 1 and fieldsets[0][0] is None:
+    if not fieldsets or (len(fieldsets) == 1 and fieldsets[0][0] is None):
         return False
     return True
