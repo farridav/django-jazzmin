@@ -2,7 +2,9 @@ import logging
 from urllib.parse import urlencode
 
 from django.apps import apps
+from django.contrib.admin.helpers import AdminForm
 from django.db.models.base import ModelBase
+
 from jazzmin.compat import NoReverseMatch, reverse
 
 logger = logging.getLogger(__name__)
@@ -198,3 +200,10 @@ def make_menu(user, links, options, allow_appmenus=True):
             )
 
     return menu
+
+
+def has_fieldsets_check(adminform: AdminForm) -> bool:
+    fieldsets = adminform.fieldsets
+    if len(fieldsets) == 1 and fieldsets[0][0] is None:
+        return False
+    return True
