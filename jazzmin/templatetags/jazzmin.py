@@ -27,6 +27,7 @@ from ..utils import (
     get_admin_url,
     get_view_permissions,
     make_menu,
+    has_fieldsets_check,
 )
 
 User = get_user_model()
@@ -232,13 +233,11 @@ def jazzy_admin_url(value):
 
 
 @register.filter
-def has_fieldsets(value):
+def has_fieldsets(adminform: AdminForm) -> bool:
     """
     Do we have fieldsets
     """
-    fieldsets = value.model_admin.fieldsets
-    has_fieldsets = fieldsets and len(fieldsets) > 1
-    return True if has_fieldsets else False
+    return has_fieldsets_check(adminform)
 
 
 @register.filter
@@ -264,8 +263,7 @@ def get_changeform_template(adminform: AdminForm) -> str:
     the default template, or the overriden one for this modeladmin
     """
     options = get_settings()
-    fieldsets = adminform.model_admin.fieldsets
-    has_fieldsets = fieldsets and len(fieldsets) > 1
+    has_fieldsets = has_fieldsets_check(adminform)
     inlines = adminform.model_admin.inlines
     has_inlines = inlines and len(inlines) > 0
     model = adminform.model_admin.model
