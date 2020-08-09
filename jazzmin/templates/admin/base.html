@@ -122,7 +122,7 @@
                         {% endfor %}
                         <div class="dropdown-divider"></div>
                         {% if perms|can_view_self %}
-                            <a href="{{ request.user|jazzy_admin_url }}" class="dropdown-item dropdown-footer">{% trans 'See Profile' %}</a>
+                            <a href="{% jazzy_admin_url request.user request.current_app|default:"admin" %}" class="dropdown-item dropdown-footer">{% trans 'See Profile' %}</a>
                         {% endif %}
                     </div>
                 </li>
@@ -149,7 +149,7 @@
                         </div>
                         <div class="info">
                             {% if perms|can_view_self %}
-                                <a href="{{ request.user|jazzy_admin_url }}" class="d-block">{{ request.user }}</a>
+                                <a href="{% jazzy_admin_url request.user request.current_app|default:"admin" %}" class="d-block">{{ request.user }}</a>
                             {% else %}
                                 <span class="d-block" style="color: white;">{{ request.user }}</span>
                             {% endif %}

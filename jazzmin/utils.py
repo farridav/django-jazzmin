@@ -25,7 +25,7 @@ def order_with_respect_to(first, reference):
     return [y for x, y in sorted(zip(ranking, first), key=lambda x: x[0])]
 
 
-def get_admin_url(instance, **kwargs):
+def get_admin_url(instance, admin_site="admin", **kwargs):
     """
     Return the admin URL for the given instance, model class or <app>.<model> string
     """
@@ -36,22 +36,25 @@ def get_admin_url(instance, **kwargs):
         if type(instance) == str:
             app_label, model_name = instance.lower().split(".")
             url = reverse(
-                "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name)
+                "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name),
+                current_app=admin_site
             )
 
         # Model class
         elif instance.__class__ == ModelBase:
             app_label, model_name = instance._meta.app_label, instance._meta.model_name
             url = reverse(
-                "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name)
+                "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name),
+                current_app=admin_site
             )
 
         # Model instance
         elif instance.__class__.__class__ == ModelBase and isinstance(instance, instance.__class__):
             app_label, model_name = instance._meta.app_label, instance._meta.model_name
             url = reverse(
-                "admin:{app_label}_{model_name}_change".format(app_label=app_label, model_name=model_name),
+                "admin:{app_label}_{model_name}_change".format(admin_site, app_label=app_label, model_name=model_name),
                 args=(instance.pk,),
+                current_app=admin_site
             )
 
     except (NoReverseMatch, ValueError):
