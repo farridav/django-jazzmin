@@ -52,7 +52,7 @@ def get_admin_url(instance, admin_site="admin", **kwargs):
         elif instance.__class__.__class__ == ModelBase and isinstance(instance, instance.__class__):
             app_label, model_name = instance._meta.app_label, instance._meta.model_name
             url = reverse(
-                "admin:{app_label}_{model_name}_change".format(admin_site, app_label=app_label, model_name=model_name),
+                "admin:{app_label}_{model_name}_change".format(app_label=app_label, model_name=model_name),
                 args=(instance.pk,),
                 current_app=admin_site
             )
