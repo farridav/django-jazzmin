@@ -224,12 +224,12 @@ def jazzmin_list_filter(cl, spec):
     return tpl.render({"field_name": field_key, "title": spec.title, "choices": choices, "spec": spec,})
 
 
-@register.filter
-def jazzy_admin_url(value):
+@register.simple_tag
+def jazzy_admin_url(value, admin_site="admin"):
     """
     Get the admin url for a given object
     """
-    return get_admin_url(value)
+    return get_admin_url(value, admin_site=admin_site)
 
 
 @register.filter
