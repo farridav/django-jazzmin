@@ -117,7 +117,7 @@
                         {% for link in user_menu %}
                             <div class="dropdown-divider"></div>
                             <a href="{{ link.url }}" class="dropdown-item" {% if link.new_window %}target="_blank"{% endif %}>
-                                <i class="fas {{ link.icon }} mr-2"></i> {% trans link.name %}
+                                <i class="{{ link.icon }} mr-2"></i> {% trans link.name %}
                             </a>
                         {% endfor %}
                         <div class="dropdown-divider"></div>
@@ -172,7 +172,7 @@
                                     {% for model in app.models %}
                                         <li class="nav-item">
                                             <a href="{% if model.url %}{{ model.url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
-                                                <i class="fa nav-icon {{ model.icon }}"></i>
+                                                <i class="nav-icon {{ model.icon }}"></i>
                                                 <p>{{ model.name }}</p>
                                             </a>
                                         </li>
@@ -182,14 +182,14 @@
                                 {% for app in side_menu_list %}
                                     <li class="nav-item has-treeview">
                                         <a href="#" class="nav-link">
-                                            <i class="nav-icon fas {{ app.icon }}"></i>
+                                            <i class="nav-icon {{ app.icon }}"></i>
                                             <p>{{ app.name|truncatechars:21 }} <i class="fas fa-angle-left right"></i></p>
                                         </a>
                                         <ul class="nav nav-treeview" style="display: none;">
                                             {% for model in app.models %}
                                                 <li class="nav-item">
                                                     <a href="{% if model.url %}{{ model.url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
-                                                        <i class="fa nav-icon {{ model.icon }}"></i>
+                                                        <i class="nav-icon {{ model.icon }}"></i>
                                                         <p>{{ model.name }}</p>
                                                     </a>
                                                 </li>

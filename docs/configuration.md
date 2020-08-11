@@ -81,7 +81,7 @@ JAZZMIN_SETTINGS = {
         'polls': [{
             'name': 'Make Messages', 
             'url': 'make_messages', 
-            'icon': 'fa-comments',
+            'icon': 'fas fa-comments',
             'permissions': ['polls.view_poll']
         }]
     },
@@ -89,13 +89,13 @@ JAZZMIN_SETTINGS = {
     # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
     # for a list of icon classes
     'icons': {
-        'auth': 'fa-users-cog',
-        'auth.user': 'fa-user',
-        'auth.Group': 'fa-users',
+        'auth': 'fas fa-users-cog',
+        'auth.user': 'fas fa-user',
+        'auth.Group': 'fas fa-users',
     },
     # Icons that are used when one is not manually specified
-    'default_icon_parents': 'fa-chevron-circle-right',
-    'default_icon_children': 'fa-circle',
+    'default_icon_parents': 'fas fa-chevron-circle-right',
+    'default_icon_children': 'fas fa-circle',
 
     #############
     # UI Tweaks #
@@ -169,7 +169,7 @@ Example:
             'url': 'make_messages',                 
             
             # any font-awesome icon, see list here https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/ (optional)
-            'icon': 'fa-comments',                  
+            'icon': 'fas fa-comments',                  
             
             # a list of permissions the user must have to see this link (optional)
             'permissions': ['polls.view_poll']     

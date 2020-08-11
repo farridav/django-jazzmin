@@ -47,10 +47,10 @@ DEFAULT_SETTINGS = {
     "custom_links": {},
     # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
     # for a list of icon classes
-    "icons": {"auth": "fa-users-cog", "auth.user": "fa-user", "auth.Group": "fa-users",},
+    "icons": {"auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users",},
     # Icons that are used when one is not manually specified
-    "default_icon_parents": "fa-chevron-circle-right",
-    "default_icon_children": "fa-circle",
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
     #############
     # UI Tweaks #
     #############
