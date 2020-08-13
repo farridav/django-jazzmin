@@ -25,7 +25,6 @@ from ..utils import (
     order_with_respect_to,
     get_filter_id,
     get_admin_url,
-    get_view_permissions,
     make_menu,
     has_fieldsets_check,
 )
@@ -45,7 +44,6 @@ def get_side_menu(context):
     if not user:
         return []
 
-    model_permissions = get_view_permissions(user)
     options = get_settings()
 
     menu = []
@@ -64,8 +62,6 @@ def get_side_menu(context):
         menu_items = []
         for model in app.get("models", []):
             model_str = "{app_label}.{model}".format(app_label=app_label, model=model["object_name"]).lower()
-            if model_str not in model_permissions:
-                continue
             if model_str in options.get("hide_models", []):
                 continue
 
