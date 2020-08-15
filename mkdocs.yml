@@ -5,3 +5,7 @@ nav:
     - Configuration: configuration.md
     - Development: development.md
 theme: readthedocs
+
+markdown_extensions:
+  - toc:
+      permalink: true
