@@ -151,7 +151,12 @@ JAZZMIN_SETTINGS = {
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
         "polls": [
-            {"name": "Make Messages", "url": "make_messages", "icon": "fas fa-comments", "permissions": ["polls.view_poll"]}
+            {
+                "name": "Make Messages",
+                "url": "make_messages",
+                "icon": "fas fa-comments",
+                "permissions": ["polls.view_poll"],
+            }
         ]
     },
     # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/

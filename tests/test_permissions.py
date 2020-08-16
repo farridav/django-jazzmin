@@ -37,23 +37,27 @@ def test_no_add_permission(client):
 
 
 @pytest.mark.django_db
-def test_no_view_permission(client):
+def test_delete_but_no_view_permission(client):
     """
-    When our user has no view permission, they dont see things they are not supposed to
+    When our user has delete but no view/change permission, menu items render out, but with no links
+
+    As in Plain old Django Admin
     """
-    user = user_with_permissions("polls.change_poll")
+    user = user_with_permissions("polls.delete_poll")
 
     url = reverse("admin:index")
     client.force_login(user)
 
     response = client.get(url)
-    assert parse_sidemenu(response) == {"Global": ["/admin/"]}
+    assert parse_sidemenu(response) == {"Global": ['/admin/'], 'Polls': [None]}
 
 
 @pytest.mark.django_db
 def test_no_permission(client):
     """
     When our user has no permissions at all, they see no menu or dashboard
+
+    As in Plain old Django Admin
     """
     user = user_with_permissions()
 
