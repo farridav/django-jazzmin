@@ -102,19 +102,19 @@ def get_user_menu(user):
 
 
 @register.simple_tag
-def get_jazzmin_settings():
+def get_jazzmin_settings(current_app="admin"):
     """
     Return Jazzmin settings
     """
-    return get_settings()
+    return get_settings(current_app)
 
 
 @register.simple_tag
-def get_jazzmin_ui_tweaks():
+def get_jazzmin_ui_tweaks(current_app="admin"):
     """
     Return Jazzmin ui tweaks
     """
-    return get_ui_tweaks()
+    return get_ui_tweaks(current_app)
 
 
 @register.simple_tag

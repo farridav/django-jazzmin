@@ -120,10 +120,12 @@ CHANGEFORM_TEMPLATES = {
 }
 
 
-def get_settings():
+def get_settings(current_app='admin'):
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
     user_settings = {x: y for x, y in getattr(settings, "JAZZMIN_SETTINGS", {}).items() if y is not None}
     jazzmin_settings.update(user_settings)
+    app_settings = {x: y for x, y in getattr(settings, "JAZZMIN_SETTINGS_" + current_app.upper(), {}).items() if y is not None}
+    jazzmin_settings.update(app_settings)
 
     # Extract search url from search model
     if jazzmin_settings["search_model"]:
@@ -154,9 +156,11 @@ def get_settings():
     return jazzmin_settings
 
 
-def get_ui_tweaks():
+def get_ui_tweaks(current_app='admin'):
     raw_tweaks = copy.deepcopy(DEFAULT_UI_TWEAKS)
     raw_tweaks.update(getattr(settings, "JAZZMIN_UI_TWEAKS", {}))
+    raw_tweaks.update(getattr(settings, "JAZZMIN_UI_TWEAKS_" + current_app.upper(), {}))
+
     tweaks = {x: y for x, y in raw_tweaks.items() if y not in (None, "", False)}
 
     bool_map = {
