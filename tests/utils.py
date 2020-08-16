@@ -51,8 +51,8 @@ def parse_sidemenu(response):
             current_app = li.text.strip()
 
         elif "nav-item" in li["class"]:
-            href = li.find("a")["href"]
-            menu[current_app].append(href)
+            href = li.find("a")
+            menu[current_app].append(href["href"] if href else None)
 
     return menu
 

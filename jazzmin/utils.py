@@ -37,7 +37,7 @@ def get_admin_url(instance, admin_site="admin", **kwargs):
             app_label, model_name = instance.lower().split(".")
             url = reverse(
                 "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name),
-                current_app=admin_site
+                current_app=admin_site,
             )
 
         # Model class
@@ -45,7 +45,7 @@ def get_admin_url(instance, admin_site="admin", **kwargs):
             app_label, model_name = instance._meta.app_label, instance._meta.model_name
             url = reverse(
                 "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name),
-                current_app=admin_site
+                current_app=admin_site,
             )
 
         # Model instance
@@ -54,11 +54,11 @@ def get_admin_url(instance, admin_site="admin", **kwargs):
             url = reverse(
                 "admin:{app_label}_{model_name}_change".format(app_label=app_label, model_name=model_name),
                 args=(instance.pk,),
-                current_app=admin_site
+                current_app=admin_site,
             )
 
     except (NoReverseMatch, ValueError):
-        logger.error("Couldnt reverse url from {instance}".format(instance=instance))
+        logger.warning("Couldnt reverse url from {instance}".format(instance=instance))
 
     if kwargs:
         url += "?{params}".format(params=urlencode(kwargs))
@@ -130,10 +130,10 @@ def get_app_admin_urls(app):
 
 def get_view_permissions(user):
     """
-    Get model names based on a users view permissions
+    Get model names based on a users view/change permissions
     """
     lower_perms = map(lambda x: x.lower(), user.get_all_permissions())
-    return {x.replace("view_", "") for x in lower_perms if "view" in x}
+    return {x.replace("view_", "") for x in lower_perms if "view" in x or "change" in x}
 
 
 def make_menu(user, links, options, allow_appmenus=True):
@@ -186,7 +186,7 @@ def make_menu(user, links, options, allow_appmenus=True):
         # App links
         elif "app" in link and allow_appmenus:
             children = [
-                {"name": child.get("verbose_name", child["name"]), "url": child["url"], "children": None}
+                {"name": child.get("verbose_name", child["name"]), "url": child["url"], "children": None,}
                 for child in get_app_admin_urls(link["app"])
                 if child["model"] in model_permissions
             ]

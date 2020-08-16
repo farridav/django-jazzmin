@@ -171,10 +171,15 @@
                                     <li class="nav-header">{{ app.name }}</li>
                                     {% for model in app.models %}
                                         <li class="nav-item">
-                                            <a href="{% if model.url %}{{ model.url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
-                                                <i class="nav-icon {{ model.icon }}"></i>
-                                                <p>{{ model.name }}</p>
+                                            {% if model.url %}
+                                            <a href="{{ model.url }}" class="nav-link">
+                                                <i class="nav-icon {{ model.icon }}"></i> <p>{{ model.name }}</p>
                                             </a>
+                                        {% else %}
+                                            <span class="nav-link disabled">
+                                                <i class="nav-icon {{ model.icon }}"></i> <p>{{ model.name }}</p>
+                                            </span>
+                                        {% endif %}
                                         </li>
                                     {% endfor %}
                                 {% endfor %}

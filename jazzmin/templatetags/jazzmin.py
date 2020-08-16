@@ -38,6 +38,8 @@ logger = logging.getLogger(__name__)
 def get_side_menu(context):
     """
     Get the list of apps and models to render out in the side menu and on the dashboard page
+
+    N.B - Permissions are not checked here, as context["available_apps"] has already been filtered by django
     """
 
     user = context.get("user")
