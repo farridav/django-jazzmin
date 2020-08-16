@@ -124,7 +124,9 @@ def get_settings(current_app='admin'):
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
     user_settings = {x: y for x, y in getattr(settings, "JAZZMIN_SETTINGS", {}).items() if y is not None}
     jazzmin_settings.update(user_settings)
-    app_settings = {x: y for x, y in getattr(settings, "JAZZMIN_SETTINGS_" + current_app.upper(), {}).items() if y is not None}
+    app_settings = {x: y for x, y in getattr(settings,
+                                             "JAZZMIN_SETTINGS_" + current_app.upper(),
+                                             {}).items() if y is not None}
     jazzmin_settings.update(app_settings)
 
     # Extract search url from search model
