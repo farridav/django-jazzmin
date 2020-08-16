@@ -70,7 +70,7 @@ def get_filter_id(spec):
     return getattr(spec, "field_path", getattr(spec, "parameter_name", spec.title))
 
 
-def get_custom_url(url):
+def get_custom_url(url, admin_site='admin'):
     """
     Take in a custom url, and try to reverse it
     """
@@ -81,7 +81,7 @@ def get_custom_url(url):
     if "/" in url:
         return url
     try:
-        url = reverse(url.lower())
+        url = reverse(url.lower(), current_app=admin_site)
     except NoReverseMatch:
         logger.warning("Couldnt reverse {url}".format(url=url))
         url = "#" + url
@@ -101,7 +101,7 @@ def get_model_meta(model_str):
         return None
 
 
-def get_app_admin_urls(app):
+def get_app_admin_urls(app, admin_site='admin'):
     """
     For the given app string, get links to all the app models admin views
     """
@@ -111,7 +111,7 @@ def get_app_admin_urls(app):
 
     models = []
     for model in apps.app_configs[app].get_models():
-        url = get_admin_url(model)
+        url = get_admin_url(model, admin_site=admin_site)
 
         # We have no admin class
         if url == "#":
@@ -119,7 +119,7 @@ def get_app_admin_urls(app):
 
         models.append(
             {
-                "url": get_admin_url(model),
+                "url": url,
                 "model": "{app}.{model}".format(app=model._meta.app_label, model=model._meta.model_name),
                 "name": model._meta.verbose_name_plural.title(),
             }
@@ -136,7 +136,7 @@ def get_view_permissions(user):
     return {x.replace("view_", "") for x in lower_perms if "view" in x or "change" in x}
 
 
-def make_menu(user, links, options, allow_appmenus=True):
+def make_menu(user, links, options, allow_appmenus=True, admin_site='admin'):
     """
     Make a menu from a list of user supplied links
     """
@@ -160,7 +160,7 @@ def make_menu(user, links, options, allow_appmenus=True):
             menu.append(
                 {
                     "name": link.get("name", "unspecified"),
-                    "url": get_custom_url(link["url"]),
+                    "url": get_custom_url(link["url"], admin_site=admin_site),
                     "children": None,
                     "icon": link.get("icon", options["default_icon_children"]),
                 }
@@ -177,7 +177,7 @@ def make_menu(user, links, options, allow_appmenus=True):
             menu.append(
                 {
                     "name": name,
-                    "url": get_admin_url(link["model"]),
+                    "url": get_admin_url(link["model"], admin_site=admin_site),
                     "children": [],
                     "icon": options["icons"].get(link["model"], options["default_icon_children"]),
                 }
@@ -187,7 +187,7 @@ def make_menu(user, links, options, allow_appmenus=True):
         elif "app" in link and allow_appmenus:
             children = [
                 {"name": child.get("verbose_name", child["name"]), "url": child["url"], "children": None,}
-                for child in get_app_admin_urls(link["app"])
+                for child in get_app_admin_urls(link["app"], admin_site=admin_site)
                 if child["model"] in model_permissions
             ]
             if len(children) == 0:

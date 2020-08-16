@@ -84,21 +84,21 @@ def get_side_menu(context):
 
 
 @register.simple_tag
-def get_top_menu(user):
+def get_top_menu(user, admin_site='admin'):
     """
     Produce the menu for the top nav bar
     """
     options = get_settings()
-    return make_menu(user, options.get("topmenu_links", []), options, allow_appmenus=True)
+    return make_menu(user, options.get("topmenu_links", []), options, allow_appmenus=True, admin_site=admin_site)
 
 
 @register.simple_tag
-def get_user_menu(user):
+def get_user_menu(user, admin_site='admin'):
     """
     Produce the menu for the user dropdown
     """
     options = get_settings()
-    return make_menu(user, options.get("usermenu_links", []), options, allow_appmenus=False)
+    return make_menu(user, options.get("usermenu_links", []), options, allow_appmenus=False, admin_site=admin_site)
 
 
 @register.simple_tag
