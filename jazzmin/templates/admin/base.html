@@ -50,7 +50,7 @@
                     </li>
                 {% endif %}
 
-                {% get_top_menu user as top_menu %}
+                {% get_top_menu user request.current_app|default:"admin" as top_menu %}
                 {% for link in top_menu %}
                     <li class="nav-item d-none d-sm-inline-block{% if link.children %} dropdown{% endif %}">
                         {% if link.children %}
@@ -113,7 +113,7 @@
                         <a href="{% url 'admin:logout' %}" class="dropdown-item">
                             <i class="fas fa-users mr-2"></i> {% trans 'Log out' %}
                         </a>
-                        {% get_user_menu user as user_menu %}
+                        {% get_user_menu user request.current_app|default:"admin" as user_menu %}
                         {% for link in user_menu %}
                             <div class="dropdown-divider"></div>
                             <a href="{{ link.url }}" class="dropdown-item" {% if link.new_window %}target="_blank"{% endif %}>
