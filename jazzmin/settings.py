@@ -131,7 +131,7 @@ def get_settings(current_app='admin'):
 
     # Extract search url from search model
     if jazzmin_settings["search_model"]:
-        jazzmin_settings["search_url"] = get_admin_url(jazzmin_settings["search_model"].lower())
+        jazzmin_settings["search_url"] = get_admin_url(jazzmin_settings["search_model"].lower(), current_app)
         model_meta = get_model_meta(jazzmin_settings["search_model"])
         if model_meta:
             jazzmin_settings["search_name"] = model_meta.verbose_name_plural.title()
