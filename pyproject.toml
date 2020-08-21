@@ -1,0 +1,133 @@
+[tool.poetry]
+name = "django-jazzmin"
+version = "2.2.7"
+description = "Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy"
+license = "MIT"
+authors = ["Shipit <packages@shipit.ltd>"]
+maintainers = ["Shipit <packages@shipit.ltd>"]
+readme  = "README.md"
+homepage = "https://github.com/farridav/django-jazzmin"
+repository = "https://github.com/farridav/django-jazzmin"
+documentation = " https://django-jazzmin.readthedocs.io"
+keywords = ["django", "dashboard", "theme", "admin", "jazzmin"]
+classifiers = [
+    "Environment :: Web Environment",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Framework :: Django",
+    "Framework :: Django :: 2.0",
+    "Framework :: Django :: 2.1",
+    "Framework :: Django :: 2.2",
+    "Framework :: Django :: 3.0",
+    "Framework :: Django :: 3.1",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Internet :: WWW/HTTP :: WSGI",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+packages = [
+    { include = "jazzmin" },
+]
+include = ["jazzmin"]
+exclude = ["tests", "docs"]
+
+[tool.poetry.dependencies]
+python = ">=3.5"
+django = ">=2"
+
+[tool.poetry.dev-dependencies]
+wheel = "*"                 # python packaging support
+setuptools = "*"            # python packaging support
+twine = "*"                 # python packaging tools
+pep517 = "*"                # Python packaging tools
+flake8 = "*"                # Static code checking
+pytest = "*"                # Test runner
+pytest-django = "*"         # Django integration for pytest
+tox-gh-actions = "*"        # Github actions support for tox
+coverage = "*"              # Measure code coverage durign tests
+tox = "*"                   # Test runner for python packages
+django-debug-toolbar = "*"  # unparallelled debugging in django
+werkzeug = "*"              # support for werkzeug debugger in runserver_plus
+ipython = "*"               # enhanced python shell
+ipdb = "*"                  # ipython breakpoints
+django-extensions = "*"     # Django Sugar for development
+faker = "*"                 # less fake fake data
+coveralls = "*"             # Publish code coverage to coveralls
+beautifulsoup4 = "*"        # Structure HTML documents into navigable things for test assertions
+dj-database-url = "*"       # Parsing of database urls
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
+"Release notes" = "https://github.com/farridav/django-jazzmin/releases"
+"Source" = "https://github.com/farridav/django-jazzmin/"
+
+[tool.pytest.ini_options]
+addopts = "--pdbcls=IPython.terminal.debugger:TerminalPdb -p no:warnings --junitxml=.reports/coverage.xml --cov-report=html:.reports/htmlcov --cov jazzmin"
+junit_family = "xunit2"
+norecursedirs = ".git .tox _resource build dist docs"
+DJANGO_SETTINGS_MODULE = "tests.test_app.settings"
+FAIL_INVALID_TEMPLATE_VARS = 1
+
+[tool.black]
+line-length = 120
+
+[tool.flake8]
+max-complexity = 10
+ignore = ["C901" ,"W504", "W503", "E231", "E203"]
+exclude = [".git", ".tox", "_resource", "migrations", "build", "dist", "docs"]
+max-line-length = 150
+show-source = true
+statistics = false
+
+[tool.coverage.run]
+omit = ["*/__init__.py", "lib/replicant-tools/replicant/runner.py"]
+
+[tool.coverage.report]
+omit = ["*/__init__.py", "lib/replicant-tools/replicant/runner.py"]
+show_missing = true
+
+legacy_tox_ini = """
+[tox]
+envlist =
+    django2-{py36,py37},
+    django3-{py36,py37,py38},
+    # run one of the tests again but with coverage
+    coveralls-django3-py38,
+skipsdist = True
+
+[gh-actions]
+python =
+    3.5: py35
+    3.6: py36
+    3.7: py37
+    3.8: py38
+
+[testenv]
+setenv =
+    PYTHONPATH = {toxinidir}
+commands =
+    {envpython} -m flake8 jazzmin
+    {envpython} -m py.test
+deps =
+    -rdev-requirements.txt
+    django2: Django<3
+    django3: Django<4
+
+[testenv:coveralls-django3-py38]
+passenv = COVERALLS_REPO_TOKEN
+commands =
+    coverage run -m py.test
+    - coveralls
+"""
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

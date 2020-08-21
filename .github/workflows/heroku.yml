@@ -9,11 +9,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Deploy to Heroku
-      uses: AkhileshNS/heroku-deploy@v3.0.4
-      with:
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_email: ${{ secrets.HEROKU_EMAIL }}
-        heroku_app_name: django-jazzmin
-        buildpack: heroku/python
+      - uses: actions/checkout@v2
+      - name: Deploy to Heroku
+        uses: AkhileshNS/heroku-deploy@v3.0.4
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_app_name: django-jazzmin
+          buildpack: heroku/python

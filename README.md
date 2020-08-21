@@ -1,6 +1,6 @@
 # Django jazzmin (Jazzy Admin)
 
-[![Docs](https://readthedocs.org/projects/django-jazzmin/badge/?version=latest)](http://django-jazzmin.readthedocs.io/?badge=latest)
+[![Docs](https://django-jazzmin.readthedocs.io.org/projects/django-jazzmin/badge/?version=latest)](https://django-jazzmin.readthedocs.io.io/?badge=latest)
 ![PyPI download month](https://img.shields.io/pypi/dm/django-jazzmin.svg)
 [![PyPI version](https://badge.fury.io/py/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
 ![Python versions](https://img.shields.io/pypi/pyversions/django-jazzmin.svg)
@@ -15,7 +15,7 @@ pip install django-jazzmin
 ```
 
 ## Documentation
-See [Documentation](https://django-jazzmin.readthedocs.io/) or [Test App](./tests/test_app/settings.py)
+See [Documentation](https://django-jazzmin.readthedocs.io.io/) or [Test App](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/settings.py)
 
 ## Demo
 Live demo https://django-jazzmin.herokuapp.com/admin
@@ -32,59 +32,63 @@ Live demo https://django-jazzmin.herokuapp.com/admin
 - Customisable top menu
 - Customisable user menu
 - 4 different Change form templates (horizontal tabs, vertical tabs, carousel, collapsible)
+- Search bar for any given model admin
 - Customisable UI (via Live UI changes, or custom CSS/JS)
-- Based on the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
+- Responsive
+- Select2 drop-downs
+- Bootstrap 4 & AdminLTE UI components
+- Using the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 
 ## Screenshots
 
 ## Dashboard
-![dashboard](docs/img/dashboard.png)
+![dashboard](https://django-jazzmin.readthedocs.io/img/dashboard.png)
 
 ## List view
-![table list](docs/img/list_view.png)
+![table list](https://django-jazzmin.readthedocs.io/img/list_view.png)
 
 ## Change form templates
 
 ### Collapsed side menu
-![form page](docs/img/detail_view.png)
+![form page](https://django-jazzmin.readthedocs.io/img/detail_view.png)
 
 ### Expanded side menu
-![Single](docs/img/changeform_single.png)
+![Single](https://django-jazzmin.readthedocs.io/img/changeform_single.png)
 
 ### Horizontal tabs
-![Horizontal tabs](docs/img/changeform_horizontal_tabs.png)
+![Horizontal tabs](https://django-jazzmin.readthedocs.io/img/changeform_horizontal_tabs.png)
 
 ### Vertical tabs
-![Vertical tabs](docs/img/changeform_vertical_tabs.png)
+![Vertical tabs](https://django-jazzmin.readthedocs.io/img/changeform_vertical_tabs.png)
 
 ### Collapsible
-![Collapsible](docs/img/changeform_collapsible.png)
+![Collapsible](https://django-jazzmin.readthedocs.io/img/changeform_collapsible.png)
 
 ### Carousel
-![Carousel](docs/img/changeform_carousel.png)
+![Carousel](https://django-jazzmin.readthedocs.io/img/changeform_carousel.png)
 
 ## History page
-![form page](docs/img/history_page.png)
+![form page](https://django-jazzmin.readthedocs.io/img/history_page.png)
 
 ## Login view
-![login](docs/img/login.png)
+![login](https://django-jazzmin.readthedocs.io/img/login.png)
 
 ## UI Customiser
-![ui_customiser](docs/img/ui_customiser.png)
+![ui_customiser](https://django-jazzmin.readthedocs.io/img/ui_customiser.png)
 
 ## Mobile layout
-![mobile](docs/img/dashboard_mobile.png)
+![mobile](https://django-jazzmin.readthedocs.io/img/dashboard_mobile.png)
 
 ## Tablet layout
-![tablet](docs/img/dashboard_tablet.png)
+![tablet](https://django-jazzmin.readthedocs.io/img/dashboard_tablet.png)
 
 ## Admin Docs (if installed)
-![admin_docs](docs/img/admin_docs.png)
+![admin_docs](https://django-jazzmin.readthedocs.io/img/admin_docs.png)
 
 ## Thanks
 This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that we refactored so much we thought it
 deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, we are still patching into that
-project were possible, but this project is taking a slightly different direction.
+project were possible, but this project has taken a different direction.
 
 - Based on AdminLTE 3: https://adminlte.io/
 - Using Bootstrap 4: https://getbootstrap.com/
