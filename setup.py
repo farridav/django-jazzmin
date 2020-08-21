@@ -15,6 +15,7 @@ setup(
     description="Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy",
     long_description=open('README.rst').read(),
     author='farridav',
+    author_email='packages@shipit.ltd',
     maintainer='farridav',
     license='MIT',
     packages=find_packages(exclude=('tests', 'tests.*')),
