@@ -1,5 +1,6 @@
---extra-index-url https://testpypi.python.org/pypi
+--index-url https://testpypi.python.org/pypi
 
+Django
 whitenoise
 gunicorn
 psycopg2-binary
