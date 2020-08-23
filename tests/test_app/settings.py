@@ -10,6 +10,8 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "not-secret-at-all")
 DEBUG = bool(int(os.getenv("DEBUG", 1)))
 TEST = os.getenv("FAIL_INVALID_TEMPLATE_VARS")
 
+PREFIX = "" if os.getenv('STANDALONE') else "tests.test_app."
+
 ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     # Keep this above 'django.contrib.admin'
@@ -21,7 +23,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "polls.apps.PollsConfig",
+    f"{PREFIX}polls.apps.PollsConfig",
 ]
 
 MIDDLEWARE = [
@@ -35,7 +37,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "urls"
+ROOT_URLCONF = f"{PREFIX}urls"
 
 LOGGING = {
     "version": 1,

@@ -44,25 +44,22 @@ python = ">=3.5"
 django = ">=2"
 
 [tool.poetry.dev-dependencies]
-wheel = "*"                 # python packaging support
-setuptools = "*"            # python packaging support
-twine = "*"                 # python packaging tools
-pep517 = "*"                # Python packaging tools
-flake8 = "*"                # Static code checking
-pytest = "*"                # Test runner
-pytest-django = "*"         # Django integration for pytest
 tox-gh-actions = "*"        # Github actions support for tox
-coverage = "*"              # Measure code coverage durign tests
-tox = "*"                   # Test runner for python packages
 django-debug-toolbar = "*"  # unparallelled debugging in django
 werkzeug = "*"              # support for werkzeug debugger in runserver_plus
 ipython = "*"               # enhanced python shell
 ipdb = "*"                  # ipython breakpoints
 django-extensions = "*"     # Django Sugar for development
+dj-database-url = "*"       # Parsing of database urls
+
+flake9 = "*"                # Static code checking (with pyproject.toml support)
+pytest = "*"                # Test runner
+pytest-django = "*"         # Django integration for pytest
+pytest-cov = "*"            # Measure code coverage durign tests
+tox = "*"                   # Test runner for python packages
 faker = "*"                 # less fake fake data
 coveralls = "*"             # Publish code coverage to coveralls
 beautifulsoup4 = "*"        # Structure HTML documents into navigable things for test assertions
-dj-database-url = "*"       # Parsing of database urls
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
@@ -94,6 +91,7 @@ omit = ["*/__init__.py", "lib/replicant-tools/replicant/runner.py"]
 omit = ["*/__init__.py", "lib/replicant-tools/replicant/runner.py"]
 show_missing = true
 
+[tool.tox]
 legacy_tox_ini = """
 [tox]
 envlist =
@@ -117,7 +115,14 @@ commands =
     {envpython} -m flake8 jazzmin
     {envpython} -m py.test
 deps =
-    -rdev-requirements.txt
+    flake9
+    pytest
+    pytest-django
+    pytest-cov
+    faker
+    coveralls
+    beautifulsoup4
+    dj-database-url
     django2: Django<3
     django3: Django<4
 

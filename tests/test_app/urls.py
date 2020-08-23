@@ -1,6 +1,7 @@
 from django.conf import settings
-from django.contrib import admin
-from django.urls import re_path
+from django.contrib import admin, messages
+from django.http import HttpResponseRedirect
+from django.urls import re_path, reverse
 from django.views.generic import RedirectView
 from django.views.static import serve
 
@@ -9,13 +10,21 @@ try:
 except ImportError:
     from django.conf.urls.defaults import url, include
 
-from . import views
+
+def make_messages(request):
+    messages.add_message(request, messages.INFO, "Info message")
+    messages.add_message(request, messages.ERROR, "Error message")
+    messages.add_message(request, messages.WARNING, "Warning message")
+    messages.add_message(request, messages.SUCCESS, "Success message")
+
+    return HttpResponseRedirect(reverse("admin:index"))
+
 
 urlpatterns = [
     url(r"^$", RedirectView.as_view(pattern_name="admin:index", permanent=False)),
     url(r"admin/doc/", include("django.contrib.admindocs.urls")),
     url(r"admin/", admin.site.urls),
-    url(r"make_messages/", views.make_messages, name="make_messages"),
+    url(r"make_messages/", make_messages, name="make_messages"),
 ]
 
 if settings.DEBUG:
