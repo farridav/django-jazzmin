@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "tests.test_app.polls.apps.PollsConfig",
+    "polls.apps.PollsConfig",
 ]
 
 MIDDLEWARE = [
@@ -35,7 +35,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "tests.test_app.urls"
+ROOT_URLCONF = "urls"
 
 LOGGING = {
     "version": 1,

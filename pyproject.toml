@@ -8,7 +8,7 @@ maintainers = ["Shipit <packages@shipit.ltd>"]
 readme  = "README.md"
 homepage = "https://github.com/farridav/django-jazzmin"
 repository = "https://github.com/farridav/django-jazzmin"
-documentation = " https://django-jazzmin.readthedocs.io"
+documentation = "https://django-jazzmin.readthedocs.io"
 keywords = ["django", "dashboard", "theme", "admin", "jazzmin"]
 classifiers = [
     "Environment :: Web Environment",
@@ -67,7 +67,7 @@ dj-database-url = "*"       # Parsing of database urls
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
 "Release notes" = "https://github.com/farridav/django-jazzmin/releases"
-"Source" = "https://github.com/farridav/django-jazzmin/"
+"Source" = "https://github.com/farridav/django-jazzmin"
 
 [tool.pytest.ini_options]
 addopts = "--pdbcls=IPython.terminal.debugger:TerminalPdb -p no:warnings --junitxml=.reports/coverage.xml --cov-report=html:.reports/htmlcov --cov jazzmin"

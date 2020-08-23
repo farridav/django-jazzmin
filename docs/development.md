@@ -11,15 +11,18 @@
 
 Setup db tables etc.
 
-    python tests/test_app/manage.py migrate
+    cd tests/test_app/
+    python manage.py migrate
 
 Generate test data
 
-    python tests/test_app/manage.py loaddata initial_data
+    cd tests/test_app/
+    python manage.py loaddata initial_data
 
 Run development server (with werkzeug debugger)
 
-    python tests/test_app/manage.py runserver_plus
+    cd tests/test_app/
+    python manage.py runserver_plus
 
 ## Running the tests
 Tests are run via github actions on any pull request into `master`, and are written for use with the [pytest](https://docs.pytest.org/en/latest/) 

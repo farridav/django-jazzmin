@@ -26,15 +26,12 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip twine
-          pip install -r dev-requirements.txt
+        run: python -m pip install --upgrade pip poetry tox
 
-      - name: Test with tox
+      - name: Run tests
         run: tox
 
-      - name: Validate and deploy package to test pypi
+      - name: Deploy
         run: |
-          python setup.py sdist
-          twine check dist/*
-          twine upload --repository testpypi dist/*
+          poetry config repositories.testpypi https://test.pypi.org/legacy/
+          poetry --build publish -r testpypi --username ${{ secrets.TESTPYPI_USERNAME }} ${{ secrets.TESTPYPI_PASSWORD }}
