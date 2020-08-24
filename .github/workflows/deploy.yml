@@ -22,4 +22,4 @@ jobs:
       - name: Deploy to pypi.org
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-        run: poetry --build publish
+        run: poetry publish --build
