@@ -44,14 +44,12 @@ python = ">=3.5"
 django = ">=2"
 
 [tool.poetry.dev-dependencies]
-tox-gh-actions = "*"        # Github actions support for tox
 django-debug-toolbar = "*"  # unparallelled debugging in django
 werkzeug = "*"              # support for werkzeug debugger in runserver_plus
 ipython = "*"               # enhanced python shell
 ipdb = "*"                  # ipython breakpoints
 django-extensions = "*"     # Django Sugar for development
 dj-database-url = "*"       # Parsing of database urls
-
 flake9 = "*"                # Static code checking (with pyproject.toml support)
 pytest = "*"                # Test runner
 pytest-django = "*"         # Django integration for pytest
@@ -63,7 +61,8 @@ beautifulsoup4 = "*"        # Structure HTML documents into navigable things for
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
-"Release notes" = "https://github.com/farridav/django-jazzmin/releases"
+"All Releases" = "https://github.com/farridav/django-jazzmin/releases"
+"Latest Release" = "https://github.com/farridav/django-jazzmin/releases/latest"
 "Source" = "https://github.com/farridav/django-jazzmin"
 
 [tool.pytest.ini_options]
@@ -85,10 +84,10 @@ show-source = true
 statistics = false
 
 [tool.coverage.run]
-omit = ["*/__init__.py", "lib/replicant-tools/replicant/runner.py"]
+omit = ["*/__init__.py"]
 
 [tool.coverage.report]
-omit = ["*/__init__.py", "lib/replicant-tools/replicant/runner.py"]
+omit = ["*/__init__.py"]
 show_missing = true
 
 [tool.tox]
