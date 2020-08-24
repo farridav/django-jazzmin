@@ -3,5 +3,4 @@ whitenoise
 gunicorn
 psycopg2-binary
 dj-database-url
-
--r dev-requirements.txt
+https://github.com/farridav/django-jazzmin/archive/master.zip

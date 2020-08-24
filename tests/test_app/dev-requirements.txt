@@ -1,3 +1,0 @@
---index-url https://testpypi.python.org/pypi
-
-django-jazzmin
