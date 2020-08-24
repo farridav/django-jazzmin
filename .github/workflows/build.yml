@@ -26,12 +26,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: python -m pip install --upgrade pip poetry tox tox-gh-actions
+        run: python -m pip install --upgrade pip tox tox-gh-actions
 
       - name: Run tests
         run: tox
-
-      - name: Deploy to testpypi.org
-        run: |
-          poetry config repositories.testpypi https://test.pypi.org/legacy/
-          poetry --build publish -r testpypi --username ${{ secrets.TESTPYPI_USERNAME }} ${{ secrets.TESTPYPI_PASSWORD }}
