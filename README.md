@@ -1,6 +1,6 @@
 # Django jazzmin (Jazzy Admin)
 
-[![Docs](https://django-jazzmin.readthedocs.io.org/projects/django-jazzmin/badge/?version=latest)](https://django-jazzmin.readthedocs.io.io/?badge=latest)
+[![Docs](https://django-jazzmin.readthedocs.io/projects/django-jazzmin/badge/?version=latest)](https://django-jazzmin.readthedocs.io?badge=latest)
 ![PyPI download month](https://img.shields.io/pypi/dm/django-jazzmin.svg)
 [![PyPI version](https://badge.fury.io/py/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
 ![Python versions](https://img.shields.io/pypi/pyversions/django-jazzmin.svg)
@@ -15,7 +15,7 @@ pip install django-jazzmin
 ```
 
 ## Documentation
-See [Documentation](https://django-jazzmin.readthedocs.io.io/) or [Test App](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/settings.py)
+See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/settings.py)
 
 ## Demo
 Live demo https://django-jazzmin.herokuapp.com/admin

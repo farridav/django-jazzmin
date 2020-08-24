@@ -1,8 +1,7 @@
---index-url https://testpypi.python.org/pypi
-
 Django
 whitenoise
 gunicorn
 psycopg2-binary
 dj-database-url
-django-jazzmin
+
+-r dev-requirements.txt

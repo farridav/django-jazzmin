@@ -84,10 +84,10 @@ show-source = true
 statistics = false
 
 [tool.coverage.run]
-omit = ["*/__init__.py"]
+omit = ["*/__init__.py", ".tox", ".reports", ".git"]
 
 [tool.coverage.report]
-omit = ["*/__init__.py"]
+omit = ["*/__init__.py", ".tox", ".reports", ".git"]
 show_missing = true
 
 [tool.tox]
@@ -128,7 +128,7 @@ deps =
 [testenv:coveralls-django3-py38]
 passenv = COVERALLS_REPO_TOKEN
 commands =
-    coverage run -m py.test
+    pytest
     - coveralls
 """
 

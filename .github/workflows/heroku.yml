@@ -22,7 +22,7 @@ jobs:
       - name: Deploy to testpypi.org
         run: |
           poetry config repositories.testpypi https://test.pypi.org/legacy/
-          poetry publish --build -r testpypi --username ${{ secrets.TESTPYPI_USERNAME }} --password ${{ secrets.TESTPYPI_PASSWORD }}
+          poetry publish --build -r testpypi --username ${{ secrets.TESTPYPI_USERNAME }} --password ${{ secrets.TESTPYPI_PASSWORD }} || :
       - name: Deploy to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
