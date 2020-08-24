@@ -1,8 +1,0 @@
--e .
-
-# Used for our heroku deploy (Not needed for development)
-
-whitenoise
-gunicorn
-psycopg2-binary
-dj-database-url

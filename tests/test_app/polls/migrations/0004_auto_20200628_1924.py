@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='allfields',
             name='file_path',
-            field=models.FilePathField(help_text='This is how FilePathFields look like...', path='/Users/tyson/workspace/django-jazzmin/tests/test_app'),
+            field=models.FilePathField(help_text='This is how FilePathFields look like...', path='path/to/django-jazzmin/tests/test_app'),
         ),
         migrations.AlterField(
             model_name='allfields',
