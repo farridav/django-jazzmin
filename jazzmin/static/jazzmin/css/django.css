@@ -64,7 +64,7 @@ tr.djn-tr > .original {
 }
 
 .related-widget-wrapper select {
-    width: 90%;
+    width: initial; /* Setting a width will make the *-related btns overflow */
     height: auto;
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -425,6 +425,13 @@ table.dataTable thead .sorting_desc_disabled::after {
     padding: 0;
     overflow: hidden;
     line-height: 1;
+}
+
+/* Might need to import more rules from:
+ * https://github.com/django/django/blob/master/django/contrib/admin/static/admin/css/responsive.css
+ */
+.inline-group {
+    overflow: auto;
 }
 
 .selector .selector-available input {
