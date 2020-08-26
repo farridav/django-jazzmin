@@ -1,0 +1,6 @@
+Django
+whitenoise
+gunicorn
+psycopg2-binary
+dj-database-url
+https://github.com/farridav/django-jazzmin/archive/master.zip
