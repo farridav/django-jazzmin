@@ -130,7 +130,7 @@
         </nav>
         {% block sidebar %}
         {% if jazzmin_settings.show_sidebar %}
-            {% get_side_menu as side_menu_list %}
+            {% get_side_menu request.current_app|default:"admin" as side_menu_list %}
 
             <aside class="main-sidebar elevation-4 {{ jazzmin_ui.sidebar_classes }}" id="jazzy-sidebar">
                 <a href="{% url 'admin:index' %}" class="brand-link {{ jazzmin_ui.brand_classes }}" id="jazzy-logo">
@@ -142,7 +142,7 @@
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
                             {% if jazzmin_settings.user_avatar %}
-                                <img src="{% get_user_avatar request.user %}" width="160px" class="img-circle elevation-2" alt="User Image">
+                                <img src="{% get_user_avatar request.user request.current_app|default:"admin" %}" width="160px" class="img-circle elevation-2" alt="User Image">
                             {% else %}
                                 <i class="fas fa-inverse user-profile fa-user-circle"></i>
                             {% endif %}

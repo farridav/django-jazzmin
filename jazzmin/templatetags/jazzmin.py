@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 @register.simple_tag(takes_context=True)
-def get_side_menu(context):
+def get_side_menu(context, current_app='admin'):
     """
     Get the list of apps and models to render out in the side menu and on the dashboard page
 
@@ -46,7 +46,7 @@ def get_side_menu(context):
     if not user:
         return []
 
-    options = get_settings()
+    options = get_settings(current_app)
 
     menu = []
     available_apps = copy.deepcopy(context.get("available_apps", []))
@@ -88,7 +88,7 @@ def get_top_menu(user, admin_site='admin'):
     """
     Produce the menu for the top nav bar
     """
-    options = get_settings()
+    options = get_settings(admin_site)
     return make_menu(user, options.get("topmenu_links", []), options, allow_appmenus=True, admin_site=admin_site)
 
 
@@ -97,7 +97,7 @@ def get_user_menu(user, admin_site='admin'):
     """
     Produce the menu for the user dropdown
     """
-    options = get_settings()
+    options = get_settings(admin_site)
     return make_menu(user, options.get("usermenu_links", []), options, allow_appmenus=False, admin_site=admin_site)
 
 
@@ -126,12 +126,12 @@ def get_jazzmin_version():
 
 
 @register.simple_tag
-def get_user_avatar(user):
+def get_user_avatar(user, current_app="admin"):
     """
     For the given user, try to get the avatar image
     """
     no_avatar = static("adminlte/img/user2-160x160.jpg")
-    options = get_settings()
+    options = get_settings(current_app)
 
     if not options.get("user_avatar"):
         return no_avatar
@@ -255,12 +255,12 @@ def as_json(value):
 
 
 @register.simple_tag
-def get_changeform_template(adminform: AdminForm) -> str:
+def get_changeform_template(adminform: AdminForm, current_app="admin") -> str:
     """
     Go get the correct change form template based on the modeladmin being used,
     the default template, or the overriden one for this modeladmin
     """
-    options = get_settings()
+    options = get_settings(current_app)
     has_fieldsets = has_fieldsets_check(adminform)
     inlines = adminform.model_admin.inlines
     has_inlines = inlines and len(inlines) > 0

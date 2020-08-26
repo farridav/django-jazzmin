@@ -1,6 +1,6 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_urls static admin_modify jazzmin %}
-{% get_jazzmin_settings as jazzmin_settings %}
+{% get_jazzmin_settings request.current_app|default:"admin" as jazzmin_settings %}
 {% block extrahead %}
     {{ block.super }}
     <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                {% get_changeform_template adminform as changeform_template %}
+                                {% get_changeform_template adminform request.current_app|default:"admin" as changeform_template %}
                                 {% include changeform_template %}
                             </div>
                         </div>
