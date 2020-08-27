@@ -81,10 +81,14 @@ function handleCollapsible($collapsible) {
 $(document).ready(function () {
     const $carousel = $('#content-main form #jazzy-carousel');
     const $tabs = $('#content-main form #jazzy-tabs');
-    const $collapsible = $('#content-main form #jazzy-collapsible');
+
+    // Stop the height being set to 1px during a JS race condition
+    // TODO: Find the JS that is setting this html attribute, and solve the problem properly
+    $('.selector .selector-chosen select').removeAttr('style');
 
     // Ensure all raw_id_fields have the search icon in them
-    $('.related-lookup').append('<i class="fa fa-search"></i>')
+    const $collapsible = $('#content-main form #jazzy-collapsible');
+    $('.related-lookup').append('<i class="fa fa-search"></i>');
 
     // Style the inline fieldset button
     $('.inline-related fieldset.module .add-row a').addClass('btn btn-sm btn-default float-right');
@@ -94,4 +98,3 @@ $(document).ready(function () {
     else if ($carousel.length) {handleCarousel($carousel);}
     else if ($collapsible.length) {handleCollapsible($collapsible);}
 });
-
