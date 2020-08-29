@@ -660,3 +660,27 @@ body.no-sidebar .main-header {
 #jazzy-carousel .carousel-indicators {
     position: initial;
 }
+
+form ul.radiolist li {
+    list-style-type: none;
+}
+
+form ul.radiolist label {
+    float: none;
+    display: inline;
+}
+
+form ul.radiolist input[type="radio"] {
+    margin: -2px 4px 0 0;
+    padding: 0;
+}
+
+form ul.inline {
+    margin-left: 0;
+    padding: 0;
+}
+
+form ul.inline li {
+    float: left;
+    padding-right: 7px;
+}
