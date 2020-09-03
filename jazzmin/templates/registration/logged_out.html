@@ -19,6 +19,10 @@
     <!-- Theme style -->
     <link rel="stylesheet" href={% static "adminlte/css/adminlte.min.css" %}>
 
+    {% if jazzmin_settings.custom_css %}
+        <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
+    {% endif %}
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -42,6 +46,10 @@
         </p>
     </div>
 </div>
+
+{% if jazzmin_settings.custom_js %}
+<script src="{% static jazzmin_settings.custom_js %}"></script>
+{% endif %}
 
 </body>
 </html>

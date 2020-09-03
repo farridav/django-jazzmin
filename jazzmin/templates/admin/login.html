@@ -18,6 +18,10 @@
     <!-- Custom fixes for django -->
     <link rel="stylesheet" href="{% static "jazzmin/css/django.css" %}">
 
+    {% if jazzmin_settings.custom_css %}
+        <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
+    {% endif %}
+
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     {% block extrastyle %} {% endblock %}
@@ -95,6 +99,10 @@
 <script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'adminlte/js/adminlte.min.js' %}"></script>
+
+{% if jazzmin_settings.custom_js %}
+<script src="{% static jazzmin_settings.custom_js %}"></script>
+{% endif %}
 
 </body>
 </html>
