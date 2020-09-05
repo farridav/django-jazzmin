@@ -5,7 +5,7 @@
         <div class="nav flex-column nav-tabs h-100" role="tablist" aria-orientation="vertical">
             {% for fieldset in adminform %}
                 <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="pill" href="#{{ fieldset.name|default:"General"|unicode_slugify }}-tab" role="tab" aria-controls="{{ fieldset.name|default:"General"|unicode_slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
-                    {{ fieldset.name|default:"General"|title }}
+                    {{ fieldset.name|default:"General" }}
                 </a>
             {% endfor %}
             {% for inline_admin_formset in inline_admin_formsets %}

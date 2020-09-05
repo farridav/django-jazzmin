@@ -5,7 +5,7 @@
         <div class="card card-default">
             <div class="card-header collapsible-header" data-toggle="collapse" data-parent="#jazzy-collapsible" data-target="#{{ fieldset.name|default:"General"|unicode_slugify }}-tab">
                 <h4 class="card-title">
-                    {{ fieldset.name|default:"General"|title }}
+                    {{ fieldset.name|default:"General" }}
                 </h4>
             </div>
             <div id="{{ fieldset.name|default:"General"|unicode_slugify }}-tab" class="panel-collapse in {% if forloop.first %}show{% else %}collapse{% endif %}">
