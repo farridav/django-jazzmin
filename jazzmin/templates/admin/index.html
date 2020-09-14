@@ -14,7 +14,7 @@
 
 
 {% block content %}
-    {% get_side_menu as dashboard_list %}
+    {% get_side_menu using="app_list" as dashboard_list %}
     {% if dashboard_list %}
         {% widthratio dashboard_list|length 2 1 as middle %}
     {% endif %}

@@ -35,13 +35,12 @@ logger = logging.getLogger(__name__)
 
 
 @register.simple_tag(takes_context=True)
-def get_side_menu(context):
+def get_side_menu(context, using="available_apps"):
     """
     Get the list of apps and models to render out in the side menu and on the dashboard page
 
     N.B - Permissions are not checked here, as context["available_apps"] has already been filtered by django
     """
-
     user = context.get("user")
     if not user:
         return []
@@ -49,7 +48,8 @@ def get_side_menu(context):
     options = get_settings()
 
     menu = []
-    available_apps = copy.deepcopy(context.get("available_apps", []))
+    available_apps = copy.deepcopy(context.get(using, []))
+
     custom_links = {
         app_name: make_menu(user, links, options, allow_appmenus=False)
         for app_name, links in options.get("custom_links", {}).items()
@@ -84,7 +84,7 @@ def get_side_menu(context):
 
 
 @register.simple_tag
-def get_top_menu(user, admin_site='admin'):
+def get_top_menu(user, admin_site="admin"):
     """
     Produce the menu for the top nav bar
     """
@@ -93,7 +93,7 @@ def get_top_menu(user, admin_site='admin'):
 
 
 @register.simple_tag
-def get_user_menu(user, admin_site='admin'):
+def get_user_menu(user, admin_site="admin"):
     """
     Produce the menu for the user dropdown
     """
