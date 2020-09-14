@@ -1,6 +1,8 @@
 {% extends "admin/index.html" %}
 {% load i18n %}
 
+{% block content_title %} {{ app_label|capfirst }} {% endblock %}
+
 {% block bodyclass %}{{ block.super }} app-{{ app_label }}{% endblock %}
 
 {% if not is_popup %}
@@ -11,5 +13,3 @@
         </ol>
     {% endblock %}
 {% endif %}
-
-{% block sidebar %}{% endblock %}
