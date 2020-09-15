@@ -52,7 +52,7 @@ function handleTabs($tabs) {
         }
         
         // Fix selector heights
-	    $('.selector .selector-chosen').each( function(i) {
+	$('.selector .selector-chosen').each( function(i) {
 	    var a = $(this).siblings('.selector-available');
             var s = $(this).find('select').first();
             s.height( a.find('select').first().height() + a.find('p.selector-filter').first().outerHeight() );
