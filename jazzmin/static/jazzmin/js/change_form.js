@@ -50,6 +50,14 @@ function handleTabs($tabs) {
         } else {
             location.hash = e.target.hash;
         }
+        
+        // Fix selector heights
+	$('.selector .selector-chosen').each( function(i) {
+	    var a = $(this).siblings('.selector-available');
+            var s = $(this).find('select').first();
+            s.height( a.find('select').first().height() + a.find('p.selector-filter').first().outerHeight() );
+            s.css('border-top', s.css('border-bottom') );
+        })
     });
 }
 
