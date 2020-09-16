@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     f"{PREFIX}polls.apps.PollsConfig",
-    f"{PREFIX}utils.apps.UtilsConfig",
 ]
 
 MIDDLEWARE = [
@@ -177,8 +176,6 @@ JAZZMIN_SETTINGS = {
 
         "polls.Campaign": "fas fa-ad",
         "polls.Cheese": "fas fa-cheese",
-
-        "utils.AllFields": "fab fa-python",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -209,8 +206,6 @@ JAZZMIN_SETTINGS = {
         "polls.Poll": "horizontal_tabs",
         "polls.Choice": "single",
         "polls.Vote": "carousel",
-
-        "utils.AllFields": "collapsible",
     },
 }
 

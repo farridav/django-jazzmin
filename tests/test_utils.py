@@ -76,7 +76,6 @@ def test_get_app_admin_urls():
         {"model": "polls.vote", "name": "Votes", "url": reverse("admin:polls_vote_changelist")},
         {"model": "polls.cheese", "name": "Cheeses", "url": reverse("admin:polls_cheese_changelist")},
         {"model": "polls.campaign", "name": "Campaigns", "url": reverse("admin:polls_campaign_changelist")},
-        {"model": "polls.allfields", "name": "Allfields", "url": reverse("admin:polls_allfields_changelist")},
     ]
 
     assert get_app_admin_urls("nothing") == []
