@@ -1,32 +1,31 @@
 {% load i18n admin_urls static %}
 <div class="js-inline-admin-formset inline-group" id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="stacked" data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
     <fieldset class="module {{ inline_admin_formset.classes }} card card-outline">
-        <div class="card-header with-border">
-            <h2 class="card-title">{{ inline_admin_formset.opts.verbose_name_plural|capfirst }}</h2>
-        </div>
         <div class="card-body">
-                {{ inline_admin_formset.formset.management_form }}
-                {{ inline_admin_formset.formset.non_form_errors }}
+            {{ inline_admin_formset.formset.management_form }}
+            {{ inline_admin_formset.formset.non_form_errors }}
 
-                {% for inline_admin_form in inline_admin_formset %}
-                    <div class="panel card inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+            {% for inline_admin_form in inline_admin_formset %}
+                <div class="panel inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+                    <div class="card card-primary{% if not inline_admin_form.original %} card-outline{% endif %}">
                         <div class="card-header with-border">
                             <h3 class="card-title">
-                                <b>{{ inline_admin_formset.opts.verbose_name|capfirst }}:</b>&nbsp;
                                 <span class="inline_label">
                                     {% if inline_admin_form.original %}
                                         {{ inline_admin_form.original }}
                                         {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                            <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %}">
-                                            {% if inline_admin_formset.has_change_permission %}
-                                                {% trans "Change" %}
-                                            {% else %}
-                                                {% trans "View" %}
-                                            {% endif %}
-                                            </a>
+                                            <span class="card-tools pl-3">
+                                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %}">
+                                                {% if inline_admin_formset.has_change_permission %}
+                                                    {% trans "Change" %}
+                                                {% else %}
+                                                    {% trans "View" %}
+                                                {% endif %}
+                                                </a>
+                                            </span>
                                         {% endif %}
                                     {% else %}
-                                        #{{ forloop.counter }}
+                                        {% trans "Add " %}{{ inline_admin_formset.opts.verbose_name|capfirst }} - #{{ forloop.counter }}
                                     {% endif %}
                                 </span>
                                 {% if inline_admin_form.show_url %}
@@ -38,7 +37,6 @@
                                   {{ inline_admin_form.deletion_field.field }} {{ inline_admin_form.deletion_field.label_tag }}
                                 </span>
                             {% endif %}
-
                         </div>
                         <div class="card-body">
                             {% if inline_admin_form.form.non_field_errors %}{{ inline_admin_form.form.non_field_errors }}{% endif %}
@@ -49,7 +47,8 @@
                             {% if inline_admin_form.fk_field %}{{ inline_admin_form.fk_field.field }}{% endif %}
                         </div>
                     </div>
-                {% endfor %}
+                </div>
+            {% endfor %}
         </div>
     </fieldset>
 </div>

@@ -6,7 +6,7 @@ from django.utils.timesince import timesince
 from .models import Poll, Choice, Vote, Campaign, Cheese
 
 
-class ChoiceInline(admin.TabularInline):
+class ChoiceInline(admin.StackedInline):
     model = Choice
     show_change_link = True
 
