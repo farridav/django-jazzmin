@@ -1,3 +1,17 @@
+function fix_selector_height() {
+    $('.selector .selector-chosen').each(function() {
+        let selector_chosen = $(this);
+        let selector_available = selector_chosen.siblings('.selector-available');
+
+        let selector_chosen_select = selector_chosen.find('select').first();
+        let selector_available_select = selector_available.find('select').first();
+        let selector_available_filter = selector_available.find('p.selector-filter').first();
+
+        selector_chosen_select.height(selector_available_select.height() + selector_available_filter.outerHeight());
+        selector_chosen_select.css('border-top', selector_chosen_select.css('border-bottom'));
+    });
+}
+
 function handleCarousel($carousel) {
     const errors = $('.errorlist li', $carousel);
     const hash = document.location.hash;
@@ -15,6 +29,9 @@ function handleCarousel($carousel) {
 
     // Update page hash/history on slide
     $carousel.on('slide.bs.carousel', function (e) {
+
+        fix_selector_height();
+
         if (e.relatedTarget.dataset.hasOwnProperty("label")) {
             $('.carousel-fieldset-label', $carousel).text(e.relatedTarget.dataset.label);
         }
@@ -44,20 +61,15 @@ function handleTabs($tabs) {
 
     // Change hash for page-reload
     $('.nav-tabs a').on('shown.bs.tab', function (e) {
+
+        fix_selector_height();
+
         e.preventDefault();
         if (history.pushState) {
             history.pushState(null, null, e.target.hash);
         } else {
             location.hash = e.target.hash;
         }
-        
-        // Fix selector heights
-	$('.selector .selector-chosen').each( function(i) {
-	    var a = $(this).siblings('.selector-available');
-            var s = $(this).find('select').first();
-            s.height( a.find('select').first().height() + a.find('p.selector-filter').first().outerHeight() );
-            s.css('border-top', s.css('border-bottom') );
-        })
     });
 }
 
@@ -78,6 +90,9 @@ function handleCollapsible($collapsible) {
 
     // Change hash for page-reload
     $collapsible.on('shown.bs.collapse', function (e) {
+
+        fix_selector_height();
+
         if (history.pushState) {
             history.pushState(null, null, '#' + e.target.id);
         } else {
