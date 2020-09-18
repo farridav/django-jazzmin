@@ -105,10 +105,6 @@ $(document).ready(function () {
     const $carousel = $('#content-main form #jazzy-carousel');
     const $tabs = $('#content-main form #jazzy-tabs');
 
-    // Stop the height being set to 1px during a JS race condition
-    // TODO: Find the JS that is setting this html attribute, and solve the problem properly
-    $('.selector .selector-chosen select').removeAttr('style');
-
     // Ensure all raw_id_fields have the search icon in them
     const $collapsible = $('#content-main form #jazzy-collapsible');
     $('.related-lookup').append('<i class="fa fa-search"></i>');
