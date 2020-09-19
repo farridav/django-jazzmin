@@ -28,7 +28,7 @@
 
                         <div class="timeline">
 
-                            {% for action in action_list %}
+                            {% for action in action_list reversed %}
                               <div class="time-label">
                                 <span class="bg-info">{{ action.action_time|date:"DATETIME_FORMAT" }}</span>
                               </div>
