@@ -202,10 +202,6 @@ JAZZMIN_SETTINGS = {
     "changeform_format_overrides": {
         "auth.user": "collapsible",
         "auth.group": "vertical_tabs",
-
-        "polls.Poll": "horizontal_tabs",
-        "polls.Choice": "single",
-        "polls.Vote": "carousel",
     },
 }
 
