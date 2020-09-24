@@ -163,7 +163,20 @@ JAZZMIN_SETTINGS = {
     },
     # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
     # for a list of icon classes
-    "icons": {"auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users"},
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+
+        "admin.LogEntry": "fas fa-file",
+
+        "polls.Poll": "fas fa-poll",
+        "polls.Choice": "fas fa-list",
+        "polls.Vote": "fas fa-vote-yea",
+
+        "polls.Campaign": "fas fa-ad",
+        "polls.Cheese": "fas fa-cheese",
+    },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
@@ -186,7 +199,10 @@ JAZZMIN_SETTINGS = {
     # - carousel
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    },
 }
 
 if not DEBUG and not TEST:
