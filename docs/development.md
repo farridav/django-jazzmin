@@ -2,10 +2,13 @@
 
 ## Installation
 
+This project manages dependencies using [poetry](https://python-poetry.org/)
+
+Ensure you have poetry installed (`pip install poetry`)
+
+Then get setup with `poetry install`
+
     git clone git@github.com:farridav/django-jazzmin.git
-    python3 -m venv .venv
-    . .venv/bin/activate
-    pip install Poetry
     poetry install
 
 ## Running the test project
