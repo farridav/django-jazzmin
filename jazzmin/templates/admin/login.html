@@ -46,13 +46,13 @@
 
                     {% if form.username.errors %}
                     <div class="callout callout-danger">
-                        <p>Username: {{ form.username.errors|join:', ' }}</p>
+                        <p>{% trans 'Username' %}: {{ form.username.errors|join:', ' }}</p>
                     </div>
                     {% endif %}
 
                     {% if form.password.errors %}
                     <div class="callout callout-danger">
-                        <p>Password: {{ form.password.errors|join:', ' }}</p>
+                        <p>{% trans 'Password' %}: {{ form.password.errors|join:', ' }}</p>
                     </div>
                     {% endif %}
 

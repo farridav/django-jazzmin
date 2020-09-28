@@ -3,19 +3,23 @@ import itertools
 import json
 import logging
 import urllib.parse
+from typing import List, Dict, Union, Any
 
 from django.conf import settings
+from django.contrib.admin import BooleanFieldListFilter
 from django.contrib.admin.helpers import AdminForm
 from django.contrib.admin.models import LogEntry
-from django.contrib.admin.views.main import PAGE_VAR
+from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.auth import get_user_model
 from django.contrib.auth.context_processors import PermWrapper
+from django.contrib.auth.models import AbstractUser
+from django.db.models.base import ModelBase
 from django.http import HttpRequest
-from django.template import Library
+from django.template import Library, Context
 from django.template.loader import get_template
 from django.templatetags.static import static
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeText
 from django.utils.text import get_text_list, slugify
 from django.utils.translation import gettext
 
@@ -35,7 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 @register.simple_tag(takes_context=True)
-def get_side_menu(context, using="available_apps"):
+def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]:
     """
     Get the list of apps and models to render out in the side menu and on the dashboard page
 
@@ -84,7 +88,7 @@ def get_side_menu(context, using="available_apps"):
 
 
 @register.simple_tag
-def get_top_menu(user, admin_site="admin"):
+def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     """
     Produce the menu for the top nav bar
     """
@@ -93,7 +97,7 @@ def get_top_menu(user, admin_site="admin"):
 
 
 @register.simple_tag
-def get_user_menu(user, admin_site="admin"):
+def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     """
     Produce the menu for the user dropdown
     """
@@ -102,7 +106,7 @@ def get_user_menu(user, admin_site="admin"):
 
 
 @register.simple_tag
-def get_jazzmin_settings():
+def get_jazzmin_settings() -> Dict:
     """
     Return Jazzmin settings
     """
@@ -110,7 +114,7 @@ def get_jazzmin_settings():
 
 
 @register.simple_tag
-def get_jazzmin_ui_tweaks():
+def get_jazzmin_ui_tweaks() -> Dict:
     """
     Return Jazzmin ui tweaks
     """
@@ -118,7 +122,7 @@ def get_jazzmin_ui_tweaks():
 
 
 @register.simple_tag
-def get_jazzmin_version():
+def get_jazzmin_version() -> str:
     """
     Get the version for this package
     """
@@ -126,7 +130,7 @@ def get_jazzmin_version():
 
 
 @register.simple_tag
-def get_user_avatar(user):
+def get_user_avatar(user: AbstractUser) -> str:
     """
     For the given user, try to get the avatar image
     """
@@ -144,7 +148,7 @@ def get_user_avatar(user):
 
 
 @register.simple_tag
-def jazzmin_paginator_number(cl, i):
+def jazzmin_paginator_number(cl: ChangeList, i: int) -> SafeText:
     """
     Generate an individual page index link in a paginated list.
     """
@@ -180,7 +184,7 @@ def jazzmin_paginator_number(cl, i):
 
 
 @register.simple_tag
-def admin_extra_filters(cl):
+def admin_extra_filters(cl: ChangeList) -> Dict:
     """
     Return the dict of used filters which is not included in list_filters form
     """
@@ -189,7 +193,7 @@ def admin_extra_filters(cl):
 
 
 @register.simple_tag
-def jazzmin_list_filter(cl, spec):
+def jazzmin_list_filter(cl: ChangeList, spec: BooleanFieldListFilter) -> SafeText:
     tpl = get_template(spec.template)
     choices = list(spec.choices(cl))
     field_key = get_filter_id(spec)
@@ -223,7 +227,7 @@ def jazzmin_list_filter(cl, spec):
 
 
 @register.simple_tag
-def jazzy_admin_url(value, admin_site="admin"):
+def jazzy_admin_url(value: Union[str, ModelBase], admin_site: str = "admin") -> str:
     """
     Get the admin url for a given object
     """
@@ -239,7 +243,7 @@ def has_fieldsets(adminform: AdminForm) -> bool:
 
 
 @register.filter
-def debug(value):
+def debug(value: Any) -> Any:
     """
     Add in a breakpoint here and use filter in templates for debugging ;)
     """
@@ -247,7 +251,7 @@ def debug(value):
 
 
 @register.filter
-def as_json(value):
+def as_json(value: Union[List, Dict]) -> str:
     """
     Take the given item and dump it out as JSON
     """
@@ -258,7 +262,7 @@ def as_json(value):
 def get_changeform_template(adminform: AdminForm) -> str:
     """
     Go get the correct change form template based on the modeladmin being used,
-    the default template, or the overriden one for this modeladmin
+    the default template, or the overridden one for this modeladmin
     """
     options = get_settings()
     has_fieldsets = has_fieldsets_check(adminform)
@@ -300,7 +304,7 @@ def can_view_self(perms: PermWrapper) -> bool:
 
 
 @register.simple_tag
-def header_class(header: dict, forloop: dict) -> str:
+def header_class(header: Dict, forloop: Dict) -> str:
     """
     Adds CSS classes to header HTML element depending on its attributes
     """
@@ -336,11 +340,33 @@ def app_is_installed(app: str) -> bool:
 
 
 @register.simple_tag
-def action_message_to_list(action: LogEntry) -> list:
+def action_message_to_list(action: LogEntry) -> List[Dict]:
     """
     Retrieves a formatted list with all actions taken by a user given a log entry object
     """
     messages = []
+
+    def added(x: str) -> Dict:
+        return {
+            "msg": x,
+            "icon": "plus-circle",
+            "colour": "success",
+        }
+
+    def changed(x: str) -> Dict:
+        return {
+            "msg": x,
+            "icon": "edit",
+            "colour": "blue",
+        }
+
+    def deleted(x: str) -> Dict:
+        return {
+            "msg": x,
+            "icon": "trash",
+            "colour": "danger",
+        }
+
     if action.change_message and action.change_message[0] == "[":
         try:
             change_message = json.loads(action.change_message)
@@ -351,9 +377,9 @@ def action_message_to_list(action: LogEntry) -> list:
             if "added" in sub_message:
                 if sub_message["added"]:
                     sub_message["added"]["name"] = gettext(sub_message["added"]["name"])
-                    messages.append(gettext("Added {name} “{object}”.").format(**sub_message["added"]))
+                    messages.append(added(gettext("Added {name} “{object}”.").format(**sub_message["added"])))
                 else:
-                    messages.append(gettext("Added."))
+                    messages.append(added(gettext("Added.")))
 
             elif "changed" in sub_message:
                 sub_message["changed"]["fields"] = get_text_list(
@@ -361,44 +387,21 @@ def action_message_to_list(action: LogEntry) -> list:
                 )
                 if "name" in sub_message["changed"]:
                     sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])
-                    messages.append(gettext("Changed {fields} for {name} “{object}”.").format(**sub_message["changed"]))
+                    messages.append(
+                        changed(gettext("Changed {fields} for {name} “{object}”.").format(**sub_message["changed"]))
+                    )
                 else:
-                    messages.append(gettext("Changed {fields}.").format(**sub_message["changed"]))
+                    messages.append(changed(gettext("Changed {fields}.").format(**sub_message["changed"])))
 
             elif "deleted" in sub_message:
                 sub_message["deleted"]["name"] = gettext(sub_message["deleted"]["name"])
-                messages.append(gettext("Deleted {name} “{object}”.").format(**sub_message["deleted"]))
-    return messages if len(messages) else [action.change_message]
+                messages.append(deleted(gettext("Deleted {name} “{object}”.").format(**sub_message["deleted"])))
+
+    return messages if len(messages) else [changed(gettext(action.change_message))]
 
 
 @register.filter
-def get_action_icon(message: str) -> str:
-    """
-    Retrieves action given a certain action
-    """
-    if message.startswith("Added"):
-        return "plus-circle"
-    elif message.startswith("Deleted"):
-        return "trash"
-    else:
-        return "edit"
-
-
-@register.filter
-def get_action_color(message: str) -> str:
-    """
-    Retrieves color given a certain action
-    """
-    if message.startswith("Added"):
-        return "success"
-    elif message.startswith("Deleted"):
-        return "danger"
-    else:
-        return "blue"
-
-
-@register.filter
-def style_bold_first_word(message: str) -> str:
+def style_bold_first_word(message: str) -> SafeText:
     """
     Wraps first word in a message with <strong> HTML element
     """

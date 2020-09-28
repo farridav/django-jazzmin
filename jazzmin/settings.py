@@ -1,4 +1,5 @@
 import copy
+from typing import Dict
 
 from django.conf import settings
 from django.contrib.admin import AdminSite
@@ -120,7 +121,7 @@ CHANGEFORM_TEMPLATES = {
 }
 
 
-def get_settings():
+def get_settings() -> Dict:
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
     user_settings = {x: y for x, y in getattr(settings, "JAZZMIN_SETTINGS", {}).items() if y is not None}
     jazzmin_settings.update(user_settings)
@@ -154,7 +155,7 @@ def get_settings():
     return jazzmin_settings
 
 
-def get_ui_tweaks():
+def get_ui_tweaks() -> Dict:
     raw_tweaks = copy.deepcopy(DEFAULT_UI_TWEAKS)
     raw_tweaks.update(getattr(settings, "JAZZMIN_UI_TWEAKS", {}))
     tweaks = {x: y for x, y in raw_tweaks.items() if y not in (None, "", False)}
@@ -177,7 +178,7 @@ def get_ui_tweaks():
         if key in tweaks:
             tweaks[key] = value
 
-    def classes(*args):
+    def classes(*args: str) -> str:
         return " ".join([tweaks.get(arg, "") for arg in args if arg]).strip()
 
     return {

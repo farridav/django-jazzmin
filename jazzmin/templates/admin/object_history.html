@@ -36,13 +36,13 @@
                                 {% action_message_to_list action as action_message_list %}
                                 {% for action_message in action_message_list %}
                                   <div>
-                                    <i class="fas fa-{{ action_message|get_action_icon }} bg-{{ action_message|get_action_color }}"></i>
+                                    <i class="fas fa-{{ action_message.icon }} bg-{{ action_message.colour }}"></i>
                                     <div class="timeline-item">
                                       <h3 class="timeline-header no-border">
                                           <a href="{% jazzy_admin_url action.user request.current_app|default:"admin" %}" target="_blank">
                                               {{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}
                                           </a>
-                                          {{ action_message|style_bold_first_word }}
+                                          {{ action_message.msg|style_bold_first_word }}
                                       </h3>
                                     </div>
                                   </div>

@@ -10,7 +10,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "not-secret-at-all")
 DEBUG = bool(int(os.getenv("DEBUG", 1)))
 TEST = os.getenv("FAIL_INVALID_TEMPLATE_VARS")
 
-PREFIX = "" if os.getenv('STANDALONE') else "tests.test_app."
+PREFIX = "" if os.getenv("STANDALONE") else "tests.test_app."
 
 ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
@@ -77,6 +77,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-gb"
 TIME_ZONE = "Europe/London"
+
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -167,13 +168,10 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-
         "admin.LogEntry": "fas fa-file",
-
         "polls.Poll": "fas fa-poll",
         "polls.Choice": "fas fa-list",
         "polls.Vote": "fas fa-vote-yea",
-
         "polls.Campaign": "fas fa-ad",
         "polls.Cheese": "fas fa-cheese",
     },
@@ -199,10 +197,7 @@ JAZZMIN_SETTINGS = {
     # - carousel
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {
-        "auth.user": "collapsible",
-        "auth.group": "vertical_tabs",
-    },
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
 }
 
 if not DEBUG and not TEST:
