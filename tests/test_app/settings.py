@@ -87,6 +87,7 @@ gettext = lambda s: s  # NOQA
 LANGUAGES = (
     ("en", gettext("English")),
     ("de", gettext("German")),
+    ("es", gettext("Spanish")),
 )
 
 STATIC_URL = "/static/"
