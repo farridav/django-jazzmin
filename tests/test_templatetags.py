@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from django.contrib.admin.models import LogEntry, CHANGE
 
@@ -23,43 +25,17 @@ def test_action_message_to_list(admin_user):
     """
     We can generate a list of messages from a log entry object
     """
-    message = (
-        '[{"changed": {"fields": ["Owner", "Text", "Pub date", "Active"]}}, '
-        '{"added": {"name": "choice", "object": "More random choices"}}, '
-        '{"deleted": {"name": "choice", "object": "Person serious choose tea"}}]'
-    )
-    log_entry = LogEntry.objects.create(user=admin_user, action_flag=CHANGE, change_message=message)
-    assert jazzmin.action_message_to_list(log_entry) == [
-        "Changed Owner, Text, Pub date and Active.",
-        "Added choice “More random choices”.",
-        "Deleted choice “Person serious choose tea”.",
+    message = [
+        {"changed": {"fields": ["Owner", "Text", "Pub date", "Active"]}},
+        {"added": {"name": "choice", "object": "More random choices"}},
+        {"deleted": {"name": "choice", "object": "Person serious choose tea"}},
     ]
-
-
-def test_get_action_icon():
-    """
-    Returns icon depending on action being added, changed or deleted
-    """
-    add_message = "Added cheese option"
-    change_message = "Changed cheese option"
-    delete_message = "Deleted cheese option"
-
-    assert jazzmin.get_action_icon(add_message) == "plus-circle"
-    assert jazzmin.get_action_icon(change_message) == "edit"
-    assert jazzmin.get_action_icon(delete_message) == "trash"
-
-
-def test_get_action_color():
-    """
-    Returns color depending on action being added, changed or deleted
-    """
-    add_message = "Added cheese option"
-    change_message = "Changed cheese option"
-    delete_message = "Deleted cheese option"
-
-    assert jazzmin.get_action_color(add_message) == "success"
-    assert jazzmin.get_action_color(change_message) == "blue"
-    assert jazzmin.get_action_color(delete_message) == "danger"
+    log_entry = LogEntry.objects.create(user=admin_user, action_flag=CHANGE, change_message=json.dumps(message))
+    assert jazzmin.action_message_to_list(log_entry) == [
+        {"msg": "Changed Owner, Text, Pub date and Active.", "icon": "edit", "colour": "blue"},
+        {"msg": "Added choice “More random choices”.", "icon": "plus-circle", "colour": "success"},
+        {"msg": "Deleted “Person serious choose tea”.", "icon": "trash", "colour": "danger"},
+    ]
 
 
 def test_style_bold_first_word():
