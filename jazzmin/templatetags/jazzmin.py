@@ -395,7 +395,7 @@ def action_message_to_list(action: LogEntry) -> List[Dict]:
 
             elif "deleted" in sub_message:
                 sub_message["deleted"]["name"] = gettext(sub_message["deleted"]["name"])
-                messages.append(deleted(gettext("Deleted {name} “{object}”.").format(**sub_message["deleted"])))
+                messages.append(deleted(gettext("Deleted “{object}”.").format(**sub_message["deleted"])))
 
     return messages if len(messages) else [changed(gettext(action.change_message))]
 

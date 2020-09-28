@@ -77,10 +77,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-gb"
 TIME_ZONE = "Europe/London"
-
 USE_I18N = True
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 USE_L10N = True
 USE_TZ = True
+
+# English default
+gettext = lambda s: s  # NOQA
+LANGUAGES = (
+    ("en", gettext("English")),
+    ("de", gettext("German")),
+)
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
