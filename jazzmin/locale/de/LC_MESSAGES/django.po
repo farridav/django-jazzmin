@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-28 15:37+0100\n"
+"POT-Creation-Date: 2020-09-28 22:40+0100\n"
 "PO-Revision-Date: 2020-09-22 10:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -29,7 +29,7 @@ msgstr "Dashboard"
 
 #: templates/admin/base.html:276
 msgid "version"
-msgstr ""
+msgstr "Version"
 
 #: templates/admin/base.html:279
 msgid "Copyright"
@@ -50,8 +50,9 @@ msgstr ""
 "persistent zu machen"
 
 #: templates/admin/index.html:90
-msgid "ago"
-msgstr ""
+#, python-format
+msgid "%(entry.action_time|timesince)s ago"
+msgstr "%(entry.action_time|timesince)s vor"
 
 #: templates/admin/submit_line.html:8
 msgid "Actions"
@@ -68,21 +69,17 @@ msgstr "Vorlage: <q>%(name)s</q>"
 msgid "Search path for template <q>%(name)s</q>:"
 msgstr "Suchpfad für Vorlage <q>%(name)s</q>:"
 
-#: templates/admin_doc/template_filter_index.html:25
-msgid "built-in filters"
-msgstr "eingebaute Filter"
-
 #: templates/admin_doc/template_filter_index.html:37
 #: templates/admin_doc/view_index.html:43
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "View function: <code>%(full_name)s</code>. Name: "
+#| "<code>%(url_name)s</code>.\n"
 msgid ""
-"\n"
-"                  View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>.\n"
-"              "
+"View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
 msgstr ""
-"\n"
-"                  View-Funktion: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>.\n"
-"              "
+"View-Funktion: <code>%(full_name)s</code>. Name: "
+"<code>%(url_name)s</code>.\n"
 
 #: templatetags/jazzmin.py:380
 #, python-brace-format
@@ -103,4 +100,4 @@ msgstr "{name} “{object}” gelöscht."
 #: utils.py:66
 #, python-brace-format
 msgid "Could not reverse url from {instance}"
-msgstr ""
+msgstr "Url für {instance} könnte nicht gefunden werden"
