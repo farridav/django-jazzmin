@@ -6,11 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0004_auto_20200628_1924'),
+        ("polls", "0004_auto_20200628_1924"),
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='AllFields',
-        ),
+        migrations.DeleteModel(name="AllFields",),
     ]

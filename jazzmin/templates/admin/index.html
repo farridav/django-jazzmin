@@ -87,7 +87,7 @@
                                 {% endif %}
 
                                 <div class="timeline-item">
-                                    <span class="time"><i class="fas fa-clock"></i>  {{ entry.action_time|timesince }} ago</span>
+                                    <span class="time"><i class="fas fa-clock"></i>  {{ entry.action_time|timesince }} {% trans 'ago' %}</span>
                                     <h3 class="timeline-header no-border">
                                         {% if entry.is_deletion or not entry.get_admin_url %}
                                             {{ entry.object_repr }}
@@ -111,7 +111,7 @@
                                                 <ul style="list-style: none; padding: 0;">
                                                     {% action_message_to_list entry as action_message_list %}
                                                     {% for action_message in action_message_list %}
-                                                        <li>{{ action_message|style_bold_first_word }}</li>
+                                                        <li>{{ action_message.msg|style_bold_first_word }}</li>
                                                     {% endfor %}
                                                 </ul>
                                             {% endif %}

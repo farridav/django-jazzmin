@@ -1,16 +1,21 @@
 import logging
+from typing import List, Union, Dict, Set
 from urllib.parse import urlencode
 
 from django.apps import apps
+from django.contrib.admin import BooleanFieldListFilter
 from django.contrib.admin.helpers import AdminForm
+from django.contrib.auth.models import AbstractUser
 from django.db.models.base import ModelBase
+from django.db.models.options import Options
+from django.utils.translation import gettext
 
 from jazzmin.compat import NoReverseMatch, reverse
 
 logger = logging.getLogger(__name__)
 
 
-def order_with_respect_to(first, reference):
+def order_with_respect_to(first: List, reference: List) -> List:
     ranking = []
     max_num = len(first)
 
@@ -25,7 +30,7 @@ def order_with_respect_to(first, reference):
     return [y for x, y in sorted(zip(ranking, first), key=lambda x: x[0])]
 
 
-def get_admin_url(instance, admin_site="admin", **kwargs):
+def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **kwargs: str) -> str:
     """
     Return the admin URL for the given instance, model class or <app>.<model> string
     """
@@ -58,7 +63,7 @@ def get_admin_url(instance, admin_site="admin", **kwargs):
             )
 
     except (NoReverseMatch, ValueError):
-        logger.warning("Couldnt reverse url from {instance}".format(instance=instance))
+        logger.warning(gettext("Could not reverse url from {instance}".format(instance=instance)))
 
     if kwargs:
         url += "?{params}".format(params=urlencode(kwargs))
@@ -66,11 +71,11 @@ def get_admin_url(instance, admin_site="admin", **kwargs):
     return url
 
 
-def get_filter_id(spec):
+def get_filter_id(spec: BooleanFieldListFilter) -> str:
     return getattr(spec, "field_path", getattr(spec, "parameter_name", spec.title))
 
 
-def get_custom_url(url, admin_site='admin'):
+def get_custom_url(url: str, admin_site: str = "admin") -> str:
     """
     Take in a custom url, and try to reverse it
     """
@@ -89,7 +94,7 @@ def get_custom_url(url, admin_site='admin'):
     return url
 
 
-def get_model_meta(model_str):
+def get_model_meta(model_str: str) -> Union[None, Options]:
     """
     Get model meta class
     """
@@ -101,7 +106,7 @@ def get_model_meta(model_str):
         return None
 
 
-def get_app_admin_urls(app, admin_site='admin'):
+def get_app_admin_urls(app: str, admin_site: str = "admin") -> List[Dict]:
     """
     For the given app string, get links to all the app models admin views
     """
@@ -128,7 +133,7 @@ def get_app_admin_urls(app, admin_site='admin'):
     return models
 
 
-def get_view_permissions(user):
+def get_view_permissions(user: AbstractUser) -> Set[str]:
     """
     Get model names based on a users view/change permissions
     """
@@ -136,7 +141,9 @@ def get_view_permissions(user):
     return {x.replace("view_", "") for x in lower_perms if "view" in x or "change" in x}
 
 
-def make_menu(user, links, options, allow_appmenus=True, admin_site='admin'):
+def make_menu(
+    user: AbstractUser, links: List[Dict], options: Dict, allow_appmenus: bool = True, admin_site: str = "admin"
+) -> List[Dict]:
     """
     Make a menu from a list of user supplied links
     """

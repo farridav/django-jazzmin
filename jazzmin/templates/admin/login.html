@@ -46,13 +46,13 @@
 
                     {% if form.username.errors %}
                     <div class="callout callout-danger">
-                        <p>Username: {{ form.username.errors|join:', ' }}</p>
+                        <p>{{ form.username.label }}: {{ form.username.errors|join:', ' }}</p>
                     </div>
                     {% endif %}
 
                     {% if form.password.errors %}
                     <div class="callout callout-danger">
-                        <p>Password: {{ form.password.errors|join:', ' }}</p>
+                        <p>{{ form.password.label }}: {{ form.password.errors|join:', ' }}</p>
                     </div>
                     {% endif %}
 
@@ -66,7 +66,7 @@
 
                 {% endif %}
                 <div class="input-group mb-3">
-                    <input type="text" name="username" class="form-control" placeholder="{% trans 'username' %}" required>
+                    <input type="text" name="username" class="form-control" placeholder="{{ form.username.label }}" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="{% trans 'password' %}" required>
+                    <input type="password" name="password" class="form-control" placeholder="{{ form.password.label }}" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
