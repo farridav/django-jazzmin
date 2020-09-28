@@ -1,8 +1,9 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-22 08:51+0200\n"
+"POT-Creation-Date: 2020-09-28 15:37+0100\n"
 "PO-Revision-Date: 2020-09-22 10:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,10 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2.1\n"
-
-#: apps.py:12
-msgid "Jazzmin"
-msgstr "Jazzmin"
 
 #: templates/admin/base.html:107
 msgid "Account"
@@ -31,8 +28,12 @@ msgid "Dashboard"
 msgstr "Dashboard"
 
 #: templates/admin/base.html:276
-msgid "Jazzmin Version"
-msgstr "Jazzmin Version"
+msgid "version"
+msgstr ""
+
+#: templates/admin/base.html:279
+msgid "Copyright"
+msgstr ""
 
 #: templates/admin/base.html:279
 msgid "All rights reserved."
@@ -48,18 +49,9 @@ msgstr ""
 "Übernehmen sie dies in Ihre Einstellungs-Datei, um die UI-Anpassungen "
 "persistent zu machen"
 
-#: templates/admin/change_list_object_tools.html:7
-#, python-format
-msgid "<i class=\"fa fa-plus-circle\"></i> &nbsp; Add %(name)s"
-msgstr "<i class=\"fa fa-plus-circle\"></i> &nbsp;%(name)s hinzufügen"
-
-#: templates/admin/login.html:69
-msgid "username"
-msgstr "Benutzername"
-
-#: templates/admin/login.html:77
-msgid "password"
-msgstr "Passwort"
+#: templates/admin/index.html:90
+msgid "ago"
+msgstr ""
 
 #: templates/admin/submit_line.html:8
 msgid "Actions"
@@ -92,25 +84,23 @@ msgstr ""
 "                  View-Funktion: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>.\n"
 "              "
 
-#: templates/admin_doc/template_tag_index.html:25
-msgid "built-in tags"
-msgstr "eingebaute Tags"
-
-#: templates/admin_doc/view_index.html:15
-msgid "Views documentation"
-msgstr "View-Dokumentation"
-
-#: templatetags/jazzmin.py:354
+#: templatetags/jazzmin.py:380
 #, python-brace-format
 msgid "Added {name} “{object}”."
 msgstr "{name} “{object}” hinzugefügt."
 
-#: templatetags/jazzmin.py:364
+#: templatetags/jazzmin.py:391
 #, python-brace-format
 msgid "Changed {fields} for {name} “{object}”."
 msgstr "{fields} für {name} “{object}” geändert."
 
-#: templatetags/jazzmin.py:370
-#, python-brace-format
-msgid "Deleted {name} “{object}”."
+#: templatetags/jazzmin.py:398
+#, fuzzy, python-brace-format
+#| msgid "Deleted {name} “{object}”."
+msgid "Deleted “{object}”."
 msgstr "{name} “{object}” gelöscht."
+
+#: utils.py:66
+#, python-brace-format
+msgid "Could not reverse url from {instance}"
+msgstr ""

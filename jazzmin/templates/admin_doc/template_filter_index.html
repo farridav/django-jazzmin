@@ -22,7 +22,7 @@
     <div class="col-4 col-sm-2">
       <div class="nav flex-column nav-tabs h-100" id="filter-tab" role="tablist" aria-orientation="vertical">
         {% for library in filter_libraries %}
-          <a class="nav-link" id="tabs-{% firstof library.grouper built_in_filters %}-tab" data-toggle="pill" href="#tabs-{% firstof library.grouper built_in_filters %}" role="tab" aria-controls="tabs-{% firstof library.grouper built_in_filters %}" aria-selected="true"><h6>{% firstof library.grouper _("built-in filters") %}</h6></a>
+          <a class="nav-link" id="tabs-{% firstof library.grouper built_in_filters %}-tab" data-toggle="pill" href="#tabs-{% firstof library.grouper built_in_filters %}" role="tab" aria-controls="tabs-{% firstof library.grouper built_in_filters %}" aria-selected="true"><h6>{% firstof library.grouper _("Built-in filters") %}</h6></a>
         {% endfor %}
       </div>
     </div>
