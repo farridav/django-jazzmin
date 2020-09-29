@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-29 09:51+0100\n"
+"POT-Creation-Date: 2020-09-29 10:05+0100\n"
 "PO-Revision-Date: 2020-09-22 10:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,7 +28,6 @@ msgid "Dashboard"
 msgstr "Dashboard"
 
 #: templates/admin/base.html:276
-#| msgid "version"
 msgid "Jazzmin version"
 msgstr "Jazzmin Version"
 
@@ -83,11 +82,6 @@ msgstr ""
 #, python-brace-format
 msgid "Added {name} “{object}”."
 msgstr "{name} “{object}” hinzugefügt."
-
-#: templatetags/jazzmin.py:391
-#, python-brace-format
-msgid "Changed {fields} for {name} “{object}”."
-msgstr "{fields} für {name} “{object}” geändert."
 
 #: templatetags/jazzmin.py:398
 #, python-brace-format
