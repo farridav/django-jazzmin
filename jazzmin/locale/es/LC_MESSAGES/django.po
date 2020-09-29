@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-28 22:40+0100\n"
+"POT-Creation-Date: 2020-09-29 09:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,8 +27,8 @@ msgid "Dashboard"
 msgstr "Panel de control"
 
 #: templates/admin/base.html:276
-msgid "version"
-msgstr "versión"
+msgid "Jazzmin version"
+msgstr "Versión de Jazzmin"
 
 #: templates/admin/base.html:279
 msgid "Copyright"
@@ -73,22 +73,23 @@ msgstr "Buscar ruta para plantilla <q>%(name)s</q>:"
 #, python-format
 msgid ""
 "View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
-msgstr "Ver función: <code>%(full_name)s</code>. Nombre: <code>%(url_name)s</code>."
+msgstr ""
+"Ver función: <code>%(full_name)s</code>. Nombre: <code>%(url_name)s</code>."
 
 #: templatetags/jazzmin.py:380
 #, python-brace-format
 msgid "Added {name} “{object}”."
-msgstr "Añadir {name} “{object}”."
+msgstr "Añadido {name} “{object}”."
 
 #: templatetags/jazzmin.py:391
 #, python-brace-format
 msgid "Changed {fields} for {name} “{object}”."
-msgstr "Cambiar {fields} para {name} “{object}”."
+msgstr "Campos {fields} editados para {name} “{object}”."
 
 #: templatetags/jazzmin.py:398
 #, python-brace-format
 msgid "Deleted “{object}”."
-msgstr "“{object}”. borrado"
+msgstr "“{object}” borrado"
 
 #: utils.py:66
 #, python-brace-format
