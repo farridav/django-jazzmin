@@ -40,9 +40,7 @@
           {% for view in ns_views.list|dictsort:"url" %}
               {% ifchanged %}
               <h4><a href="{% url 'django-admindocs-views-detail' view=view.full_name %}">{{ view.url }}</a></h4>
-              <p class="small quiet">{% blocktrans with view.full_name as full_name and view.url_name as url_name %}
-                  View function: <code>{{ full_name }}</code>. Name: <code>{{ url_name }}</code>.
-              {% endblocktrans %}</p>
+              <p class="small quiet">{% blocktrans with view.full_name as full_name and view.url_name as url_name %}View function: <code>{{ full_name }}</code>. Name: <code>{{ url_name }}</code>.{% endblocktrans %}</p>
               <p>{{ view.title }}</p>
               <hr>
               {% endifchanged %}

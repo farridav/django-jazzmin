@@ -1,35 +1,34 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-29 10:05+0100\n"
-"PO-Revision-Date: 2020-09-22 10:18+0200\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: de\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
 
 #: templates/admin/base.html:107
 msgid "Account"
-msgstr "Konto"
+msgstr "Cuenta"
 
 #: templates/admin/base.html:125
 msgid "See Profile"
-msgstr "Profil anzeigen"
+msgstr "Ver perfil"
 
 #: templates/admin/base.html:165 templates/admin/index.html:6
 #: templates/admin/index.html:11
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Panel de control"
 
 #: templates/admin/base.html:276
 msgid "Jazzmin version"
-msgstr "Jazzmin Version"
+msgstr "Versión de Jazzmin"
 
 #: templates/admin/base.html:279
 msgid "Copyright"
@@ -37,37 +36,37 @@ msgstr ""
 
 #: templates/admin/base.html:279
 msgid "All rights reserved."
-msgstr "Alle Rechte vorbehalten."
+msgstr "Todos los derechos reservados."
 
 #: templates/admin/base.html:295
 msgid "UI Configuration"
-msgstr "UI Konfiguration"
+msgstr "Configuración de la IU"
 
 #: templates/admin/base.html:299
 msgid "Copy this info your settings file to persist these UI changes"
 msgstr ""
-"Übernehmen sie dies in Ihre Einstellungs-Datei, um die UI-Anpassungen "
-"persistent zu machen"
+"Copia esta información en tu archivo settings para mantener los cambios en "
+"la IU"
 
 #: templates/admin/index.html:90
 #, python-format
 msgid "%(entry.action_time|timesince)s ago"
-msgstr "%(entry.action_time|timesince)s vor"
+msgstr "Hace %(entry.action_time|timesince)s"
 
 #: templates/admin/submit_line.html:8
 msgid "Actions"
-msgstr "Aktionen"
+msgstr "Acciones"
 
 #: templates/admin_doc/template_detail.html:13
 #, python-format
 msgid "Template: <q>%(name)s</q>"
-msgstr "Vorlage: <q>%(name)s</q>"
+msgstr "Plantilla: <q>%(name)s</q>"
 
 #. Translators: Search is not a verb here, it qualifies path (a search path)
 #: templates/admin_doc/template_detail.html:17
 #, python-format
 msgid "Search path for template <q>%(name)s</q>:"
-msgstr "Suchpfad für Vorlage <q>%(name)s</q>:"
+msgstr "Buscar ruta para plantilla <q>%(name)s</q>:"
 
 #: templates/admin_doc/template_filter_index.html:37
 #: templates/admin_doc/view_index.html:43
@@ -75,20 +74,19 @@ msgstr "Suchpfad für Vorlage <q>%(name)s</q>:"
 msgid ""
 "View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
 msgstr ""
-"View-Funktion: <code>%(full_name)s</code>. Name: "
-"<code>%(url_name)s</code>.\n"
+"Ver función: <code>%(full_name)s</code>. Nombre: <code>%(url_name)s</code>."
 
 #: templatetags/jazzmin.py:380
 #, python-brace-format
 msgid "Added {name} “{object}”."
-msgstr "{name} “{object}” hinzugefügt."
+msgstr "Añadido {name} “{object}”."
 
 #: templatetags/jazzmin.py:398
 #, python-brace-format
 msgid "Deleted “{object}”."
-msgstr "“{object}” gelöscht."
+msgstr "“{object}” borrado"
 
 #: utils.py:66
 #, python-brace-format
 msgid "Could not reverse url from {instance}"
-msgstr "Url für {instance} könnte nicht gefunden werden"
+msgstr "No se pudo obtener la url para {instance}"
