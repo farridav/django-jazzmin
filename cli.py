@@ -2,12 +2,10 @@
 
 import argparse
 import os
-from argparse import Namespace
 from itertools import chain
 
 import django
 import polib
-
 
 THIS_DIR = os.path.dirname(__file__)
 LOCALE_DIR = os.path.join(THIS_DIR, "jazzmin", "locale")
@@ -44,17 +42,14 @@ def locales(cmd_args):
     new_po.save(os.path.join(LOCALE_DIR, cmd_args.locale, "LC_MESSAGES", "django.po"))
 
 
-def run(cmd_args: Namespace):
-    if cmd_args.command == "locales":
-        locales(cmd_args)
-
-
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", action="store", type=str, help="Command", choices=["locales"], default="locales")
-    parser.add_argument("--locale", action="store", dest="locale", help="locale to process", default="de")
+    subparsers = parser.add_subparsers()
+    parser_locales = subparsers.add_parser('locales', help='remove the django provided strings')
+    parser_locales.add_argument("--locale", action="store", dest="locale", help="locale to process", default="de")
+    parser_locales.set_defaults(func=locales)
     cmd_args = parser.parse_args()
-    run(cmd_args)
+    cmd_args.func(cmd_args)
 
 
 if __name__ == "__main__":
