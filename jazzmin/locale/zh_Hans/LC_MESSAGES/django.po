@@ -1,0 +1,96 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-30 10:32+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: templates/admin/auth/user/add_form.html:6
+msgid ""
+"First, enter a username and password. Then, you'll be able to edit more user"
+" options."
+msgstr "输入用户名和密码后，你将能够编辑更多的用户选项。"
+
+#: templates/admin/base.html:107
+msgid "Account"
+msgstr "账户"
+
+#: templates/admin/base.html:125
+msgid "See Profile"
+msgstr "查看个人资料"
+
+#: templates/admin/base.html:165 templates/admin/index.html:6
+#: templates/admin/index.html:11
+msgid "Dashboard"
+msgstr "仪表盘"
+
+#: templates/admin/base.html:276
+msgid "Jazzmin version"
+msgstr "Jazzmin 版本"
+
+#: templates/admin/base.html:279
+msgid "Copyright"
+msgstr "版权"
+
+#: templates/admin/base.html:279
+msgid "All rights reserved."
+msgstr "保留所有权利。"
+
+#: templates/admin/base.html:295
+msgid "UI Configuration"
+msgstr "UI配置"
+
+#: templates/admin/base.html:299
+msgid "Copy this info your settings file to persist these UI changes"
+msgstr "将此信息复制到您的设置文件以保留这些UI更改"
+
+#: templates/admin/delete_confirmation.html:64
+#: templates/admin/delete_selected_confirmation.html:69
+msgid "Yes, I'm sure"
+msgstr "是的，我确定"
+
+#: templates/admin/index.html:90
+#, python-format
+msgid "%(entry.action_time|timesince)s ago"
+msgstr "%(entry.action_time|timesince)s 前"
+
+#: templates/admin/object_history.html:58
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this"
+" admin site."
+msgstr "此对象没有修改历史。它可能不是通过管理站点添加的。"
+
+#: templates/admin/submit_line.html:8
+msgid "Actions"
+msgstr "动作"
+
+#: templates/admin_doc/template_filter_index.html:37
+#: templates/admin_doc/view_index.html:43
+#, python-format
+msgid ""
+"View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
+msgstr "查看函数：<code>%(full_name)s</code>. 名字：<code>%(url_name)s</code>。"
+
+#: templates/registration/password_change_form.html:27
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new"
+" password twice so we can verify you typed it in correctly."
+msgstr "安全起见请输入你的旧密码。然后输入两次你的新密码以确保输入正确。"
+
+#: templatetags/jazzmin.py:398
+#, python-brace-format
+msgid "Deleted “{object}”."
+msgstr "“{object}” 已删除。"
+
+#: utils.py:66
+#, python-brace-format
+msgid "Could not reverse url from {instance}"
+msgstr "无法从{instance}中反转URL"
