@@ -72,6 +72,8 @@ DEFAULT_SETTINGS = {
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {},
+    # Add a language dropdown into the admin
+    "language_chooser": False,
 }
 
 #######################################

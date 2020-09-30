@@ -51,7 +51,7 @@ def test_get_custom_url():
     """
     assert get_custom_url("http://somedomain.com") == "http://somedomain.com"
     assert get_custom_url("/relative/path") == "/relative/path"
-    assert get_custom_url("admin:polls_poll_changelist") == "/admin/polls/poll/"
+    assert get_custom_url("admin:polls_poll_changelist") == "/en/admin/polls/poll/"
 
 
 @pytest.mark.django_db

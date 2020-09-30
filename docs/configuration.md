@@ -118,6 +118,8 @@ JAZZMIN_SETTINGS = {
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
+    # Add a language dropdown into the admin
+    "language_chooser": True,
 }
 ```
 
@@ -225,6 +227,24 @@ same time, the first collapsible is opened
 Puts fieldsets and inlines into a bootstrap carousel, and allows paginaton with previous/next buttons, as well as an indicators.
 
 ![Carousel](./img/changeform_carousel.png)
+
+## Language Chooser
+You can enable a language chooser dropdown using `"language_chooser": True` in your `JAZZMIN_SETTINGS`, we mainly use this for 
+assisting with translations, but it could be of use to some people in their admin site.
+
+To make proper use of this, please ensure you have internationalisation setup properly, See https://docs.djangoproject.com/en/3.1/topics/i18n/translation/
+
+Namely:
+
+- i18n urls for your admin
+- `LocaleMiddleware` is used, and in the right place
+- `LOCALE_DIRS` is setup
+- `LANGUAGES` have been defined
+
+See our [test app settings](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/settings.py) 
+for a practical example.
+
+![Language chooser](./img/language_chooser.png)
 
 ## UI Tweaks
 

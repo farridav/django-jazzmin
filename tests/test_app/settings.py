@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
@@ -75,7 +76,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
-LANGUAGE_CODE = "en-gb"
+LANGUAGE_CODE = "en"
 TIME_ZONE = "Europe/London"
 USE_I18N = True
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
@@ -88,8 +89,8 @@ LANGUAGES = (
     ("en", gettext("English")),
     ("de", gettext("German")),
     ("es", gettext("Spanish")),
-    ("zh_Hans", gettext("Chinese (Simplified)")),
-    ("zh_Hant", gettext("Chinese (Traditional)")),
+    ("zh-hans", gettext("Simplified Chinese")),
+    ("zh-hant", gettext("Traditional Chinese")),
 )
 
 STATIC_URL = "/static/"
@@ -207,7 +208,9 @@ JAZZMIN_SETTINGS = {
     # - carousel
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+    # Add a language dropdown into the admin
+    "language_chooser": True,
 }
 
 if not DEBUG and not TEST:
