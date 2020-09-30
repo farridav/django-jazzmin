@@ -100,16 +100,23 @@
                 {% endif %}
 
                 {% if jazzmin_settings.language_chooser %}
-                <form action="/i18n/setlang/" method="post">
-                    {% csrf_token %}
-                    <select name="language">
-                        {% for lang in settings.LANGUAGES %}
-                            <option value="{{ lang.0 }}" {% ifequal lang.0 request.LANGUAGE_CODE %}selected="yes"{% endifequal %}>{{ lang.1 }}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="submit" value="{% trans 'Change language' %}" />
-                </form>
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link btn" data-toggle="dropdown" href="#" title="Choose language">
+                            <i class="fas fa-globe-americas pr-2" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left" id="jazzy-languagemenu">
+                            {% for language in languages %}
+                            <a href="{{ request|change_lang:language.code }}" class="dropdown-item{% if language.code == LANGUAGE_CODE %} active{% endif %}" lang="{{ language.code }}">
+                                {{ language.name_local }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </li>
                 {% endif %}
+
                 <li class="nav-item dropdown">
                     <a class="nav-link btn" data-toggle="dropdown" href="#" title="{{ request.user }}">
                         <i class="far fa-user pr-2" aria-hidden="true"></i>

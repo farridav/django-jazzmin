@@ -14,34 +14,34 @@ def test_side_menu(admin_client, settings):
     response = admin_client.get(url)
 
     assert parse_sidemenu(response) == {
-        "Global": ["/admin/"],
+        "Global": ["/en/admin/"],
         "Polls": [
-            "/admin/polls/campaign/",
-            "/admin/polls/cheese/",
-            "/admin/polls/choice/",
-            "/admin/polls/poll/",
-            "/admin/polls/vote/",
+            "/en/admin/polls/campaign/",
+            "/en/admin/polls/cheese/",
+            "/en/admin/polls/choice/",
+            "/en/admin/polls/poll/",
+            "/en/admin/polls/vote/",
             "/make_messages/",
         ],
-        "Administration": ["/admin/admin/logentry/"],
-        "Authentication and Authorization": ["/admin/auth/group/", "/admin/auth/user/"],
+        "Administration": ["/en/admin/admin/logentry/"],
+        "Authentication and Authorization": ["/en/admin/auth/group/", "/en/admin/auth/user/"],
     }
 
     settings.JAZZMIN_SETTINGS = override_jazzmin_settings(hide_models=["auth.user"])
     response = admin_client.get(url)
 
     assert parse_sidemenu(response) == {
-        "Global": ["/admin/"],
+        "Global": ["/en/admin/"],
         "Polls": [
-            "/admin/polls/campaign/",
-            "/admin/polls/cheese/",
-            "/admin/polls/choice/",
-            "/admin/polls/poll/",
-            "/admin/polls/vote/",
+            "/en/admin/polls/campaign/",
+            "/en/admin/polls/cheese/",
+            "/en/admin/polls/choice/",
+            "/en/admin/polls/poll/",
+            "/en/admin/polls/vote/",
             "/make_messages/",
         ],
-        "Administration": ["/admin/admin/logentry/"],
-        "Authentication and Authorization": ["/admin/auth/group/"],
+        "Administration": ["/en/admin/admin/logentry/"],
+        "Authentication and Authorization": ["/en/admin/auth/group/"],
     }
 
 
@@ -70,11 +70,11 @@ def test_permissions_on_custom_links(client, settings):
 
     client.force_login(user)
     response = client.get(url)
-    assert parse_sidemenu(response) == {"Global": ["/admin/"]}
+    assert parse_sidemenu(response) == {"Global": ["/en/admin/"]}
 
     client.force_login(user2)
     response = client.get(url)
-    assert parse_sidemenu(response) == {"Global": ["/admin/"], "Polls": ["/admin/polls/poll/", "/make_messages/"]}
+    assert parse_sidemenu(response) == {"Global": ["/en/admin/"], "Polls": ["/en/admin/polls/poll/", "/make_messages/"]}
 
 
 @pytest.mark.django_db
@@ -96,9 +96,9 @@ def test_top_menu(admin_client, settings):
     response = admin_client.get(url)
 
     assert parse_topmenu(response) == [
-        {"name": "Home", "link": "/admin/"},
+        {"name": "Home", "link": "/en/admin/"},
         {"name": "Support", "link": "https://github.com/farridav/django-jazzmin/issues"},
-        {"name": "Users", "link": "/admin/auth/user/"},
+        {"name": "Users", "link": "/en/admin/auth/user/"},
         {
             "name": "Polls",
             "link": "#",
@@ -132,10 +132,10 @@ def test_user_menu(admin_user, client, settings):
     response = client.get(url)
 
     assert parse_usermenu(response) == [
-        {"link": "/admin/password_change/", "name": "Change password"},
-        {"link": "/admin/logout/", "name": "Log out"},
-        {"link": "/admin/", "name": "Home"},
+        {"link": "/en/admin/password_change/", "name": "Change password"},
+        {"link": "/en/admin/logout/", "name": "Log out"},
+        {"link": "/en/admin/", "name": "Home"},
         {"link": "https://github.com/farridav/django-jazzmin/issues", "name": "Support"},
-        {"link": "/admin/auth/user/", "name": "Users"},
-        {"link": "/admin/auth/user/{}/change/".format(admin_user.pk), "name": "See Profile"},
+        {"link": "/en/admin/auth/user/", "name": "Users"},
+        {"link": "/en/admin/auth/user/{}/change/".format(admin_user.pk), "name": "See Profile"},
     ]

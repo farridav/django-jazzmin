@@ -49,7 +49,7 @@ def test_delete_but_no_view_permission(client):
     client.force_login(user)
 
     response = client.get(url)
-    assert parse_sidemenu(response) == {"Global": ["/admin/"], "Polls": [None]}
+    assert parse_sidemenu(response) == {"Global": ["/en/admin/"], "Polls": [None]}
 
 
 @pytest.mark.django_db
@@ -65,4 +65,4 @@ def test_no_permission(client):
     client.force_login(user)
 
     response = client.get(url)
-    assert parse_sidemenu(response) == {"Global": ["/admin/"]}
+    assert parse_sidemenu(response) == {"Global": ["/en/admin/"]}

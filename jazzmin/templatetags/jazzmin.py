@@ -18,6 +18,7 @@ from django.http import HttpRequest
 from django.template import Library, Context
 from django.template.loader import get_template
 from django.templatetags.static import static
+from django.utils import translation
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe, SafeText
 from django.utils.text import get_text_list, slugify
@@ -243,10 +244,20 @@ def has_fieldsets(adminform: AdminForm) -> bool:
 
 
 @register.filter
+def change_lang(request: HttpRequest, language_code: str) -> str:
+    """
+    Change the url to use the given language
+    """
+    current_language = translation.get_language()
+    return request.get_full_path().replace(current_language, language_code)
+
+
+@register.filter
 def debug(value: Any) -> Any:
     """
     Add in a breakpoint here and use filter in templates for debugging ;)
     """
+    breakpoint()
     return type(value)
 
 
@@ -387,9 +398,7 @@ def action_message_to_list(action: LogEntry) -> List[Dict]:
                 )
                 if "name" in sub_message["changed"]:
                     sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])
-                    messages.append(
-                        changed(gettext("Changed {fields}.").format(**sub_message["changed"]))
-                    )
+                    messages.append(changed(gettext("Changed {fields}.").format(**sub_message["changed"])))
                 else:
                     messages.append(changed(gettext("Changed {fields}.").format(**sub_message["changed"])))
 
