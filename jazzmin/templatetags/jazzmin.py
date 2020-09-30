@@ -257,7 +257,6 @@ def debug(value: Any) -> Any:
     """
     Add in a breakpoint here and use filter in templates for debugging ;)
     """
-    breakpoint()
     return type(value)
 
 

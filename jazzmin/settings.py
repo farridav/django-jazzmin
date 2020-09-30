@@ -72,6 +72,8 @@ DEFAULT_SETTINGS = {
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {},
+    # Add a language dropdown into the admin
+    "language_chooser": False,
 }
 
 #######################################
@@ -110,8 +112,6 @@ DEFAULT_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     # Use a flat style sidebar
     "sidebar_nav_flat_style": False,
-    # Add a language dropdown into the admin
-    "language_chooser": False,
 }
 
 CHANGEFORM_TEMPLATES = {
