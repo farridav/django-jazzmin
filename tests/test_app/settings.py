@@ -88,6 +88,8 @@ LANGUAGES = (
     ("en", gettext("English")),
     ("de", gettext("German")),
     ("es", gettext("Spanish")),
+    ("zh_Hans", gettext("Chinese (Simplified)")),
+    ("zh_Hant", gettext("Chinese (Traditional)")),
 )
 
 STATIC_URL = "/static/"
