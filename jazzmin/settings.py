@@ -110,6 +110,8 @@ DEFAULT_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     # Use a flat style sidebar
     "sidebar_nav_flat_style": False,
+    # Add a language dropdown into the admin
+    "language_chooser": False,
 }
 
 CHANGEFORM_TEMPLATES = {

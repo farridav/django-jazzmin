@@ -388,7 +388,7 @@ def action_message_to_list(action: LogEntry) -> List[Dict]:
                 if "name" in sub_message["changed"]:
                     sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])
                     messages.append(
-                        changed(gettext("Changed {fields}.").format(sub_message["changed"]["fields"]))
+                        changed(gettext("Changed {fields}.").format(**sub_message["changed"]))
                     )
                 else:
                     messages.append(changed(gettext("Changed {fields}.").format(**sub_message["changed"])))

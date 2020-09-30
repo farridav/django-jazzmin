@@ -99,6 +99,17 @@
                 </li>
                 {% endif %}
 
+                {% if jazzmin_settings.language_chooser %}
+                <form action="/i18n/setlang/" method="post">
+                    {% csrf_token %}
+                    <select name="language">
+                        {% for lang in settings.LANGUAGES %}
+                            <option value="{{ lang.0 }}" {% ifequal lang.0 request.LANGUAGE_CODE %}selected="yes"{% endifequal %}>{{ lang.1 }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="{% trans 'Change language' %}" />
+                </form>
+                {% endif %}
                 <li class="nav-item dropdown">
                     <a class="nav-link btn" data-toggle="dropdown" href="#" title="{{ request.user }}">
                         <i class="far fa-user pr-2" aria-hidden="true"></i>
