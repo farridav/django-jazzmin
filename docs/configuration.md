@@ -237,9 +237,9 @@ To make proper use of this, please ensure you have internationalisation setup pr
 Namely:
 
 - i18n urls for your admin
-- `LocaleMiddlware` used
-- `LOCALE_DIRS` setup
-- `LANGUAGES` defined
+- `LocaleMiddleware` is used, and in the right place
+- `LOCALE_DIRS` is setup
+- `LANGUAGES` have been defined
 
 See our [test app settings](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/settings.py) 
 for a practical example.
