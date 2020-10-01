@@ -76,7 +76,7 @@ msgid ""
 "View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
 msgstr ""
 "View-Funktion: <code>%(full_name)s</code>. Name: "
-"<code>%(url_name)s</code>.\n"
+"<code>%(url_name)s</code>."
 
 #: templatetags/jazzmin.py:380
 #, python-brace-format
