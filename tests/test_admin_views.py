@@ -63,17 +63,27 @@ def test_password_change(admin_client):
         "django/forms/widgets/password.html",
         "django/forms/widgets/input.html",
         "django/forms/widgets/attrs.html",
+        "jazzmin/includes/ui_builder_panel.html",
     }
 
     response = admin_client.post(
         url,
-        data={"old_password": "password", "new_password1": "PickleRick123!!", "new_password2": "PickleRick123!!"},
+        data={
+            "old_password": "password",
+            "new_password1": "PickleRick123!!",
+            "new_password2": "PickleRick123!!"
+        },
         follow=True,
     )
     templates_used = [t.name for t in response.templates]
 
     assert "Password change successful" in response.content.decode()
-    assert set(templates_used) == {"registration/password_change_done.html", "admin/base.html", "admin/base_site.html"}
+    assert set(templates_used) == {
+        "registration/password_change_done.html",
+        "admin/base.html",
+        "admin/base_site.html",
+        "jazzmin/includes/ui_builder_panel.html",
+    }
 
 
 @pytest.mark.django_db
@@ -87,7 +97,12 @@ def test_dashboard(admin_client):
     templates_used = [t.name for t in response.templates]
 
     assert response.status_code == 200
-    assert templates_used == ["admin/index.html", "admin/base_site.html", "admin/base.html"]
+    assert templates_used == [
+        "admin/index.html",
+        "admin/base_site.html",
+        "admin/base.html",
+        "jazzmin/includes/ui_builder_panel.html",
+    ]
 
 
 @pytest.mark.django_db
@@ -126,6 +141,7 @@ def test_detail(admin_client, test_data):
         "django/forms/widgets/textarea.html": 1,
         "django/forms/widgets/time.html": 2,
         "jazzmin/includes/horizontal_tabs.html": 1,
+        "jazzmin/includes/ui_builder_panel.html": 1,
     }
 
     # The templates that were used
@@ -151,6 +167,7 @@ def test_detail(admin_client, test_data):
         "django/forms/widgets/textarea.html",
         "django/forms/widgets/time.html",
         "jazzmin/includes/horizontal_tabs.html",
+        "jazzmin/includes/ui_builder_panel.html",
     }
 
     # TODO: post data and confirm we can change model instances
@@ -187,6 +204,7 @@ def test_list(admin_client, test_data):
         "django/forms/widgets/input.html": 12,
         "django/forms/widgets/select.html": 2,
         "django/forms/widgets/select_option.html": 4,
+        "jazzmin/includes/ui_builder_panel.html": 1,
     }
 
     # The templates that were used
@@ -207,6 +225,7 @@ def test_list(admin_client, test_data):
         "django/forms/widgets/input.html",
         "django/forms/widgets/select.html",
         "django/forms/widgets/select_option.html",
+        "jazzmin/includes/ui_builder_panel.html",
     }
 
 
@@ -225,10 +244,20 @@ def test_history(admin_client, test_data):
     render_counts = {x: templates_used.count(x) for x in set(templates_used)}
 
     # The number of times each template was rendered
-    assert render_counts == {"admin/object_history.html": 1, "admin/base.html": 1, "admin/base_site.html": 1}
+    assert render_counts == {
+        "admin/object_history.html": 1,
+        "admin/base.html": 1,
+        "admin/base_site.html": 1,
+        "jazzmin/includes/ui_builder_panel.html": 1,
+    }
 
     # The templates that were used
-    assert set(templates_used) == {"admin/object_history.html", "admin/base.html", "admin/base_site.html"}
+    assert set(templates_used) == {
+        "admin/object_history.html",
+        "admin/base.html",
+        "admin/base_site.html",
+        "jazzmin/includes/ui_builder_panel.html",
+    }
 
 
 @pytest.mark.django_db
@@ -251,6 +280,7 @@ def test_delete(admin_client, test_data):
         "admin/base_site.html": 1,
         "admin/base.html": 1,
         "admin/includes/object_delete_summary.html": 1,
+        "jazzmin/includes/ui_builder_panel.html": 1,
     }
 
     # The templates that were used
@@ -259,6 +289,7 @@ def test_delete(admin_client, test_data):
         "admin/base_site.html",
         "admin/base.html",
         "admin/includes/object_delete_summary.html",
+        "jazzmin/includes/ui_builder_panel.html",
     }
 
     response = admin_client.post(url, data={"post": "yes"}, follow=True)
