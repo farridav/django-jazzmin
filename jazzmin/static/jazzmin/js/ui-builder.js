@@ -1,5 +1,5 @@
 (function ($) {
-    'use strict'
+    'use strict';
 
     var $body = $('body');
     var $footer = $('footer');
@@ -8,7 +8,7 @@
     var $navbar = $('nav#jazzy-navbar');
     var $logo = $('#jazzy-logo');
 
-    window.ui_changes = window.ui_changes || {}
+    window.ui_changes = window.ui_changes || {};
 
     // Toggles
     function addListeners() {
@@ -166,4 +166,4 @@
     setFromExisting();
     addListeners();
 
-})(jQuery)
+})(jQuery);
