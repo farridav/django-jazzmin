@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-29 10:05+0100\n"
+"POT-Creation-Date: 2020-10-03 17:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,45 +13,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/admin/base.html:107
+#: templates/admin/base.html:125
 msgid "Account"
 msgstr "Cuenta"
 
-#: templates/admin/base.html:125
+#: templates/admin/base.html:143
 msgid "See Profile"
 msgstr "Ver perfil"
 
-#: templates/admin/base.html:165 templates/admin/index.html:6
+#: templates/admin/base.html:183 templates/admin/index.html:6
 #: templates/admin/index.html:11
 msgid "Dashboard"
 msgstr "Panel de control"
 
-#: templates/admin/base.html:276
+#: templates/admin/base.html:294
 msgid "Jazzmin version"
 msgstr "Versión de Jazzmin"
 
-#: templates/admin/base.html:279
+#: templates/admin/base.html:297
 msgid "Copyright"
 msgstr ""
 
-#: templates/admin/base.html:279
+#: templates/admin/base.html:297
 msgid "All rights reserved."
 msgstr "Todos los derechos reservados."
 
-#: templates/admin/base.html:295
+#: templates/admin/base.html:313
 msgid "UI Configuration"
 msgstr "Configuración de la IU"
 
-#: templates/admin/base.html:299
+#: templates/admin/base.html:317
 msgid "Copy this info your settings file to persist these UI changes"
 msgstr ""
 "Copia esta información en tu archivo settings para mantener los cambios en "
 "la IU"
 
 #: templates/admin/index.html:90
-#, python-format
-msgid "%(entry.action_time|timesince)s ago"
-msgstr "Hace %(entry.action_time|timesince)s"
+#| msgid "%(entry.action_time|timesince)s ago"
+msgid "%(timesince)s ago"
+msgstr "Hace %(timesince)s"
 
 #: templates/admin/submit_line.html:8
 msgid "Actions"
@@ -76,12 +76,12 @@ msgid ""
 msgstr ""
 "Ver función: <code>%(full_name)s</code>. Nombre: <code>%(url_name)s</code>."
 
-#: templatetags/jazzmin.py:380
+#: templatetags/jazzmin.py:390
 #, python-brace-format
 msgid "Added {name} “{object}”."
 msgstr "Añadido {name} “{object}”."
 
-#: templatetags/jazzmin.py:398
+#: templatetags/jazzmin.py:406
 #, python-brace-format
 msgid "Deleted “{object}”."
 msgstr "“{object}” borrado"

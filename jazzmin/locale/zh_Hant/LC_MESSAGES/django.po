@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-30 10:31+0800\n"
+"POT-Creation-Date: 2020-10-03 17:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,64 +13,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: templates/admin/auth/user/add_form.html:6
-msgid ""
-"First, enter a username and password. Then, you'll be able to edit more user"
-" options."
-msgstr "首先，輸入一個使用者名稱和密碼。然後你可以編輯更多使用者選項。"
-
-#: templates/admin/base.html:107
+#: templates/admin/base.html:125
 msgid "Account"
 msgstr "帳戶"
 
-#: templates/admin/base.html:125
+#: templates/admin/base.html:143
 msgid "See Profile"
 msgstr "查看個人資料"
 
-#: templates/admin/base.html:165 templates/admin/index.html:6
+#: templates/admin/base.html:183 templates/admin/index.html:6
 #: templates/admin/index.html:11
 msgid "Dashboard"
 msgstr "儀表盤"
 
-#: templates/admin/base.html:276
+#: templates/admin/base.html:294
 msgid "Jazzmin version"
 msgstr "Jazzmin 版本"
 
-#: templates/admin/base.html:279
+#: templates/admin/base.html:297
 msgid "Copyright"
 msgstr "版權"
 
-#: templates/admin/base.html:279
+#: templates/admin/base.html:297
 msgid "All rights reserved."
 msgstr "保留所有權利。"
 
-#: templates/admin/base.html:295
+#: templates/admin/base.html:313
 msgid "UI Configuration"
 msgstr "UI配置"
 
-#: templates/admin/base.html:299
+#: templates/admin/base.html:317
 msgid "Copy this info your settings file to persist these UI changes"
 msgstr "將此信息複製到您的設置文件以保留這些UI更改"
 
-#: templates/admin/delete_confirmation.html:64
-#: templates/admin/delete_selected_confirmation.html:69
-msgid "Yes, I'm sure"
-msgstr "是的，我確定"
-
 #: templates/admin/index.html:90
-#, python-format
-msgid "%(entry.action_time|timesince)s ago"
-msgstr "%(entry.action_time|timesince)s 前"
-
-#: templates/admin/object_history.html:58
-msgid ""
-"This object doesn't have a change history. It probably wasn't added via this"
-" admin site."
-msgstr "這個物件沒有變更的歷史。它可能不是透過這個管理網站新增的。"
+#| msgid "%(entry.action_time|timesince)s ago"
+msgid "%(timesince)s ago"
+msgstr "%(timesince)s 前"
 
 #: templates/admin/submit_line.html:8
 msgid "Actions"
 msgstr "動作"
+
+#: templates/admin_doc/template_detail.html:13
+#, python-format
+msgid "Template: <q>%(name)s</q>"
+msgstr ""
+
+#. Translators: Search is not a verb here, it qualifies path (a search path)
+#: templates/admin_doc/template_detail.html:17
+#, python-format
+msgid "Search path for template <q>%(name)s</q>:"
+msgstr ""
 
 #: templates/admin_doc/template_filter_index.html:37
 #: templates/admin_doc/view_index.html:43
@@ -79,13 +73,13 @@ msgid ""
 "View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
 msgstr "視圖函式：<code>%(full_name)s</code>，名稱：<code>%(url_name)s</code>。"
 
-#: templates/registration/password_change_form.html:27
-msgid ""
-"Please enter your old password, for security's sake, and then enter your new"
-" password twice so we can verify you typed it in correctly."
-msgstr "為了安全上的考量，請輸入你的舊密碼，再輸入新密碼兩次，讓我們核驗你已正確地輸入。"
+#: templatetags/jazzmin.py:390
+#, fuzzy, python-brace-format
+#| msgid "Deleted “{object}”."
+msgid "Added {name} “{object}”."
+msgstr "“{object}” 已刪除。"
 
-#: templatetags/jazzmin.py:398
+#: templatetags/jazzmin.py:406
 #, python-brace-format
 msgid "Deleted “{object}”."
 msgstr "“{object}” 已刪除。"
