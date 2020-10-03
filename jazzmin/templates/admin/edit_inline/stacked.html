@@ -7,7 +7,7 @@
 
             {% for inline_admin_form in inline_admin_formset %}
                 <div class="panel inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
-                    <div class="card card-primary{% if not inline_admin_form.original %} card-outline{% endif %}">
+                    <div class="card card-primary card-stacked{% if not inline_admin_form.original %} card-striped new-stacked{% endif %}">
                         <div class="card-header with-border">
                             <h3 class="card-title">
                                 <span class="inline_label">
@@ -25,7 +25,7 @@
                                             </span>
                                         {% endif %}
                                     {% else %}
-                                        {% trans "Add " %}{{ inline_admin_formset.opts.verbose_name|capfirst }} - #{{ forloop.counter }}
+                                        {% trans "Add new " %}{{ inline_admin_formset.opts.verbose_name|capfirst }} - #{{ forloop.counter }}
                                     {% endif %}
                                 </span>
                                 {% if inline_admin_form.show_url %}
