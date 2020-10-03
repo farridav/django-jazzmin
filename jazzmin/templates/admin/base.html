@@ -110,7 +110,7 @@
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left" id="jazzy-languagemenu">
                             {% for language in languages %}
                             <a href="{{ request|change_lang:language.code }}" class="dropdown-item{% if language.code == LANGUAGE_CODE %} active{% endif %}" lang="{{ language.code }}">
-                                {{ language.name_local }}
+                                {{ language.name_local|title }}
                             </a>
                             {% endfor %}
                         </div>
