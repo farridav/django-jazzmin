@@ -11,20 +11,20 @@
                         <div class="card-header">
                             <h3 class="card-title">
                                 {% if inline_admin_form.original %}
-                                    {{ inline_admin_form.original }}
                                     {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
                                         <span class="card-tools">
                                             <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %}">
                                             {% if inline_admin_formset.has_change_permission %}
-                                                <i class="fas fa-pencil-alt fa-sm"></i>
+                                                <i class="fas fa-pencil-alt fa-sm float-right"></i>
                                             {% else %}
-                                                <i class="fas fa-eye fa-sm"></i>
+                                                <i class="fas fa-eye fa-sm float-right"></i>
                                             {% endif %}
                                             </a>
                                         </span>
                                     {% endif %}
+                                    {{ inline_admin_form.original }}
                                 {% else %}
-                                    {% trans "Add new " %}{{ inline_admin_formset.opts.verbose_name|capfirst }} - #{{ forloop.counter }}
+                                <span class="text-success"><i class="fas fa-plus fa-sm"></i></span>  {% trans "Add new " %}{{ inline_admin_formset.opts.verbose_name|capfirst }} - #{{ forloop.counter }}
                                 {% endif %}
                                 {% if inline_admin_form.show_url %}
                                     <a href="{{ inline_admin_form.absolute_url }}">{% trans "View on site" %}</a>
