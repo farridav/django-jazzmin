@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.template.defaultfilters import truncatechars
 from django.urls import reverse
 from django.utils import timezone
 
@@ -37,7 +38,7 @@ class Choice(models.Model):
         return "{} and {}".format(self.choice_text, cheese)
 
     def __str__(self):
-        return self.choice_text[:25]
+        return truncatechars(self.choice_text, 20)
 
 
 class Vote(models.Model):

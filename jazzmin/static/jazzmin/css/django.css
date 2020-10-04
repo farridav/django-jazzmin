@@ -594,10 +594,8 @@ body.no-sidebar .main-header {
 
 .vCheckboxLabel.inline {
     vertical-align: top;
-    padding-top: 1px;
     color: red;
-    font-style: italic;
-    padding-left: 3px;
+    margin-bottom: 0;
 }
 
 .inline-related .card-header > span {
@@ -685,49 +683,17 @@ form ul.inline li {
     padding-right: 7px;
 }
 
-
-/* Stacked Inlines */
-.card-striped {
-    background-image: repeating-linear-gradient(
-          45deg,
-          rgba(1,124,254,.5) 0px,
-          rgba(1,124,254,.5) 40px,
-          rgba(61,144,254,.5) 40px,
-          rgba(61,144,254,.5) 80px
-    );
+/* stacked inlines */
+a.inline-deletelink:hover {
+    border: 1px solid darkred;
 }
 
-.new-stacked .card-header {
-    background-color: rgba(61,144,254,.8) !important;
-}
-
-.new-stacked .card-title {
+a.inline-deletelink {
     float: right;
-}
-
-.card-stacked .inlinechangelink, .card-stacked .inlineviewlink {
-    width: 20px;
-    float: right;
-}
-
-.card-stacked .inline-deletelink {
-    float: left;
-    width: 25%;
-    padding: .25rem .5rem;
-    margin: 1rem;
-    font-size: 1rem;
-    border-radius: .2rem;
-    color: #dc3545 !important;
-    display: block;
-    font-weight: 400;
-    text-align: center;
-    vertical-align: middle;
-    border: 1px solid #dc3545;
-    background-color: rgba(255, 255, 255, .5);
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-.card-stacked .inline-deletelink:hover {
-    background-color: #dc3545;
-    color: #ffffff !important;
+    padding: 3px 5px;
+    margin: 10px;
+    background-color: red;
+    border-radius: 7px;
+    color: white !important;
+    border: 1px solid white;
 }

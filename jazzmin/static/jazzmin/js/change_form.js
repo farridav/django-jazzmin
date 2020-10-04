@@ -18,13 +18,14 @@ function handleCarousel($carousel) {
 
     // If we have errors, open that tab first
     if (errors.length) {
-        const errorCarousel = errors.eq(0).closest('.carousel-item').data('carouselid');
-        $carousel.carousel(errorCarousel);
-
+        const errorCarousel = errors.eq(0).closest('.carousel-item');
+        $carousel.carousel(errorCarousel.data('carouselid'));
+        $('.carousel-fieldset-label', $carousel).text(errorCarousel.data()["label"]);
     // If we have a tab hash, open that
     } else if (hash) {
-        const activeCarousel = $('.carousel-item[data-target="' + hash + '"]', $carousel).data('carouselid');
-        $carousel.carousel(activeCarousel);
+        const activeCarousel = $('.carousel-item[data-target="' + hash + '"]', $carousel);
+        $carousel.carousel(activeCarousel.data()["carouselid"]);
+        $('.carousel-fieldset-label', $carousel).text(activeCarousel.data()["label"]);
     }
 
     // Update page hash/history on slide
@@ -52,15 +53,15 @@ function handleTabs($tabs) {
     // If we have errors, open that tab first
     if (errors.length) {
         const tabId = errors.eq(0).closest('.tab-pane').attr('id');
-        $('.nav-tabs a[href="#' + tabId + '"]').tab('show');
+        $('a[href="#' + tabId + '"]').tab('show');
 
     // If we have a tab hash, open that
     } else if (hash) {
-        $('.nav-tabs a[href="' + hash + '"]', $tabs).tab('show');
+        $('a[href="' + hash + '"]', $tabs).tab('show');
     }
 
     // Change hash for page-reload
-    $('.nav-tabs a').on('shown.bs.tab', function (e) {
+    $('a', $tabs).on('shown.bs.tab', function (e) {
 
         fix_selector_height();
 
@@ -113,6 +114,7 @@ $(document).ready(function () {
     $('.inline-related fieldset.module .add-row a').addClass('btn btn-sm btn-default float-right');
 
     // Ensure we preserve the tab the user was on using the url hash, even on page reload
+
     if ($tabs.length) {handleTabs($tabs);}
     else if ($carousel.length) {handleCarousel($carousel);}
     else if ($collapsible.length) {handleCollapsible($collapsible);}
