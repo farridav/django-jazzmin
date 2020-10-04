@@ -81,7 +81,7 @@
             window.ui_changes['layout_boxed'] = this.checked;
         });
 
-        $('#actions-sticky-top').on('click', function () {
+        $('#actions-fixed').on('click', function () {
             $actions.toggleClass('sticky-top');
             window.ui_changes['actions_sticky_top'] = this.checked;
         });
