@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-29 10:05+0100\n"
+"POT-Creation-Date: 2020-10-03 17:04+0100\n"
 "PO-Revision-Date: 2020-09-22 10:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,45 +14,45 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: templates/admin/base.html:107
+#: templates/admin/base.html:125
 msgid "Account"
 msgstr "Konto"
 
-#: templates/admin/base.html:125
+#: templates/admin/base.html:143
 msgid "See Profile"
 msgstr "Profil anzeigen"
 
-#: templates/admin/base.html:165 templates/admin/index.html:6
+#: templates/admin/base.html:183 templates/admin/index.html:6
 #: templates/admin/index.html:11
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: templates/admin/base.html:276
+#: templates/admin/base.html:294
 msgid "Jazzmin version"
 msgstr "Jazzmin Version"
 
-#: templates/admin/base.html:279
+#: templates/admin/base.html:297
 msgid "Copyright"
 msgstr ""
 
-#: templates/admin/base.html:279
+#: templates/admin/base.html:297
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 
-#: templates/admin/base.html:295
+#: templates/admin/base.html:313
 msgid "UI Configuration"
 msgstr "UI Konfiguration"
 
-#: templates/admin/base.html:299
+#: templates/admin/base.html:317
 msgid "Copy this info your settings file to persist these UI changes"
 msgstr ""
 "Übernehmen sie dies in Ihre Einstellungs-Datei, um die UI-Anpassungen "
 "persistent zu machen"
 
 #: templates/admin/index.html:90
-#, python-format
-msgid "%(entry.action_time|timesince)s ago"
-msgstr "%(entry.action_time|timesince)s vor"
+#| msgid "%(entry.action_time|timesince)s ago"
+msgid "%(timesince)s ago"
+msgstr "%(timesince)s vor"
 
 #: templates/admin/submit_line.html:8
 msgid "Actions"
@@ -75,15 +75,14 @@ msgstr "Suchpfad für Vorlage <q>%(name)s</q>:"
 msgid ""
 "View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
 msgstr ""
-"View-Funktion: <code>%(full_name)s</code>. Name: "
-"<code>%(url_name)s</code>."
+"View-Funktion: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
 
-#: templatetags/jazzmin.py:380
+#: templatetags/jazzmin.py:390
 #, python-brace-format
 msgid "Added {name} “{object}”."
 msgstr "{name} “{object}” hinzugefügt."
 
-#: templatetags/jazzmin.py:398
+#: templatetags/jazzmin.py:406
 #, python-brace-format
 msgid "Deleted “{object}”."
 msgstr "“{object}” gelöscht."

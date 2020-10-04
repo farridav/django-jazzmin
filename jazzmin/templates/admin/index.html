@@ -87,7 +87,7 @@
                                 {% endif %}
 
                                 <div class="timeline-item">
-                                    <span class="time"><i class="fas fa-clock"></i>{% blocktrans %}{{ entry.action_time|timesince }} ago{% endblocktrans %}</span>
+                                    <span class="time"><i class="fas fa-clock"></i> {% blocktrans with timesince=entry.action_time|timesince %}{{ timesince }} ago{% endblocktrans %}</span>
                                     <h3 class="timeline-header no-border">
                                         {% if entry.is_deletion or not entry.get_admin_url %}
                                             {{ entry.object_repr }}
