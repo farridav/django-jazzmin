@@ -594,10 +594,8 @@ body.no-sidebar .main-header {
 
 .vCheckboxLabel.inline {
     vertical-align: top;
-    padding-top: 1px;
     color: red;
-    font-style: italic;
-    padding-left: 3px;
+    margin-bottom: 0;
 }
 
 .inline-related .card-header > span {
@@ -683,4 +681,19 @@ form ul.inline {
 form ul.inline li {
     float: left;
     padding-right: 7px;
+}
+
+/* stacked inlines */
+a.inline-deletelink:hover {
+    border: 1px solid darkred;
+}
+
+a.inline-deletelink {
+    float: right;
+    padding: 3px 5px;
+    margin: 10px;
+    background-color: red;
+    border-radius: 7px;
+    color: white !important;
+    border: 1px solid white;
 }

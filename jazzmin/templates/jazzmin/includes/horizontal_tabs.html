@@ -10,7 +10,7 @@
     {% endfor %}
     {% for inline_admin_formset in inline_admin_formsets %}
         <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|unicode_slugify }}" aria-selected="false" href="#{{ inline_admin_formset.opts.verbose_name_plural|unicode_slugify }}-tab">
+            <a class="nav-link" data-toggle="pill" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|unicode_slugify }}-tab" aria-selected="false" href="#{{ inline_admin_formset.opts.verbose_name_plural|unicode_slugify }}-tab">
                 {{ inline_admin_formset.opts.verbose_name_plural|title }}
             </a>
         </li>

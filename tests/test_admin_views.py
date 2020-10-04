@@ -68,11 +68,7 @@ def test_password_change(admin_client):
 
     response = admin_client.post(
         url,
-        data={
-            "old_password": "password",
-            "new_password1": "PickleRick123!!",
-            "new_password2": "PickleRick123!!"
-        },
+        data={"old_password": "password", "new_password1": "PickleRick123!!", "new_password2": "PickleRick123!!"},
         follow=True,
     )
     templates_used = [t.name for t in response.templates]
@@ -124,20 +120,20 @@ def test_detail(admin_client, test_data):
         "admin/base_site.html": 1,
         "admin/change_form.html": 1,
         "admin/change_form_object_tools.html": 1,
-        "admin/edit_inline/tabular.html": 1,
-        "admin/includes/fieldset.html": 2,
+        "admin/edit_inline/stacked.html": 1,
+        "admin/includes/fieldset.html": 7,
         "admin/prepopulated_fields_js.html": 1,
         "admin/submit_line.html": 1,
         "admin/widgets/foreign_key_raw_id.html": 1,
         "admin/widgets/split_datetime.html": 1,
-        "django/forms/widgets/attrs.html": 35,
+        "django/forms/widgets/attrs.html": 29,
         "django/forms/widgets/checkbox.html": 4,
         "django/forms/widgets/date.html": 2,
-        "django/forms/widgets/hidden.html": 18,
-        "django/forms/widgets/input.html": 34,
+        "django/forms/widgets/hidden.html": 14,
+        "django/forms/widgets/input.html": 28,
         "django/forms/widgets/multiwidget.html": 1,
         "django/forms/widgets/splithiddendatetime.html": 1,
-        "django/forms/widgets/text.html": 7,
+        "django/forms/widgets/text.html": 5,
         "django/forms/widgets/textarea.html": 1,
         "django/forms/widgets/time.html": 2,
         "jazzmin/includes/horizontal_tabs.html": 1,
@@ -150,7 +146,7 @@ def test_detail(admin_client, test_data):
         "admin/base_site.html",
         "admin/change_form.html",
         "admin/change_form_object_tools.html",
-        "admin/edit_inline/tabular.html",
+        "admin/edit_inline/stacked.html",
         "admin/includes/fieldset.html",
         "admin/prepopulated_fields_js.html",
         "admin/submit_line.html",
