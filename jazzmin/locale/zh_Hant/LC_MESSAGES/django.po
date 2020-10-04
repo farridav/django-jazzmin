@@ -55,17 +55,6 @@ msgstr "%(timesince)s 前"
 msgid "Actions"
 msgstr "動作"
 
-#: templates/admin_doc/template_detail.html:13
-#, python-format
-msgid "Template: <q>%(name)s</q>"
-msgstr ""
-
-#. Translators: Search is not a verb here, it qualifies path (a search path)
-#: templates/admin_doc/template_detail.html:17
-#, python-format
-msgid "Search path for template <q>%(name)s</q>:"
-msgstr ""
-
 #: templates/admin_doc/template_filter_index.html:37
 #: templates/admin_doc/view_index.html:43
 #, python-format
