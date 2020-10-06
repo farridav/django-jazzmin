@@ -13,7 +13,7 @@ div.inline-related {
 }
 
 .empty-form {
-    display: none;
+    display: none !important;
 }
 
 .inline-related .tabular {
