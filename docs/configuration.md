@@ -73,8 +73,8 @@ JAZZMIN_SETTINGS = {
     # Hide these models when generating side menu (e.g auth.user)
     'hide_models': [],
 
-    # List of apps to base side menu ordering off of (does not need to contain all apps)
-    'order_with_respect_to': ['accounts', 'polls'],
+    # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
+    "order_with_respect_to": ["auth", "polls", "polls.choice", "polls.poll"],
 
     # Custom links to append to app groups, keyed on app name
     'custom_links': {
@@ -154,8 +154,33 @@ links to model admin pages.
 You can omit apps, or models from this generated menu, using `hide_apps` or `hide_models` where app is like `auth` and 
 model is like `auth.user`
 
-Ordering of the menu can be done using `order_with_respect_to`, which is a list of apps you want to base the ordering off 
-of, it can be a partial list 
+Ordering of the menu can be done using `order_with_respect_to`, which is a list of apps/models/custom links you want to 
+base  the ordering off of, it can be a full, or partial list, some examples:
+
+```
+# Order the auth app before the polls app, other apps will be alphabetically placed after these
+"order_with_respect_to": ["auth", "polls"],
+
+# Keep the same app ordering as above, but also order choice and poll model links within the polls app
+"order_with_respect_to": ["auth", "polls", "polls.choice", "polls.poll"],
+
+# Just make sure auth is first
+"order_with_respect_to": ["auth"],
+
+# Order apps automatically, but make sure choice and poll admin links are first within the polls app
+"order_with_respect_to": ["polls.choice", "polls.poll"],
+
+# Place our choice model admin link and our custom link first within the polls app (Note: custom link name used for order key)
+"order_with_respect_to": ["polls.choice", "Make Messages"],
+
+# do nothing
+"order_with_respect_to": [],
+
+# Still do nothing
+"order_with_respect_to": ["doesnt_exist"],
+```
+
+Currently, custom links (See below) cannot be ordered
 
 ### Side menu custom links
 
