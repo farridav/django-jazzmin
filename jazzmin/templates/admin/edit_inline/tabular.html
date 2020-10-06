@@ -27,13 +27,30 @@
                     <tr class="form-row {% if inline_admin_form.original or inline_admin_form.show_url %}has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %}"
                         id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
                         <td class="original">
-                            {% if inline_admin_form.original or inline_admin_form.show_url %}<p>
+                            {% if inline_admin_form.original or inline_admin_form.show_url %}
+                            <p>
                                 {% if inline_admin_form.original %}
+                                    {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
+                                        <a
+                                            href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}"
+                                            class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %}">
+                                            {% if inline_admin_formset.has_change_permission %}
+                                                <i class="fas fa-pencil-alt fa-sm"> </i>
+                                            {% else %}
+                                                <i class="fas fa-eye fa-sm"> </i>
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
                                     {{ inline_admin_form.original }}
-                                    {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}<a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %}">{% if inline_admin_formset.has_change_permission %}{% translate "Change" %}{% else %}{% translate "View" %}{% endif %}</a>{% endif %}
+
+                                    {% if inline_admin_form.show_url %}
+                                        <a href="{{ inline_admin_form.absolute_url }}">
+                                            <i class="fas fa-eye fa-sm"> </i> {% trans "View on site" %}
+                                        </a>
+                                    {% endif %}
                                 {% endif %}
-                                {% if inline_admin_form.show_url %}<a href="{{ inline_admin_form.absolute_url }}">{% translate "View on site" %}</a>{% endif %}
-                            </p>{% endif %}
+                            </p>
+                            {% endif %}
                             {% if inline_admin_form.needs_explicit_pk_field %}{{ inline_admin_form.pk_field.field }}{% endif %}
                             {% if inline_admin_form.fk_field %}{{ inline_admin_form.fk_field.field }}{% endif %}
                             {% spaceless %}
@@ -50,7 +67,7 @@
                             {% for line in fieldset %}
                                 {% for field in line %}
                                     {% if field.is_readonly or not field.field.is_hidden %}
-                                        <td{% if field.field.name %} class="field-{{ field.field.name }}"{% endif %}>
+                                        <td {% if field.field.name %} class="field-{{ field.field.name }}"{% endif %}>
                                             {% if field.is_readonly %}
                                                 <p>{{ field.contents }}</p>
                                             {% else %}

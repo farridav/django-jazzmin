@@ -3,16 +3,11 @@ from django.contrib.admin.models import LogEntry
 from django.utils.html import format_html
 from django.utils.timesince import timesince
 
-from .models import Poll, Choice, Vote, Campaign, Cheese
+from .models import Campaign, Cheese, Choice, Poll, Vote
 
 
-class ChoiceInline(admin.StackedInline):
+class ChoiceInline(admin.TabularInline):
     model = Choice
-    show_change_link = True
-    extra = 1
-
-    def has_add_permission(self, request, obj=None):
-        return True
 
 
 @admin.register(Poll)
