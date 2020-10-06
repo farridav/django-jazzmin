@@ -7,6 +7,7 @@
 
             {% for inline_admin_form in inline_admin_formset %}
                 <div class="panel inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+
                     <div class="card card-outline {% if not inline_admin_form.original %}new-stacked card-success{% else %}card-secondary{% endif %}">
                         <div class="card-header">
                             <h3 class="card-title">

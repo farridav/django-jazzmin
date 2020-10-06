@@ -543,10 +543,6 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
     height: 0;
 }
 
-.empty-form {
-    display: none;
-}
-
 #user_form input[type="password"] {
     width: 100%;
 }
