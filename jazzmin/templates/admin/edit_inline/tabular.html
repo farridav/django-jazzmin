@@ -16,7 +16,7 @@
                             </th>
                         {% endif %}
                     {% endfor %}
-                    {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}<th>{% translate "Delete?" %}</th>{% endif %}
+                    {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}<th>{% trans "Delete?" %}</th>{% endif %}
                 </tr></thead>
 
                 <tbody>
