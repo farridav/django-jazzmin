@@ -51,6 +51,8 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
         return []
 
     options = get_settings()
+    ordering = options.get("order_with_respect_to", [])
+    ordering = [x.lower() for x in ordering]
 
     menu = []
     available_apps = copy.deepcopy(context.get(using, []))
@@ -62,6 +64,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
 
     for app in available_apps:
         app_label = app["app_label"].lower()
+        app_custom_links = custom_links.get(app_label, [])
         app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
         if app_label in options["hide_apps"]:
             continue
@@ -73,17 +76,28 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
                 continue
 
             model["url"] = model["admin_url"]
+            model["model_str"] = model_str
             model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
             menu_items.append(model)
 
-        menu_items.extend(custom_links.get(app_label, []))
+        menu_items.extend(app_custom_links)
+
+        custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
+        model_ordering = list(
+            filter(lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names, ordering)
+        )
 
         if len(menu_items):
+            if model_ordering:
+                menu_items = order_with_respect_to(
+                    menu_items, model_ordering, getter=lambda x: x.get("model_str", x.get("name", "").lower())
+                )
             app["models"] = menu_items
             menu.append(app)
 
-    if options.get("order_with_respect_to"):
-        menu = order_with_respect_to(menu, options["order_with_respect_to"])
+    if ordering:
+        apps_order = list(filter(lambda x: "." not in x, ordering))
+        menu = order_with_respect_to(menu, apps_order, getter=lambda x: x["app_label"].lower())
 
     return menu
 
@@ -216,7 +230,7 @@ def jazzmin_list_filter(cl: ChangeList, spec: BooleanFieldListFilter) -> SafeTex
             if value:
                 matches[matched_key] = value
 
-        # Iterate matches, use first as actual values, additional for hidden
+        # Iterate matches, use original as actual values, additional for hidden
         i = 0
         for key, value in matches.items():
             if i == 0:

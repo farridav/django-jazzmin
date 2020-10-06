@@ -24,9 +24,12 @@ def test_order_with_respect_to():
 
     original_list = apps("b", "c", "a")
 
-    assert order_with_respect_to(original_list, ["c", "b"]) == apps("c", "b", "a")
-    assert order_with_respect_to(original_list, ["nothing"]) == original_list
-    assert order_with_respect_to(original_list, ["a"])[0]["app_label"] == "a"
+    assert order_with_respect_to(original_list, ["c", "b"], getter=lambda x: x["app_label"]) == apps("c", "b", "a")
+    assert order_with_respect_to(original_list, ["nothing"], getter=lambda x: x["app_label"]) == original_list
+    assert order_with_respect_to(original_list, ["a"], getter=lambda x: x["app_label"])[0]["app_label"] == "a"
+    assert order_with_respect_to([1, 2, 3], [3, 2, 1]) == [3, 2, 1]
+    assert order_with_respect_to([1, 2, 3], [3]) == [3, 1, 2]
+    assert order_with_respect_to(["morty", "pickle", "rick"], ["pickle", "morty"]) == ["pickle", "morty", "rick"]
 
 
 @pytest.mark.django_db

@@ -16,12 +16,12 @@ def test_side_menu(admin_client, settings):
     assert parse_sidemenu(response) == {
         "Global": ["/en/admin/"],
         "Polls": [
-            "/en/admin/polls/campaign/",
-            "/en/admin/polls/cheese/",
+            "/make_messages/",
             "/en/admin/polls/choice/",
             "/en/admin/polls/poll/",
+            "/en/admin/polls/campaign/",
+            "/en/admin/polls/cheese/",
             "/en/admin/polls/vote/",
-            "/make_messages/",
         ],
         "Administration": ["/en/admin/admin/logentry/"],
         "Authentication and Authorization": ["/en/admin/auth/group/", "/en/admin/auth/user/"],
@@ -33,12 +33,12 @@ def test_side_menu(admin_client, settings):
     assert parse_sidemenu(response) == {
         "Global": ["/en/admin/"],
         "Polls": [
-            "/en/admin/polls/campaign/",
-            "/en/admin/polls/cheese/",
+            "/make_messages/",
             "/en/admin/polls/choice/",
             "/en/admin/polls/poll/",
+            "/en/admin/polls/campaign/",
+            "/en/admin/polls/cheese/",
             "/en/admin/polls/vote/",
-            "/make_messages/",
         ],
         "Administration": ["/en/admin/admin/logentry/"],
         "Authentication and Authorization": ["/en/admin/auth/group/"],
@@ -74,7 +74,10 @@ def test_permissions_on_custom_links(client, settings):
 
     client.force_login(user2)
     response = client.get(url)
-    assert parse_sidemenu(response) == {"Global": ["/en/admin/"], "Polls": ["/en/admin/polls/poll/", "/make_messages/"]}
+    assert parse_sidemenu(response) == {
+        "Global": ["/en/admin/"],
+        "Polls": ["/make_messages/", "/en/admin/polls/poll/"],
+    }
 
 
 @pytest.mark.django_db

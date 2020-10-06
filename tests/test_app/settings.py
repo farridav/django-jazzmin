@@ -160,8 +160,8 @@ JAZZMIN_SETTINGS = {
     "hide_apps": [],
     # Hide these models when generating side menu (e.g auth.user)
     "hide_models": [],
-    # List of apps to base side menu ordering off of
-    "order_with_respect_to": ["accounts", "polls"],
+    # List of apps to base side menu (app or model) ordering off of
+    "order_with_respect_to": ["Make Messages", "auth", "polls", "polls.choice", "polls.poll"],
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
         "polls": [

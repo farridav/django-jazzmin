@@ -1,5 +1,5 @@
 import logging
-from typing import List, Union, Dict, Set
+from typing import List, Union, Dict, Set, Callable
 from urllib.parse import urlencode
 
 from django.apps import apps
@@ -15,19 +15,27 @@ from jazzmin.compat import NoReverseMatch, reverse
 logger = logging.getLogger(__name__)
 
 
-def order_with_respect_to(first: List, reference: List) -> List:
+def order_with_respect_to(original: List, reference: List, getter: Callable = None) -> List:
+    """
+    Order a list based on the location of items in the reference list, optionally, use a getter to pull values out of
+    the first list
+    """
     ranking = []
-    max_num = len(first)
+    max_num = len(original)
+    if not getter:
 
-    for item in first:
+        def getter(x):
+            return x
+
+    for item in original:
         try:
-            pos = reference.index(item["app_label"])
+            pos = reference.index(getter(item))
         except ValueError:
             pos = max_num
 
         ranking.append(pos)
 
-    return [y for x, y in sorted(zip(ranking, first), key=lambda x: x[0])]
+    return [y for x, y in sorted(zip(ranking, original), key=lambda x: x[0])]
 
 
 def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **kwargs: str) -> str:
