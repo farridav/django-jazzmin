@@ -6,8 +6,9 @@ from django.utils.timesince import timesince
 from .models import Campaign, Cheese, Choice, Poll, Vote
 
 
-class ChoiceInline(admin.TabularInline):
+class ChoiceInline(admin.StackedInline):
     model = Choice
+    extra = 1
 
 
 @admin.register(Poll)
