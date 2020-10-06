@@ -8,6 +8,14 @@ div.inline-related {
     padding: 5px;
 }
 
+.table tr.form-row {
+    display: table-row;
+}
+
+.table tr.empty-form {
+    display: none;
+}
+
 .inlinechangelink {
     content: url('../img/icon-changelink.svg');
 }

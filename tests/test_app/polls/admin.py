@@ -9,10 +9,10 @@ from .models import Poll, Choice, Vote, Campaign, Cheese
 class ChoiceInline(admin.StackedInline):
     model = Choice
     show_change_link = True
-    extra = 2
+    extra = 1
 
     def has_add_permission(self, request, obj=None):
-        return False
+        return True
 
 
 @admin.register(Poll)
