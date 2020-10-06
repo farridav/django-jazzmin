@@ -12,12 +12,8 @@ div.inline-related {
     display: table-row;
 }
 
-.table tr.empty-form {
+.empty-form {
     display: none;
-}
-
-.inlinechangelink {
-    content: url('../img/icon-changelink.svg');
 }
 
 .inline-related .tabular {
