@@ -8,8 +8,12 @@ div.inline-related {
     padding: 5px;
 }
 
-.inlinechangelink {
-    content: url('../img/icon-changelink.svg');
+.table tr.form-row {
+    display: table-row;
+}
+
+.empty-form {
+    display: none !important;
 }
 
 .inline-related .tabular {
@@ -541,10 +545,6 @@ a.active.selector-clearall:focus, a.active.selector-clearall:hover {
 
 .selector .search-label-icon {
     height: 0;
-}
-
-.empty-form {
-    display: none;
 }
 
 #user_form input[type="password"] {

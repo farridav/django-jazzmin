@@ -6,6 +6,8 @@
 .tox
 .venv
 .env
+.vscode
+/diffs
 /build
 /dist
 /.reports

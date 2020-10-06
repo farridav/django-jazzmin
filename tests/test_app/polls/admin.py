@@ -3,12 +3,11 @@ from django.contrib.admin.models import LogEntry
 from django.utils.html import format_html
 from django.utils.timesince import timesince
 
-from .models import Poll, Choice, Vote, Campaign, Cheese
+from .models import Campaign, Cheese, Choice, Poll, Vote
 
 
 class ChoiceInline(admin.StackedInline):
     model = Choice
-    show_change_link = True
     extra = 1
 
 
