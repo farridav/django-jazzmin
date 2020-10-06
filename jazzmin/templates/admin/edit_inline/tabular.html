@@ -50,6 +50,8 @@
                                     {% endif %}
                                 {% endif %}
                             </p>
+                            {% else %}
+                            <i class="fas fa-plus fa-sm text-success"> </i>
                             {% endif %}
                             {% if inline_admin_form.needs_explicit_pk_field %}{{ inline_admin_form.pk_field.field }}{% endif %}
                             {% if inline_admin_form.fk_field %}{{ inline_admin_form.fk_field.field }}{% endif %}
