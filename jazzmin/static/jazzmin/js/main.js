@@ -33,7 +33,7 @@ function setActiveLinks() {
 
     if ($link.length) {
         $link.addClass('active');
-    } else if ($parent_link.length){
+    } else if ($parent_link.length) {
         $parent_link.addClass('active');
     }
 }
@@ -44,4 +44,11 @@ $(document).ready(function () {
 
     // When we use the menu, store its state in a cookie to preserve it
     handleMenu();
+
+    // Add minimal changelist styling to templates that we have been unable to override (e.g MPTT)
+    const $changeListTable = $('#changelist .results table');
+    if ($changeListTable.length && !$changeListTable.hasClass('table table-striped')) {
+        $changeListTable.addClass('table table-striped');
+    }
+
 });

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.utils.html import format_html
 from django.utils.timesince import timesince
-from mptt.admin import DraggableMPTTAdmin
+from mptt.admin import MPTTModelAdmin
 
 from .models import Campaign, Cheese, Choice, Genre, Poll, Vote
 
@@ -91,11 +91,7 @@ class CampaignAdmin(admin.ModelAdmin):
 
 admin.site.register(
     Genre,
-    DraggableMPTTAdmin,
-    list_display=(
-        "tree_actions",
-        "indented_title",
-        "name",
-    ),
+    MPTTModelAdmin,
+    list_display=("name",),
     list_display_links=("name",),
 )
