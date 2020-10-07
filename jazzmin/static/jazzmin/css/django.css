@@ -105,7 +105,7 @@ table.dataTable thead .sorting_desc_disabled::after {
 }
 
 .table tbody tr th {
-    padding-left: .75rem !important;
+    padding-left: .75rem;
 }
 
 .select2.select2-container {
@@ -696,4 +696,14 @@ a.inline-deletelink {
     border-radius: 7px;
     color: white !important;
     border: 1px solid white;
+}
+
+
+/* Support for django-mptt */
+#result_list .field-tree_actions {
+    width: calc(40px + 2.25rem);
+}
+
+#result_list .field-tree_actions > div {
+    margin-top: 0;
 }

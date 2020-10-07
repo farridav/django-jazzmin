@@ -4,6 +4,7 @@ from django.db import models
 from django.template.defaultfilters import truncatechars
 from django.urls import reverse
 from django.utils import timezone
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Poll(models.Model):
@@ -67,3 +68,11 @@ class Campaign(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Genre(MPTTModel):
+    name = models.CharField(max_length=50, unique=True)
+    parent = TreeForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="children")
+
+    class MPTTMeta:
+        order_insertion_by = ["name"]
