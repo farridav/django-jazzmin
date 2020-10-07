@@ -3,4 +3,5 @@ whitenoise
 gunicorn
 psycopg2-binary
 dj-database-url
+django-mptt
 https://github.com/farridav/django-jazzmin/archive/master.zip
