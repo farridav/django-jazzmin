@@ -12,6 +12,10 @@ div.inline-related {
     display: table-row;
 }
 
+.table td.action-checkbox {
+    width: 45px;
+}
+
 .empty-form {
     display: none !important;
 }
