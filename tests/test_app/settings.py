@@ -23,7 +23,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "mptt",
     f"{PREFIX}polls.apps.PollsConfig",
 ]
 
