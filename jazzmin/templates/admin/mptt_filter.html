@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load mptt_admin %}
+
+<div class="form-group">
+    <select class="form-control search-filter-mptt" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
+        <option value="">{{ title }}</option>
+        <option value="">---------</option>
+        {% for choice in choices %}
+            {% if choice.name %}
+                <option {{ choice.padding_style }} data-name="{{ choice.name }}" value="{{ choice.value }}" {% if choice.selected %}selected {% endif %}>
+                    {{ choice.display }}
+                </option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>
