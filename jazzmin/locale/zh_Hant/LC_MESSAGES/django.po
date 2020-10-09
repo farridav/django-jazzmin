@@ -64,9 +64,8 @@ msgstr "視圖函式：<code>%(full_name)s</code>，名稱：<code>%(url_name)s<
 
 #: templatetags/jazzmin.py:390
 #, fuzzy, python-brace-format
-#| msgid "Deleted “{object}”."
 msgid "Added {name} “{object}”."
-msgstr "“{object}” 已刪除。"
+msgstr "{name} “{object}” 已新增。"
 
 #: templatetags/jazzmin.py:406
 #, python-brace-format
