@@ -64,14 +64,13 @@ msgstr "查看函数：<code>%(full_name)s</code>. 名字：<code>%(url_name)s</
 
 #: templatetags/jazzmin.py:390
 #, fuzzy, python-brace-format
-#| msgid "Deleted “{object}”."
 msgid "Added {name} “{object}”."
-msgstr "“{object}” 已删除。"
+msgstr "添加了 {name}“{object}”。"
 
 #: templatetags/jazzmin.py:406
 #, python-brace-format
 msgid "Deleted “{object}”."
-msgstr "“{object}” 已删除。"
+msgstr "删除了“{object}”。"
 
 #: utils.py:66
 #, python-brace-format
