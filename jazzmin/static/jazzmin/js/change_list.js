@@ -22,7 +22,7 @@ $(document).ready(function () {
     // Make search filters select2 and ensure they work for filtering
     const $ele = $('.search-filter');
     $ele.search_filters();
-    $ele.select2();
+    $ele.select2({ dropdownAutoWidth: true });
 
     // Use select2 for mptt dropdowns
     const $mptt = $('.search-filter-mptt');

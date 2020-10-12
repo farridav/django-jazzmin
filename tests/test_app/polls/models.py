@@ -29,7 +29,15 @@ class Choice(models.Model):
     """
 
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=255)
+    choice_text = models.CharField(
+        max_length=255,
+        choices=(
+            ("Here is a choice", "Here is a choice"),
+            ("Here is another choice", "Here is another choice"),
+        ),
+    )
+
+    time = models.DurationField()
 
     def choice_text_with_cheese(self, cheese="Cheddar"):
         """

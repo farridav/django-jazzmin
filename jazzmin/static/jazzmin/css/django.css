@@ -149,6 +149,7 @@ table.dataTable thead .sorting_desc_disabled::after {
 .vTimeField,
 .field-float input[type="number"],
 .field-decimal input[type="number"],
+.field-time input[type="text"],
 .field-duration input[type="text"],
 .field-identifier input[type="text"],
 .field-generic_ip_address input[type="text"],
