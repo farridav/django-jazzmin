@@ -1,5 +1,5 @@
 function fix_selector_height() {
-    $('.selector .selector-chosen').each(function() {
+    $('.selector .selector-chosen').each(function () {
         let selector_chosen = $(this);
         let selector_available = selector_chosen.siblings('.selector-available');
 
@@ -21,8 +21,8 @@ function handleCarousel($carousel) {
         const errorCarousel = errors.eq(0).closest('.carousel-item');
         $carousel.carousel(errorCarousel.data('carouselid'));
         $('.carousel-fieldset-label', $carousel).text(errorCarousel.data()["label"]);
-    // If we have a tab hash, open that
     } else if (hash) {
+        // If we have a tab hash, open that
         const activeCarousel = $('.carousel-item[data-target="' + hash + '"]', $carousel);
         $carousel.carousel(activeCarousel.data()["carouselid"]);
         $('.carousel-fieldset-label', $carousel).text(activeCarousel.data()["label"]);
@@ -55,7 +55,7 @@ function handleTabs($tabs) {
         const tabId = errors.eq(0).closest('.tab-pane').attr('id');
         $('a[href="#' + tabId + '"]').tab('show');
 
-    // If we have a tab hash, open that
+        // If we have a tab hash, open that
     } else if (hash) {
         $('a[href="' + hash + '"]', $tabs).tab('show');
     }
@@ -83,8 +83,8 @@ function handleCollapsible($collapsible) {
         $('.panel-collapse', $collapsible).collapse('hide');
         errors.eq(0).closest('.panel-collapse').collapse('show');
 
-    // If we have a tab hash, open that
     } else if (hash) {
+        // If we have a tab hash, open that
         $('.panel-collapse', $collapsible).collapse('hide');
         $(hash, $collapsible).collapse('show');
     }
@@ -115,7 +115,10 @@ $(document).ready(function () {
 
     // Ensure we preserve the tab the user was on using the url hash, even on page reload
 
-    if ($tabs.length) {handleTabs($tabs);}
-    else if ($carousel.length) {handleCarousel($carousel);}
-    else if ($collapsible.length) {handleCollapsible($collapsible);}
+    if ($tabs.length) { handleTabs($tabs); }
+    else if ($carousel.length) { handleCarousel($carousel); }
+    else if ($collapsible.length) { handleCollapsible($collapsible); }
+
+    // Apply select2 to any select boxes that dont yet have it
+    $('select').not('.select2-hidden-accessible').select2({ dropdownAutoWidth: true });
 });
