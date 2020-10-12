@@ -55,9 +55,9 @@ You can serve the docs locally using `mkdocs serve -a localhost:8001` and visiti
 
 
 ## Translations
-Working with translations in jazzmin is, a bit unorthadox, as we are overriding djangos templates, so it looks like we have a lot of strings that need translating, 
+Working with translations in jazzmin is, a bit unorthodox, as we are overriding djangos templates, so it looks like we have a lot of strings that need translating, 
 but in-fact they already have translation strings in Django, heres the process for dealing with translations, though we recommend not adding new strings that need 
-translating if possible, and use suitable iconography instead (See [https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/](https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/)), 
+translating if possible, and use suitable iconography instead (See [https://fontawesome.com/icons?d=gallery&m=free](https://fontawesome.com/icons?d=gallery&m=free)), 
 or use a string that is already translated upstream in Django.
 
 

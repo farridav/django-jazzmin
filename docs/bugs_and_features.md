@@ -2,7 +2,7 @@
 
 ## Reporting bugs
 
-When reporting bugs, or compatability issues, heres a general guide on the best way to do it.
+When reporting bugs, or compatibility issues, here is a general guide on the best way to do it.
 
 First of all, ask yourself these questions:
 
@@ -17,7 +17,7 @@ If you can solve the problem using CSS/JS then you can temporarily use "custom C
 
 ## Features
 
-We welcome new features, heres a list of guidelines to consider:
+We welcome new features, here is a list of guidelines to consider:
 
 1. Avoid writing too much CSS (We have CSS frameworks that we make use of, namely adminLTE & Bootstrap)
 2. Look for components in AdminLTE first, we try to keep in-line with that, failing that, bootstrap has a lot to offer
@@ -29,14 +29,14 @@ We welcome new features, heres a list of guidelines to consider:
 6. Ensure that any new strings are translated (but ideally try to use icons, or fallback on the comprehensive translations from Django)
 
 
-When making changes, see if you can acheive your goal by removing code, failing that, try changing code, failing that, add new code
+When making changes, see if you can achieve your goal by removing code, failing that, try changing code, failing that, add new code
 
 We prefer to use HTML first, failing that, use CSS, failing that, use JavaScript (This approach helps with maintainability) 
 
 
-Some usefull links for feature development:
+Some useful links for feature development:
 
 - [https://adminlte.io/themes/v3/index3.html](https://adminlte.io/themes/v3/index3.html)
 - [https://adminlte.io/docs/3.0/index.html](https://adminlte.io/docs/3.0/index.html)
-- [https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/](https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/)
+- [https://fontawesome.com/icons?d=gallery&m=free](https://fontawesome.com/icons?d=gallery&m=free)
 - [https://getbootstrap.com/docs/4.5/getting-started/introduction/](https://getbootstrap.com/docs/4.5/getting-started/introduction/)
