@@ -49,7 +49,6 @@ werkzeug = "*"              # support for werkzeug debugger in runserver_plus
 ipython = "*"               # enhanced python shell
 ipdb = "*"                  # ipython breakpoints
 django-extensions = "*"     # Django Sugar for development
-dj-database-url = "*"       # Parsing of database urls
 flake9 = "*"                # Static code checking (with pyproject.toml support)
 pytest = "*"                # Test runner
 pytest-django = "*"         # Django integration for pytest
