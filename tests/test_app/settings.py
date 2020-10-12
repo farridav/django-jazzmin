@@ -187,7 +187,7 @@ JAZZMIN_SETTINGS = {
             }
         ]
     },
-    # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
+    # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free
     # for a list of icon classes
     "icons": {
         "auth": "fas fa-users-cog",

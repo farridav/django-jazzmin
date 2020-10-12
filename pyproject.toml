@@ -58,6 +58,8 @@ tox = "*"                   # Test runner for python packages
 faker = "*"                 # less fake fake data
 coveralls = "*"             # Publish code coverage to coveralls
 beautifulsoup4 = "*"        # Structure HTML documents into navigable things for test assertions
+mkdocs = "^1.1.2"           # Tool for serving rendered markdown docs
+polib = "^1.1.0"            # Tool for dealing with translation files
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
