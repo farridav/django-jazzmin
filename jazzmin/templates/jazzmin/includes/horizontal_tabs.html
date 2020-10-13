@@ -1,17 +1,18 @@
-{% load jazzmin %}
+{% load i18n jazzmin %}
+{% trans "General" as general_tab %}
 
 <ul class="nav nav-tabs" role="tablist" id="jazzy-tabs">
     {% for fieldset in adminform %}
         <li class="nav-item">
-            <a class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls="{{ fieldset.name|default:"General"|unicode_slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:"General"|unicode_slugify }}-tab">
-                {{ fieldset.name|default:"General" }}
+            <a class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
+                {{ fieldset.name|default:general_tab }}
             </a>
         </li>
     {% endfor %}
     {% for inline_admin_formset in inline_admin_formsets %}
         <li class="nav-item">
             <a class="nav-link" data-toggle="pill" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name_plural|unicode_slugify }}-tab" aria-selected="false" href="#{{ inline_admin_formset.opts.verbose_name_plural|unicode_slugify }}-tab">
-                {{ inline_admin_formset.opts.verbose_name_plural|title }}
+                {{ inline_admin_formset.opts.verbose_name_plural|capfirst }}
             </a>
         </li>
     {% endfor %}
@@ -19,7 +20,7 @@
 
 <div class="tab-content">
     {% for fieldset in adminform %}
-        <div id="{{ fieldset.name|default:"General"|unicode_slugify }}-tab" class="tab-pane fade{% if forloop.first %} active show{% endif %}" role="tabpanel" aria-labelledby="{{ fieldset.name|default:"General"|unicode_slugify }}-tab">
+        <div id="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" class="tab-pane fade{% if forloop.first %} active show{% endif %}" role="tabpanel" aria-labelledby="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
             {% include "admin/includes/fieldset.html" with card=True %}
         </div>
     {% endfor %}

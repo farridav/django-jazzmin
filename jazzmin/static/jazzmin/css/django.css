@@ -690,17 +690,19 @@ form ul.inline li {
 
 /* stacked inlines */
 a.inline-deletelink:hover {
-    border: 1px solid darkred;
+    background-color: #c82333;
+    border-color: #bd2130;
 }
 
 a.inline-deletelink {
     float: right;
     padding: 3px 5px;
     margin: 10px;
-    background-color: red;
-    border-radius: 7px;
+    background-color: #dc3545;
+    border-radius: .25rem;
     color: white !important;
-    border: 1px solid white;
+    border: 1px solid #dc3545;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 
