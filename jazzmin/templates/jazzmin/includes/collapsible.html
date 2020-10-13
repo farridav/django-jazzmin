@@ -21,7 +21,7 @@
         <div class="card card-default">
             <div class="card-header collapsible-header" data-toggle="collapse" data-parent="#jazzy-collapsible" data-target="#{{ inline_admin_formset.opts.verbose_name|unicode_slugify }}-tab">
                 <h4 class="card-title">
-                    {{ inline_admin_formset.opts.verbose_name_plural|title }}
+                    {{ inline_admin_formset.opts.verbose_name_plural|capfirst }}
                 </h4>
             </div>
             <div id="{{ inline_admin_formset.opts.verbose_name|unicode_slugify }}-tab" class="panel-collapse in collapse">

@@ -11,7 +11,7 @@
             {% endfor %}
             {% for inline_admin_formset in inline_admin_formsets %}
                 <a class="nav-link" data-toggle="pill" href="#{{ inline_admin_formset.opts.verbose_name|unicode_slugify }}-tab" role="tab" aria-controls="{{ inline_admin_formset.opts.verbose_name|unicode_slugify }}-tab" aria-selected="false">
-                    {{ inline_admin_formset.opts.verbose_name_plural|title }}
+                    {{ inline_admin_formset.opts.verbose_name_plural|capfirst }}
                 </a>
             {% endfor %}
         </div>
