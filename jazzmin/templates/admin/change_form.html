@@ -1,6 +1,12 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_urls static admin_modify jazzmin %}
 {% get_jazzmin_settings as jazzmin_settings %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/select2/css/select2.min.css' %}">
+{% endblock %}
+
 {% block extrahead %}
     {{ block.super }}
     <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
@@ -115,5 +121,7 @@
 {% endblock %}
 
 {% block extrajs %}
+    {{  block.super }}
+    <script type="text/javascript" src="{% static 'adminlte/plugins/select2/js/select2.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'jazzmin/js/change_form.js' %}"></script>
 {% endblock %}

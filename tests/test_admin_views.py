@@ -18,7 +18,12 @@ def test_login(client, admin_user):
     assert templates_used == ["admin/login.html"]
 
     response = client.post(
-        url + "?next=/admin/", data={"username": admin_user.username, "password": "password"}, follow=True
+        url + "?next=/admin/",
+        data={
+            "username": admin_user.username,
+            "password": "password"
+        },
+        follow=True
     )
 
     assert response.status_code == 200
@@ -68,7 +73,11 @@ def test_password_change(admin_client):
 
     response = admin_client.post(
         url,
-        data={"old_password": "password", "new_password1": "PickleRick123!!", "new_password2": "PickleRick123!!"},
+        data={
+            "old_password": "password",
+            "new_password1": "PickleRick123!!",
+            "new_password2": "PickleRick123!!"
+        },
         follow=True,
     )
     templates_used = [t.name for t in response.templates]
@@ -126,15 +135,15 @@ def test_detail(admin_client, test_data):
         "admin/submit_line.html": 1,
         "admin/widgets/foreign_key_raw_id.html": 1,
         "admin/widgets/split_datetime.html": 1,
-        "django/forms/widgets/attrs.html": 29,
-        "django/forms/widgets/checkbox.html": 4,
         "django/forms/widgets/date.html": 2,
+        "django/forms/widgets/attrs.html": 34,
+        "django/forms/widgets/checkbox.html": 4,
         "django/forms/widgets/hidden.html": 14,
-        "django/forms/widgets/input.html": 28,
+        "django/forms/widgets/input.html": 33,
         "django/forms/widgets/multiwidget.html": 1,
         "django/forms/widgets/splithiddendatetime.html": 1,
-        "django/forms/widgets/text.html": 5,
         "django/forms/widgets/textarea.html": 1,
+        "django/forms/widgets/text.html": 10,
         "django/forms/widgets/time.html": 2,
         "jazzmin/includes/horizontal_tabs.html": 1,
         "jazzmin/includes/ui_builder_panel.html": 1,
@@ -142,28 +151,28 @@ def test_detail(admin_client, test_data):
 
     # The templates that were used
     assert set(templates_used) == {
-        "admin/base.html",
-        "admin/base_site.html",
-        "admin/change_form.html",
-        "admin/change_form_object_tools.html",
-        "admin/edit_inline/stacked.html",
-        "admin/includes/fieldset.html",
-        "admin/prepopulated_fields_js.html",
-        "admin/submit_line.html",
-        "admin/widgets/foreign_key_raw_id.html",
         "admin/widgets/split_datetime.html",
-        "django/forms/widgets/attrs.html",
-        "django/forms/widgets/checkbox.html",
-        "django/forms/widgets/date.html",
-        "django/forms/widgets/hidden.html",
-        "django/forms/widgets/input.html",
-        "django/forms/widgets/multiwidget.html",
         "django/forms/widgets/splithiddendatetime.html",
-        "django/forms/widgets/text.html",
+        "admin/change_form_object_tools.html",
+        "django/forms/widgets/checkbox.html",
+        "admin/change_form.html",
+        "admin/prepopulated_fields_js.html",
+        "django/forms/widgets/date.html",
         "django/forms/widgets/textarea.html",
-        "django/forms/widgets/time.html",
+        "admin/base_site.html",
+        "admin/widgets/foreign_key_raw_id.html",
+        "admin/includes/fieldset.html",
+        "django/forms/widgets/hidden.html",
+        "django/forms/widgets/attrs.html",
+        "admin/edit_inline/stacked.html",
+        "django/forms/widgets/text.html",
+        "django/forms/widgets/input.html",
+        "admin/base.html",
+        "django/forms/widgets/multiwidget.html",
         "jazzmin/includes/horizontal_tabs.html",
+        "django/forms/widgets/time.html",
         "jazzmin/includes/ui_builder_panel.html",
+        "admin/submit_line.html",
     }
 
     # TODO: post data and confirm we can change model instances

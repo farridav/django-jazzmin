@@ -38,9 +38,9 @@ class PollAdmin(admin.ModelAdmin):
 
 @admin.register(Choice)
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ("poll", "choice_text")
+    list_display = ("poll", "choice_text", "time")
     list_per_page = 20
-    list_editable = ("choice_text",)
+    list_editable = ("choice_text", "time")
     autocomplete_fields = ("poll",)
 
 

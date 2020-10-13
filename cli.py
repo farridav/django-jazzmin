@@ -15,21 +15,7 @@ DJANGO_PATH = django.__path__[0]
 
 def locales(cmd_args: argparse.Namespace):
     """
-
     e.g - ./cli.py locales --prune de
-
-    1. cd into the jazzmin folder
-    2. Add the desired language directory e.g mkdir -p locale/de/LC_MESSAGES
-    3. Run django-admin makemessages
-    4. Run ./cli.py locales --prune de to remove the django provided strings
-    5. Go through the strings in the locale file, any that are not genuinely new strings introduced by jazzmin, find
-    them in the codebase, and try making them match the ones provided in either of djangos translation files
-
-    https://raw.githubusercontent.com/django/django/master/django/contrib/admindocs/locale/de/LC_MESSAGES/django.po
-    https://raw.githubusercontent.com/django/django/master/django/contrib/admin/locale/de/LC_MESSAGES/django.po
-
-    Once you have finished, run makemessages again, until the file contains ONLY unique strings to jazzmin, there should
-    only be a handful
     """
     our_po = polib.pofile(os.path.join(LOCALE_DIR, cmd_args.locale, "LC_MESSAGES", "django.po"))
     admin_po = polib.pofile(os.path.join(DJANGO_PATH, "contrib", "admin", "locale", "en", "LC_MESSAGES", "django.po"))
@@ -80,13 +66,22 @@ def templates(cmd_args: argparse.Namespace):
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
+    subparsers.required = True
+
     parser_locales = subparsers.add_parser("locales", help="remove the django provided strings")
     parser_locales.add_argument("--prune", action="store", dest="locale", help="locale to prune", default="de")
     parser_locales.set_defaults(func=locales)
+
     parser_templates = subparsers.add_parser("templates", help="Deal with templates")
     parser_templates.add_argument("--diff", action="store_true", dest="template_diff", help="generate template diff")
     parser_templates.set_defaults(func=templates)
-    cmd_args = parser.parse_args()
+
+    try:
+        cmd_args = parser.parse_args()
+    except TypeError:
+        parser.print_help()
+        return
+
     cmd_args.func(cmd_args)
 
 

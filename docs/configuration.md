@@ -86,7 +86,7 @@ JAZZMIN_SETTINGS = {
         }]
     },
 
-    # Custom icons for side menu apps/models See https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/
+    # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free
     # for a list of icon classes
     'icons': {
         'auth': 'fas fa-users-cog',
@@ -195,7 +195,7 @@ Example:
             # url name e.g `admin:index`, relative urls e.g `/admin/index` or absolute urls e.g `https://domain.com/admin/index`
             'url': 'make_messages',                 
             
-            # any font-awesome icon, see list here https://www.fontawesomecheatsheet.com/font-awesome-cheatsheet-5x/ (optional)
+            # any font-awesome icon, see list here https://fontawesome.com/icons?d=gallery&m=free (optional)
             'icon': 'fas fa-comments',                  
             
             # a list of permissions the user must have to see this link (optional)

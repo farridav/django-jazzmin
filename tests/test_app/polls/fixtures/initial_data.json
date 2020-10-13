@@ -4,7 +4,8 @@
     "pk": 34,
     "fields": {
       "poll": 13,
-      "choice_text": "Past policy sport open especially where his clear."
+      "choice_text": "Past policy sport open especially where his clear.",
+      "time": null
     }
   },
   {
@@ -12,7 +13,8 @@
     "pk": 35,
     "fields": {
       "poll": 13,
-      "choice_text": "Administration visit guess TV street."
+      "choice_text": "Administration visit guess TV street.",
+      "time": null
     }
   },
   {
@@ -20,7 +22,8 @@
     "pk": 36,
     "fields": {
       "poll": 13,
-      "choice_text": "Over less get wear believe realize."
+      "choice_text": "Over less get wear believe realize.",
+      "time": null
     }
   },
   {
@@ -28,7 +31,8 @@
     "pk": 37,
     "fields": {
       "poll": 14,
-      "choice_text": "Life whether enjoy member laugh."
+      "choice_text": "Life whether enjoy member laugh.",
+      "time": null
     }
   },
   {
@@ -36,7 +40,8 @@
     "pk": 38,
     "fields": {
       "poll": 14,
-      "choice_text": "Woman hold audience themselves wonder voice."
+      "choice_text": "Woman hold audience themselves wonder voice.",
+      "time": null
     }
   },
   {
@@ -44,7 +49,8 @@
     "pk": 39,
     "fields": {
       "poll": 14,
-      "choice_text": "Sport effect by ready."
+      "choice_text": "Sport effect by ready.",
+      "time": null
     }
   },
   {
@@ -52,7 +58,8 @@
     "pk": 40,
     "fields": {
       "poll": 14,
-      "choice_text": "Bad after sound rather run improve."
+      "choice_text": "Bad after sound rather run improve.",
+      "time": null
     }
   },
   {
@@ -60,7 +67,8 @@
     "pk": 41,
     "fields": {
       "poll": 15,
-      "choice_text": "Policy perform structure edge manager piece around gas."
+      "choice_text": "Policy perform structure edge manager piece around gas.",
+      "time": null
     }
   },
   {
@@ -68,7 +76,8 @@
     "pk": 42,
     "fields": {
       "poll": 15,
-      "choice_text": "She where record."
+      "choice_text": "She where record.",
+      "time": null
     }
   },
   {
@@ -76,7 +85,8 @@
     "pk": 43,
     "fields": {
       "poll": 15,
-      "choice_text": "Partner term necessary nor think."
+      "choice_text": "Partner term necessary nor think.",
+      "time": null
     }
   },
   {
@@ -84,7 +94,8 @@
     "pk": 44,
     "fields": {
       "poll": 16,
-      "choice_text": "Because treatment concern there all above know administration."
+      "choice_text": "Because treatment concern there all above know administration.",
+      "time": null
     }
   },
   {
@@ -92,7 +103,8 @@
     "pk": 45,
     "fields": {
       "poll": 16,
-      "choice_text": "What federal hair."
+      "choice_text": "What federal hair.",
+      "time": null
     }
   },
   {
@@ -100,7 +112,8 @@
     "pk": 46,
     "fields": {
       "poll": 17,
-      "choice_text": "Artist their season reflect scientist true."
+      "choice_text": "Artist their season reflect scientist true.",
+      "time": null
     }
   },
   {
@@ -108,7 +121,8 @@
     "pk": 47,
     "fields": {
       "poll": 17,
-      "choice_text": "Exist accept girl condition public listen."
+      "choice_text": "Exist accept girl condition public listen.",
+      "time": null
     }
   },
   {
@@ -116,7 +130,8 @@
     "pk": 48,
     "fields": {
       "poll": 17,
-      "choice_text": "Just during loss truth data major consider."
+      "choice_text": "Just during loss truth data major consider.",
+      "time": null
     }
   },
   {
@@ -124,7 +139,8 @@
     "pk": 49,
     "fields": {
       "poll": 17,
-      "choice_text": "Option cup author source feel reach."
+      "choice_text": "Option cup author source feel reach.",
+      "time": null
     }
   },
   {
@@ -132,7 +148,8 @@
     "pk": 50,
     "fields": {
       "poll": 18,
-      "choice_text": "Receive whom standard glass significant chance civil."
+      "choice_text": "Receive whom standard glass significant chance civil.",
+      "time": null
     }
   },
   {
@@ -140,7 +157,8 @@
     "pk": 51,
     "fields": {
       "poll": 18,
-      "choice_text": "Open plant window election technology."
+      "choice_text": "Open plant window election technology.",
+      "time": null
     }
   },
   {
@@ -148,7 +166,8 @@
     "pk": 52,
     "fields": {
       "poll": 18,
-      "choice_text": "Campaign strong PM exactly recognize process else."
+      "choice_text": "Campaign strong PM exactly recognize process else.",
+      "time": null
     }
   },
   {
@@ -156,7 +175,8 @@
     "pk": 53,
     "fields": {
       "poll": 18,
-      "choice_text": "Leave source tend number draw door training still."
+      "choice_text": "Leave source tend number draw door training still.",
+      "time": null
     }
   },
   {
@@ -164,7 +184,8 @@
     "pk": 54,
     "fields": {
       "poll": 19,
-      "choice_text": "Truth tell matter eat start."
+      "choice_text": "Truth tell matter eat start.",
+      "time": null
     }
   },
   {
@@ -172,7 +193,8 @@
     "pk": 55,
     "fields": {
       "poll": 19,
-      "choice_text": "Such quality more model place."
+      "choice_text": "Such quality more model place.",
+      "time": null
     }
   },
   {
@@ -180,7 +202,8 @@
     "pk": 56,
     "fields": {
       "poll": 19,
-      "choice_text": "City agree how argue back kid raise likely."
+      "choice_text": "City agree how argue back kid raise likely.",
+      "time": "3 16:15:14"
     }
   },
   {
@@ -188,7 +211,8 @@
     "pk": 57,
     "fields": {
       "poll": 19,
-      "choice_text": "Always direction hit people success study."
+      "choice_text": "Always direction hit people success study.",
+      "time": null
     }
   },
   {
@@ -196,7 +220,8 @@
     "pk": 58,
     "fields": {
       "poll": 19,
-      "choice_text": "Poor mind on organization administration pass any."
+      "choice_text": "Poor mind on organization administration pass any.",
+      "time": null
     }
   },
   {
@@ -204,7 +229,8 @@
     "pk": 59,
     "fields": {
       "poll": 20,
-      "choice_text": "Total hot early hour before garden whose cost."
+      "choice_text": "Total hot early hour before garden whose cost.",
+      "time": null
     }
   },
   {
@@ -212,7 +238,8 @@
     "pk": 60,
     "fields": {
       "poll": 20,
-      "choice_text": "Opportunity another service list behind up marriage."
+      "choice_text": "Opportunity another service list behind up marriage.",
+      "time": null
     }
   },
   {
@@ -220,7 +247,8 @@
     "pk": 61,
     "fields": {
       "poll": 20,
-      "choice_text": "Develop peace force dream whatever draw once."
+      "choice_text": "Develop peace force dream whatever draw once.",
+      "time": "2 13:12:06"
     }
   },
   {
@@ -228,7 +256,8 @@
     "pk": 62,
     "fields": {
       "poll": 20,
-      "choice_text": "Score democratic minute successful lose according."
+      "choice_text": "Score democratic minute successful lose according.",
+      "time": null
     }
   },
   {
@@ -236,7 +265,8 @@
     "pk": 63,
     "fields": {
       "poll": 20,
-      "choice_text": "Role officer wish half who."
+      "choice_text": "Role officer wish half who.",
+      "time": null
     }
   },
   {
@@ -244,7 +274,8 @@
     "pk": 64,
     "fields": {
       "poll": 21,
-      "choice_text": "Such wish hand reveal arm Congress."
+      "choice_text": "Such wish hand reveal arm Congress.",
+      "time": null
     }
   },
   {
@@ -252,7 +283,8 @@
     "pk": 65,
     "fields": {
       "poll": 21,
-      "choice_text": "Approach those identify."
+      "choice_text": "Approach those identify.",
+      "time": null
     }
   },
   {
@@ -260,7 +292,8 @@
     "pk": 66,
     "fields": {
       "poll": 21,
-      "choice_text": "Low available play despite kind name I."
+      "choice_text": "Low available play despite kind name I.",
+      "time": "1 13:12:06"
     }
   },
   {
@@ -268,7 +301,8 @@
     "pk": 67,
     "fields": {
       "poll": 21,
-      "choice_text": "Provide lay still identify town law kitchen."
+      "choice_text": "Provide lay still identify town law kitchen.",
+      "time": null
     }
   },
   {
@@ -276,7 +310,8 @@
     "pk": 68,
     "fields": {
       "poll": 22,
-      "choice_text": "Exactly against bed never any."
+      "choice_text": "Exactly against bed never any.",
+      "time": null
     }
   },
   {
@@ -284,7 +319,8 @@
     "pk": 69,
     "fields": {
       "poll": 22,
-      "choice_text": "Myself party mean."
+      "choice_text": "Myself party mean.",
+      "time": null
     }
   },
   {
@@ -292,7 +328,8 @@
     "pk": 70,
     "fields": {
       "poll": 22,
-      "choice_text": "Recently never large foot else defense hour."
+      "choice_text": "Recently never large foot else defense hour.",
+      "time": null
     }
   },
   {
@@ -300,7 +337,404 @@
     "pk": 71,
     "fields": {
       "poll": 22,
-      "choice_text": "School cultural of see quite out point."
+      "choice_text": "School cultural of see quite out point.",
+      "time": "13:12:06"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can add log entry",
+      "content_type": 1,
+      "codename": "add_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Can change log entry",
+      "content_type": 1,
+      "codename": "change_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Can delete log entry",
+      "content_type": 1,
+      "codename": "delete_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Can view log entry",
+      "content_type": 1,
+      "codename": "view_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+      "name": "Can add permission",
+      "content_type": 2,
+      "codename": "add_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+      "name": "Can change permission",
+      "content_type": 2,
+      "codename": "change_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+      "name": "Can delete permission",
+      "content_type": 2,
+      "codename": "delete_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+      "name": "Can view permission",
+      "content_type": 2,
+      "codename": "view_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+      "name": "Can add group",
+      "content_type": 3,
+      "codename": "add_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+      "name": "Can change group",
+      "content_type": 3,
+      "codename": "change_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+      "name": "Can delete group",
+      "content_type": 3,
+      "codename": "delete_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+      "name": "Can view group",
+      "content_type": 3,
+      "codename": "view_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+      "name": "Can add user",
+      "content_type": 4,
+      "codename": "add_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+      "name": "Can change user",
+      "content_type": 4,
+      "codename": "change_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+      "name": "Can delete user",
+      "content_type": 4,
+      "codename": "delete_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+      "name": "Can view user",
+      "content_type": 4,
+      "codename": "view_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+      "name": "Can add content type",
+      "content_type": 5,
+      "codename": "add_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+      "name": "Can change content type",
+      "content_type": 5,
+      "codename": "change_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+      "name": "Can delete content type",
+      "content_type": 5,
+      "codename": "delete_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+      "name": "Can view content type",
+      "content_type": 5,
+      "codename": "view_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+      "name": "Can add session",
+      "content_type": 6,
+      "codename": "add_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+      "name": "Can change session",
+      "content_type": 6,
+      "codename": "change_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+      "name": "Can delete session",
+      "content_type": 6,
+      "codename": "delete_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+      "name": "Can view session",
+      "content_type": 6,
+      "codename": "view_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+      "name": "Can add cheese",
+      "content_type": 7,
+      "codename": "add_cheese"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+      "name": "Can change cheese",
+      "content_type": 7,
+      "codename": "change_cheese"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+      "name": "Can delete cheese",
+      "content_type": 7,
+      "codename": "delete_cheese"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+      "name": "Can view cheese",
+      "content_type": 7,
+      "codename": "view_cheese"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+      "name": "Can add choice",
+      "content_type": 8,
+      "codename": "add_choice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+      "name": "Can change choice",
+      "content_type": 8,
+      "codename": "change_choice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+      "name": "Can delete choice",
+      "content_type": 8,
+      "codename": "delete_choice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+      "name": "Can view choice",
+      "content_type": 8,
+      "codename": "view_choice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+      "name": "Can add poll",
+      "content_type": 9,
+      "codename": "add_poll"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+      "name": "Can change poll",
+      "content_type": 9,
+      "codename": "change_poll"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+      "name": "Can delete poll",
+      "content_type": 9,
+      "codename": "delete_poll"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+      "name": "Can view poll",
+      "content_type": 9,
+      "codename": "view_poll"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+      "name": "Can add vote",
+      "content_type": 10,
+      "codename": "add_vote"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+      "name": "Can change vote",
+      "content_type": 10,
+      "codename": "change_vote"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+      "name": "Can delete vote",
+      "content_type": 10,
+      "codename": "delete_vote"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+      "name": "Can view vote",
+      "content_type": 10,
+      "codename": "view_vote"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+      "name": "Can add campaign",
+      "content_type": 11,
+      "codename": "add_campaign"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+      "name": "Can change campaign",
+      "content_type": 11,
+      "codename": "change_campaign"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+      "name": "Can delete campaign",
+      "content_type": 11,
+      "codename": "delete_campaign"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+      "name": "Can view campaign",
+      "content_type": 11,
+      "codename": "view_campaign"
     }
   },
   {
@@ -313,34 +747,33 @@
         2,
         3,
         4,
-        9,
-        10,
-        11,
         12,
-        5,
-        6,
-        7,
         8,
-        13,
-        14,
-        15,
         16,
         17,
         18,
         19,
         20,
-        29,
-        30,
-        31,
-        32,
+        41,
+        42,
+        43,
+        44,
         25,
         26,
         27,
         28,
+        29,
+        30,
+        31,
+        32,
         33,
         34,
         35,
         36,
+        37,
+        38,
+        39,
+        40,
         21,
         22,
         23,
@@ -402,13 +835,13 @@
         18,
         19,
         20,
+        25,
+        27,
+        28,
         29,
         30,
         31,
         32,
-        25,
-        27,
-        28,
         33,
         34,
         35,

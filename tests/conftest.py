@@ -1,9 +1,10 @@
 import random
+from datetime import timedelta
 
 import pytest
 from django.utils import timezone
 
-from tests.test_app.polls.models import Poll, Vote, Choice
+from tests.test_app.polls.models import Choice, Poll, Vote
 
 
 @pytest.fixture
@@ -19,7 +20,7 @@ def test_data(transactional_db, admin_user):
 
         choices = []
         for answer in answers:
-            choices.append(Choice.objects.create(poll=poll, choice_text=answer))
+            choices.append(Choice.objects.create(poll=poll, choice_text=answer, time=timedelta(days=1)))
 
         for x in range(1, random.randint(2, 10)):
             Vote.objects.create(user=admin_user, poll=poll, choice=random.choice(choices))
