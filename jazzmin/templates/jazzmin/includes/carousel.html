@@ -1,4 +1,5 @@
-{% load jazzmin %}
+{% load i18n jazzmin %}
+{% trans "General" as general_tab %}
 
 <div id="jazzy-carousel" class="carousel slide" data-ride="false" data-wrap="false" data-keyboard="true" data-interval="false">
     <div class="row">
@@ -7,7 +8,7 @@
         </div>
         <div class="col-sm-8 text-center">
             <p class="carousel-fieldset-label">
-                {{ adminform.fieldsets.0.0|default:"General" }}
+                {{ adminform.fieldsets.0.0|default:general_tab }}
             </p>
         </div>
         <div class="col-sm-2">
@@ -25,7 +26,7 @@
     </ol>
     <div class="carousel-inner">
         {% for fieldset in adminform %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-carouselId="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:"General"|title }}" data-target="#{{ fieldset.name|default:"General"|unicode_slugify }}-tab">
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-carouselId="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:general_tab|title }}" data-target="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
                 {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
             </div>
         {% endfor %}
