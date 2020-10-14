@@ -1,7 +1,6 @@
 from datetime import timedelta, date
 
 import factory
-from django.conf import settings
 from django.contrib.auth.models import Group, Permission, User
 from django.utils import timezone
 from factory.django import DjangoModelFactory

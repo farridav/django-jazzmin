@@ -74,11 +74,9 @@ def test_get_app_admin_urls():
     We can get all the admin urls for an app
     """
     assert get_app_admin_urls("books") == [
-        {"model": "books.book", "name": "Books", "url": reverse("admin:books_book_changelist")},
-        {"model": "books.choice", "name": "Choices", "url": reverse("admin:books_author_changelist")},
-        {"model": "books.vote", "name": "Votes", "url": reverse("admin:books_vote_changelist")},
-        {"model": "books.cheese", "name": "Cheeses", "url": reverse("admin:books_cheese_changelist")},
-        {"model": "books.campaign", "name": "Campaigns", "url": reverse("admin:books_campaign_changelist")},
+        {"url": "/en/admin/books/genre/", "model": "books.genre", "name": "Genres"},
+        {"url": "/en/admin/books/book/", "model": "books.book", "name": "Books"},
+        {"url": "/en/admin/books/author/", "model": "books.author", "name": "Authors"},
     ]
 
     assert get_app_admin_urls("nothing") == []

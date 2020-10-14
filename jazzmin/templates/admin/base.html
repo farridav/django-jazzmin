@@ -59,7 +59,7 @@
                             </a>
                             <div class="dropdown-menu">
                                 {% for child in link.children %}
-                                    <a class="dropdown-item" href="{{ child.url }}">{{ child.name }}</a>
+                                    <a class="dropdown-item" href="{{ child.url }}" {% if link.new_window %}target="_blank"{% endif %}>{{ child.name }}</a>
                                 {% endfor %}
                             </div>
                         {% else %}

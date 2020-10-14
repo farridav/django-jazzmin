@@ -177,6 +177,7 @@ def make_menu(
                     "name": link.get("name", "unspecified"),
                     "url": get_custom_url(link["url"], admin_site=admin_site),
                     "children": None,
+                    "new_window": link.get("new_window", False),
                     "icon": link.get("icon", options["default_icon_children"]),
                 }
             )
@@ -194,6 +195,7 @@ def make_menu(
                     "name": name,
                     "url": get_admin_url(link["model"], admin_site=admin_site),
                     "children": [],
+                    "new_window": link.get("new_window", False),
                     "icon": options["icons"].get(link["model"], options["default_icon_children"]),
                 }
             )

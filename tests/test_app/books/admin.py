@@ -5,8 +5,11 @@ from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.timesince import timesince
 
-from .models import Book, Author
+from .models import Book, Author, Genre
 from ..loans.admin import BookLoanInline
+from ..loans.models import Library
+
+admin.site.unregister(User)
 
 
 class BooksInline(admin.TabularInline):
@@ -76,9 +79,6 @@ class LogEntryAdmin(admin.ModelAdmin):
     modified.admin_order_field = "action_time"
 
 
-admin.site.unregister(User)
-
-
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     def get_queryset(self, request):
@@ -86,3 +86,13 @@ class CustomUserAdmin(UserAdmin):
         Remove our test user from the admin, so it cant be messed with
         """
         return super(CustomUserAdmin, self).get_queryset(request).exclude(username="test@test.com")
+
+
+@admin.register(Genre)
+class GenreAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Library)
+class LibraryAdmin(admin.ModelAdmin):
+    pass

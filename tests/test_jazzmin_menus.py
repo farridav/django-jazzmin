@@ -15,11 +15,11 @@ def test_side_menu(admin_client, settings):
     response = admin_client.get(url)
 
     assert parse_sidemenu(response) == {
-        "Global": ["/en/admin/"],
-        "Authentication and Authorization": ["/en/admin/auth/group/"],
-        "Books": ["/en/admin/books/author/", "/en/admin/books/book/"],
-        "Loans": ["/make_messages/", "/en/admin/loans/bookloan/"],
         "Administration": ["/en/admin/admin/logentry/"],
+        "Authentication and Authorization": ["/en/admin/auth/group/", "/en/admin/auth/user/"],
+        "Books": ["/en/admin/books/author/", "/en/admin/books/book/", "/en/admin/books/genre/"],
+        "Global": ["/en/admin/"],
+        "Loans": ["/make_messages/", "/en/admin/loans/bookloan/", "/en/admin/loans/library/"],
     }
 
     settings.JAZZMIN_SETTINGS = override_jazzmin_settings(hide_models=["auth.user"])
@@ -27,10 +27,10 @@ def test_side_menu(admin_client, settings):
 
     assert parse_sidemenu(response) == {
         "Global": ["/en/admin/"],
-        "Books": ["/en/admin/books/author/", "/en/admin/books/book/"],
-        "Loans": ["/make_messages/", "/en/admin/loans/loan/"],
-        "Administration": ["/en/admin/admin/logentry/"],
         "Authentication and Authorization": ["/en/admin/auth/group/"],
+        "Books": ["/en/admin/books/author/", "/en/admin/books/book/", "/en/admin/books/genre/"],
+        "Loans": ["/make_messages/", "/en/admin/loans/bookloan/", "/en/admin/loans/library/"],
+        "Administration": ["/en/admin/admin/logentry/"],
     }
 
 
@@ -46,7 +46,7 @@ def test_permissions_on_custom_links(client, settings):
 
     settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
         custom_links={
-            "loans": [
+            "books": [
                 {
                     "name": "Make Messages",
                     "url": "make_messages",
@@ -63,11 +63,7 @@ def test_permissions_on_custom_links(client, settings):
 
     client.force_login(user2)
     response = client.get(url)
-    assert parse_sidemenu(response) == {
-        "Global": ["/en/admin/"],
-        "Books": ["/en/admin/books/book/"],
-        "Loans": ["/make_messages/"],
-    }
+    assert parse_sidemenu(response) == {"Global": ["/en/admin/"], "Books": ["/make_messages/", "/en/admin/books/book/"]}
 
 
 @pytest.mark.django_db
@@ -96,11 +92,9 @@ def test_top_menu(admin_client, settings):
             "name": "Books",
             "link": "#",
             "children": [
-                {"name": "Books", "link": reverse("admin:books_book_changelist")},
-                {"name": "Choices", "link": reverse("admin:books_author_changelist")},
-                {"name": "Votes", "link": reverse("admin:books_vote_changelist")},
-                {"name": "Cheeses", "link": reverse("admin:books_cheese_changelist")},
-                {"name": "Campaigns", "link": reverse("admin:books_campaign_changelist")},
+                {"name": "Genres", "link": "/en/admin/books/genre/"},
+                {"name": "Books", "link": "/en/admin/books/book/"},
+                {"name": "Authors", "link": "/en/admin/books/author/"},
             ],
         },
     ]
