@@ -1,8 +1,8 @@
 import pytest
 from django.urls import reverse
 
-from tests.test_app.polls.models import Poll
-from tests.utils import user_with_permissions, parse_sidemenu
+from tests.factories import BookFactory, UserFactory
+from tests.utils import parse_sidemenu
 
 
 @pytest.mark.django_db
@@ -10,11 +10,11 @@ def test_no_delete_permission(client):
     """
     When our user has no delete permission, they dont see things they are not supposed to
     """
-    user = user_with_permissions("polls.view_poll")
-    poll = Poll.objects.create(owner=user, text="question")
+    user = UserFactory(permissions=["books.view_book"])
+    book = BookFactory()
 
-    url = reverse("admin:polls_poll_change", args=(poll.pk,))
-    delete_url = reverse("admin:polls_poll_delete", args=(poll.pk,))
+    url = reverse("admin:books_book_change", args=(book.pk,))
+    delete_url = reverse("admin:books_book_delete", args=(book.pk,))
     client.force_login(user)
 
     response = client.get(url)
@@ -26,9 +26,9 @@ def test_no_add_permission(client):
     """
     When our user has no add permission, they dont see things they are not supposed to
     """
-    user = user_with_permissions("polls.view_poll")
-    url = reverse("admin:polls_poll_changelist")
-    add_url = reverse("admin:polls_poll_add")
+    user = UserFactory(permissions=["books.view_book"])
+    url = reverse("admin:books_book_changelist")
+    add_url = reverse("admin:books_book_add")
 
     client.force_login(user)
     response = client.get(url)
@@ -43,13 +43,13 @@ def test_delete_but_no_view_permission(client):
 
     As in Plain old Django Admin
     """
-    user = user_with_permissions("polls.delete_poll")
+    user = UserFactory(permissions=["books.delete_book"])
 
     url = reverse("admin:index")
     client.force_login(user)
 
     response = client.get(url)
-    assert parse_sidemenu(response) == {"Global": ["/en/admin/"], "Polls": [None]}
+    assert parse_sidemenu(response) == {"Global": ["/en/admin/"], "Books": [None]}
 
 
 @pytest.mark.django_db
@@ -59,7 +59,7 @@ def test_no_permission(client):
 
     As in Plain old Django Admin
     """
-    user = user_with_permissions()
+    user = UserFactory(permissions=[])
 
     url = reverse("admin:index")
     client.force_login(user)

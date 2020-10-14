@@ -2,7 +2,7 @@ from datetime import timedelta, date
 
 import factory
 from django.conf import settings
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission, User
 from django.utils import timezone
 from factory.django import DjangoModelFactory
 from factory.fuzzy import FuzzyDate
@@ -46,8 +46,30 @@ class UserFactory(DjangoModelFactory):
             for group in extracted:
                 self.groups.add(group)
 
+    @factory.post_generation
+    def permissions(self, create, extracted, **kwargs):
+        """
+        Create a user with the given permissions, e.g UserFactory(permissions=('books.view_book', 'auth.change_user'))
+        """
+        if not create:
+            return
+
+        if extracted:
+            available_permissions = [
+                "{}.{}".format(x[0], x[1])
+                for x in Permission.objects.values_list("content_type__app_label", "codename")
+            ]
+
+            for permission in extracted:
+                assert permission in available_permissions, "{} not in {}".format(permission, available_permissions)
+
+                app, perm = permission.split(".")
+                perm_obj = Permission.objects.get(content_type__app_label=app, codename=perm)
+
+                self.user_permissions.add(perm_obj)
+
     class Meta:
-        model = settings.AUTH_USER_MODEL
+        model = User
 
 
 class GenreFactory(DjangoModelFactory):
