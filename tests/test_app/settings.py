@@ -23,7 +23,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    f"{PREFIX}polls.apps.PollsConfig",
+    # Our apps
+    f"{PREFIX}books.apps.BooksConfig",
+    f"{PREFIX}loans.apps.LoansConfig",
 ]
 
 MIDDLEWARE = [
@@ -43,14 +45,8 @@ ROOT_URLCONF = f"{PREFIX}urls"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-        },
-    },
-    "loggers": {
-        "": {"handlers": ["console"], "level": "INFO"},
-    },
+    "handlers": {"console": {"class": "logging.StreamHandler",},},
+    "loggers": {"": {"handlers": ["console"], "level": "INFO"},},
 }
 
 TEMPLATES = [
@@ -76,18 +72,10 @@ DATABASES = {
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 LANGUAGE_CODE = "en"
@@ -128,15 +116,15 @@ if not DEBUG and not TEST:
 ########################
 JAZZMIN_SETTINGS = {
     # title of the window
-    "site_title": "Polls Admin",
+    "site_title": "Library Admin",
     # Title on the brand, and the login screen (19 chars max)
-    "site_header": "Polls",
+    "site_header": "Library",
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-    "site_logo": "polls/img/logo.png",
+    "site_logo": "books/img/logo.png",
     # Welcome text on the login screen
-    "welcome_sign": "Welcome to polls",
+    "welcome_sign": "Welcome to the library",
     # Copyright on the footer
-    "copyright": "Acme Ltd",
+    "copyright": "Acme Library Ltd",
     # The model admin to search from the search bar, search bar omitted if excluded
     "search_model": "auth.User",
     # Field name on user model that contains avatar image
@@ -153,7 +141,8 @@ JAZZMIN_SETTINGS = {
         # model admin to link to (Permissions checked against model)
         {"model": "auth.User"},
         # App with dropdown menu to all its models pages (Permissions checked against models)
-        {"app": "polls"},
+        {"app": "books"},
+        {"app": "loans"},
     ],
     #############
     # User Menu #
@@ -175,15 +164,15 @@ JAZZMIN_SETTINGS = {
     # Hide these models when generating side menu (e.g auth.user)
     "hide_models": [],
     # List of apps to base side menu (app or model) ordering off of
-    "order_with_respect_to": ["Make Messages", "auth", "polls", "polls.choice", "polls.poll"],
+    "order_with_respect_to": ["Make Messages", "auth", "books", "books.author", "books.book", "loans"],
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
-        "polls": [
+        "loans": [
             {
                 "name": "Make Messages",
                 "url": "make_messages",
                 "icon": "fas fa-comments",
-                "permissions": ["polls.view_poll"],
+                "permissions": ["loans.view_loan"],
             }
         ]
     },
@@ -194,11 +183,10 @@ JAZZMIN_SETTINGS = {
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
         "admin.LogEntry": "fas fa-file",
-        "polls.Poll": "fas fa-poll",
-        "polls.Choice": "fas fa-list",
-        "polls.Vote": "fas fa-vote-yea",
-        "polls.Campaign": "fas fa-ad",
-        "polls.Cheese": "fas fa-cheese",
+        "books.Author": "fas fa-user",
+        "books.Book": "fas fa-book-open",
+        "books.Genre": "fas fa-photo-video",
+        "loans.BookLoan": "fas fa-book-reader",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
