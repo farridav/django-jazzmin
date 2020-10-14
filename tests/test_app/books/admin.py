@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.timesince import timesince
 
-from jazzmin.utils import get_admin_url
 from .models import Book, Author
 from ..loans.admin import BookLoanInline
 
@@ -19,8 +20,8 @@ class BookAdmin(admin.ModelAdmin):
         ("other", {"fields": ("genre", "summary", "isbn", "published_on")}),
     )
     raw_id_fields = ("author",)
-    list_display = ("edit", "title", "author")
-    readonly_fields = ("edit",)
+    list_display = ("__str__", "title", "author")
+    readonly_fields = ("__str__",)
     list_display_links = ()
     list_filter = ("author", "genre")
     list_select_related = False
@@ -40,9 +41,9 @@ class BookAdmin(admin.ModelAdmin):
     actions_on_bottom = True
     actions_selection_counter = True
 
-    def edit(self, obj):
-        url = get_admin_url(obj)
-        return format_html(f'<a href="{url}"><i class="fas fa-edit"> </i></a>')
+    def save_form(self, request, form, change):
+        ret = super().save_form(request, form, change)
+        return ret
 
 
 @admin.register(Author)
@@ -73,3 +74,15 @@ class LogEntryAdmin(admin.ModelAdmin):
         return "{} ago".format(timesince(obj.action_time))
 
     modified.admin_order_field = "action_time"
+
+
+admin.site.unregister(User)
+
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    def get_queryset(self, request):
+        """
+        Remove our test user from the admin, so it cant be messed with
+        """
+        return super(CustomUserAdmin, self).get_queryset(request).exclude(username="test@test.com")

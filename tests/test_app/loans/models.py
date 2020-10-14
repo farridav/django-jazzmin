@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 
 class Library(models.Model):
@@ -16,6 +17,8 @@ class BookLoan(models.Model):
     book = models.ForeignKey("books.Book", on_delete=models.SET_NULL, null=True)
     imprint = models.CharField(max_length=200)
     due_back = models.DateField(null=True, blank=True)
+    loan_start = models.DateTimeField()
+    duration = models.DurationField(blank=True)
 
     LOAN_STATUS = (
         ("m", "Maintenance"),
@@ -33,3 +36,7 @@ class BookLoan(models.Model):
 
     def __str__(self):
         return f"{self.id} ({self.book.title})"
+
+    def save(self, **kwargs):
+        self.duration = self.loan_start - timezone.now()
+        super().save(**kwargs)

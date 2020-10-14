@@ -16,6 +16,7 @@ div.inline-related {
     width: 45px;
 }
 
+
 .empty-form {
     display: none !important;
 }
@@ -102,6 +103,10 @@ table.dataTable thead .sorting_desc_disabled::after {
 
 .select2-container .select2-selection--single {
     height: 40px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #007bff !important;
 }
 
 #changelist-search .form-group {

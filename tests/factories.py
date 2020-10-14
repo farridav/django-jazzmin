@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta, date
+from datetime import timedelta, date
 
 import factory
 from django.conf import settings
+from django.contrib.auth.models import Group
 from django.utils import timezone
 from factory.django import DjangoModelFactory
 from factory.fuzzy import FuzzyDate
@@ -12,24 +13,29 @@ from tests.test_app.loans.models import BookLoan, Library
 NOW = timezone.now()
 
 
+class GroupFactory(DjangoModelFactory):
+    name = factory.Faker("job")
+
+    @factory.post_generation
+    def permissions(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            for group in extracted:
+                self.permissions.add(group)
+
+    class Meta:
+        model = Group
+
+
 class UserFactory(DjangoModelFactory):
     username = factory.Faker("name")
     email = factory.Faker("email")
     is_staff = True
     is_active = True
     is_superuser = False
-
-    @classmethod
-    def _prepare(cls, create, **kwargs):
-        password = "test123"
-        if "password" in kwargs:
-            password = kwargs.pop("password")
-        user = super(UserFactory, cls)._prepare(create, **kwargs)
-        user.set_password(password)
-        if create:
-            user.save()
-
-        return user
+    password = factory.PostGenerationMethodCall("set_password", "test")
 
     @factory.post_generation
     def groups(self, create, extracted, **kwargs):
@@ -94,7 +100,8 @@ class BookLoanFactory(DjangoModelFactory):
     id = factory.Faker("uuid4")
     book = factory.SubFactory(BookFactory)
     imprint = factory.Faker("name")
-    due_back = FuzzyDate(NOW, NOW + timedelta(weeks=4))
+    loan_start = NOW
+    due_back = factory.LazyAttribute(lambda x: x.loan_start + timedelta(weeks=2))
     borrower = factory.SubFactory(UserFactory)
     status = factory.fuzzy.FuzzyChoice(dict(BookLoan.LOAN_STATUS).keys())
 
