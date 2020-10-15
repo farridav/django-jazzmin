@@ -4,7 +4,9 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.timesince import timesince
+from import_export.admin import ImportExportMixin
 
+from .resources import BookResource
 from .models import Book, Author, Genre
 from ..loans.admin import BookLoanInline
 from ..loans.models import Library
@@ -17,7 +19,8 @@ class BooksInline(admin.TabularInline):
 
 
 @admin.register(Book)
-class BookAdmin(admin.ModelAdmin):
+class BookAdmin(ImportExportMixin, admin.ModelAdmin):
+    resource_class = BookResource
     fieldsets = (
         ("general", {"fields": ("title", "author")}),
         ("other", {"fields": ("genre", "summary", "isbn", "published_on")}),
