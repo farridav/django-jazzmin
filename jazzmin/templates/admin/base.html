@@ -24,6 +24,10 @@
         <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
     {% endif %}
 
+    <!-- favicons -->
+    <link rel="shortcut icon" href="{% static jazzmin_settings.site_logo %}" type="image/png">
+    <link rel="icon" href="{% static jazzmin_settings.site_logo %}" sizes="32x32" type="image/png">
+
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     {% block extrastyle %} {% endblock %}
@@ -59,7 +63,7 @@
                             </a>
                             <div class="dropdown-menu">
                                 {% for child in link.children %}
-                                    <a class="dropdown-item" href="{{ child.url }}">{{ child.name }}</a>
+                                    <a class="dropdown-item" href="{{ child.url }}" {% if link.new_window %}target="_blank"{% endif %}>{{ child.name }}</a>
                                 {% endfor %}
                             </div>
                         {% else %}

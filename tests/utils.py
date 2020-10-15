@@ -3,39 +3,9 @@ from collections import defaultdict
 
 from bs4 import BeautifulSoup, Tag
 from django.conf import settings
-from django.contrib.auth.models import User, Permission
 from faker import Faker
 
 fake = Faker()
-
-
-def user_with_permissions(*permissions):
-    """
-    Create a user with the given permissions, e.g user_with_permissions('polls.view_poll', 'auth.change_user')
-    """
-    available_permissions = [
-        "{}.{}".format(x[0], x[1]) for x in Permission.objects.values_list("content_type__app_label", "codename")
-    ]
-
-    first_name = fake.first_name()
-    last_name = fake.last_name()
-    user = User.objects.create_user(
-        first_name=first_name,
-        last_name=last_name,
-        email=first_name + "." + last_name + "@fakermail.com",
-        username=first_name + last_name,
-        password="password",
-        is_staff=True,
-    )
-
-    for permission in permissions:
-        assert permission in available_permissions, "{} not in {}".format(permission, available_permissions)
-
-        app, perm = permission.split(".")
-        perm_obj = Permission.objects.get(content_type__app_label=app, codename=perm)
-        user.user_permissions.add(perm_obj)
-
-    return user
 
 
 def parse_sidemenu(response):

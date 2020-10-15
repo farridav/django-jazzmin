@@ -120,5 +120,6 @@ $(document).ready(function () {
     else if ($collapsible.length) { handleCollapsible($collapsible); }
 
     // Apply select2 to any select boxes that dont yet have it
-    $('select').not('.select2-hidden-accessible').not('.selectfilter').select2({ dropdownAutoWidth: true });
+    const noSelect2 = '.select2-hidden-accessible, .selectfilter, .selector-available select, .selector-chosen select';
+    $('select').not(noSelect2).select2({ dropdownAutoWidth: true });
 });

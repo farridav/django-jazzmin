@@ -1,7 +1,8 @@
 import pytest
 
 from jazzmin.compat import reverse
-from tests.test_app.polls.models import Poll
+from tests.factories import BookFactory
+from tests.test_app.books.models import Book
 
 
 @pytest.mark.django_db
@@ -18,12 +19,7 @@ def test_login(client, admin_user):
     assert templates_used == ["admin/login.html"]
 
     response = client.post(
-        url + "?next=/admin/",
-        data={
-            "username": admin_user.username,
-            "password": "password"
-        },
-        follow=True
+        url + "?next=/admin/", data={"username": admin_user.username, "password": "password"}, follow=True
     )
 
     assert response.status_code == 200
@@ -73,11 +69,7 @@ def test_password_change(admin_client):
 
     response = admin_client.post(
         url,
-        data={
-            "old_password": "password",
-            "new_password1": "PickleRick123!!",
-            "new_password2": "PickleRick123!!"
-        },
+        data={"old_password": "password", "new_password1": "PickleRick123!!", "new_password2": "PickleRick123!!"},
         follow=True,
     )
     templates_used = [t.name for t in response.templates]
@@ -111,11 +103,12 @@ def test_dashboard(admin_client):
 
 
 @pytest.mark.django_db
-def test_detail(admin_client, test_data):
+def test_detail(admin_client):
     """
     We can render the detail view
     """
-    url = reverse("admin:polls_poll_change", args=(test_data[0].pk,))
+    book = BookFactory()
+    url = reverse("admin:books_book_change", args=(book.pk,))
 
     response = admin_client.get(url)
     templates_used = [t.name for t in response.templates]
@@ -125,53 +118,49 @@ def test_detail(admin_client, test_data):
 
     # The number of times each template was rendered
     assert render_counts == {
-        "admin/base.html": 1,
-        "admin/base_site.html": 1,
-        "admin/change_form.html": 1,
-        "admin/change_form_object_tools.html": 1,
-        "admin/edit_inline/stacked.html": 1,
-        "admin/includes/fieldset.html": 7,
-        "admin/prepopulated_fields_js.html": 1,
-        "admin/submit_line.html": 1,
+        "django/forms/widgets/text.html": 6,
         "admin/widgets/foreign_key_raw_id.html": 1,
-        "admin/widgets/split_datetime.html": 1,
-        "django/forms/widgets/date.html": 2,
-        "django/forms/widgets/attrs.html": 34,
-        "django/forms/widgets/checkbox.html": 4,
-        "django/forms/widgets/hidden.html": 14,
-        "django/forms/widgets/input.html": 33,
-        "django/forms/widgets/multiwidget.html": 1,
-        "django/forms/widgets/splithiddendatetime.html": 1,
-        "django/forms/widgets/textarea.html": 1,
-        "django/forms/widgets/text.html": 10,
-        "django/forms/widgets/time.html": 2,
-        "jazzmin/includes/horizontal_tabs.html": 1,
+        "django/forms/widgets/select_option.html": 19,
+        "admin/edit_inline/stacked.html": 1,
+        "admin/prepopulated_fields_js.html": 1,
         "jazzmin/includes/ui_builder_panel.html": 1,
+        "admin/widgets/related_widget_wrapper.html": 3,
+        "django/forms/widgets/textarea.html": 1,
+        "admin/change_form_object_tools.html": 1,
+        "django/forms/widgets/date.html": 3,
+        "admin/base.html": 1,
+        "admin/includes/fieldset.html": 4,
+        "django/forms/widgets/hidden.html": 6,
+        "django/forms/widgets/attrs.html": 41,
+        "admin/change_form.html": 1,
+        "admin/base_site.html": 1,
+        "django/forms/widgets/select.html": 5,
+        "jazzmin/includes/horizontal_tabs.html": 1,
+        "django/forms/widgets/input.html": 16,
+        "admin/submit_line.html": 1,
     }
 
     # The templates that were used
     assert set(templates_used) == {
-        "admin/widgets/split_datetime.html",
-        "django/forms/widgets/splithiddendatetime.html",
-        "admin/change_form_object_tools.html",
-        "django/forms/widgets/checkbox.html",
-        "admin/change_form.html",
-        "admin/prepopulated_fields_js.html",
-        "django/forms/widgets/date.html",
-        "django/forms/widgets/textarea.html",
-        "admin/base_site.html",
+        "django/forms/widgets/text.html",
         "admin/widgets/foreign_key_raw_id.html",
+        "django/forms/widgets/select_option.html",
+        "admin/edit_inline/stacked.html",
+        "admin/prepopulated_fields_js.html",
+        "jazzmin/includes/ui_builder_panel.html",
+        "admin/widgets/related_widget_wrapper.html",
+        "django/forms/widgets/textarea.html",
+        "admin/change_form_object_tools.html",
+        "django/forms/widgets/date.html",
+        "admin/base.html",
         "admin/includes/fieldset.html",
         "django/forms/widgets/hidden.html",
         "django/forms/widgets/attrs.html",
-        "admin/edit_inline/stacked.html",
-        "django/forms/widgets/text.html",
-        "django/forms/widgets/input.html",
-        "admin/base.html",
-        "django/forms/widgets/multiwidget.html",
+        "admin/change_form.html",
+        "admin/base_site.html",
+        "django/forms/widgets/select.html",
         "jazzmin/includes/horizontal_tabs.html",
-        "django/forms/widgets/time.html",
-        "jazzmin/includes/ui_builder_panel.html",
+        "django/forms/widgets/input.html",
         "admin/submit_line.html",
     }
 
@@ -179,11 +168,13 @@ def test_detail(admin_client, test_data):
 
 
 @pytest.mark.django_db
-def test_list(admin_client, test_data):
+def test_list(admin_client):
     """
     We can render the list view
     """
-    url = reverse("admin:polls_poll_changelist")
+    BookFactory.create_batch(5)
+
+    url = reverse("admin:books_book_changelist")
 
     response = admin_client.get(url)
     templates_used = [t.name for t in response.templates]
@@ -193,54 +184,56 @@ def test_list(admin_client, test_data):
 
     # The number of times each template was rendered
     assert render_counts == {
-        "admin/actions.html": 2,
+        "jazzmin/includes/ui_builder_panel.html": 1,
+        "admin/change_list.html": 1,
+        "django/forms/widgets/checkbox.html": 5,
+        "django/forms/widgets/text.html": 5,
+        "django/forms/widgets/select_option.html": 4,
+        "admin/filter.html": 2,
         "admin/base.html": 1,
         "admin/base_site.html": 1,
-        "admin/change_list.html": 1,
         "admin/change_list_object_tools.html": 1,
-        "admin/change_list_results.html": 1,
         "admin/date_hierarchy.html": 1,
-        "admin/filter.html": 1,
-        "admin/pagination.html": 1,
-        "admin/search_form.html": 1,
-        "django/forms/widgets/attrs.html": 18,
-        "django/forms/widgets/checkbox.html": 4,
-        "django/forms/widgets/hidden.html": 8,
-        "django/forms/widgets/input.html": 12,
         "django/forms/widgets/select.html": 2,
-        "django/forms/widgets/select_option.html": 4,
-        "jazzmin/includes/ui_builder_panel.html": 1,
+        "admin/change_list_results.html": 1,
+        "admin/pagination.html": 1,
+        "django/forms/widgets/input.html": 21,
+        "admin/search_form.html": 1,
+        "django/forms/widgets/hidden.html": 11,
+        "django/forms/widgets/attrs.html": 27,
+        "admin/actions.html": 2,
     }
 
     # The templates that were used
     assert set(templates_used) == {
-        "admin/actions.html",
+        "jazzmin/includes/ui_builder_panel.html",
+        "admin/change_list.html",
+        "django/forms/widgets/checkbox.html",
+        "django/forms/widgets/text.html",
+        "django/forms/widgets/select_option.html",
+        "admin/filter.html",
         "admin/base.html",
         "admin/base_site.html",
-        "admin/change_list.html",
         "admin/change_list_object_tools.html",
-        "admin/change_list_results.html",
         "admin/date_hierarchy.html",
-        "admin/filter.html",
-        "admin/pagination.html",
-        "admin/search_form.html",
-        "django/forms/widgets/attrs.html",
-        "django/forms/widgets/checkbox.html",
-        "django/forms/widgets/hidden.html",
-        "django/forms/widgets/input.html",
         "django/forms/widgets/select.html",
-        "django/forms/widgets/select_option.html",
-        "jazzmin/includes/ui_builder_panel.html",
+        "admin/change_list_results.html",
+        "admin/pagination.html",
+        "django/forms/widgets/input.html",
+        "admin/search_form.html",
+        "django/forms/widgets/hidden.html",
+        "django/forms/widgets/attrs.html",
+        "admin/actions.html",
     }
 
 
 @pytest.mark.django_db
-def test_history(admin_client, test_data):
+def test_history(admin_client):
     """
     We can render the object history page
     """
-    poll = test_data[0]
-    url = reverse("admin:polls_poll_history", args=(poll.pk,))
+    book = BookFactory()
+    url = reverse("admin:books_book_history", args=(book.pk,))
 
     response = admin_client.get(url)
     templates_used = [t.name for t in response.templates]
@@ -266,12 +259,12 @@ def test_history(admin_client, test_data):
 
 
 @pytest.mark.django_db
-def test_delete(admin_client, test_data):
+def test_delete(admin_client):
     """
     We can load the confirm delete page, and POST it, and it deletes our object
     """
-    poll = test_data[0]
-    url = reverse("admin:polls_poll_delete", args=(poll.pk,))
+    book = BookFactory()
+    url = reverse("admin:books_book_delete", args=(book.pk,))
 
     response = admin_client.get(url)
     templates_used = [t.name for t in response.templates]
@@ -300,5 +293,5 @@ def test_delete(admin_client, test_data):
     response = admin_client.post(url, data={"post": "yes"}, follow=True)
 
     # We deleted our object, and are now back on the changelist
-    assert not Poll.objects.filter(id=poll.pk).exists()
-    assert response.resolver_match.url_name == "polls_poll_changelist"
+    assert not Book.objects.all().exists()
+    assert response.resolver_match.url_name == "books_book_changelist"

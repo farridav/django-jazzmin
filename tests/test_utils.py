@@ -10,8 +10,8 @@ from jazzmin.utils import (
     get_app_admin_urls,
     get_view_permissions,
 )
-from tests.test_app.polls.models import Poll
-from tests.utils import user_with_permissions
+from tests.factories import BookFactory, UserFactory
+from tests.test_app.books.models import Book
 
 
 def test_order_with_respect_to():
@@ -37,12 +37,12 @@ def test_get_admin_url(admin_user):
     """
     We can get admin urls for Model classes, instances, or app.model strings
     """
-    poll = Poll.objects.create(owner=admin_user, text="question")
+    book = BookFactory()
 
-    assert get_admin_url(poll) == reverse("admin:polls_poll_change", args=(poll.pk,))
-    assert get_admin_url(Poll) == reverse("admin:polls_poll_changelist")
-    assert get_admin_url(Poll, q="test") == reverse("admin:polls_poll_changelist") + "?q=test"
-    assert get_admin_url("polls.Poll") == reverse("admin:polls_poll_changelist")
+    assert get_admin_url(book) == reverse("admin:books_book_change", args=(book.pk,))
+    assert get_admin_url(Book) == reverse("admin:books_book_changelist")
+    assert get_admin_url(Book, q="test") == reverse("admin:books_book_changelist") + "?q=test"
+    assert get_admin_url("books.Book") == reverse("admin:books_book_changelist")
     assert get_admin_url("cheese:bad_pattern") == "#"
     assert get_admin_url("fake_app.fake_model") == "#"
     assert get_admin_url(1) == "#"
@@ -54,7 +54,7 @@ def test_get_custom_url():
     """
     assert get_custom_url("http://somedomain.com") == "http://somedomain.com"
     assert get_custom_url("/relative/path") == "/relative/path"
-    assert get_custom_url("admin:polls_poll_changelist") == "/en/admin/polls/poll/"
+    assert get_custom_url("admin:books_book_changelist") == "/en/admin/books/book/"
 
 
 @pytest.mark.django_db
@@ -63,7 +63,7 @@ def test_get_model_meta(admin_user):
     We can fetch model meta
     """
     assert get_model_meta("auth.user") == admin_user._meta
-    assert get_model_meta("polls.poll") == Poll._meta
+    assert get_model_meta("books.book") == Book._meta
     assert get_model_meta("nothing") is None
     assert get_model_meta("nothing.nothing") is None
 
@@ -73,12 +73,10 @@ def test_get_app_admin_urls():
     """
     We can get all the admin urls for an app
     """
-    assert get_app_admin_urls("polls") == [
-        {"model": "polls.poll", "name": "Polls", "url": reverse("admin:polls_poll_changelist")},
-        {"model": "polls.choice", "name": "Choices", "url": reverse("admin:polls_choice_changelist")},
-        {"model": "polls.vote", "name": "Votes", "url": reverse("admin:polls_vote_changelist")},
-        {"model": "polls.cheese", "name": "Cheeses", "url": reverse("admin:polls_cheese_changelist")},
-        {"model": "polls.campaign", "name": "Campaigns", "url": reverse("admin:polls_campaign_changelist")},
+    assert get_app_admin_urls("books") == [
+        {"url": "/en/admin/books/genre/", "model": "books.genre", "name": "Genres"},
+        {"url": "/en/admin/books/book/", "model": "books.book", "name": "Books"},
+        {"url": "/en/admin/books/author/", "model": "books.author", "name": "Authors"},
     ]
 
     assert get_app_admin_urls("nothing") == []
@@ -89,10 +87,9 @@ def test_get_model_permissions():
     """
     We can create the correct model permissions from user permissions
     """
+    user = UserFactory(permissions=("books.view_book", "books.view_author"))
 
-    user = user_with_permissions("polls.view_poll", "polls.view_choice")
-
-    assert get_view_permissions(user) == {"polls.poll", "polls.choice"}
+    assert get_view_permissions(user) == {"books.book", "books.author"}
 
 
 @pytest.mark.django_db
@@ -100,8 +97,7 @@ def test_get_model_permissions_lowercased():
     """
     When our permissions are upper cased (we had an app with an upper case letter) we still get user perms in lower case
     """
-
-    user = user_with_permissions("polls.view_poll", "polls.view_choice")
+    user = UserFactory(permissions=("books.view_book", "books.view_author"))
     user.user_permissions.update(codename=Upper("codename"))
 
-    assert get_view_permissions(user) == {"polls.poll", "polls.choice"}
+    assert get_view_permissions(user) == {"books.book", "books.author"}

@@ -16,6 +16,7 @@ div.inline-related {
     width: 45px;
 }
 
+
 .empty-form {
     display: none !important;
 }
@@ -104,6 +105,10 @@ table.dataTable thead .sorting_desc_disabled::after {
     height: 40px !important;
 }
 
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #007bff !important;
+}
+
 #changelist-search .form-group {
     margin-right: .5em;
 }
@@ -122,6 +127,7 @@ table.dataTable thead .sorting_desc_disabled::after {
 
 .date-hierarchy {
     margin-right: 8px;
+    display: block;
 }
 
 /* APP.CSS */
