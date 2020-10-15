@@ -89,6 +89,7 @@ class AuthorFactory(DjangoModelFactory):
 
 
 class LibraryFactory(DjangoModelFactory):
+    name = factory.Faker("company")
     address = factory.Faker("address")
     librarian = factory.SubFactory(UserFactory)
 

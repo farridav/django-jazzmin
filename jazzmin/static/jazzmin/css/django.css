@@ -127,6 +127,7 @@ table.dataTable thead .sorting_desc_disabled::after {
 
 .date-hierarchy {
     margin-right: 8px;
+    display: block;
 }
 
 /* APP.CSS */

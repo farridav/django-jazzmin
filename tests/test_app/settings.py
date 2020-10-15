@@ -184,9 +184,10 @@ JAZZMIN_SETTINGS = {
         "auth.Group": "fas fa-users",
         "admin.LogEntry": "fas fa-file",
         "books.Author": "fas fa-user",
-        "books.Book": "fas fa-book-open",
+        "books.Book": "fas fa-book",
         "books.Genre": "fas fa-photo-video",
-        "loans.BookLoan": "fas fa-book-reader",
+        "loans.BookLoan": "fas fa-book-open",
+        "loans.Library": "fas fa-book-reader",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",

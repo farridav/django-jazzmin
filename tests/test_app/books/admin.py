@@ -32,6 +32,7 @@ class BookAdmin(admin.ModelAdmin):
     list_max_show_all = 100
     list_editable = ("title",)
     search_fields = ("title", "author__last_name")
+    autocomplete_fields = ("genre", )
     date_hierarchy = "published_on"
     save_as = True
     save_as_continue = True
@@ -90,9 +91,9 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ("name", )
 
 
 @admin.register(Library)
 class LibraryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("name", "address", "librarian")
