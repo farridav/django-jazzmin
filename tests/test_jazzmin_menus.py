@@ -1,8 +1,8 @@
 import pytest
 from django.urls import reverse
 
-from .factories import UserFactory
-from .utils import parse_sidemenu, parse_topmenu, parse_usermenu, override_jazzmin_settings
+from tests.factories import UserFactory
+from tests.utils import parse_sidemenu, parse_topmenu, parse_usermenu, override_jazzmin_settings
 
 
 @pytest.mark.django_db

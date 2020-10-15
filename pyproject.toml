@@ -59,7 +59,11 @@ coveralls = "*"             # Publish code coverage to coveralls
 beautifulsoup4 = "*"        # Structure HTML documents into navigable things for test assertions
 mkdocs = "^1.1.2"           # Tool for serving rendered markdown docs
 polib = "^1.1.0"            # Tool for dealing with translation files
-factory-boy = "^3.1.0"
+factory-boy = "^3.1.0"      # Factory generation
+# 3rd party app support demonstrated in test app
+django-mptt = "^0.11.0"
+django-treebeard = "^4.3.1"
+django-import-export = "^2.4.0"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
@@ -120,10 +124,10 @@ deps =
     pytest
     pytest-django
     pytest-cov
-    faker
     coveralls
     beautifulsoup4
     dj-database-url
+    factory-boy
     django2: Django<3
     django3: Django<4
 

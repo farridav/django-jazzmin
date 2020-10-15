@@ -4,7 +4,7 @@ import factory
 from django.contrib.auth.models import Group, Permission, User
 from django.utils import timezone
 from factory.django import DjangoModelFactory
-from factory.fuzzy import FuzzyDate
+from factory.fuzzy import FuzzyChoice, FuzzyDate
 
 from tests.test_app.books.models import Author, Book, Genre
 from tests.test_app.loans.models import BookLoan, Library
@@ -124,7 +124,7 @@ class BookLoanFactory(DjangoModelFactory):
     loan_start = NOW
     due_back = factory.LazyAttribute(lambda x: x.loan_start + timedelta(weeks=2))
     borrower = factory.SubFactory(UserFactory)
-    status = factory.fuzzy.FuzzyChoice(dict(BookLoan.LOAN_STATUS).keys())
+    status = FuzzyChoice(dict(BookLoan.LOAN_STATUS).keys())
 
     class Meta:
         model = BookLoan

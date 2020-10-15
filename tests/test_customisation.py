@@ -2,13 +2,13 @@ from unittest import mock
 
 import pytest
 from bs4 import BeautifulSoup
-from django.contrib.auth.models import User
 from django.urls import reverse
 
 from jazzmin.settings import CHANGEFORM_TEMPLATES
-from .factories import BookFactory, UserFactory
-from .test_app.books.admin import BookAdmin
-from .utils import override_jazzmin_settings
+
+from tests.factories import BookFactory, UserFactory
+from tests.test_app.books.admin import BookAdmin
+from tests.utils import override_jazzmin_settings
 
 
 @pytest.mark.django_db
@@ -31,7 +31,6 @@ def test_changeform_templates(admin_client, settings, config_value, template):
     """
     All changeform config values use the correct templates
     """
-    user = User.objects.first()
     book = BookFactory()
 
     url = reverse("admin:books_book_change", args=(book.pk,))
