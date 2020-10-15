@@ -297,3 +297,43 @@ custom CSS and/or JS file, just pass a relative path to your files e.g:
  ```
 
 Into your jazzmin settings (Ensure these files can be found by the static file finder)
+
+### Adding extra actions to model's form view
+
+Add a template for your model on your main template directory
+
+```djangourlpath
+your_app/templates/admin/your_model/change_form.html
+```
+
+```jinja2
+{% extends "admin/submit_line.html %}
+
+{% block extra-actions %}
+
+{# For a simple link #}
+<div class="form-group">
+    <a href="/some/url" class="btn btn-outline-info form-control">Some Action</a>
+</div>
+
+{# Or, to process this with form submission #}
+<div class="form-group">
+    <input type="submit" class="btn btn-outline-info form-control" value="SomeAction" name="_your_action">
+</div>
+{% endblock %}
+```
+
+If you are adding a button that needs processing with the form, e.g (Save and send) you will need to add the
+following to your admin class:
+
+```python
+def response_change(self, request, obj):
+    ret = super().response_change(request, obj)
+    if '_your_action' in request.POST:
+        # Do something
+        pass
+    return ret
+```
+    
+The implementation might change slightly if your wanting to perform an action on add, or delete, for those, you can
+override the response_add of response_delete methods instead/as well.
