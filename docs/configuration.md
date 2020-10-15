@@ -303,11 +303,11 @@ Into your jazzmin settings (Ensure these files can be found by the static file f
 Add a template for your model on your main template directory
 
 ```djangourlpath
-your_app/templates/admin/your_model/change_form.html
+your_app/templates/admin/your_model/submit_line.html
 ```
 
 ```jinja2
-{% extends "admin/submit_line.html %}
+{% extends "admin/submit_line.html" %}
 
 {% block extra-actions %}
 

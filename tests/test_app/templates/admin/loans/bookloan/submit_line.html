@@ -1,0 +1,14 @@
+{% extends "admin/submit_line.html" %}
+
+{% block extra-actions %}
+
+{# Simple link #}
+<div class="form-group">
+    <a href="https://www.djangoproject.com/" class="btn btn-outline-warning form-control" target="_blank">Go Django</a>
+</div>
+
+{# Process with form submission #}
+<div class="form-group">
+    <input type="submit" class="btn btn-outline-primary form-control" value="Reserve" name="reserve">
+</div>
+{% endblock %}
