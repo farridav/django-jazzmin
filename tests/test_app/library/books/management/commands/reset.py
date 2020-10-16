@@ -1,7 +1,9 @@
 from random import choice
 
-from django.core.management import BaseCommand, call_command
+from django.contrib.auth.models import User, Group
+from django.core.management import BaseCommand
 
+from ...models import Book, Author, Genre
 from ....factories import (
     BookLoanFactory,
     UserFactory,
@@ -10,6 +12,7 @@ from ....factories import (
     GroupFactory,
     LibraryFactory,
 )
+from ....loans.models import Library, BookLoan
 
 
 class Command(BaseCommand):
@@ -18,8 +21,8 @@ class Command(BaseCommand):
     """
 
     def handle(self, *args, **options):
-        call_command("reset_db", "--noinput")
-        call_command("migrate")
+        for Model in [Group, User, Library, Author, Book, BookLoan, Genre]:
+            Model.objects.all().delete()
 
         library = LibraryFactory()
         UserFactory(
