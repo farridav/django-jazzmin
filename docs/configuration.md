@@ -266,7 +266,7 @@ Namely:
 - `LOCALE_DIRS` is setup
 - `LANGUAGES` have been defined
 
-See our [test app settings](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/settings.py) 
+See our [test app settings](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/settings.py) 
 for a practical example.
 
 ![Language chooser](./img/language_chooser.png)

@@ -3,4 +3,4 @@ from django.conf import settings
 
 
 class LoansConfig(AppConfig):
-    name = f"{settings.PREFIX}loans"
+    name = "{}library.loans".format(settings.PREFIX)

@@ -5,7 +5,7 @@ import dj_database_url
 ###################
 # Django Settings #
 ###################
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "not-secret-at-all")
 DEBUG = bool(int(os.getenv("DEBUG", 1)))
 TEST = os.getenv("FAIL_INVALID_TEMPLATE_VARS")
@@ -25,8 +25,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "import_export",
     # Our apps
-    f"{PREFIX}apps.books.apps.BooksConfig",
-    f"{PREFIX}apps.loans.apps.LoansConfig",
+    "{}library.books.apps.BooksConfig".format(PREFIX),
+    "{}library.loans.apps.LoansConfig".format(PREFIX),
 ]
 
 MIDDLEWARE = [
@@ -41,7 +41,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = f"{PREFIX}urls"
+ROOT_URLCONF = "{}library.urls".format(PREFIX)
+
+WSGI_APPLICATION = "{}.library.wsgi.application".format(PREFIX)
 
 LOGGING = {
     "version": 1,

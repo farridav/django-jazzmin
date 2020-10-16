@@ -75,7 +75,7 @@ django-import-export = "^2.4.0"
 addopts = "--pdbcls=IPython.terminal.debugger:TerminalPdb -p no:warnings --junitxml=.reports/coverage.xml --cov-report=html:.reports/htmlcov --cov jazzmin"
 junit_family = "xunit2"
 norecursedirs = ".git .tox _resource build dist docs"
-DJANGO_SETTINGS_MODULE = "tests.test_app.settings"
+DJANGO_SETTINGS_MODULE = "tests.test_app.library.settings"
 FAIL_INVALID_TEMPLATE_VARS = 1
 
 [tool.black]

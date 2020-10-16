@@ -15,7 +15,7 @@ pip install django-jazzmin
 ```
 
 ## Documentation
-See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/settings.py)
+See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/settings.py)
 
 ## Demo
 Live demo https://django-jazzmin.herokuapp.com/admin

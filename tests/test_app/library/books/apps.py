@@ -3,4 +3,4 @@ from django.conf import settings
 
 
 class BooksConfig(AppConfig):
-    name = f"{settings.PREFIX}books"
+    name = "{}library.books".format(settings.PREFIX)
