@@ -21,3 +21,11 @@ class BookLoanAdmin(admin.ModelAdmin):
         (None, {"fields": ("book", "imprint", "id")}),
         ("Availability", {"fields": ("status", "due_back", "duration", "borrower")}),
     )
+
+    def response_change(self, request, obj):
+        ret = super().response_change(request, obj)
+
+        if "reserve" in request.POST:
+            obj.status = "r"
+            obj.save()
+        return ret
