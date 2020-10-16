@@ -2,7 +2,7 @@ from random import choice
 
 from django.core.management import BaseCommand, call_command
 
-from tests.factories import (
+from tests.test_app.factories import (
     BookLoanFactory,
     UserFactory,
     AuthorFactory,
@@ -23,10 +23,7 @@ class Command(BaseCommand):
 
         library = LibraryFactory()
         UserFactory(
-            username="test@test.com",
-            email="test@test.com",
-            password="test",
-            is_superuser=True,
+            username="test@test.com", email="test@test.com", password="test", is_superuser=True,
         )
 
         users = UserFactory.create_batch(2, is_staff=False)

@@ -1,7 +1,7 @@
 import pytest
 
 from jazzmin.compat import reverse
-from .factories import BookFactory
+from .test_app.factories import BookFactory
 from .test_app.library.books.models import Book
 
 

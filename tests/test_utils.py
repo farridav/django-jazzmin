@@ -10,7 +10,7 @@ from jazzmin.utils import (
     get_app_admin_urls,
     get_view_permissions,
 )
-from .factories import BookFactory, UserFactory
+from .test_app.factories import BookFactory, UserFactory
 from .test_app.library.books.models import Book
 
 

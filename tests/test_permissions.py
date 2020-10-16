@@ -1,8 +1,8 @@
 import pytest
 from django.urls import reverse
 
-from tests.factories import BookFactory, UserFactory
-from tests.utils import parse_sidemenu
+from .test_app.factories import BookFactory, UserFactory
+from .utils import parse_sidemenu
 
 
 @pytest.mark.django_db

@@ -6,8 +6,8 @@ from django.utils import timezone
 from factory.django import DjangoModelFactory
 from factory.fuzzy import FuzzyChoice, FuzzyDate
 
-from .test_app.library.books.models import Author, Book, Genre
-from .test_app.library.loans.models import BookLoan, Library
+from tests.test_app.library.books.models import Author, Book, Genre
+from tests.test_app.library.loans.models import BookLoan, Library
 
 NOW = timezone.now()
 
