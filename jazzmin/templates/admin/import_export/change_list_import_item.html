@@ -2,9 +2,7 @@
 {% load admin_urls %}
 
 {% if has_import_permission %}
-<li class="list-inline-item">
-    <a href='{% url opts|admin_urlname:"import" %}' class="import_link btn btn-app">
-        <i class="fas fa-file-import text-info"></i>{% trans "Import" %}
-    </a>
-</li>
+<a href='{% url opts|admin_urlname:"import" %}' class="import_link btn btn-outline-secondary">
+    <i class="fas fa-file-import"></i> {% trans "Import" %}
+</a>
 {% endif %}

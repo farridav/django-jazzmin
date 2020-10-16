@@ -2,9 +2,7 @@
 {% load admin_urls %}
 
 {% if has_export_permission %}
-<li class="list-inline-item">
-    <a href="{% url opts|admin_urlname:'export' %}{{cl.get_query_string}}" class="export_link btn btn-app">
-         <i class="fas fa-file-export text-info"></i>{% trans "Export" %}
-    </a>
-</li>
+<a href="{% url opts|admin_urlname:'export' %}{{cl.get_query_string}}" class="export_link btn btn-outline-secondary">
+     <i class="fas fa-file-export"></i> {% trans "Export" %}
+</a>
 {% endif %}
