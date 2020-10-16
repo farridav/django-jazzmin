@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from jazzmin.settings import CHANGEFORM_TEMPLATES
 
-from .test_app.factories import BookFactory, UserFactory
+from .test_app.library.factories import BookFactory, UserFactory
 from .test_app.library.books.admin import BookAdmin
 from .utils import override_jazzmin_settings
 

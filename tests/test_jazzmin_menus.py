@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 
-from .test_app.factories import UserFactory
+from .test_app.library.factories import UserFactory
 from .utils import (
     parse_sidemenu,
     parse_topmenu,

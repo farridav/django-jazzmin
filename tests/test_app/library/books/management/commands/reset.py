@@ -2,7 +2,7 @@ from random import choice
 
 from django.core.management import BaseCommand, call_command
 
-from tests.test_app.factories import (
+from ....factories import (
     BookLoanFactory,
     UserFactory,
     AuthorFactory,
