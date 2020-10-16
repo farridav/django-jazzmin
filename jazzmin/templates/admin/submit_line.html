@@ -9,11 +9,11 @@
         </h3>
     </div>
     <div class="card-body">
-        <div class="form-group">
-            {% if show_save %}
+        {% if show_save %}
+            <div class="form-group">
                 <input type="submit" value="{% trans 'Save' %}" class="btn btn-success form-control" name="_save">
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
         {% if show_delete_link and original %}
             <div class="form-group">
                 {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}

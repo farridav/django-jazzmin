@@ -44,7 +44,10 @@ def parse_topmenu(response):
         item = {"name": anchor.text.strip(), "link": anchor["href"]}
         dropdown = li.find("div", class_="dropdown-menu")
         if dropdown:
-            item["children"] = [{"name": a.text.strip(), "link": a["href"]} for a in dropdown.find_all("a")]
+            item["children"] = [
+                {"name": a.text.strip(), "link": a["href"]}
+                for a in dropdown.find_all("a")
+            ]
 
         menu.append(item)
 

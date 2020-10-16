@@ -24,12 +24,28 @@ def test_order_with_respect_to():
 
     original_list = apps("b", "c", "a")
 
-    assert order_with_respect_to(original_list, ["c", "b"], getter=lambda x: x["app_label"]) == apps("c", "b", "a")
-    assert order_with_respect_to(original_list, ["nothing"], getter=lambda x: x["app_label"]) == original_list
-    assert order_with_respect_to(original_list, ["a"], getter=lambda x: x["app_label"])[0]["app_label"] == "a"
+    assert order_with_respect_to(
+        original_list, ["c", "b"], getter=lambda x: x["app_label"]
+    ) == apps("c", "b", "a")
+    assert (
+        order_with_respect_to(
+            original_list, ["nothing"], getter=lambda x: x["app_label"]
+        )
+        == original_list
+    )
+    assert (
+        order_with_respect_to(original_list, ["a"], getter=lambda x: x["app_label"])[0][
+            "app_label"
+        ]
+        == "a"
+    )
     assert order_with_respect_to([1, 2, 3], [3, 2, 1]) == [3, 2, 1]
     assert order_with_respect_to([1, 2, 3], [3]) == [3, 1, 2]
-    assert order_with_respect_to(["morty", "pickle", "rick"], ["pickle", "morty"]) == ["pickle", "morty", "rick"]
+    assert order_with_respect_to(["morty", "pickle", "rick"], ["pickle", "morty"]) == [
+        "pickle",
+        "morty",
+        "rick",
+    ]
 
 
 @pytest.mark.django_db
@@ -41,7 +57,10 @@ def test_get_admin_url(admin_user):
 
     assert get_admin_url(book) == reverse("admin:books_book_change", args=(book.pk,))
     assert get_admin_url(Book) == reverse("admin:books_book_changelist")
-    assert get_admin_url(Book, q="test") == reverse("admin:books_book_changelist") + "?q=test"
+    assert (
+        get_admin_url(Book, q="test")
+        == reverse("admin:books_book_changelist") + "?q=test"
+    )
     assert get_admin_url("books.Book") == reverse("admin:books_book_changelist")
     assert get_admin_url("cheese:bad_pattern") == "#"
     assert get_admin_url("fake_app.fake_model") == "#"

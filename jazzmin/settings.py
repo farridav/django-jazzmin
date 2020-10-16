@@ -129,17 +129,25 @@ CHANGEFORM_TEMPLATES = {
 
 def get_settings() -> Dict:
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
-    user_settings = {x: y for x, y in getattr(settings, "JAZZMIN_SETTINGS", {}).items() if y is not None}
+    user_settings = {
+        x: y
+        for x, y in getattr(settings, "JAZZMIN_SETTINGS", {}).items()
+        if y is not None
+    }
     jazzmin_settings.update(user_settings)
 
     # Extract search url from search model
     if jazzmin_settings["search_model"]:
-        jazzmin_settings["search_url"] = get_admin_url(jazzmin_settings["search_model"].lower())
+        jazzmin_settings["search_url"] = get_admin_url(
+            jazzmin_settings["search_model"].lower()
+        )
         model_meta = get_model_meta(jazzmin_settings["search_model"])
         if model_meta:
             jazzmin_settings["search_name"] = model_meta.verbose_name_plural.title()
         else:
-            jazzmin_settings["search_name"] = jazzmin_settings["search_model"].split(".")[-1] + "s"
+            jazzmin_settings["search_name"] = (
+                jazzmin_settings["search_model"].split(".")[-1] + "s"
+            )
 
     # Deal with single strings in hide_apps/hide_models and make sure we lower case 'em
     if type(jazzmin_settings["hide_apps"]) == str:
@@ -148,14 +156,19 @@ def get_settings() -> Dict:
 
     if type(jazzmin_settings["hide_models"]) == str:
         jazzmin_settings["hide_models"] = [jazzmin_settings["hide_models"]]
-    jazzmin_settings["hide_models"] = [x.lower() for x in jazzmin_settings["hide_models"]]
+    jazzmin_settings["hide_models"] = [
+        x.lower() for x in jazzmin_settings["hide_models"]
+    ]
 
     # Ensure icon model names and classes are lower case
-    jazzmin_settings["icons"] = {x.lower(): y.lower() for x, y in jazzmin_settings.get("icons", {}).items()}
+    jazzmin_settings["icons"] = {
+        x.lower(): y.lower() for x, y in jazzmin_settings.get("icons", {}).items()
+    }
 
     # ensure all model names are lower cased
     jazzmin_settings["changeform_format_overrides"] = {
-        x.lower(): y.lower() for x, y in jazzmin_settings.get("changeform_format_overrides", {}).items()
+        x.lower(): y.lower()
+        for x, y in jazzmin_settings.get("changeform_format_overrides", {}).items()
     }
 
     return jazzmin_settings

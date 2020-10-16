@@ -19,7 +19,9 @@ def test_login(client, admin_user):
     assert templates_used == ["admin/login.html"]
 
     response = client.post(
-        url + "?next=/admin/", data={"username": admin_user.username, "password": "password"}, follow=True
+        url + "?next=/admin/",
+        data={"username": admin_user.username, "password": "password"},
+        follow=True,
     )
 
     assert response.status_code == 200
@@ -69,7 +71,11 @@ def test_password_change(admin_client):
 
     response = admin_client.post(
         url,
-        data={"old_password": "password", "new_password1": "PickleRick123!!", "new_password2": "PickleRick123!!"},
+        data={
+            "old_password": "password",
+            "new_password1": "PickleRick123!!",
+            "new_password2": "PickleRick123!!",
+        },
         follow=True,
     )
     templates_used = [t.name for t in response.templates]

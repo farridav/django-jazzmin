@@ -4,7 +4,6 @@ from .models import Book
 
 
 class BookResource(resources.ModelResource):
-
     class Meta:
         model = Book
-        exclude = ("published_on", )
+        exclude = ("published_on",)

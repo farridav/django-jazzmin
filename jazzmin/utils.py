@@ -15,7 +15,9 @@ from jazzmin.compat import NoReverseMatch, reverse
 logger = logging.getLogger(__name__)
 
 
-def order_with_respect_to(original: List, reference: List, getter: Callable = None) -> List:
+def order_with_respect_to(
+    original: List, reference: List, getter: Callable = None
+) -> List:
     """
     Order a list based on the location of items in the reference list, optionally, use a getter to pull values out of
     the first list
@@ -38,7 +40,9 @@ def order_with_respect_to(original: List, reference: List, getter: Callable = No
     return [y for x, y in sorted(zip(ranking, original), key=lambda x: x[0])]
 
 
-def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **kwargs: str) -> str:
+def get_admin_url(
+    instance: Union[str, ModelBase], admin_site: str = "admin", **kwargs: str
+) -> str:
     """
     Return the admin URL for the given instance, model class or <app>.<model> string
     """
@@ -49,7 +53,9 @@ def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **
         if type(instance) == str:
             app_label, model_name = instance.lower().split(".")
             url = reverse(
-                "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name),
+                "admin:{app_label}_{model_name}_changelist".format(
+                    app_label=app_label, model_name=model_name
+                ),
                 current_app=admin_site,
             )
 
@@ -57,21 +63,29 @@ def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **
         elif instance.__class__ == ModelBase:
             app_label, model_name = instance._meta.app_label, instance._meta.model_name
             url = reverse(
-                "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name),
+                "admin:{app_label}_{model_name}_changelist".format(
+                    app_label=app_label, model_name=model_name
+                ),
                 current_app=admin_site,
             )
 
         # Model instance
-        elif instance.__class__.__class__ == ModelBase and isinstance(instance, instance.__class__):
+        elif instance.__class__.__class__ == ModelBase and isinstance(
+            instance, instance.__class__
+        ):
             app_label, model_name = instance._meta.app_label, instance._meta.model_name
             url = reverse(
-                "admin:{app_label}_{model_name}_change".format(app_label=app_label, model_name=model_name),
+                "admin:{app_label}_{model_name}_change".format(
+                    app_label=app_label, model_name=model_name
+                ),
                 args=(instance.pk,),
                 current_app=admin_site,
             )
 
     except (NoReverseMatch, ValueError):
-        logger.warning(gettext("Could not reverse url from {instance}".format(instance=instance)))
+        logger.warning(
+            gettext("Could not reverse url from {instance}".format(instance=instance))
+        )
 
     if kwargs:
         url += "?{params}".format(params=urlencode(kwargs))
@@ -133,7 +147,9 @@ def get_app_admin_urls(app: str, admin_site: str = "admin") -> List[Dict]:
         models.append(
             {
                 "url": url,
-                "model": "{app}.{model}".format(app=model._meta.app_label, model=model._meta.model_name),
+                "model": "{app}.{model}".format(
+                    app=model._meta.app_label, model=model._meta.model_name
+                ),
                 "name": model._meta.verbose_name_plural.title(),
             }
         )
@@ -150,7 +166,11 @@ def get_view_permissions(user: AbstractUser) -> Set[str]:
 
 
 def make_menu(
-    user: AbstractUser, links: List[Dict], options: Dict, allow_appmenus: bool = True, admin_site: str = "admin"
+    user: AbstractUser,
+    links: List[Dict],
+    options: Dict,
+    allow_appmenus: bool = True,
+    admin_site: str = "admin",
 ) -> List[Dict]:
     """
     Make a menu from a list of user supplied links
@@ -196,14 +216,20 @@ def make_menu(
                     "url": get_admin_url(link["model"], admin_site=admin_site),
                     "children": [],
                     "new_window": link.get("new_window", False),
-                    "icon": options["icons"].get(link["model"], options["default_icon_children"]),
+                    "icon": options["icons"].get(
+                        link["model"], options["default_icon_children"]
+                    ),
                 }
             )
 
         # App links
         elif "app" in link and allow_appmenus:
             children = [
-                {"name": child.get("verbose_name", child["name"]), "url": child["url"], "children": None,}
+                {
+                    "name": child.get("verbose_name", child["name"]),
+                    "url": child["url"],
+                    "children": None,
+                }
                 for child in get_app_admin_urls(link["app"], admin_site=admin_site)
                 if child["model"] in model_permissions
             ]
@@ -212,10 +238,14 @@ def make_menu(
 
             menu.append(
                 {
-                    "name": getattr(apps.app_configs[link["app"]], "verbose_name", link["app"]).title(),
+                    "name": getattr(
+                        apps.app_configs[link["app"]], "verbose_name", link["app"]
+                    ).title(),
                     "url": "#",
                     "children": children,
-                    "icon": options["icons"].get(link["app"], options["default_icon_children"]),
+                    "icon": options["icons"].get(
+                        link["app"], options["default_icon_children"]
+                    ),
                 }
             )
 

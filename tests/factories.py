@@ -56,14 +56,20 @@ class UserFactory(DjangoModelFactory):
         if extracted:
             available_permissions = [
                 "{}.{}".format(x[0], x[1])
-                for x in Permission.objects.values_list("content_type__app_label", "codename")
+                for x in Permission.objects.values_list(
+                    "content_type__app_label", "codename"
+                )
             ]
 
             for permission in extracted:
-                assert permission in available_permissions, "{} not in {}".format(permission, available_permissions)
+                assert permission in available_permissions, "{} not in {}".format(
+                    permission, available_permissions
+                )
 
                 app, perm = permission.split(".")
-                perm_obj = Permission.objects.get(content_type__app_label=app, codename=perm)
+                perm_obj = Permission.objects.get(
+                    content_type__app_label=app, codename=perm
+                )
 
                 self.user_permissions.add(perm_obj)
 
@@ -82,7 +88,9 @@ class AuthorFactory(DjangoModelFactory):
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
     date_of_birth = FuzzyDate(date(1950, 1, 1), NOW.date() - timedelta(days=365))
-    date_of_death = factory.LazyAttribute(lambda x: x.date_of_birth.replace(year=NOW.year))
+    date_of_death = factory.LazyAttribute(
+        lambda x: x.date_of_birth.replace(year=NOW.year)
+    )
 
     class Meta:
         model = Author

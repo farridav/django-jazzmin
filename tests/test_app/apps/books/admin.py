@@ -8,6 +8,7 @@ from import_export.admin import ImportExportMixin
 
 from .models import Book, Author, Genre
 from .resources import BookResource
+
 from ..loans.admin import BookLoanInline
 
 admin.site.unregister(User)
@@ -71,7 +72,9 @@ class LogEntryAdmin(admin.ModelAdmin):
     def object(self, obj):
         url = obj.get_admin_url()
         return format_html(
-            '<a href="{url}">{obj} [{model}]</a>'.format(url=url, obj=obj.object_repr, model=obj.content_type.model)
+            '<a href="{url}">{obj} [{model}]</a>'.format(
+                url=url, obj=obj.object_repr, model=obj.content_type.model
+            )
         )
 
     def modified(self, obj):
@@ -88,7 +91,11 @@ class CustomUserAdmin(UserAdmin):
         """
         Remove our test user from the admin, so it cant be messed with
         """
-        return super(CustomUserAdmin, self).get_queryset(request).exclude(username="test@test.com")
+        return (
+            super(CustomUserAdmin, self)
+            .get_queryset(request)
+            .exclude(username="test@test.com")
+        )
 
 
 @admin.register(Genre)

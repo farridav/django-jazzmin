@@ -23,7 +23,7 @@ class BookLoan(models.Model):
     id = models.UUIDField(
         primary_key=True,
         default=uuid4,
-        help_text="Unique ID for this particular book across whole library"
+        help_text="Unique ID for this particular book across whole library",
     )
     book = models.ForeignKey("books.Book", on_delete=models.SET_NULL, null=True)
     imprint = models.CharField(max_length=200)
