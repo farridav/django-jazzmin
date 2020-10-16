@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import BookLoan
+from .models import BookLoan, Library
 
 
 class BookLoanInline(admin.StackedInline):
@@ -29,3 +29,8 @@ class BookLoanAdmin(admin.ModelAdmin):
             obj.status = "r"
             obj.save()
         return ret
+
+
+@admin.register(Library)
+class LibraryAdmin(admin.ModelAdmin):
+    list_display = ("name", "address", "librarian")

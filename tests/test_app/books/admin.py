@@ -6,10 +6,9 @@ from django.utils.html import format_html
 from django.utils.timesince import timesince
 from import_export.admin import ImportExportMixin
 
-from .resources import BookResource
 from .models import Book, Author, Genre
+from .resources import BookResource
 from ..loans.admin import BookLoanInline
-from ..loans.models import Library
 
 admin.site.unregister(User)
 
@@ -35,7 +34,7 @@ class BookAdmin(ImportExportMixin, admin.ModelAdmin):
     list_max_show_all = 100
     list_editable = ("title",)
     search_fields = ("title", "author__last_name")
-    autocomplete_fields = ("genre", )
+    autocomplete_fields = ("genre",)
     date_hierarchy = "published_on"
     save_as = True
     save_as_continue = True
@@ -94,9 +93,4 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
-    search_fields = ("name", )
-
-
-@admin.register(Library)
-class LibraryAdmin(admin.ModelAdmin):
-    list_display = ("name", "address", "librarian")
+    search_fields = ("name",)
