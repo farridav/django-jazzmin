@@ -43,7 +43,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "{}library.urls".format(PREFIX)
 
-WSGI_APPLICATION = "{}.library.wsgi.application".format(PREFIX)
+WSGI_APPLICATION = "{}library.wsgi.application".format(PREFIX)
 
 LOGGING = {
     "version": 1,
@@ -108,7 +108,7 @@ if DEBUG and not TEST:
     os.environ.setdefault("WERKZEUG_DEBUG_PIN", "off")
     INSTALLED_APPS.extend(["debug_toolbar", "django_extensions"])
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: False}
+    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
 
 if not DEBUG and not TEST:
     MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")

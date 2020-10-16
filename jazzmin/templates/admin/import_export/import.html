@@ -4,16 +4,17 @@
 {% load import_export_tags %}
 {% load static %}
 
-{% block extrastyle %}{{ block.super }}
-    <link rel="stylesheet" type="text/css"
-          href="{% static "import_export/import.css" %}"/>{% endblock %}
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "import_export/import.css" %}"/>
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/select2/css/select2.min.css' %}">
+{% endblock %}
 
 {% block breadcrumbs_last %}
     {% trans "Import" %}
 {% endblock %}
 
 {% block content %}
-
     <div class="col-12">
         {% if confirm_form %}
             <form action="{% url opts|admin_urlname:"process_import" %}" method="POST">
@@ -23,7 +24,7 @@
                         <div class="card card-primary card-outline">
                             <div class="card-header">
                                 <div class="card-title">
-                                    Confirm Import
+                                    {% trans 'Confirm Import' %}
                                 </div>
                             </div>
                             <div class="card-body">
@@ -41,7 +42,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-edit"></i>
-                                    Actions
+                                    {% trans 'Actions' %}
                                 </h3>
                             </div>
                             <div class="card-body">
@@ -61,7 +62,7 @@
                         <div class="card card-primary card-outline">
                             <div class="card-header">
                                 <div class="card-title">
-                                    Confirm Import
+                                    {% trans 'Confirm Import' %}
                                 </div>
                             </div>
                             <div class="card-body">
@@ -103,7 +104,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-edit"></i>
-                                    Actions
+                                    {% trans 'Actions' %}
                                 </h3>
                             </div>
                             <div class="card-body">
@@ -264,4 +265,10 @@
         {% endif %}
     {% endif %}
     </div>
+{% endblock %}
+
+{% block extrajs %}
+    {{  block.super }}
+    <script type="text/javascript" src="{% static 'adminlte/plugins/select2/js/select2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jazzmin/js/change_form.js' %}"></script>
 {% endblock %}

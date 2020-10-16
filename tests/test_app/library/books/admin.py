@@ -48,10 +48,6 @@ class BookAdmin(ImportExportMixin, admin.ModelAdmin):
     actions_on_bottom = True
     actions_selection_counter = True
 
-    def save_form(self, request, form, change):
-        ret = super().save_form(request, form, change)
-        return ret
-
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
@@ -72,9 +68,7 @@ class LogEntryAdmin(admin.ModelAdmin):
     def object(self, obj):
         url = obj.get_admin_url()
         return format_html(
-            '<a href="{url}">{obj} [{model}]</a>'.format(
-                url=url, obj=obj.object_repr, model=obj.content_type.model
-            )
+            '<a href="{url}">{obj} [{model}]</a>'.format(url=url, obj=obj.object_repr, model=obj.content_type.model)
         )
 
     def modified(self, obj):
@@ -91,11 +85,7 @@ class CustomUserAdmin(UserAdmin):
         """
         Remove our test user from the admin, so it cant be messed with
         """
-        return (
-            super(CustomUserAdmin, self)
-            .get_queryset(request)
-            .exclude(username="test@test.com")
-        )
+        return super(CustomUserAdmin, self).get_queryset(request).exclude(username="test@test.com")
 
 
 @admin.register(Genre)

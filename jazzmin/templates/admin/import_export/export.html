@@ -3,6 +3,11 @@
 {% load admin_urls static %}
 {% load import_export_tags %}
 
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/select2/css/select2.min.css' %}">
+{% endblock %}
+
 {% block breadcrumbs_last %}
     {% trans "Export" %}
 {% endblock %}
@@ -61,4 +66,10 @@
             </div>
         </form>
     </div>
+{% endblock %}
+
+{% block extrajs %}
+    {{  block.super }}
+    <script type="text/javascript" src="{% static 'adminlte/plugins/select2/js/select2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jazzmin/js/change_form.js' %}"></script>
 {% endblock %}
