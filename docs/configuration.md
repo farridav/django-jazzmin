@@ -300,13 +300,9 @@ Into your jazzmin settings (Ensure these files can be found by the static file f
 
 ### Adding extra actions to model's form view
 
-Add a template for your model on your main template directory
+Add a template for your model on your main template directory, e.g [app/templates/admin/app_name/model_name/submit_line.html](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/books/templates/admin/loans/bookloan/submit_line.html)
 
-```djangourlpath
-your_app/templates/admin/your_model/submit_line.html
-```
-
-```jinja2
+```djangotemplate
 {% extends "admin/submit_line.html" %}
 
 {% block extra-actions %}
