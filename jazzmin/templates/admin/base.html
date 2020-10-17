@@ -330,6 +330,10 @@
 </div>
 {% endif %}
 
+{% if jazzmin_settings.related_modal_active %}
+{% include "jazzmin/includes/related-modal.html" %}
+{% endif %}
+
 <!-- jQuery -->
 <script src="{% static "adminlte/plugins/jquery/jquery.min.js" %}"></script>
 <!-- Bootstrap 4 -->
@@ -338,6 +342,10 @@
 <script src="{% static "adminlte/js/adminlte.min.js" %}"></script>
 <!-- Django customisations -->
 <script src="{% static "jazzmin/js/main.js" %}"></script>
+
+{% if jazzmin_settings.related_modal_active %}
+<script type="text/javascript" src="{% static 'jazzmin/js/related-modal.js' %}"></script>
+{% endif %}
 
 {% if jazzmin_settings.custom_js %}
 <script src="{% static jazzmin_settings.custom_js %}"></script>
