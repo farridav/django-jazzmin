@@ -10,7 +10,7 @@
 /diffs
 /build
 /dist
-/.reports
+*.reports
 __pycache__
 _resource
 admin_templates
