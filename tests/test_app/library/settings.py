@@ -195,6 +195,11 @@ JAZZMIN_SETTINGS = {
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
+    #################
+    # Related Modal #
+    #################
+    # Activate Bootstrap modal
+    "related_modal_active": True,
     #############
     # UI Tweaks #
     #############
