@@ -22,7 +22,7 @@ class BooksInline(admin.TabularInline):
 class BookAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = BookResource
     fieldsets = (
-        ("general", {"fields": ("title", "author")}),
+        ("general", {"fields": ("title", "author", "library")}),
         ("other", {"fields": ("genre", "summary", "isbn", "published_on")}),
     )
     raw_id_fields = ("author",)

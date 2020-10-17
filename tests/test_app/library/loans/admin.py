@@ -6,8 +6,8 @@ from .models import BookLoan, Library
 class BookLoanInline(admin.StackedInline):
     model = BookLoan
     extra = 1
-    readonly_fields = ("id",)
-    fields = ("book", "imprint", "status", "due_back", "borrower", "duration")
+    readonly_fields = ("id", "duration")
+    fields = ("book", "imprint", "status", "due_back", "borrower", "loan_start", "duration")
 
 
 @admin.register(BookLoan)
