@@ -163,7 +163,12 @@
         $('#brand-logo-variants div[data-classes="' + window.ui_changes['brand_colour'] + '"]').addClass('active');
     }
 
-    setFromExisting();
-    addListeners();
+    /*
+     Don't call if it is inside an iframe
+     */
+    if (!$body.hasClass("popup")) {
+        setFromExisting();
+        addListeners();
+    }
 
 })(jQuery);
