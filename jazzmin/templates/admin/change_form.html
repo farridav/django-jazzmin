@@ -120,8 +120,15 @@
 
 {% endblock %}
 
+{% block related_modal %}
+    {% include "jazzmin/includes/related_modal.html" %}
+{% endblock %}
+
 {% block extrajs %}
     {{  block.super }}
     <script type="text/javascript" src="{% static 'adminlte/plugins/select2/js/select2.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'jazzmin/js/change_form.js' %}"></script>
+    {% if jazzmin_settings.related_modal_active %}
+    <script type="text/javascript" src="{% static 'jazzmin/js/related-modal.js' %}"></script>
+    {% endif %}
 {% endblock %}
