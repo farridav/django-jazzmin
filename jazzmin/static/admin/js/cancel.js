@@ -4,7 +4,7 @@
     $(document).ready(function() {
         $('.cancel-link').click(function(e) {
             e.preventDefault();
-            var parentWindow = window.parent;
+            const parentWindow = window.parent;
             if (parentWindow && typeof(parentWindow.dismissRelatedObjectModal) === 'function' && parentWindow !== window) {
                 parentWindow.dismissRelatedObjectModal();
             } else {

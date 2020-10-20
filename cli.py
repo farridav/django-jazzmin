@@ -17,14 +17,8 @@ def locales(cmd_args: argparse.Namespace):
     """
     e.g - ./cli.py locales --prune de
     """
-    our_po = polib.pofile(
-        os.path.join(LOCALE_DIR, cmd_args.locale, "LC_MESSAGES", "django.po")
-    )
-    admin_po = polib.pofile(
-        os.path.join(
-            DJANGO_PATH, "contrib", "admin", "locale", "en", "LC_MESSAGES", "django.po"
-        )
-    )
+    our_po = polib.pofile(os.path.join(LOCALE_DIR, cmd_args.locale, "LC_MESSAGES", "django.po"))
+    admin_po = polib.pofile(os.path.join(DJANGO_PATH, "contrib", "admin", "locale", "en", "LC_MESSAGES", "django.po"))
     admindocs_po = polib.pofile(
         os.path.join(
             DJANGO_PATH,
@@ -64,11 +58,7 @@ def templates(cmd_args: argparse.Namespace):
     }
 
     for jazzmin_dir, django_dir in templates.items():
-        for template in [
-            os.path.join(dp, f)
-            for dp, dn, filenames in os.walk(jazzmin_dir)
-            for f in filenames
-        ]:
+        for template in [os.path.join(dp, f) for dp, dn, filenames in os.walk(jazzmin_dir) for f in filenames]:
             original = template.replace(jazzmin_dir, django_dir)
             if os.path.isfile(original):
                 result = subprocess.run(
@@ -87,12 +77,8 @@ def main():
     subparsers = parser.add_subparsers()
     subparsers.required = True
 
-    parser_locales = subparsers.add_parser(
-        "locales", help="remove the django provided strings"
-    )
-    parser_locales.add_argument(
-        "--prune", action="store", dest="locale", help="locale to prune", default="de"
-    )
+    parser_locales = subparsers.add_parser("locales", help="remove the django provided strings")
+    parser_locales.add_argument("--prune", action="store", dest="locale", help="locale to prune", default="de")
     parser_locales.set_defaults(func=locales)
 
     parser_templates = subparsers.add_parser("templates", help="Deal with templates")

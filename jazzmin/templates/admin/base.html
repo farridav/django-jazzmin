@@ -233,8 +233,9 @@
         {% endblock %}
     {% endif %}
 
-    <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 0px;"{% endif %}>
+    <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 20px;"{% endif %}>
         {% block page_content %}
+            {% if not is_popup %}
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
@@ -247,6 +248,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
 
             <div class="content">
                 <div class="container-fluid">

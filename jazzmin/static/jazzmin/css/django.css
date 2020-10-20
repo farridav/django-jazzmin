@@ -720,3 +720,18 @@ a.inline-deletelink {
 #result_list .field-tree_actions > div {
     margin-top: 0;
 }
+
+/* wide modals */
+.modal.modal-wide .modal-dialog {
+    width: 50%;
+    max-width: inherit;
+}
+
+.modal-wide .modal-body {
+    overflow-y: auto;
+}
+
+iframe.related-iframe {
+    width: 100%;
+    height: 450px;
+}

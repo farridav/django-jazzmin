@@ -30,9 +30,7 @@ def test_action_message_to_list(admin_user):
         {"added": {"name": "choice", "object": "More random choices"}},
         {"deleted": {"name": "choice", "object": "Person serious choose tea"}},
     ]
-    log_entry = LogEntry.objects.create(
-        user=admin_user, action_flag=CHANGE, change_message=json.dumps(message)
-    )
+    log_entry = LogEntry.objects.create(user=admin_user, action_flag=CHANGE, change_message=json.dumps(message))
     assert jazzmin.action_message_to_list(log_entry) == [
         {
             "msg": "Changed Owner, Text, Pub date and Active.",
@@ -58,7 +56,4 @@ def test_style_bold_first_word():
     """
     message = "The bomb has been planted"
 
-    assert (
-        jazzmin.style_bold_first_word(message)
-        == "<strong>The</strong> bomb has been planted"
-    )
+    assert jazzmin.style_bold_first_word(message) == "<strong>The</strong> bomb has been planted"

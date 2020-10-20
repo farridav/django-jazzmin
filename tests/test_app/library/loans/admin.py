@@ -7,7 +7,15 @@ class BookLoanInline(admin.StackedInline):
     model = BookLoan
     extra = 1
     readonly_fields = ("id", "duration")
-    fields = ("book", "imprint", "status", "due_back", "borrower", "loan_start", "duration")
+    fields = (
+        "book",
+        "imprint",
+        "status",
+        "due_back",
+        "borrower",
+        "loan_start",
+        "duration",
+    )
 
 
 @admin.register(BookLoan)

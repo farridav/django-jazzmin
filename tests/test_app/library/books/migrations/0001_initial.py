@@ -95,9 +95,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "genre",
-                    models.ManyToManyField(
-                        help_text="Select a genre for this book", to="books.Genre"
-                    ),
+                    models.ManyToManyField(help_text="Select a genre for this book", to="books.Genre"),
                 ),
             ],
         ),

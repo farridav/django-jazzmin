@@ -8,9 +8,7 @@ from django.utils import timezone
 class Library(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    librarian = models.OneToOneField(
-        settings.AUTH_USER_MODEL, related_name="library", on_delete=models.CASCADE
-    )
+    librarian = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="library", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "Libraries"
@@ -38,9 +36,7 @@ class BookLoan(models.Model):
         ("a", "Available"),
         ("r", "Reserved"),
     )
-    borrower = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
-    )
+    borrower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(
         max_length=1,
         choices=LOAN_STATUS,

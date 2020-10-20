@@ -71,17 +71,13 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
 
         menu_items = []
         for model in app.get("models", []):
-            model_str = "{app_label}.{model}".format(
-                app_label=app_label, model=model["object_name"]
-            ).lower()
+            model_str = "{app_label}.{model}".format(app_label=app_label, model=model["object_name"]).lower()
             if model_str in options.get("hide_models", []):
                 continue
 
             model["url"] = model["admin_url"]
             model["model_str"] = model_str
-            model["icon"] = options["icons"].get(
-                model_str, options["default_icon_children"]
-            )
+            model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
             menu_items.append(model)
 
         menu_items.extend(app_custom_links)
@@ -89,8 +85,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
         custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
         model_ordering = list(
             filter(
-                lambda x: x.lower().startswith("{}.".format(app_label))
-                or x.lower() in custom_link_names,
+                lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names,
                 ordering,
             )
         )
@@ -107,9 +102,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
 
     if ordering:
         apps_order = list(filter(lambda x: "." not in x, ordering))
-        menu = order_with_respect_to(
-            menu, apps_order, getter=lambda x: x["app_label"].lower()
-        )
+        menu = order_with_respect_to(menu, apps_order, getter=lambda x: x["app_label"].lower())
 
     return menu
 
@@ -227,9 +220,7 @@ def admin_extra_filters(cl: ChangeList) -> Dict:
     """
     Return the dict of used filters which is not included in list_filters form
     """
-    used_parameters = list(
-        itertools.chain(*(s.used_parameters.keys() for s in cl.filter_specs))
-    )
+    used_parameters = list(itertools.chain(*(s.used_parameters.keys() for s in cl.filter_specs)))
     return dict((k, v) for k, v in cl.params.items() if k not in used_parameters)
 
 
@@ -434,51 +425,24 @@ def action_message_to_list(action: LogEntry) -> List[Dict]:
             if "added" in sub_message:
                 if sub_message["added"]:
                     sub_message["added"]["name"] = gettext(sub_message["added"]["name"])
-                    messages.append(
-                        added(
-                            gettext("Added {name} “{object}”.").format(
-                                **sub_message["added"]
-                            )
-                        )
-                    )
+                    messages.append(added(gettext("Added {name} “{object}”.").format(**sub_message["added"])))
                 else:
                     messages.append(added(gettext("Added.")))
 
             elif "changed" in sub_message:
                 sub_message["changed"]["fields"] = get_text_list(
-                    [
-                        gettext(field_name)
-                        for field_name in sub_message["changed"]["fields"]
-                    ],
+                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]],
                     gettext("and"),
                 )
                 if "name" in sub_message["changed"]:
-                    sub_message["changed"]["name"] = gettext(
-                        sub_message["changed"]["name"]
-                    )
-                    messages.append(
-                        changed(
-                            gettext("Changed {fields}.").format(
-                                **sub_message["changed"]
-                            )
-                        )
-                    )
+                    sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])
+                    messages.append(changed(gettext("Changed {fields}.").format(**sub_message["changed"])))
                 else:
-                    messages.append(
-                        changed(
-                            gettext("Changed {fields}.").format(
-                                **sub_message["changed"]
-                            )
-                        )
-                    )
+                    messages.append(changed(gettext("Changed {fields}.").format(**sub_message["changed"])))
 
             elif "deleted" in sub_message:
                 sub_message["deleted"]["name"] = gettext(sub_message["deleted"]["name"])
-                messages.append(
-                    deleted(
-                        gettext("Deleted “{object}”.").format(**sub_message["deleted"])
-                    )
-                )
+                messages.append(deleted(gettext("Deleted “{object}”.").format(**sub_message["deleted"])))
 
     return messages if len(messages) else [changed(gettext(action.change_message))]
 

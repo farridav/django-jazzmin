@@ -2,25 +2,21 @@
     'use strict';
 
     $(document).ready(function(){
-        function dismissModal()
-        {
+
+        // create the function that will close the modal
+        function dismissModal() {
             $('#related-modal').modal('hide');
         }
 
-        // create the function that will close the modal
-        function dismissRelatedObjectModal()
-        {
-            dismissModal();
-        }
+        // assign functions to global variables
+        window.dismissRelatedObjectModal = dismissModal;
+        window.dismissRelatedLookupPopup = dismissRelatedLookupModal;
 
-        function dismissRelatedLookupModal(win, chosenId)
-        {
-
-            var windowRef = win;
-            var windowName = windowRef.name;
-            var widgetName = windowName.replace(/^(change|add|delete|lookup)_/, '');
-            var widgetEl = $('#' + widgetName);
-            var widgetVal = widgetEl.val();
+        function dismissRelatedLookupModal(win, chosenId) {
+            let windowName = win.name;
+            let widgetName = windowName.replace(/^(change|add|delete|lookup)_/, '');
+            let widgetEl = $('#' + widgetName);
+            let widgetVal = widgetEl.val();
             if (widgetEl.hasClass('vManyToManyRawIdAdminField') && Boolean(widgetVal)) {
                 widgetEl.val(widgetVal + ', ' + chosenId);
             } else {
@@ -29,16 +25,9 @@
             dismissModal();
         }
 
-        // assign functions to global variables
-        window.dismissRelatedObjectModal = dismissRelatedObjectModal;
-        window.dismissRelatedLookupPopup = dismissRelatedLookupModal;
-
-        function presentRelatedObjectModal(e)
-        {
-
-            var linkEl = $(this);
-
-            var href = (linkEl.attr('href') || '');
+        function presentRelatedObjectModal(e) {
+            let linkEl = $(this);
+            let href = (linkEl.attr('href') || '');
             if (href === '') {
                 return;
             }
@@ -52,15 +41,15 @@
 
             // use the clicked link id as iframe name
             // it will be available as window.name in the loaded iframe
-            var iframeName = linkEl.attr('id');
-            var iframeSrc = href;
+            let iframeName = linkEl.attr('id');
+            let iframeSrc = href;
+            const title = linkEl.attr('title');
 
-            if (e.data.lookup !== true)
-            {
+            if (e.data.lookup !== true) {
                 // browsers stop loading nested iframes having the same src url
                 // create a random parameter and append it to the src url to prevent it
                 // this workaround doesn't work with related lookup url
-                var iframeSrcRandom = String(Math.round(Math.random() * 999999));
+                let iframeSrcRandom = String(Math.round(Math.random() * 999999));
                 if (iframeSrc.indexOf('?') === -1) {
                     iframeSrc += '?_modal=' + iframeSrcRandom;
                 } else {
@@ -68,7 +57,6 @@
                 }
             }
 
-            // fix for django 1.7
             if (iframeSrc.indexOf('_popup=1') === -1) {
                 if (iframeSrc.indexOf('?') === -1) {
                     iframeSrc += '?_popup=1';
@@ -78,30 +66,32 @@
             }
 
             // build the iframe html
-            var iframeHTML = '<iframe id="related-modal-iframe" name="' + iframeName + '" src="' + iframeSrc + '" frameBorder="0" style="width:100%; height:450px;"></iframe>';
-            var modalEl = $("#related-modal");
+            let iframeHTML = '<iframe id="related-modal-iframe" name="' + iframeName + '" src="' + iframeSrc + '" frameBorder="0" class="related-iframe"></iframe>';
+            let modalEl = $("#related-modal");
             modalEl.find('.modal-body').html(iframeHTML);
-            var iframeEl = modalEl.find('#related-modal-iframe');
+            let iframeEl = modalEl.find('#related-modal-iframe');
 
-            if (e.data.lookup === true)
-            {
+            if (e.data.lookup === true) {
                 // set current window as iframe opener because
                 // the callback is called on the opener window
                 iframeEl.on('load', function() {
-                    var iframeObj = $(this).get(0);
-                    var iframeWindow = iframeObj.contentWindow;
+                    let iframeObj = $(this).get(0);
+                    let iframeWindow = iframeObj.contentWindow;
                     iframeWindow.opener = window;
                 });
             }
 
             // the modal css class
-            var iframeInternalModalClass = 'related-modal';
+            let iframeInternalModalClass = 'related-modal';
 
             // if the current window is inside an iframe, it means that it is already in a modal,
             // append an additional css class to the modal to offer more customization
             if (window.top !== window.self) {
                 iframeInternalModalClass += ' related-modal__nested';
             }
+
+            // Set the modal title based on the opening link
+            $('.modal-title', modalEl).html(title);
 
             // open the modal using bootstrap modal
             modalEl.modal('show');
@@ -111,30 +101,25 @@
 
         // listen click events on related links
         function presentRelatedObjectModalOnClickOn(selector, lookup) {
-            var data = {
-                lookup:(lookup === true ? true : false)
-            };
-            var el = $(selector);
+            let el = $(selector);
             el.removeAttr('onclick');
             el.unbind('click');
-            el.click(data, presentRelatedObjectModal);
+            el.click({lookup: lookup}, presentRelatedObjectModal);
         }
 
-        // django 1.7 compatibility
-        // $('a.add-another').removeAttr('onclick').click({ lookup:false }, presentRelatedObjectModal);
-        presentRelatedObjectModalOnClickOn('a.add-another');
+        function init() {
+            presentRelatedObjectModalOnClickOn('a.related-widget-wrapper-link', false);
 
-        // django 1.8 and above
-        // $('a.related-widget-wrapper-link').click({ lookup:false }, presentRelatedObjectModal);
-        presentRelatedObjectModalOnClickOn('a.related-widget-wrapper-link');
+            // raw_id_fields support
+            presentRelatedObjectModalOnClickOn('a.related-lookup', true);
 
-        // raw_id_fields support
-        // $('a.related-lookup').unbind('click').click({ lookup:true }, presentRelatedObjectModal);
-        presentRelatedObjectModalOnClickOn('a.related-lookup', true);
+            // django-dynamic-raw-id support - #61
+            // https://github.com/lincolnloop/django-dynamic-raw-id
+            presentRelatedObjectModalOnClickOn('a.dynamic_raw_id-related-lookup', true);
+        }
 
-        // django-dynamic-raw-id support - #61
-        // https://github.com/lincolnloop/django-dynamic-raw-id
-        presentRelatedObjectModalOnClickOn('a.dynamic_raw_id-related-lookup', true);
+        // initialise
+        init()
     });
 
 })(jQuery);

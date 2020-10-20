@@ -1,9 +1,9 @@
 (function() {
     'use strict';
     
-    var windowRef = window;
-    var windowName, widgetName;
-    var openerRef = windowRef.opener;
+    let windowRef = window;
+    let windowName, widgetName;
+    let openerRef = windowRef.opener;
     if (!openerRef) {
         // related modal is active
         openerRef = windowRef.parent;
@@ -22,7 +22,7 @@
     }
 
     // default django popup_response.js
-    var initData = JSON.parse(document.getElementById('django-admin-popup-response-constants').dataset.popupResponse);
+    const initData = JSON.parse(document.getElementById('django-admin-popup-response-constants').dataset.popupResponse);
     switch (initData.action) {
         case 'change':
             if (typeof(openerRef.dismissChangeRelatedObjectPopup) === 'function') {

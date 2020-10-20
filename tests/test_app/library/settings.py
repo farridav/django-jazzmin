@@ -70,15 +70,25 @@ TEMPLATES = [
 
 DATABASES = {
     "default": dj_database_url.config(
-        env="DATABASE_URL", conn_max_age=500, default="sqlite:///{}".format(os.path.join(BASE_DIR, "db.sqlite3")),
+        env="DATABASE_URL",
+        conn_max_age=500,
+        default="sqlite:///{}".format(os.path.join(BASE_DIR, "db.sqlite3")),
     )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 LANGUAGE_CODE = "en"
@@ -140,7 +150,11 @@ JAZZMIN_SETTINGS = {
         # Url that gets reversed (Permissions can be added)
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         # external url that opens in a new window (Permissions can be added)
-        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True,},
+        {
+            "name": "Support",
+            "url": "https://github.com/farridav/django-jazzmin/issues",
+            "new_window": True,
+        },
         # model admin to link to (Permissions checked against model)
         {"model": "auth.User"},
         # App with dropdown menu to all its models pages (Permissions checked against models)
@@ -152,7 +166,11 @@ JAZZMIN_SETTINGS = {
     #############
     # Additional links to include in the user menu on the top right ('app' url type is not allowed)
     "usermenu_links": [
-        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True,},
+        {
+            "name": "Support",
+            "url": "https://github.com/farridav/django-jazzmin/issues",
+            "new_window": True,
+        },
         {"model": "auth.user"},
     ],
     #############
@@ -167,7 +185,14 @@ JAZZMIN_SETTINGS = {
     # Hide these models when generating side menu (e.g auth.user)
     "hide_models": [],
     # List of apps to base side menu (app or model) ordering off of
-    "order_with_respect_to": ["Make Messages", "auth", "books", "books.author", "books.book", "loans",],
+    "order_with_respect_to": [
+        "Make Messages",
+        "auth",
+        "books",
+        "books.author",
+        "books.book",
+        "loans",
+    ],
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
         "loans": [
@@ -219,7 +244,10 @@ JAZZMIN_SETTINGS = {
     # - carousel
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    },
     # Add a language dropdown into the admin
     "language_chooser": True,
 }
