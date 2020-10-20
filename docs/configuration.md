@@ -100,7 +100,7 @@ JAZZMIN_SETTINGS = {
     #################
     # Related Modal #
     #################
-    # Activate Bootstrap modal
+    # Use modals instead of popups
     "related_modal_active": True,
 
     #############
@@ -278,7 +278,8 @@ for a practical example.
 ![Language chooser](./img/language_chooser.png)
 
 ## Related Modal
-Render django related popups inside an iframe within bootstrap 4 modal (instead of the old popup window, optional)
+Render django related popups inside a modal using `"related_modal_active": True` instead of the old popup window, 
+defaults to `True`
 
 ![Related Modal](./img/related_modal_bootstrap.png)
 
