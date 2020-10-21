@@ -2,21 +2,85 @@
     'use strict';
 
     $(document).ready(function(){
+        var relatedModalCounter=0;
 
-        // create the function that will close the modal
-        function dismissModal() {
-            $('#related-modal').modal('hide');
+        function checkIfInIframe() {
+            return window.top !== window.self;
         }
 
-        // assign functions to global variables
-        window.dismissRelatedObjectModal = dismissModal;
-        window.dismissRelatedLookupPopup = dismissRelatedLookupModal;
+        // create the function that will close the modal
+        function dismissModal()
+        {   
+            if (checkIfInIframe()) {
+                var parentWindow = window.parent;
+                parentWindow.dismissModal();
+                return;
+            }
 
-        function dismissRelatedLookupModal(win, chosenId) {
-            let windowName = win.name;
-            let widgetName = windowName.replace(/^(change|add|delete|lookup)_/, '');
-            let widgetEl = $('#' + widgetName);
-            let widgetVal = widgetEl.val();
+            $('.related-modal-' + relatedModalCounter).modal('hide');
+            relatedModalCounter-=1;
+        }
+
+        // create the function that will show the modal
+        function showModal(title, body, e) {
+            if (checkIfInIframe()) {
+                var parentWindow = window.parent;
+                parentWindow.showModal(title, body, e);
+                return;
+            }
+
+            relatedModalCounter+=1;
+
+            $.showModal({
+                title: title,
+                body: body,
+                modalDialogClass: "modal-dialog-centered modal-lg",
+                modalClass: "related-modal-" + relatedModalCounter,
+            });
+
+            var modalEl = $("div[class*='related-modal-']")
+            var iframeEl = modalEl.find('#related-modal-iframe');
+
+            if (e.data.lookup === true) {
+                // set current window as iframe opener because
+                // the callback is called on the opener window
+                iframeEl.on('load', function() {
+                    var iframeObj = $(this).get(0);
+                    var iframeWindow = iframeObj.contentWindow;
+                    iframeWindow.opener = window;
+                });
+            }
+        }
+
+        function dismissRelatedLookupModal(win, chosenId)
+        {
+            var windowName = win.name;
+            var widgetName = windowName.replace(/^(change|add|delete|lookup)_/, '');
+            var widgetEl;
+
+            if (checkIfInIframe) {
+                // select second to last iframe in the main parent document
+                var secondLastIframe = $('iframe', win.parent.document).eq(-2);
+                var documentContext;
+
+                // if second to last iframe exists get its contents
+                if (secondLastIframe.length) {
+                    documentContext = secondLastIframe.contents();
+
+                // else get main parent document
+                } else {
+                    documentContext = $(win.parent.document);
+                }
+
+                // find and select widget from the specified document context
+                widgetEl = documentContext.find('#' + widgetName);
+            
+            // else select widget from the main document
+            } else {
+                widgetEl = $('#' + widgetName);
+            }
+
+            var widgetVal = widgetEl.val();
             if (widgetEl.hasClass('vManyToManyRawIdAdminField') && Boolean(widgetVal)) {
                 widgetEl.val(widgetVal + ', ' + chosenId);
             } else {
@@ -25,9 +89,15 @@
             dismissModal();
         }
 
+        // assign functions to global variables
+        window.dismissRelatedObjectModal = dismissModal;
+        window.dismissRelatedLookupPopup = dismissRelatedLookupModal;
+        window.showModal = showModal;
+
         function presentRelatedObjectModal(e) {
             let linkEl = $(this);
             let href = (linkEl.attr('href') || '');
+
             if (href === '') {
                 return;
             }
@@ -43,7 +113,7 @@
             // it will be available as window.name in the loaded iframe
             let iframeName = linkEl.attr('id');
             let iframeSrc = href;
-            const title = linkEl.attr('title');
+            const modalTitle = linkEl.attr('title');
 
             if (e.data.lookup !== true) {
                 // browsers stop loading nested iframes having the same src url
@@ -66,20 +136,7 @@
             }
 
             // build the iframe html
-            let iframeHTML = '<iframe id="related-modal-iframe" name="' + iframeName + '" src="' + iframeSrc + '" frameBorder="0" class="related-iframe"></iframe>';
-            let modalEl = $("#related-modal");
-            modalEl.find('.modal-body').html(iframeHTML);
-            let iframeEl = modalEl.find('#related-modal-iframe');
-
-            if (e.data.lookup === true) {
-                // set current window as iframe opener because
-                // the callback is called on the opener window
-                iframeEl.on('load', function() {
-                    let iframeObj = $(this).get(0);
-                    let iframeWindow = iframeObj.contentWindow;
-                    iframeWindow.opener = window;
-                });
-            }
+            var iframeHTML = '<iframe id="related-modal-iframe" name="' + iframeName + '" src="' + iframeSrc + '" frameBorder="0" class="related-iframe"></iframe>';
 
             // the modal css class
             let iframeInternalModalClass = 'related-modal';
@@ -90,11 +147,8 @@
                 iframeInternalModalClass += ' related-modal__nested';
             }
 
-            // Set the modal title based on the opening link
-            $('.modal-title', modalEl).html(title);
-
-            // open the modal using bootstrap modal
-            modalEl.modal('show');
+            // open the modal using dynamic bootstrap modal
+            showModal(modalTitle, iframeHTML, e);
 
             return false;
         }
