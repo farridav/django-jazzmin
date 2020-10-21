@@ -2,7 +2,7 @@
     'use strict';
 
     $(document).ready(function(){
-        var relatedModalCounter=0;
+        let relatedModalCounter = 0;
 
         function checkIfInIframe() {
             return window.top !== window.self;
@@ -12,7 +12,7 @@
         function dismissModal()
         {   
             if (checkIfInIframe()) {
-                var parentWindow = window.parent;
+                const parentWindow = window.parent;
                 parentWindow.dismissModal();
                 return;
             }
@@ -24,7 +24,7 @@
         // create the function that will show the modal
         function showModal(title, body, e) {
             if (checkIfInIframe()) {
-                var parentWindow = window.parent;
+                const parentWindow = window.parent;
                 parentWindow.showModal(title, body, e);
                 return;
             }
@@ -38,15 +38,15 @@
                 modalClass: "related-modal-" + relatedModalCounter,
             });
 
-            var modalEl = $("div[class*='related-modal-']")
-            var iframeEl = modalEl.find('#related-modal-iframe');
+            const modalEl = $("div[class*='related-modal-']")
+            const iframeEl = modalEl.find('#related-modal-iframe');
 
             if (e.data.lookup === true) {
                 // set current window as iframe opener because
                 // the callback is called on the opener window
                 iframeEl.on('load', function() {
-                    var iframeObj = $(this).get(0);
-                    var iframeWindow = iframeObj.contentWindow;
+                    const iframeObj = $(this).get(0);
+                    const iframeWindow = iframeObj.contentWindow;
                     iframeWindow.opener = window;
                 });
             }
@@ -54,14 +54,14 @@
 
         function dismissRelatedLookupModal(win, chosenId)
         {
-            var windowName = win.name;
-            var widgetName = windowName.replace(/^(change|add|delete|lookup)_/, '');
-            var widgetEl;
+            const windowName = win.name;
+            const widgetName = windowName.replace(/^(change|add|delete|lookup)_/, '');
+            let widgetEl;
 
             if (checkIfInIframe) {
                 // select second to last iframe in the main parent document
-                var secondLastIframe = $('iframe', win.parent.document).eq(-2);
-                var documentContext;
+                const secondLastIframe = $('iframe', win.parent.document).eq(-2);
+                let documentContext;
 
                 // if second to last iframe exists get its contents
                 if (secondLastIframe.length) {
@@ -80,7 +80,7 @@
                 widgetEl = $('#' + widgetName);
             }
 
-            var widgetVal = widgetEl.val();
+            const widgetVal = widgetEl.val();
             if (widgetEl.hasClass('vManyToManyRawIdAdminField') && Boolean(widgetVal)) {
                 widgetEl.val(widgetVal + ', ' + chosenId);
             } else {
@@ -136,7 +136,7 @@
             }
 
             // build the iframe html
-            var iframeHTML = '<iframe id="related-modal-iframe" name="' + iframeName + '" src="' + iframeSrc + '" frameBorder="0" class="related-iframe"></iframe>';
+            let iframeHTML = '<iframe id="related-modal-iframe" name="' + iframeName + '" src="' + iframeSrc + '" frameBorder="0" class="related-iframe"></iframe>';
 
             // the modal css class
             let iframeInternalModalClass = 'related-modal';
