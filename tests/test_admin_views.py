@@ -146,7 +146,6 @@ def test_detail(admin_client):
         "django/forms/widgets/time.html": 2,
         "jazzmin/includes/horizontal_tabs.html": 1,
         "jazzmin/includes/ui_builder_panel.html": 1,
-        "jazzmin/includes/related_modal.html": 1,
     }
 
     # The templates that were used
@@ -173,7 +172,6 @@ def test_detail(admin_client):
         "django/forms/widgets/time.html",
         "jazzmin/includes/horizontal_tabs.html",
         "jazzmin/includes/ui_builder_panel.html",
-        "jazzmin/includes/related_modal.html",
     }
 
     # TODO: post data and confirm we can change model instances
