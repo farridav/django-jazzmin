@@ -18,6 +18,7 @@
             }
 
             $('.related-modal-' + relatedModalCounter).modal('hide');
+            
             relatedModalCounter-=1;
         }
 
@@ -31,14 +32,23 @@
 
             relatedModalCounter+=1;
 
+            const modalEl = $("div[class*='related-modal-']");
+
             $.showModal({
                 title: title,
                 body: body,
+                backdrop: false,
                 modalDialogClass: "modal-dialog-centered modal-lg",
-                modalClass: "related-modal-" + relatedModalCounter,
+                modalClass: "fade modal-wide related-modal-" + relatedModalCounter,
+                onDispose: function() {
+                    // add focus to the previous modal (if exists) when the current one is closed
+                    var lastModal = modalEl.last();
+                    if (lastModal) {
+                        lastModal.focus();
+                    }
+                }
             });
 
-            const modalEl = $("div[class*='related-modal-']")
             const iframeEl = modalEl.find('#related-modal-iframe');
 
             if (e.data.lookup === true) {
