@@ -720,3 +720,27 @@ a.inline-deletelink {
 #result_list .field-tree_actions > div {
     margin-top: 0;
 }
+
+/* wide modals */
+.modal.modal-wide .modal-dialog {
+    width: 50%;
+    max-width: inherit;
+}
+
+.modal-wide .modal-body {
+    overflow-y: auto;
+}
+
+iframe.related-iframe {
+    width: 100%;
+    height: 450px;
+}
+
+/* Blur background when using modal */
+.modal-open .wrapper {
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+    filter: blur(1px);
+}

@@ -97,6 +97,12 @@ JAZZMIN_SETTINGS = {
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
 
+    #################
+    # Related Modal #
+    #################
+    # Use modals instead of popups
+    "related_modal_active": True,
+
     #############
     # UI Tweaks #
     #############
@@ -270,6 +276,12 @@ See our [test app settings](https://github.com/farridav/django-jazzmin/tree/mast
 for a practical example.
 
 ![Language chooser](./img/language_chooser.png)
+
+## Related Modal
+Render django related popups inside a modal using `"related_modal_active": True` instead of the old popup window, 
+defaults to `True`
+
+![Related Modal](./img/related_modal_bootstrap.png)
 
 ## UI Tweaks
 

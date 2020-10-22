@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_urls static admin_list %}
+{% load i18n admin_urls static admin_list jazzmin %}
 
 {% block extrastyle %}
     {{ block.super }}
@@ -23,22 +23,19 @@
 
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock %}
 
-{% if not is_popup %}
-    {% block breadcrumbs %}
-        <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a></li>
-            <li class="breadcrumb-item active">{{ cl.opts.verbose_name_plural|capfirst }}</li>
-        </ol>
-    {% endblock %}
-{% endif %}
+{% block breadcrumbs %}
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a></li>
+        <li class="breadcrumb-item active">{{ cl.opts.verbose_name_plural|capfirst }}</li>
+    </ol>
+{% endblock %}
 
 {% block content_title %} {{ cl.opts.verbose_name_plural|capfirst }} {% endblock %}
 
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
-
     <div class="col-12">
         <div class="card card-primary card-outline">
             <div class="card-header">
