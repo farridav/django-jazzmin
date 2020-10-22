@@ -32,8 +32,7 @@
 
             relatedModalCounter+=1;
 
-            const modalEl = $("div[class*='related-modal-']");
-
+            
             $.showModal({
                 title: title,
                 body: body,
@@ -42,13 +41,14 @@
                 modalClass: "fade modal-wide related-modal-" + relatedModalCounter,
                 onDispose: function() {
                     // add focus to the previous modal (if exists) when the current one is closed
-                    var lastModal = modalEl.last();
+                    var lastModal = $("div[class*='related-modal-']").last();
                     if (lastModal) {
-                        lastModal.focus();
+                            lastModal.focus();
+                        }
                     }
-                }
             });
-
+                    
+            const modalEl = $("div[class*='related-modal-']");
             const iframeEl = modalEl.find('#related-modal-iframe');
 
             if (e.data.lookup === true) {
