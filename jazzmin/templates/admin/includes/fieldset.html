@@ -1,20 +1,27 @@
 {% load jazzmin %}
+{% get_jazzmin_settings as jazzmin_settings %}
+
 {% if card %}
-<div class="card {{ fieldset.classes|cut:"collapse" }}">
-    <div class="p-5{% if fieldset.name %} card-body{% endif %}">
+    {% if is_popup and jazzmin_settings.related_modal_active %}
+        <div class="{{ fieldset.classes|cut:"collapse" }}">
+            <div class="p-2{% if fieldset.name %} card-body{% endif %}">
+    {% else %}
+        <div class="card {{ fieldset.classes|cut:"collapse" }}">
+            <div class="p-5{% if fieldset.name %} card-body{% endif %}">
+    {% endif %}
 {% endif %}
 
     {% for line in fieldset %}
     <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
         <div class="row">
             {% for field in line %}
-                <label class="{% if not line.fields|length_is:'1' and forloop.counter != 1 %}col-auto {% else %}col-sm-2 {% endif %}text-left">
+                <label class="{% if not line.fields|length_is:'1' and forloop.counter != 1 %}col-auto {% else %}col-sm-3 {% endif %}text-left">
                     {{ field.field.label|capfirst }}
                     {% if field.field.field.required %}
                     <span class="text-red">* </span>
                     {% endif %}
                 </label>
-                <div class="{% if not line.fields|length_is:'1' %} col-auto  fieldBox {% else %} col-sm-10 {% endif %}
+                <div class="{% if not line.fields|length_is:'1' %} col-auto  fieldBox {% else %} col-sm-9 {% endif %}
                              {% if field.field.name %} field-{{ field.field.name }}{% endif %}
                              {% if not field.is_readonly and field.errors %} errors{% endif %}
                              {% if field.field.is_hidden %} hidden {% endif %}
@@ -40,6 +47,7 @@
     {% endfor %}
 
 {% if card %}
-    </div>
-</div>
+            </div>
+        </div>
 {% endif %}
+

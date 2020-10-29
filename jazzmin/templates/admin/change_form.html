@@ -70,19 +70,28 @@
                 {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">{% endif %}
 
                 {% block field_sets %}
-                    <div class="col-12 col-lg-9">
-                        <div class="card card-primary card-outline">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    {{ title }}{% block pretitle %}{% endblock %}
+
+                        {% if jazzmin_settings.related_modal_active and is_popup %}
+                        <div class="col-12 col-xl-9 popup-tabs {% if adminform.fieldsets|length_is:'1' %}popup-tabs-one{% endif %}">
+                        {% else %}
+                        <div class="col-12 col-xl-9">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        {{ title }}{% block pretitle %}{% endblock %}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
+                                <div class="card-body">
+                        {% endif %}
+
                                 {% get_changeform_template adminform as changeform_template %}
                                 {% include changeform_template %}
+
+                        {% if is_popup and jazzmin_settings.related_modal_active %}{% else %}
+                                </div>
                             </div>
+                        {% endif %}
                         </div>
-                    </div>
                 {% endblock %}
 
                 {% block after_field_sets %}{% endblock %}
@@ -91,7 +100,7 @@
 
                 {% block after_related_objects %}{% endblock %}
 
-                <div class="col-12 col-lg-3">
+                <div class="col-12 col-xl-3 {% if jazzmin_settings.related_modal_active and is_popup %}popup-submitline{% endif %}">
                     {% block submit_buttons_bottom %}
                         {% submit_row %}
                         {% block object-tools %}

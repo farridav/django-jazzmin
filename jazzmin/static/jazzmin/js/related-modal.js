@@ -37,7 +37,7 @@
                 title: title,
                 body: body,
                 backdrop: false,
-                modalDialogClass: "modal-dialog-centered modal-lg",
+                modalDialogClass: "modal-dialog-centered modal-xl",
                 modalClass: "fade modal-wide related-modal-" + relatedModalCounter,
                 onDispose: function() {
                     // add focus to the previous modal (if exists) when the current one is closed
@@ -50,6 +50,15 @@
                     
             const modalEl = $("div[class*='related-modal-']");
             const iframeEl = modalEl.find('#related-modal-iframe');
+
+
+            iframeEl.on('load', function() {
+                // set modal title from <title> iframe-page
+                const iframeObj = $(this).get(0);
+                const title = iframeObj.contentDocument.title.split("|")[0];
+                const modalTitle = $(iframeObj).parents("div[class*='related-modal-']").find(".modal-title").get(0);
+                modalTitle.innerText = title;
+            });
 
             if (e.data.lookup === true) {
                 // set current window as iframe opener because
