@@ -1,5 +1,5 @@
 /*!
- *   AdminLTE v3.0.4
+ *   AdminLTE v3.0.5
  *   Author: Colorlib
  *   Website: AdminLTE.io <http://adminlte.io>
  *   License: Open source - MIT <http://opensource.org/licenses/MIT>
@@ -11748,6 +11748,10 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   width: auto;
 }
 
+.brand-link .brand-image-xl.single {
+  margin-top: -.3rem;
+}
+
 .brand-link.text-sm .brand-image,
 .text-sm .brand-link .brand-image {
   height: 29px;
@@ -12796,6 +12800,17 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 
 .sidebar nav .form-inline {
   margin-bottom: .2rem;
+}
+
+.layout-boxed.sidebar-collapse .main-sidebar {
+  margin-left: 0;
+}
+
+.layout-boxed .content-wrapper,
+.layout-boxed .main-header,
+.layout-boxed .main-footer {
+  z-index: 9999;
+  position: relative;
 }
 
 .logo-xs,
@@ -20880,6 +20895,10 @@ select.form-control-sm ~ .select2-container--default .select2-selection--multipl
   margin-top: 6px;
 }
 
+.maximized-card .select2-dropdown {
+  z-index: 9999;
+}
+
 .select2-primary + .select2-container--default.select2-container--open .select2-selection--single {
   border-color: #80bdff;
 }
@@ -23118,6 +23137,11 @@ select.form-control-sm ~ .select2-container--default .select2-selection--multipl
 
 #toast-container .toast-warning {
   background-color: #ffc107;
+}
+
+.toast-bottom-full-width .toast,
+.toast-top-full-width .toast {
+  max-width: inherit;
 }
 
 .pace {
