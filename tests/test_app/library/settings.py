@@ -94,6 +94,7 @@ LANGUAGES = (
     ("en", gettext("English")),
     ("de", gettext("German")),
     ("es", gettext("Spanish")),
+    ("hu", gettext("Hungarian")),
     ("zh-hans", gettext("Simplified Chinese")),
     ("zh-hant", gettext("Traditional Chinese")),
 )
