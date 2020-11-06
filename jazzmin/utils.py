@@ -47,7 +47,8 @@ def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **
     try:
 
         if type(instance) == str:
-            app_label, model_name = instance.lower().split(".")
+            app_label, model_name = instance.split(".")
+            model_name = model_name.lower()
             url = reverse(
                 "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name),
                 current_app=admin_site,
