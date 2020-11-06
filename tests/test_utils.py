@@ -1,4 +1,4 @@
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock, Mock
 
 import pytest
 from django.db.models.functions import Upper
@@ -99,6 +99,12 @@ def test_get_model_permissions():
     user = UserFactory(permissions=("books.view_book", "books.view_author"))
 
     assert get_view_permissions(user) == {"books.book", "books.author"}
+
+    # test for camel cased app names
+    user = MagicMock()
+    user.get_all_permissions = Mock(return_value={"BookShelf.view_author", "BookShelf.view_book"})
+
+    assert get_view_permissions(user) == {"BookShelf.book", "BookShelf.author"}
 
 
 @pytest.mark.django_db
