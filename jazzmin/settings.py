@@ -132,6 +132,17 @@ CHANGEFORM_TEMPLATES = {
 }
 
 
+def get_search_model_string(jazzmin_settings):
+    """
+    Get a search model string for reversing an admin url.
+
+    Ensure the model name is lower cased but remain the app name untouched.
+    """
+
+    app, model_name = jazzmin_settings["search_model"].split(".")
+    return "{app}.{model_name}".format(app=app, model_name=model_name.lower())
+
+
 def get_settings() -> Dict:
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
     user_settings = {x: y for x, y in getattr(settings, "JAZZMIN_SETTINGS", {}).items() if y is not None}
@@ -139,7 +150,7 @@ def get_settings() -> Dict:
 
     # Extract search url from search model
     if jazzmin_settings["search_model"]:
-        jazzmin_settings["search_url"] = get_admin_url(jazzmin_settings["search_model"].lower())
+        jazzmin_settings["search_url"] = get_admin_url(get_search_model_string(jazzmin_settings))
         model_meta = get_model_meta(jazzmin_settings["search_model"])
         if model_meta:
             jazzmin_settings["search_name"] = model_meta.verbose_name_plural.title()
