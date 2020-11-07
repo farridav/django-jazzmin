@@ -3,33 +3,41 @@
 
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
-<html lang="{{ LANGUAGE_CODE|default:" en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
-    <!-- Current language: {{ LANGUAGE_CODE }} -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ jazzmin_settings.site_title }} | {% trans 'Log in again' %}</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 4.5.0 -->
-    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href=//use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>{% block title %}{{ title }} | {% trans 'Log in again' %}{% endblock %}</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static "vendor/fontawesome-free/css/all.min.css" %}">
     <!-- Theme style -->
-    <link rel="stylesheet" href={% static "adminlte/css/adminlte.min.css" %}>
+    <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte.min.css" %}">
+    <!-- Custom fixes for django -->
+    <link rel="stylesheet" href="{% static "jazzmin/css/django.css" %}">
 
     {% if jazzmin_settings.custom_css %}
+        <!-- Custom CSS -->
         <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
     {% endif %}
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- favicons -->
+    <link rel="shortcut icon" href="{% static jazzmin_settings.site_logo %}" type="image/png">
+    <link rel="icon" href="{% static jazzmin_settings.site_logo %}" sizes="32x32" type="image/png">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    {% if jazzmin_settings.theme %}
+    <link rel="stylesheet" href="{% static 'vendor/bootswatch/{{ jazzmin_settings.theme }}/bootstrap.min.css'%}" />
+    {% endif %}
+
+    {% block extrastyle %} {% endblock %}
+    {% block extrahead %} {% endblock %}
 </head>
+
 <body class="hold-transition login-page">
 
 <div class="login-box">

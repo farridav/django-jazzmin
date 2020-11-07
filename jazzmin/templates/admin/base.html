@@ -13,16 +13,20 @@
     <title>{% block title %}{{ title }} | {{ jazzmin_settings.site_title }}{% endblock %}</title>
 
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{% static "adminlte/plugins/fontawesome-free/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "vendor/fontawesome-free/css/all.min.css" %}">
 
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{% static "adminlte/css/adminlte.min.css" %}">
+    <!-- Bootstrap and adminLTE -->
+    <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte.min.css" %}">
+
+    <!-- Bootswatch theme -->
+    <link rel="stylesheet" href="{{ jazzmin_ui.theme }}"  id="jazzmin-theme" />
 
     <!-- Custom fixes for django -->
     <link rel="stylesheet" href="{% static "jazzmin/css/django.css" %}">
 
     {% if jazzmin_settings.custom_css %}
-        <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static jazzmin_settings.custom_css %}">
     {% endif %}
 
     <!-- favicons -->
@@ -31,8 +35,8 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    {% block extrastyle %} {% endblock %}
 
+    {% block extrastyle %} {% endblock %}
     {% block extrahead %} {% endblock %}
 </head>
 <body class="hold-transition{% if not jazzmin_settings.show_sidebar %} no-sidebar{% else %} sidebar-mini{% endif %} {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }}" data-admin-utc-offset="{% now "Z" %}">
@@ -241,7 +245,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-auto col-sm-3">
-                            <h1 class="m-0 text-dark">{% block content_title %}{% endblock %}</h1>
+                            <h1 class="m-0">{% block content_title %}{% endblock %}</h1>
                         </div>
                         <div class="col-auto col-sm-9">
                             {% block breadcrumbs %}{% endblock %}
@@ -334,11 +338,11 @@
 {% endif %}
 
 <!-- jQuery -->
-<script src="{% static "adminlte/plugins/jquery/jquery-3.5.1.slim.min.js" %}"></script>
+<script src="{% static "vendor/jquery/jquery-3.5.1.slim.min.js" %}"></script>
 <!-- Bootstrap 4 -->
-<script src="{% static "adminlte/plugins/bootstrap/js/bootstrap.min.js" %}"></script>
+<script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
 <!-- AdminLTE App -->
-<script src="{% static "adminlte/js/adminlte.min.js" %}"></script>
+<script src="{% static "vendor/adminlte/js/adminlte.min.js" %}"></script>
 <!-- Django customisations -->
 <script src="{% static "jazzmin/js/main.js" %}"></script>
 

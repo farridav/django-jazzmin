@@ -1,10 +1,14 @@
 import copy
+import logging
 from typing import Dict
 
 from django.conf import settings
 from django.contrib.admin import AdminSite
+from django.templatetags.static import static
 
 from .utils import get_admin_url, get_model_meta
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_SETTINGS = {
     # title of the window
@@ -12,7 +16,7 @@ DEFAULT_SETTINGS = {
     # Title on the brand, and the login screen (19 chars max)
     "site_header": AdminSite.site_header,
     # Relative path to logo for your site, used for favicon and brand on top left (must be present in static files)
-    "site_logo": "adminlte/img/AdminLTELogo.png",
+    "site_logo": "vendor/adminlte/img/AdminLTELogo.png",
     # Welcome text on the login screen
     "welcome_sign": "Welcome",
     # Copyright on the footer
@@ -48,11 +52,7 @@ DEFAULT_SETTINGS = {
     "custom_links": {},
     # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free
     # for a list of icon classes
-    "icons": {
-        "auth": "fas fa-users-cog",
-        "auth.user": "fas fa-user",
-        "auth.Group": "fas fa-users",
-    },
+    "icons": {"auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users",},
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
@@ -121,6 +121,33 @@ DEFAULT_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     # Use a flat style sidebar
     "sidebar_nav_flat_style": False,
+    # Bootstrap theme to use (default, or from bootswatch, see THEMES below)
+    "theme": "default",
+}
+
+THEMES = {
+    "default": "vendor/bootswatch/default/bootstrap.min.css",
+    "cerulean": "vendor/bootswatch/cerulean/bootstrap.min.css",
+    "cosmo": "vendor/bootswatch/cosmo/bootstrap.min.css",
+    "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
+    "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
+    "flatly": "vendor/bootswatch/flatly/bootstrap.min.css",
+    "journal": "vendor/bootswatch/journal/bootstrap.min.css",
+    "litera": "vendor/bootswatch/litera/bootstrap.min.css",
+    "lumen": "vendor/bootswatch/lumen/bootstrap.min.css",
+    "lux": "vendor/bootswatch/lux/bootstrap.min.css",
+    "materia": "vendor/bootswatch/materia/bootstrap.min.css",
+    "minty": "vendor/bootswatch/minty/bootstrap.min.css",
+    "pulse": "vendor/bootswatch/pulse/bootstrap.min.css",
+    "sandstone": "vendor/bootswatch/sandstone/bootstrap.min.css",
+    "simplex": "vendor/bootswatch/simplex/bootstrap.min.css",
+    "sketchy": "vendor/bootswatch/sketchy/bootstrap.min.css",
+    "slate": "vendor/bootswatch/slate/bootstrap.min.css",
+    "solar": "vendor/bootswatch/solar/bootstrap.min.css",
+    "spacelab": "vendor/bootswatch/spacelab/bootstrap.min.css",
+    "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
+    "united": "vendor/bootswatch/united/bootstrap.min.css",
+    "yeti": "vendor/bootswatch/yeti/bootstrap.min.css",
 }
 
 CHANGEFORM_TEMPLATES = {
@@ -203,9 +230,16 @@ def get_ui_tweaks() -> Dict:
     def classes(*args: str) -> str:
         return " ".join([tweaks.get(arg, "") for arg in args if arg]).strip()
 
+    theme = tweaks["theme"]
+    if theme not in THEMES:
+        logger.warning("{} not found in {}, using default".format(theme, THEMES.keys()))
+        theme = "default"
+        tweaks["theme"] = theme
+
     return {
         "raw": raw_tweaks,
-        "body_classes": classes("accent", "body_small_text"),
+        "theme": static(THEMES[theme]),
+        "body_classes": classes("accent", "body_small_text") + " theme-{}".format(theme),
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_nav_border", "navbar_small_text"),
         "sidebar_list_classes": classes(

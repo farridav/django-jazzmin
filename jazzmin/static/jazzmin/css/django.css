@@ -105,6 +105,10 @@ table.dataTable thead .sorting_desc_disabled::after {
     height: 40px !important;
 }
 
+.select2-results__option {
+    color: black;
+}
+
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #007bff !important;
 }
@@ -744,4 +748,13 @@ iframe.related-iframe {
     -o-filter: blur(1px);
     -ms-filter: blur(1px);
     filter: blur(1px);
+}
+
+
+.content-wrapper {
+    background: inherit;
+}
+
+.main-footer {
+    background: inherit;
 }

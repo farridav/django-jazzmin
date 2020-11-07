@@ -84,18 +84,13 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
 
         custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
         model_ordering = list(
-            filter(
-                lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names,
-                ordering,
-            )
+            filter(lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names, ordering,)
         )
 
         if len(menu_items):
             if model_ordering:
                 menu_items = order_with_respect_to(
-                    menu_items,
-                    model_ordering,
-                    getter=lambda x: x.get("model_str", x.get("name", "").lower()),
+                    menu_items, model_ordering, getter=lambda x: x.get("model_str", x.get("name", "").lower()),
                 )
             app["models"] = menu_items
             menu.append(app)
@@ -113,13 +108,7 @@ def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     Produce the menu for the top nav bar
     """
     options = get_settings()
-    return make_menu(
-        user,
-        options.get("topmenu_links", []),
-        options,
-        allow_appmenus=True,
-        admin_site=admin_site,
-    )
+    return make_menu(user, options.get("topmenu_links", []), options, allow_appmenus=True, admin_site=admin_site,)
 
 
 @register.simple_tag
@@ -128,13 +117,7 @@ def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     Produce the menu for the user dropdown
     """
     options = get_settings()
-    return make_menu(
-        user,
-        options.get("usermenu_links", []),
-        options,
-        allow_appmenus=False,
-        admin_site=admin_site,
-    )
+    return make_menu(user, options.get("usermenu_links", []), options, allow_appmenus=False, admin_site=admin_site,)
 
 
 @register.simple_tag
@@ -166,7 +149,7 @@ def get_user_avatar(user: AbstractUser) -> str:
     """
     For the given user, try to get the avatar image
     """
-    no_avatar = static("adminlte/img/user2-160x160.jpg")
+    no_avatar = static("vendor/adminlte/img/user2-160x160.jpg")
     options = get_settings()
 
     if not options.get("user_avatar"):
@@ -255,14 +238,7 @@ def jazzmin_list_filter(cl: ChangeList, spec: BooleanFieldListFilter) -> SafeTex
                 choice["value"] = value
             i += 1
 
-    return tpl.render(
-        {
-            "field_name": field_key,
-            "title": spec.title,
-            "choices": choices,
-            "spec": spec,
-        }
-    )
+    return tpl.render({"field_name": field_key, "title": spec.title, "choices": choices, "spec": spec,})
 
 
 @register.simple_tag
@@ -431,8 +407,7 @@ def action_message_to_list(action: LogEntry) -> List[Dict]:
 
             elif "changed" in sub_message:
                 sub_message["changed"]["fields"] = get_text_list(
-                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]],
-                    gettext("and"),
+                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]], gettext("and"),
                 )
                 if "name" in sub_message["changed"]:
                     sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])

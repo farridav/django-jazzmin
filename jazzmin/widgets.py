@@ -8,8 +8,7 @@ class JazzminSelect(Select):
     @property
     def media(self):
         return forms.Media(
-            css={"all": ("adminlte/plugins/select2/css/select2.min.css",)},
-            js=("adminlte/plugins/select2/js/select2.min.js",),
+            css={"all": ("vendor/select2/css/select2.min.css",)}, js=("vendor/select2/js/select2.min.js",),
         )
 
 
@@ -23,6 +22,5 @@ class JazzminSelectMultiple(SelectMultiple):
     @property
     def media(self):
         return forms.Media(
-            css={"all": ("adminlte/plugins/select2/css/select2.min.css",)},
-            js=("adminlte/plugins/select2/js/select2.min.js",),
+            css={"all": ("vendor/select2/css/select2.min.css",)}, js=("vendor/select2/js/select2.min.js",),
         )

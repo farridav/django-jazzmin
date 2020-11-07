@@ -1,12 +1,12 @@
 (function ($) {
     'use strict';
 
-    var $body = $('body');
-    var $footer = $('footer');
-    var $sidebar_ul = $('aside#jazzy-sidebar nav ul:first-child');
-    var $sidebar = $('aside#jazzy-sidebar');
-    var $navbar = $('nav#jazzy-navbar');
-    var $logo = $('#jazzy-logo');
+    const $body = $('body');
+    const $footer = $('footer');
+    const $sidebar_ul = $('aside#jazzy-sidebar nav ul:first-child');
+    const $sidebar = $('aside#jazzy-sidebar');
+    const $navbar = $('nav#jazzy-navbar');
+    const $logo = $('#jazzy-logo');
 
     window.ui_changes = window.ui_changes || {};
 
@@ -73,7 +73,7 @@
                 'div'
             ).not(this).removeClass('active').addClass('inactive');
 
-            var newClasses = $(this).data('classes');
+            const newClasses = $(this).data('classes');
 
             $navbar.removeClass(function (index, className) {
                 return (className.match(/(^|\s)navbar-\S+/g) || []).join(' ');
@@ -87,7 +87,7 @@
                 'div'
             ).not(this).removeClass('active').addClass('inactive');
 
-            var newClasses = $(this).data('classes');
+            const newClasses = $(this).data('classes');
 
             $body.removeClass(function (index, className) {
                 return (className.match(/(^|\s)accent-\S+/g) || []).join(' ');
@@ -101,7 +101,7 @@
                 'div'
             ).not(this).removeClass('active').addClass('inactive');
 
-            var newClasses = $(this).data('classes');
+            const newClasses = $(this).data('classes');
 
             $sidebar.removeClass(function (index, className) {
                 return (className.match(/(^|\s)sidebar-[\S|-]+/g) || []).join(' ');
@@ -115,7 +115,7 @@
                 'div'
             ).not(this).removeClass('active').addClass('inactive');
 
-            var newClasses = $(this).data('classes');
+            let newClasses = $(this).data('classes');
 
             $logo.removeClass(function (index, className) {
                 return (className.match(/(^|\s)navbar-\S+/g) || []).join(' ');
@@ -140,9 +140,23 @@
                 )
             );
         });
+
+        $("#jazzmin-theme-chooser").on('change', function () {
+            const $themeCSS = $('#jazzmin-theme');
+            const currentSrc = $themeCSS.attr('href');
+            const currentTheme = currentSrc.split('/')[4];
+            const newTheme = $(this).val();
+            $themeCSS.attr('href', currentSrc.replace(currentTheme, newTheme));
+
+            if (newTheme === "darkly") {
+                $('#navbar-variants .bg-dark').click();
+            }
+        });
+
     }
 
     function setFromExisting() {
+        $('#jazzmin-theme-chooser').val(window.ui_changes['theme']);
         $('#body-small-text').get(0).checked = window.ui_changes['body_small_text'];
         $('#footer-small-text').get(0).checked = window.ui_changes['footer_small_text'];
         $('#sidebar-nav-small-text').get(0).checked = window.ui_changes['sidebar_nav_small_text'];
