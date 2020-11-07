@@ -200,7 +200,7 @@ JAZZMIN_SETTINGS = {
     # Related Modal #
     #################
     # Activate Bootstrap modal
-    "related_modal_active": True,
+    "related_modal_active": False,
     #############
     # UI Tweaks #
     #############

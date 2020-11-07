@@ -102,15 +102,12 @@ table.dataTable thead .sorting_desc_disabled::after {
 
 
 .select2-container .select2-selection--single {
-    height: 40px !important;
+    min-height: 40px;
+    padding-top: 5px;
 }
 
 .select2-results__option {
     color: black;
-}
-
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #007bff !important;
 }
 
 #changelist-search .form-group {
@@ -119,10 +116,6 @@ table.dataTable thead .sorting_desc_disabled::after {
 
 .table tbody tr th {
     padding-left: .75rem;
-}
-
-.select2.select2-container {
-    min-width: 150px;
 }
 
 .user-profile {

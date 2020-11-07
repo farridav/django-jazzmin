@@ -22,14 +22,14 @@ $(document).ready(function () {
     // Make search filters select2 and ensure they work for filtering
     const $ele = $('.search-filter');
     $ele.search_filters();
-    $ele.select2({ dropdownAutoWidth: true });
+    $ele.select2({ width: '100%', theme: "classic" });
 
     // Use select2 for mptt dropdowns
     const $mptt = $('.search-filter-mptt');
     if ($mptt.length) {
         $mptt.search_filters();
         $mptt.select2({
-            dropdownAutoWidth: true,
+            width: '100%',
             templateResult: function (data) {
                 // https://stackoverflow.com/questions/30820215/selectable-optgroups-in-select2#30948247
                 // rewrite templateresult for build tree hierarchy

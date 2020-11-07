@@ -1,5 +1,8 @@
-{% load i18n static jazzmin %}
+{% load i18n static jazzmin admin_urls %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
 {% get_jazzmin_settings as jazzmin_settings %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
@@ -13,10 +16,15 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{% static "vendor/fontawesome-free/css/all.min.css" %}">
-    <!-- Theme style -->
+
+    <!-- Bootstrap and adminLTE -->
     <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte.min.css" %}">
+
+    <!-- Bootswatch theme -->
+    <link rel="stylesheet" href="{{ jazzmin_ui.theme }}"  id="jazzmin-theme" />
+
     <!-- Custom fixes for django -->
-    <link rel="stylesheet" href="{% static "jazzmin/css/django.css" %}">
+    <link rel="stylesheet" href="{% static "jazzmin/css/main.css" %}">
 
     {% if jazzmin_settings.custom_css %}
         <!-- Custom CSS -->
@@ -29,10 +37,6 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
-    {% if jazzmin_settings.theme %}
-    <link rel="stylesheet" href="{% static 'vendor/bootswatch/{{ jazzmin_settings.theme }}/bootstrap.min.css'%}" />
-    {% endif %}
 
     {% block extrastyle %} {% endblock %}
     {% block extrahead %} {% endblock %}

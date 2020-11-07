@@ -60,7 +60,7 @@ DEFAULT_SETTINGS = {
     # Related Modal #
     #################
     # Activate Bootstrap modal
-    "related_modal_active": True,
+    "related_modal_active": False,
     #############
     # UI Tweaks #
     #############
@@ -241,7 +241,7 @@ def get_ui_tweaks() -> Dict:
         "theme": static(THEMES[theme]),
         "body_classes": classes("accent", "body_small_text") + " theme-{}".format(theme),
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
-        "navbar_classes": classes("navbar", "no_nav_border", "navbar_small_text"),
+        "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
         "sidebar_list_classes": classes(
             "sidebar_nav_small_text",
             "sidebar_nav_flat_style",

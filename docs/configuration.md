@@ -101,7 +101,7 @@ JAZZMIN_SETTINGS = {
     # Related Modal #
     #################
     # Use modals instead of popups
-    "related_modal_active": True,
+    "related_modal_active": False,
 
     #############
     # UI Tweaks #
@@ -283,36 +283,10 @@ defaults to `True`
 
 ![Related Modal](./img/related_modal_bootstrap.png)
 
-## UI Tweaks
-
-### UI Customiser
-
-Jazzmin has a built in UI configurator, mimicked from [adminlte demo](https://adminlte.io/themes/v3/index3.html), 
-that allows you to customise parts of the interface interactively.
-
-To enable this, add `"show_ui_builder": True` to your `JAZZMIN_SETTINGS` and there will be an icon in the top right of 
-the screen that allows you to customise the interface.
-
-![icon](./img/customise_icon.png)
-
-When your happy with your customisations, press the "Show Code" button, and it will give you a code snippet to put 
-into your settings that will persist these customisations beyond page refresh.
-
-### DIY with custom CSS/JS
-
-If there are things you need to do with CSS/JS, but want to avoid overriding the templates yourself, you can include a 
-custom CSS and/or JS file, just pass a relative path to your files e.g:
-
-```
-"custom_css": "common/css/main.css",
-"custom_js": "common/js/main.js"
- ```
-
-Into your jazzmin settings (Ensure these files can be found by the static file finder)
-
 ### Adding extra actions to model's form view
 
-Add a template for your model on your main template directory, e.g [app/templates/admin/app_name/model_name/submit_line.html](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/books/templates/admin/loans/bookloan/submit_line.html)
+Add a template for your model on your main template directory, 
+e.g [app/templates/admin/app_name/model_name/submit_line.html](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/books/templates/admin/loans/bookloan/submit_line.html)
 
 ```djangotemplate
 {% extends "admin/submit_line.html" %}

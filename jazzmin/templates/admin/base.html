@@ -1,9 +1,10 @@
 {% load i18n static jazzmin admin_urls %}
-<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 {% get_current_language_bidi as LANGUAGE_BIDI %}
 {% get_jazzmin_settings as jazzmin_settings %}
 {% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
+<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
     <meta charset="utf-8">
@@ -22,7 +23,7 @@
     <link rel="stylesheet" href="{{ jazzmin_ui.theme }}"  id="jazzmin-theme" />
 
     <!-- Custom fixes for django -->
-    <link rel="stylesheet" href="{% static "jazzmin/css/django.css" %}">
+    <link rel="stylesheet" href="{% static "jazzmin/css/main.css" %}">
 
     {% if jazzmin_settings.custom_css %}
     <!-- Custom CSS -->

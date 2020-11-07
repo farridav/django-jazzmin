@@ -3,4 +3,4 @@
     {% include option.template_name with widget=option %}{% endfor %}{% if group_name %}
 </optgroup>{% endif %}{% endfor %}
 </select>
-<script>django.jQuery('#id_{{ widget.name }}').select2({ dropdownAutoWidth: true })</script>
+<script>django.jQuery('#id_{{ widget.name }}').select2({ width: '100%', theme: "classic" })</script>
