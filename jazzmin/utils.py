@@ -47,7 +47,8 @@ def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **
     try:
 
         if type(instance) == str:
-            app_label, model_name = instance.lower().split(".")
+            app_label, model_name = instance.split(".")
+            model_name = model_name.lower()
             url = reverse(
                 "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name),
                 current_app=admin_site,
@@ -145,7 +146,17 @@ def get_view_permissions(user: AbstractUser) -> Set[str]:
     """
     Get model names based on a users view/change permissions
     """
-    lower_perms = map(lambda x: x.lower(), user.get_all_permissions())
+    perms = user.get_all_permissions()
+    # the perm codenames should always be lower case
+    lower_perms = []
+    for perm in perms:
+        app, perm_codename = perm.split(".")
+        lower_perms.append(
+            "{app}.{perm_codename}".format(
+                app=app,
+                perm_codename=perm_codename.lower(),
+            )
+        )
     return {x.replace("view_", "") for x in lower_perms if "view" in x or "change" in x}
 
 

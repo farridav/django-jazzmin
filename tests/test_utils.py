@@ -1,3 +1,5 @@
+from unittest.mock import patch, MagicMock, Mock
+
 import pytest
 from django.db.models.functions import Upper
 from django.urls import reverse
@@ -47,6 +49,9 @@ def test_get_admin_url(admin_user):
     assert get_admin_url(Book) == reverse("admin:books_book_changelist")
     assert get_admin_url(Book, q="test") == reverse("admin:books_book_changelist") + "?q=test"
     assert get_admin_url("books.Book") == reverse("admin:books_book_changelist")
+    with patch("jazzmin.utils.reverse") as mock_reverse:
+        get_admin_url("Books.Book")
+        mock_reverse.assert_called_once_with("admin:Books_book_changelist", current_app="admin")
     assert get_admin_url("cheese:bad_pattern") == "#"
     assert get_admin_url("fake_app.fake_model") == "#"
     assert get_admin_url(1) == "#"
@@ -94,6 +99,12 @@ def test_get_model_permissions():
     user = UserFactory(permissions=("books.view_book", "books.view_author"))
 
     assert get_view_permissions(user) == {"books.book", "books.author"}
+
+    # test for camel cased app names
+    user = MagicMock()
+    user.get_all_permissions = Mock(return_value={"BookShelf.view_author", "BookShelf.view_book"})
+
+    assert get_view_permissions(user) == {"BookShelf.book", "BookShelf.author"}
 
 
 @pytest.mark.django_db
