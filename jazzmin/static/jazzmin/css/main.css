@@ -100,7 +100,6 @@ table.dataTable thead .sorting_desc_disabled::after {
     content: "\2193";
 }
 
-
 .select2-container .select2-selection--single {
     min-height: 40px;
     padding-top: 5px;
