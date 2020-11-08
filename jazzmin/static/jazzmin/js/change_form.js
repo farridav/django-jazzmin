@@ -102,6 +102,13 @@ function handleCollapsible($collapsible) {
     });
 }
 
+function applySelect2() {
+    // Apply select2 to any select boxes that don't yet have it
+    // and are not part of the django's empty-form inline
+    const noSelect2 = '.empty-form select, .select2-hidden-accessible, .selectfilter, .selector-available select, .selector-chosen select';
+    $('select').not(noSelect2).select2({ dropdownAutoWidth: true });
+}
+
 $(document).ready(function () {
     const $carousel = $('#content-main form #jazzy-carousel');
     const $tabs = $('#content-main form #jazzy-tabs');
@@ -119,7 +126,8 @@ $(document).ready(function () {
     else if ($carousel.length) { handleCarousel($carousel); }
     else if ($collapsible.length) { handleCollapsible($collapsible); }
 
-    // Apply select2 to any select boxes that dont yet have it
-    const noSelect2 = '.select2-hidden-accessible, .selectfilter, .selector-available select, .selector-chosen select';
-    $('select').not(noSelect2).select2({ dropdownAutoWidth: true });
+    applySelect2()
 });
+
+// Apply select2 to all select boxes when new inline row is created
+django.jQuery(document).on('formset:added', applySelect2)
