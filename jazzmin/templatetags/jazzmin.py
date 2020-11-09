@@ -461,7 +461,7 @@ def style_bold_first_word(message: str) -> SafeText:
 
     message = " ".join([word for word in message_words])
 
-    return format_html(message)
+    return mark_safe(message)
 
 
 @register.filter
