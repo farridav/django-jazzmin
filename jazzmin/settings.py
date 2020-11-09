@@ -259,19 +259,14 @@ def get_ui_tweaks() -> Dict:
 
     return {
         "raw": raw_tweaks,
-<<<<<<< HEAD
         "theme": static(THEMES[theme]),
-        "body_classes": classes("accent", "body_small_text") + " theme-{}".format(theme),
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
-=======
         "body_classes": classes(
             "accent", "body_small_text", "navbar_fixed", "footer_fixed", "sidebar_fixed", "layout_boxed",
-        ),
-        "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
-        "navbar_classes": classes("navbar", "no_nav_border", "navbar_small_text"),
+        )
+        + " theme-{}".format(theme),
         "actions_classes": classes("actions_sticky_top"),
->>>>>>> 76d393c... Adds in new UI conifigurations via customiser
         "sidebar_list_classes": classes(
             "sidebar_nav_small_text",
             "sidebar_nav_flat_style",

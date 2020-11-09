@@ -790,3 +790,7 @@ iframe.related-iframe {
     filter: blur(1px);
 }
 /* end modal tweaks */
+
+.control-sidebar {
+    overflow: hidden scroll;
+}
