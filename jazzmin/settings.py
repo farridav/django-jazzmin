@@ -132,7 +132,7 @@ CHANGEFORM_TEMPLATES = {
 }
 
 
-def get_search_model_string(jazzmin_settings):
+def get_search_model_string(jazzmin_settings: Dict) -> str:
     """
     Get a search model string for reversing an admin url.
 
