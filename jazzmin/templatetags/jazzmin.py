@@ -447,14 +447,6 @@ def action_message_to_list(action: LogEntry) -> List[Dict]:
     return messages if len(messages) else [changed(gettext(action.change_message))]
 
 
-def escape_json_string(message: str) -> str:
-    """
-    Replaces "{ }" with escaped braces "{{ }}"
-     - fix for format string error in `format_html` with json field
-    """
-    return message.replace('{', '{{').replace('}', '}}')
-
-
 @register.filter
 def style_bold_first_word(message: str) -> SafeText:
     """
@@ -469,9 +461,7 @@ def style_bold_first_word(message: str) -> SafeText:
 
     message = " ".join([word for word in message_words])
 
-    message = escape_json_string(message)
-
-    return format_html(message)
+    return mark_safe(message)
 
 
 @register.filter
