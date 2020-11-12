@@ -17,10 +17,12 @@
     <link rel="stylesheet" href="{% static "vendor/fontawesome-free/css/all.min.css" %}">
 
     <!-- Bootstrap and adminLTE -->
-    <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte.min.css" %}">
+    <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte.min.css" %}" id="adminlte-css">
 
     <!-- Bootswatch theme -->
-    <link rel="stylesheet" href="{{ jazzmin_ui.theme }}"  id="jazzmin-theme" />
+    {% if jazzmin_ui.theme.name != 'default' %}
+        <link rel="stylesheet" href="{{ jazzmin_ui.theme.src }}" id="jazzmin-theme" {% if jazzmin_ui.theme_condition %}media="{{ jazzmin_ui.theme_condition }}"{% endif %}/>
+    {% endif %}
 
     <!-- Custom fixes for django -->
     <link rel="stylesheet" href="{% static "jazzmin/css/main.css" %}">

@@ -132,14 +132,15 @@ DEFAULT_UI_TWEAKS = {
     "sidebar_nav_flat_style": False,
     # Bootstrap theme to use (default, or from bootswatch, see THEMES below)
     "theme": "default",
+    # Only apply the above theme if the user opts for it using their system e.g dark mode
+    "theme_condition": "",
 }
 
 THEMES = {
+    # light themes
     "default": "vendor/bootswatch/default/bootstrap.min.css",
     "cerulean": "vendor/bootswatch/cerulean/bootstrap.min.css",
     "cosmo": "vendor/bootswatch/cosmo/bootstrap.min.css",
-    "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
-    "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
     "flatly": "vendor/bootswatch/flatly/bootstrap.min.css",
     "journal": "vendor/bootswatch/journal/bootstrap.min.css",
     "litera": "vendor/bootswatch/litera/bootstrap.min.css",
@@ -151,12 +152,15 @@ THEMES = {
     "sandstone": "vendor/bootswatch/sandstone/bootstrap.min.css",
     "simplex": "vendor/bootswatch/simplex/bootstrap.min.css",
     "sketchy": "vendor/bootswatch/sketchy/bootstrap.min.css",
-    "slate": "vendor/bootswatch/slate/bootstrap.min.css",
-    "solar": "vendor/bootswatch/solar/bootstrap.min.css",
     "spacelab": "vendor/bootswatch/spacelab/bootstrap.min.css",
-    "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
     "united": "vendor/bootswatch/united/bootstrap.min.css",
     "yeti": "vendor/bootswatch/yeti/bootstrap.min.css",
+    # dark themes
+    "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
+    "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
+    "slate": "vendor/bootswatch/slate/bootstrap.min.css",
+    "solar": "vendor/bootswatch/solar/bootstrap.min.css",
+    "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
 }
 
 CHANGEFORM_TEMPLATES = {
@@ -255,11 +259,11 @@ def get_ui_tweaks() -> Dict:
     if theme not in THEMES:
         logger.warning("{} not found in {}, using default".format(theme, THEMES.keys()))
         theme = "default"
-        tweaks["theme"] = theme
+        tweaks["theme"] = {"name": theme, "src": ""}
 
     return {
         "raw": raw_tweaks,
-        "theme": static(THEMES[theme]),
+        "theme": {"name": theme, "src": static(THEMES[theme])},
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
         "body_classes": classes(

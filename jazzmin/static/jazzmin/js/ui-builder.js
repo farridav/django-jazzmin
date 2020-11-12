@@ -72,10 +72,22 @@
 
         // Theme chooser
         $("#jazzmin-theme-chooser").on('change', function () {
-            const $themeCSS = $('#jazzmin-theme');
+            let $themeCSS = $('#jazzmin-theme');
+
+            // If we are using the default theme, there will be no theme css, just the bundled one in adminlte
+            if (!$themeCSS.length) {
+                const staticSrc = $('#adminlte-css').attr('href').split('vendor')[0]
+                $themeCSS = $('<link>').attr({
+                    'href': staticSrc + 'vendor/bootswatch/default/bootstrap.min.css',
+                    'rel': 'stylesheet',
+                    'id': 'jazzmin-theme'
+                }).appendTo('head');
+            }
+
             const currentSrc = $themeCSS.attr('href');
             const currentTheme = currentSrc.split('/')[4];
             const newTheme = $(this).val();
+
             $themeCSS.attr('href', currentSrc.replace(currentTheme, newTheme));
 
             $body.removeClass (function (index, className) {
@@ -102,6 +114,18 @@
                 )
             );
         });
+
+        $("#theme-condition").on('change', function () {
+            let $themeCSS = $('#jazzmin-theme');
+            if (this.value !== "") {
+                $themeCSS.attr('media', this.value);
+                window.ui_changes['theme_condition'] = this.value;
+            } else {
+                $themeCSS.removeAttr('media');
+                delete window.ui_changes['theme_condition'];
+            }
+        });
+
     }
 
     function navBarTweaksListeners() {
@@ -218,6 +242,7 @@
 
     function setFromExisting() {
         $('#jazzmin-theme-chooser').val(window.ui_changes['theme']);
+        $('#theme-condition').val(window.ui_changes['theme_condition']);
         $('#body-small-text').get(0).checked = window.ui_changes['body_small_text'];
         $('#footer-small-text').get(0).checked = window.ui_changes['footer_small_text'];
         $('#sidebar-nav-small-text').get(0).checked = window.ui_changes['sidebar_nav_small_text'];
@@ -227,7 +252,9 @@
         $('#main-sidebar-disable-hover-focus-auto-expand').get(0).checked = window.ui_changes['sidebar_disable_expand'];
         $('#no-navbar-border').get(0).checked = window.ui_changes['no_navbar_border'];
         $('#navbar-small-text').get(0).checked = window.ui_changes['navbar_small_text'];
+
         $('#brand-small-text').get(0).checked = window.ui_changes['brand_small_text'];
+
 
         $('#navbar-variants div, #accent-colours div, #dark-sidebar-variants div, #light-sidebar-variants div, #brand-logo-variants div').addClass('inactive');
 

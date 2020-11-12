@@ -650,6 +650,12 @@ body.no-sidebar .main-header {
     cursor: pointer;
 }
 
+.ui-customiser select {
+    width: 100%;
+    height: auto;
+    padding: 6px 2px;
+}
+
 .control-sidebar-content label {
     vertical-align: top;
 }

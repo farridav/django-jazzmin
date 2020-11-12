@@ -16,22 +16,62 @@ the screen that allows you to customise the interface.
 When your happy with your customisations, press the "Show Code" button, and it will give you a code snippet to put 
 into your settings that will persist these customisations beyond page refresh.
 
-### Theming
+### Themes
 With the ui customiser enabled (see above), you can try out different bootswatch themes, and combine the theme with our 
 other UI tweaks.
 
-Here are some examples of the available themes in action:
+#### User controlled dark themes
+To allow a users system preferences to control the use of your theme, you can set
+`JAZZMIN_UI_TWEAKS["theme_condition"] = "(prefers-color-scheme: dark)"` e.g:
+
+```
+JAZZMIN_UI_TWEAKS = {
+    ...
+    "theme": "darkly",  # or "slate", "superhero", "solar", "cyborg"
+    "theme_condition": "(prefers-color-scheme: dark)",
+}
+```
+
+Which will make jazzmin only use your theme if the user has opted for a dark theme on their device, otherwise the standard theme will be used.
+
+See [here](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) for more information on the web standard.
+
+Here are some examples of the available themes in action (Use the ui builder `JAZZMIN_SETTINGS["show_ui_builder"] = True` to test them all ):
 
 #### Darkly
+```
+JAZZMIN_UI_TWEAKS = {
+    ...
+    "theme": "darkly",
+}
+```
 ![icon](./img/theme_darkly.png)
 
 #### Simplex
+```
+JAZZMIN_UI_TWEAKS = {
+    ...
+    "theme": "simplex",
+}
+```
 ![icon](./img/theme_simplex.png)
 
 #### Sketchy
+```
+JAZZMIN_UI_TWEAKS = {
+    ...
+    "theme": "sketchy",
+}
+```
 ![icon](./img/theme_sketchy.png)
 
 #### Slate
+```
+JAZZMIN_UI_TWEAKS = {
+    ...
+    "theme": "slate",
+}
+```
 ![icon](./img/theme_slate.png)
 
 #### More
