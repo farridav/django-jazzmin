@@ -1,0 +1,92 @@
+# Переводил HurmaDev
+msgid ""
+msgstr ""
+"Project-Id-Version: django\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-19 20:23+0200\n"
+"PO-Revision-Date: 2020-11-14 00:53+0800\n"
+"Last-Translator: HurmaDev <nuwetsky@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: templates/admin/base.html:125
+msgid "Account"
+msgstr "Аккаунт"
+
+#: templates/admin/base.html:143
+msgid "See Profile"
+msgstr "Открыть профиль"
+
+#: templates/admin/base.html:183 templates/admin/index.html:6
+#: templates/admin/index.html:11
+msgid "Dashboard"
+msgstr "Админ-панель"
+
+#: templates/admin/base.html:294
+msgid "Jazzmin version"
+msgstr "Jazzmin Version"
+
+#: templates/admin/base.html:297
+msgid "Copyright"
+msgstr ""
+
+#: templates/admin/base.html:297
+msgid "All rights reserved."
+msgstr "Все права защищены."
+
+#: templates/admin/base.html:313
+msgid "UI Configuration"
+msgstr "UI конфигурация"
+
+#: templates/admin/base.html:317
+msgid "Copy this info your settings file to persist these UI changes"
+msgstr ""
+"Скопируйте этот текст в свой settings проекта, чтобы применитьизменения"
+
+#: templates/admin/index.html:90
+#| msgid "%(entry.action_time|timesince)s ago"
+msgid "%(timesince)s ago"
+msgstr "%(timesince) назад"
+
+#: templates/admin/submit_line.html:8
+msgid "Actions"
+msgstr "Экшены"
+
+#: templates/admin_doc/template_detail.html:13
+#, python-format
+msgid "Template: <q>%(name)s</q>"
+msgstr "Vorlage: <q>%(name)</q>"
+
+#. Translators: Search is not a verb here, it qualifies path (a search path)
+#: templates/admin_doc/template_detail.html:17
+#, python-format
+msgid "Search path for template <q>%(name)s</q>:"
+msgstr "Искать path в шаблоне <q>%(name)</q>:"
+
+#: templates/admin_doc/template_filter_index.html:37
+#: templates/admin_doc/view_index.html:43
+#, python-format
+msgid ""
+"View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
+msgstr ""
+"Показать функцию: <code>%(full_name)</code>. Имя: <code>%(url_name)</code>."
+
+#: templatetags/jazzmin.py:390
+#, python-brace-format
+msgid "Added {name} “{object}”."
+msgstr "Добавить {name} “{object}”."
+
+#: templatetags/jazzmin.py:406
+#, python-brace-format
+msgid "Deleted “{object}”."
+msgstr "“Удалить {object}”."
+
+#: utils.py:66
+#, python-brace-format
+msgid "Could not reverse url from {instance}"
+msgstr "Не удалось получить обратный url от {instance}"
