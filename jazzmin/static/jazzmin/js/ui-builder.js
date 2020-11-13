@@ -70,7 +70,24 @@
             window.ui_changes['brand_colour'] = newClasses;
         });
 
-        // Theme chooser
+        // show code
+        $("#codeBox").on('show.bs.modal', function () {
+            $('.modal-body code', this).html(
+                'JAZZMIN_UI_TWEAKS = ' + JSON.stringify(
+                window.ui_changes, null, 4
+                ).replace(
+                /true/g, 'True'
+                ).replace(
+                /false/g, 'False'
+                ).replace(
+                /null/g, 'None'
+                )
+            );
+        });
+    }
+
+    function themeChooserListeners() {
+        // Theme chooser (standard)
         $("#jazzmin-theme-chooser").on('change', function () {
             let $themeCSS = $('#jazzmin-theme');
 
@@ -102,30 +119,35 @@
             window.ui_changes['theme'] = newTheme;
         });
 
-        // show code
-        $("#codeBox").on('show.bs.modal', function () {
-            $('.modal-body code', this).html(
-                'JAZZMIN_UI_TWEAKS = ' + JSON.stringify(
-                window.ui_changes, null, 4
-                ).replace(
-                /true/g, 'True'
-                ).replace(
-                /false/g, 'False'
-                )
-            );
-        });
+        // Theme chooser (dark mode)
+        $("#jazzmin-dark-mode-theme-chooser").on('change', function () {
+            let $themeCSS = $('#jazzmin-dark-mode-theme');
+            // If we are using the default theme, there will be no theme css, just the bundled one in adminlte
 
-        $("#theme-condition").on('change', function () {
-            let $themeCSS = $('#jazzmin-theme');
-            if (this.value !== "") {
-                $themeCSS.attr('media', this.value);
-                window.ui_changes['theme_condition'] = this.value;
-            } else {
-                $themeCSS.removeAttr('media');
-                delete window.ui_changes['theme_condition'];
+            if (this.value === "") {
+                $themeCSS.remove();
+                window.ui_changes['dark_mode_theme'] = null;
+                return
             }
-        });
 
+            if (!$themeCSS.length) {
+                const staticSrc = $('#adminlte-css').attr('href').split('vendor')[0]
+                $themeCSS = $('<link>').attr({
+                    'href': staticSrc + 'vendor/bootswatch/darkly/bootstrap.min.css',
+                    'rel': 'stylesheet',
+                    'id': 'jazzmin-dark-mode-theme',
+                    'media': '(prefers-color-scheme: dark)'
+                }).appendTo('head');
+            }
+
+            const currentSrc = $themeCSS.attr('href');
+            const currentTheme = currentSrc.split('/')[4];
+            const newTheme = $(this).val();
+
+            $themeCSS.attr('href', currentSrc.replace(currentTheme, newTheme));
+
+            window.ui_changes['dark_mode_theme'] = newTheme;
+        });
     }
 
     function navBarTweaksListeners() {
@@ -242,6 +264,7 @@
 
     function setFromExisting() {
         $('#jazzmin-theme-chooser').val(window.ui_changes['theme']);
+        $('#jazzmin-dark-mode-theme-chooser').val(window.ui_changes['dark_mode_theme']);
         $('#theme-condition').val(window.ui_changes['theme_condition']);
         $('#body-small-text').get(0).checked = window.ui_changes['body_small_text'];
         $('#footer-small-text').get(0).checked = window.ui_changes['footer_small_text'];
@@ -254,7 +277,6 @@
         $('#navbar-small-text').get(0).checked = window.ui_changes['navbar_small_text'];
 
         $('#brand-small-text').get(0).checked = window.ui_changes['brand_small_text'];
-
 
         $('#navbar-variants div, #accent-colours div, #dark-sidebar-variants div, #light-sidebar-variants div, #brand-logo-variants div').addClass('inactive');
 
@@ -270,6 +292,7 @@
      */
     if (!$body.hasClass("popup")) {
         setFromExisting();
+        themeChooserListeners();
         miscListeners();
         navBarTweaksListeners();
         sideBarTweaksListeners();

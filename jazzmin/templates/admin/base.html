@@ -21,7 +21,11 @@
 
     <!-- Bootswatch theme -->
     {% if jazzmin_ui.theme.name != 'default' %}
-        <link rel="stylesheet" href="{{ jazzmin_ui.theme.src }}" id="jazzmin-theme" {% if jazzmin_ui.theme_condition %}media="{{ jazzmin_ui.theme_condition }}"{% endif %}/>
+        <link rel="stylesheet" href="{{ jazzmin_ui.theme.src }}" id="jazzmin-theme" />
+    {% endif %}
+
+    {% if jazzmin_ui.dark_mode_theme.name %}
+        <link rel="stylesheet" href="{{ jazzmin_ui.dark_mode_theme.src }}" id="jazzmin-dark-mode-theme" media="(prefers-color-scheme: dark)"/>
     {% endif %}
 
     <!-- Custom fixes for django -->

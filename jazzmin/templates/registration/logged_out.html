@@ -21,7 +21,12 @@
     <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte.min.css" %}">
 
     <!-- Bootswatch theme -->
-    <link rel="stylesheet" href="{{ jazzmin_ui.theme }}"  id="jazzmin-theme" />
+    {% if jazzmin_ui.theme.name != 'default' %}
+        <link rel="stylesheet" href="{{ jazzmin_ui.theme.src }}" id="jazzmin-theme" />
+    {% endif %}
+    {% if jazzmin_ui.dark_mode_theme %}
+        <link rel="stylesheet" href="{{ jazzmin_ui.dark_mode_theme.src }}" id="jazzmin-dark-mode-theme" media="(prefers-color-scheme: dark)"/>
+    {% endif %}
 
     <!-- Custom fixes for django -->
     <link rel="stylesheet" href="{% static "jazzmin/css/main.css" %}">

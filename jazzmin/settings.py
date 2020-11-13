@@ -132,8 +132,8 @@ DEFAULT_UI_TWEAKS = {
     "sidebar_nav_flat_style": False,
     # Bootstrap theme to use (default, or from bootswatch, see THEMES below)
     "theme": "default",
-    # Only apply the above theme if the user opts for it using their system e.g dark mode
-    "theme_condition": "",
+    # Theme to use instead if the user has opted for dark mode (e.g darkly/cyborg/slate/solar/superhero)
+    "dark_mode_theme": None,
 }
 
 THEMES = {
@@ -162,6 +162,8 @@ THEMES = {
     "solar": "vendor/bootswatch/solar/bootstrap.min.css",
     "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
 }
+
+DARK_THEMES = ("darkly", "cyborg", "slate", "solar", "superhero")
 
 CHANGEFORM_TEMPLATES = {
     "single": "jazzmin/includes/single.html",
@@ -259,11 +261,16 @@ def get_ui_tweaks() -> Dict:
     if theme not in THEMES:
         logger.warning("{} not found in {}, using default".format(theme, THEMES.keys()))
         theme = "default"
-        tweaks["theme"] = {"name": theme, "src": ""}
+
+    dark_mode_theme = tweaks.get("dark_mode_theme", None)
+    if dark_mode_theme and dark_mode_theme not in DARK_THEMES:
+        logger.warning("{} is not a dark theme, using darkly".format(dark_mode_theme))
+        dark_mode_theme = "darkly"
 
     return {
         "raw": raw_tweaks,
         "theme": {"name": theme, "src": static(THEMES[theme])},
+        "dark_mode_theme": {"name": dark_mode_theme, "src": static(THEMES[theme])},
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
         "body_classes": classes(
