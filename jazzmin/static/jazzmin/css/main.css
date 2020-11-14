@@ -1,0 +1,802 @@
+/** Django-related improvements to AdminLTE UI **/
+
+div.inline-related {
+    padding: 10px;
+}
+
+.form-row {
+    padding: 5px;
+}
+
+.table tr.form-row {
+    display: table-row;
+}
+
+.table td.action-checkbox {
+    width: 45px;
+}
+
+.empty-form {
+    display: none !important;
+}
+
+.inline-related .tabular {
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+td.djn-td,
+th.djn-th {
+    padding: 10px;
+}
+
+td.delete input {
+    margin: 10px;
+}
+
+tr.djn-tr>.original {
+    padding-left: 20px;
+}
+
+/* Checkbox selection table header */
+.djn-checkbox-select-all {
+    padding-right: 0 !important;
+    width: 0;
+}
+
+.object-tools {
+    padding: 0;
+}
+
+.object-tools li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.object-tools .historylink {
+    background-color: #3c8dbc;
+    width: 100%;
+    display: block;
+    padding: 5px;
+    text-align: center;
+    color: white;
+}
+
+.jazzmin-avatar {
+    font-size: 20px;
+}
+
+.related-widget-wrapper-link {
+    padding: 7px;
+}
+
+.related-widget-wrapper select {
+    width: initial;
+    /* Setting a width will make the *-related btns overflow */
+    height: auto;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.tab-pane {
+    overflow-x: auto;
+}
+
+table.dataTable thead .sorting::after,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after,
+table.dataTable thead .sorting_asc_disabled::after,
+table.dataTable thead .sorting_desc_disabled::after {
+    right: 0.5em;
+    content: "\2193";
+}
+
+.select2-container .select2-selection--single {
+    min-height: 40px;
+    padding-top: 5px;
+}
+
+.select2-results__option {
+    color: black;
+}
+
+#changelist-search .form-group {
+    margin-right: .5em;
+}
+
+.table tbody tr th {
+    padding-left: .75rem;
+}
+
+.user-profile {
+    font-size: 2.4em;
+}
+
+.date-hierarchy {
+    margin-right: 8px;
+    display: block;
+}
+
+/* APP.CSS */
+
+.form-group div .vTextField,
+.form-group div .vLargeTextField,
+.form-group div .vURLField,
+.form-group div .vBigIntegerField,
+.form-group div.field-duration input[type="text"],
+.form-group div.field-identifier input[type="text"],
+.form-group div.field-generic_ip_address input[type="text"],
+.form-group .field-null_boolean select,
+.form-group .field-file_path select {
+    display: block;
+    width: 100%;
+}
+
+.vTextField,
+.vLargeTextField,
+.vURLField,
+.vIntegerField,
+.vBigIntegerField,
+.vForeignKeyRawIdAdminField,
+.vDateField,
+.vTimeField,
+.field-float input[type="number"],
+.field-decimal input[type="number"],
+.field-time input[type="text"],
+.field-duration input[type="text"],
+.field-identifier input[type="text"],
+.field-generic_ip_address input[type="text"],
+.field-null_boolean select,
+.field-file_path select {
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.vDateField,
+.vTimeField {
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.vLargeTextField {
+    height: auto;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.date-icon:before,
+.clock-icon:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome !important;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    content: "\f073";
+}
+
+.clock-icon:before {
+    content: "\f017";
+}
+
+/* CALENDARS & CLOCKS */
+
+.calendarbox,
+.clockbox {
+    margin: 5px auto;
+    font-size: 12px;
+    width: 19em;
+    text-align: center;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    position: relative;
+}
+
+.clockbox {
+    width: auto;
+}
+
+.calendar {
+    margin: 0;
+    padding: 0;
+}
+
+.calendar table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    background: white;
+    width: 100%;
+}
+
+.calendar caption,
+.calendarbox h2,
+.clockbox h2 {
+    margin: 0;
+    text-align: center;
+    border-top: none;
+    background: #f5dd5d;
+    font-weight: 700;
+    font-size: 12px;
+    color: #333;
+}
+
+.clockbox h2 {
+    font-size: 16px;
+    padding: 5px;
+}
+
+.calendar th {
+    padding: 8px 5px;
+    background: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    font-weight: 400;
+    font-size: 12px;
+    text-align: center;
+    color: #666;
+}
+
+.calendar td {
+    font-weight: 400;
+    font-size: 12px;
+    text-align: center;
+    padding: 0;
+    border-top: 1px solid #eee;
+    border-bottom: none;
+}
+
+.calendar td.selected a {
+    background: #3C8DBC;
+    color: #fff !important;
+}
+
+.calendar td.nonday {
+    background: #f8f8f8;
+}
+
+.calendar td.today a {
+    font-weight: 700;
+}
+
+.calendar td a,
+.timelist a {
+    display: block;
+    font-weight: 400;
+    padding: 6px;
+    text-decoration: none;
+    color: #444;
+}
+
+.calendar td a:focus,
+.timelist a:focus,
+.calendar td a:hover,
+.timelist a:hover {
+    background: #3C8DBC;
+    color: white;
+}
+
+.calendar td a:active,
+.timelist a:active {
+    background: #3C8DBC;
+    color: white;
+}
+
+.calendarnav {
+    font-size: 10px;
+    text-align: center;
+    color: #ccc;
+    margin: 0;
+    padding: 1px 3px;
+}
+
+.calendarnav a:link,
+#calendarnav a:visited,
+#calendarnav a:focus,
+#calendarnav a:hover {
+    color: #999;
+}
+
+.calendar-shortcuts {
+    background: white;
+    font-size: 11px;
+    line-height: 11px;
+    border-top: 1px solid #eee;
+    padding: 8px 0;
+    color: #ccc;
+}
+
+.calendarbox .calendarnav-previous,
+.calendarbox .calendarnav-next {
+    display: block;
+    position: absolute;
+    top: 8px;
+    width: 15px;
+    height: 15px;
+    text-indent: -9999px;
+    padding: 0;
+}
+
+.calendarnav-previous {
+    left: 10px;
+    background: url(../img/calendar-icons.svg) 0 0 no-repeat;
+}
+
+.calendarbox .calendarnav-previous:focus,
+.calendarbox .calendarnav-previous:hover {
+    background-position: 0 -15px;
+}
+
+.calendarnav-next {
+    right: 10px;
+    background: url(../img/calendar-icons.svg) 0 -30px no-repeat;
+}
+
+.calendarbox .calendarnav-next:focus,
+.calendarbox .calendarnav-next:hover {
+    background-position: 0 -45px;
+}
+
+.calendar-cancel {
+    margin: 0;
+    padding: 4px 0;
+    font-size: 12px;
+    background: #eee;
+    border-top: 1px solid #ddd;
+    color: #333;
+}
+
+.calendar-cancel:focus,
+.calendar-cancel:hover {
+    background: #ddd;
+}
+
+.calendar-cancel a {
+    color: black;
+    display: block;
+}
+
+/* Selectors - This needs some work TODO */
+
+.selector {
+    width: 100%;
+    float: left;
+}
+
+.selector select {
+    width: 100%;
+    height: 15em;
+}
+
+.selector-available,
+.selector-chosen {
+    float: left;
+    width: 48%;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.selector-chosen select {
+    border-top: none;
+}
+
+.selector-available h2,
+.selector-chosen h2 {
+    border: 1px solid #ccc;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.selector-chosen h2 {
+    background: #3C8DBC;
+    color: #fff;
+}
+
+.selector .selector-available h2 {
+    background: #f8f8f8;
+    color: #666;
+}
+
+.selector .selector-filter {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 8px;
+    color: #999;
+    font-size: 10px;
+    margin: 0;
+    text-align: left;
+}
+
+.selector-filter input {
+    height: 24px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-left: 0 !important;
+}
+
+.selector .selector-filter label,
+.inline-group .aligned .selector .selector-filter label {
+    float: left;
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    overflow: hidden;
+    line-height: 1;
+}
+
+/* Might need to import more rules from:
+ * https://github.com/django/django/blob/master/django/contrib/admin/static/admin/css/responsive.css
+ */
+.inline-group {
+    overflow: auto;
+}
+
+.selector .selector-available input {
+    width: 100%;
+    margin-left: 8px;
+}
+
+.selector ul.selector-chooser {
+    float: left;
+    width: 4%;
+    background-color: #eee;
+    border-radius: 10px;
+    margin: 10em 0 0;
+    padding: 0;
+}
+
+.selector-chooser li {
+    margin: 0;
+    padding: 3px;
+    list-style-type: none;
+}
+
+.selector select {
+    padding: 0 10px;
+    margin: 0 0 10px;
+    /*border-radius: 0 0 4px 4px;*/
+;
+}
+
+.selector-add,
+.selector-remove {
+    height: 16px;
+    display: block;
+    text-indent: -3000px;
+    overflow: hidden;
+    cursor: default;
+    opacity: 0.3;
+}
+
+.active.selector-add,
+.active.selector-remove {
+    opacity: 1;
+}
+
+.active.selector-add:hover,
+.active.selector-remove:hover {
+    cursor: pointer;
+}
+
+.selector-add {
+    background: url(../img/selector-icons.svg) 0 -96px no-repeat;
+}
+
+.active.selector-add:focus,
+.active.selector-add:hover {
+    background-position: 0 -112px;
+}
+
+.selector-remove {
+    background: url(../img/selector-icons.svg) 0 -64px no-repeat;
+}
+
+.active.selector-remove:focus,
+.active.selector-remove:hover {
+    background-position: 0 -80px;
+}
+
+a.selector-chooseall,
+a.selector-clearall {
+    display: inline-block;
+    height: 16px;
+    text-align: left;
+    margin: 1px auto 3px;
+    overflow: hidden;
+    font-weight: bold;
+    line-height: 16px;
+    color: #666;
+    text-decoration: none;
+    opacity: 0.3;
+}
+
+a.active.selector-chooseall:focus,
+a.active.selector-clearall:focus,
+a.active.selector-chooseall:hover,
+a.active.selector-clearall:hover {
+    color: #447e9b;
+}
+
+a.active.selector-chooseall,
+a.active.selector-clearall {
+    opacity: 1;
+}
+
+a.active.selector-chooseall:hover,
+a.active.selector-clearall:hover {
+    cursor: pointer;
+}
+
+a.selector-chooseall {
+    padding: 0 18px 0 0;
+    background: url(../img/selector-icons.svg) right -160px no-repeat;
+    cursor: default;
+}
+
+a.active.selector-chooseall:focus,
+a.active.selector-chooseall:hover {
+    background-position: 100% -176px;
+}
+
+a.selector-clearall {
+    padding: 0 0 0 18px;
+    background: url(../img/selector-icons.svg) 0 -128px no-repeat;
+    cursor: default;
+}
+
+a.active.selector-clearall:focus,
+a.active.selector-clearall:hover {
+    background-position: 0 -144px;
+}
+
+.selector .search-label-icon {
+    height: 0;
+}
+
+#user_form input[type="password"] {
+    width: 100%;
+}
+
+.control-label {
+    margin-top: 7px;
+}
+
+.help-block,
+.timezonewarning {
+    font-size: .8em;
+    color: #859099;
+    font-style: italic;
+}
+
+.dashboard tbody tr:first-child td {
+    border-top: none;
+}
+
+.vTimeField {
+    margin-top: 10px;
+}
+
+.vTimeField,
+.vDateField {
+    min-width: 200px;
+}
+
+.date-icon::before,
+.clock-icon::before {
+    font-family: "Font Awesome 5 Free" !important;
+}
+
+.timelist li {
+    list-style-type: none;
+}
+
+.timelist {
+    margin: 0;
+    padding: 0;
+}
+
+body.no-sidebar .content-wrapper,
+body.no-sidebar .main-footer,
+body.no-sidebar .main-header {
+    margin-left: 0;
+}
+
+.vCheckboxLabel.inline {
+    vertical-align: top;
+    color: red;
+    margin-bottom: 0;
+}
+
+.inline-related .card-header>span {
+    float: right;
+}
+
+.ui-customiser .menu-items div {
+    width: 40px;
+    height: 20px;
+    border-radius: 25px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.ui-customiser select {
+    width: 100%;
+    height: auto;
+    padding: 6px 2px;
+}
+
+.control-sidebar-content label {
+    vertical-align: top;
+}
+
+.ui-customiser .menu-items div.inactive {
+    opacity: 0.3;
+}
+
+.ui-customiser .menu-items div.active {
+    opacity: 1;
+    border: 1px solid white;
+}
+
+.timeline-item {
+    word-break: break-word;
+}
+
+.navbar-nav .brand-link {
+    padding-top: 3px;
+}
+
+.breadcrumb {
+    margin-top: 5px;
+}
+
+.login-box,
+.register-box {
+    width: auto;
+    max-width: 700px;
+}
+
+#jazzy-collapsible .collapsible-header:hover {
+    background: #007bff;
+    color: white;
+}
+
+#jazzy-collapsible .collapsible-header {
+    cursor: pointer;
+}
+
+#jazzy-carousel .carousel-indicators li {
+    background-color: #007bfe;
+}
+
+#jazzy-carousel .carousel-indicators {
+    position: initial;
+}
+
+form ul.radiolist li {
+    list-style-type: none;
+}
+
+form ul.radiolist label {
+    float: none;
+    display: inline;
+}
+
+form ul.radiolist input[type="radio"] {
+    margin: -2px 4px 0 0;
+    padding: 0;
+}
+
+form ul.inline {
+    margin-left: 0;
+    padding: 0;
+}
+
+form ul.inline li {
+    float: left;
+    padding-right: 7px;
+}
+
+.content-wrapper {
+    background: inherit;
+}
+
+.main-footer {
+    background: inherit;
+}
+
+#jazzy-actions.sticky-top {
+    top: 10px;
+}
+
+body.layout-navbar-fixed #jazzy-actions.sticky-top {
+    top: 67px;
+}
+
+/* stacked inlines */
+a.inline-deletelink:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+a.inline-deletelink {
+    float: right;
+    padding: 3px 5px;
+    margin: 10px;
+    background-color: #dc3545;
+    border-radius: .25rem;
+    color: white !important;
+    border: 1px solid #dc3545;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+/* end stacked inlines */
+
+/* Support for django-mptt */
+#result_list .field-tree_actions {
+    width: calc(40px + 2.25rem);
+}
+
+#result_list .field-tree_actions>div {
+    margin-top: 0;
+}
+/* End support for django-mptt */
+
+/* modal tweaks */
+.modal.modal-wide .modal-dialog {
+    width: 50%;
+    max-width: inherit;
+}
+
+.modal-wide .modal-body {
+    overflow-y: auto;
+}
+
+iframe.related-iframe {
+    width: 100%;
+    height: 450px;
+}
+
+/* Blur background when using modal */
+.modal-open .wrapper {
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+    filter: blur(1px);
+}
+/* end modal tweaks */
+
+.control-sidebar {
+    overflow: hidden scroll;
+}

@@ -1,32 +1,184 @@
 (function ($) {
     'use strict';
 
-    var $body = $('body');
-    var $footer = $('footer');
-    var $sidebar_ul = $('aside#jazzy-sidebar nav ul:first-child');
-    var $sidebar = $('aside#jazzy-sidebar');
-    var $navbar = $('nav#jazzy-navbar');
-    var $logo = $('#jazzy-logo');
+    const $body = $('body');
+    const $footer = $('footer');
+    const $sidebar_ul = $('aside#jazzy-sidebar nav ul:first-child');
+    const $sidebar = $('aside#jazzy-sidebar');
+    const $navbar = $('nav#jazzy-navbar');
+    const $logo = $('#jazzy-logo');
+    const $actions = $('#jazzy-actions');
 
     window.ui_changes = window.ui_changes || {};
 
-    // Toggles
-    function addListeners() {
-        $('#body-small-text').on('click', function () {
-            $body.toggleClass('text-sm');
-            window.ui_changes['body_small_text'] = this.checked;
+    function miscListeners() {
+        $('#footer-fixed').on('click', function () {
+            $body.toggleClass('layout-footer-fixed');
+            if (this.checked) {
+                $('#layout-boxed:checked').click();
+            }
+            window.ui_changes['footer_fixed'] = this.checked;
         });
 
-        $('#footer-small-text').on('click', function () {
-            $footer.toggleClass('text-sm');
-            window.ui_changes['footer_small_text'] = this.checked;
+        $('#layout-boxed').on('click', function () {
+            $body.toggleClass('layout-boxed');
+
+            // We cannot combine these options with layout boxed
+            if (this.checked) {
+                $('#navbar-fixed:checked').click();
+                $('#footer-fixed:checked').click();
+            }
+            window.ui_changes['layout_boxed'] = this.checked;
         });
 
-        $('#sidebar-nav-small-text').on('click', function () {
-            $sidebar_ul.toggleClass('text-sm');
-            window.ui_changes['sidebar_nav_small_text'] = this.checked;
+        $('#actions-fixed').on('click', function () {
+            $actions.toggleClass('sticky-top');
+            window.ui_changes['actions_sticky_top'] = this.checked;
         });
 
+        // Colour pickers
+        $('#accent-colours div').on('click', function () {
+            $(this).removeClass('inactive').addClass('active').parent().find(
+                'div'
+            ).not(this).removeClass('active').addClass('inactive');
+
+            const newClasses = $(this).data('classes');
+
+            $body.removeClass(function (index, className) {
+                return (className.match(/(^|\s)accent-\S+/g) || []).join(' ');
+            }).addClass(newClasses);
+
+            window.ui_changes['accent'] = newClasses;
+        });
+
+        $('#brand-logo-variants div').on('click', function () {
+            $(this).removeClass('inactive').addClass('active').parent().find(
+                'div'
+            ).not(this).removeClass('active').addClass('inactive');
+
+            let newClasses = $(this).data('classes');
+
+            $logo.removeClass(function (index, className) {
+                return (className.match(/(^|\s)navbar-\S+/g) || []).join(' ');
+            }).addClass(newClasses);
+
+            if (newClasses === "") {
+                newClasses = false;
+                $(this).parent().find('div').removeClass('active inactive');
+            }
+
+            window.ui_changes['brand_colour'] = newClasses;
+        });
+
+        // show code
+        $("#codeBox").on('show.bs.modal', function () {
+            $('.modal-body code', this).html(
+                'JAZZMIN_UI_TWEAKS = ' + JSON.stringify(
+                window.ui_changes, null, 4
+                ).replace(
+                /true/g, 'True'
+                ).replace(
+                /false/g, 'False'
+                ).replace(
+                /null/g, 'None'
+                )
+            );
+        });
+    }
+
+    function themeChooserListeners() {
+        // Theme chooser (standard)
+        $("#jazzmin-theme-chooser").on('change', function () {
+            let $themeCSS = $('#jazzmin-theme');
+
+            // If we are using the default theme, there will be no theme css, just the bundled one in adminlte
+            if (!$themeCSS.length) {
+                const staticSrc = $('#adminlte-css').attr('href').split('vendor')[0]
+                $themeCSS = $('<link>').attr({
+                    'href': staticSrc + 'vendor/bootswatch/default/bootstrap.min.css',
+                    'rel': 'stylesheet',
+                    'id': 'jazzmin-theme'
+                }).appendTo('head');
+            }
+
+            const currentSrc = $themeCSS.attr('href');
+            const currentTheme = currentSrc.split('/')[4];
+            const newTheme = $(this).val();
+
+            $themeCSS.attr('href', currentSrc.replace(currentTheme, newTheme));
+
+            $body.removeClass (function (index, className) {
+                return (className.match (/(^|\s)theme-\S+/g) || []).join(' ');
+            });
+            $body.addClass('theme-' + newTheme);
+
+            if (newTheme === "darkly") {
+                $('#navbar-variants .bg-dark').click();
+            }
+
+            window.ui_changes['theme'] = newTheme;
+        });
+
+        // Theme chooser (dark mode)
+        $("#jazzmin-dark-mode-theme-chooser").on('change', function () {
+            let $themeCSS = $('#jazzmin-dark-mode-theme');
+            // If we are using the default theme, there will be no theme css, just the bundled one in adminlte
+
+            if (this.value === "") {
+                $themeCSS.remove();
+                window.ui_changes['dark_mode_theme'] = null;
+                return
+            }
+
+            if (!$themeCSS.length) {
+                const staticSrc = $('#adminlte-css').attr('href').split('vendor')[0]
+                $themeCSS = $('<link>').attr({
+                    'href': staticSrc + 'vendor/bootswatch/darkly/bootstrap.min.css',
+                    'rel': 'stylesheet',
+                    'id': 'jazzmin-dark-mode-theme',
+                    'media': '(prefers-color-scheme: dark)'
+                }).appendTo('head');
+            }
+
+            const currentSrc = $themeCSS.attr('href');
+            const currentTheme = currentSrc.split('/')[4];
+            const newTheme = $(this).val();
+
+            $themeCSS.attr('href', currentSrc.replace(currentTheme, newTheme));
+
+            window.ui_changes['dark_mode_theme'] = newTheme;
+        });
+    }
+
+    function navBarTweaksListeners() {
+        $('#navbar-fixed').on('click', function () {
+            $body.toggleClass('layout-navbar-fixed');
+            if (this.checked) {$('#layout-boxed:checked').click();}
+            window.ui_changes['navbar_fixed'] = this.checked;
+        });
+
+        $('#no-navbar-border').on('click', function () {
+            $navbar.toggleClass('border-bottom-0');
+            window.ui_changes['no_navbar_border'] = $navbar.hasClass('border-bottom-0');
+        });
+
+        // Colour picker
+        $('#navbar-variants div').on('click', function () {
+            $(this).removeClass('inactive').addClass('active').parent().find(
+                'div'
+            ).not(this).removeClass('active').addClass('inactive');
+
+            const newClasses = $(this).data('classes');
+
+            $navbar.removeClass(function (index, className) {
+                return (className.match(/(^|\s)navbar-\S+/g) || []).join(' ');
+            }).addClass('navbar-expand ' + newClasses);
+
+            window.ui_changes['navbar'] = newClasses;
+        });
+    }
+
+    function sideBarTweaksListeners() {
         $('#sidebar-nav-flat-style').on('click', function () {
             $sidebar_ul.toggleClass('nav-flat');
             window.ui_changes['sidebar_nav_flat_style'] = this.checked;
@@ -52,11 +204,28 @@
             window.ui_changes['sidebar_disable_expand'] = this.checked;
         });
 
-        $('#no-navbar-border').on('click', function () {
-            $navbar.toggleClass('border-bottom-0');
-            window.ui_changes['no_navbar_border'] = $navbar.hasClass('border-bottom-0');
+        $('#sidebar-fixed').on('click', function () {
+            $body.toggleClass('layout-fixed');
+            window.ui_changes['sidebar_fixed'] = this.checked;
         });
 
+        // Colour pickers
+        $('#dark-sidebar-variants div, #light-sidebar-variants div').on('click', function () {
+            $(this).removeClass('inactive').addClass('active').parent().find(
+                'div'
+            ).not(this).removeClass('active').addClass('inactive');
+
+            const newClasses = $(this).data('classes');
+
+            $sidebar.removeClass(function (index, className) {
+                return (className.match(/(^|\s)sidebar-[\S|-]+/g) || []).join(' ');
+            }).addClass(newClasses);
+
+            window.ui_changes['sidebar'] = newClasses.trim();
+        });
+    }
+
+    function smallTextListeners() {
         $('#navbar-small-text').on('click', function () {
             $navbar.toggleClass('text-sm');
             window.ui_changes['navbar_small_text'] = this.checked;
@@ -67,82 +236,36 @@
             window.ui_changes['brand_small_text'] = this.checked;
         });
 
-        // Colour pickers
-        $('#navbar-variants div').on('click', function () {
-            $(this).removeClass('inactive').addClass('active').parent().find(
-                'div'
-            ).not(this).removeClass('active').addClass('inactive');
-
-            var newClasses = $(this).data('classes');
-
-            $navbar.removeClass(function (index, className) {
-                return (className.match(/(^|\s)navbar-\S+/g) || []).join(' ');
-            }).addClass('navbar-expand ' + newClasses);
-
-            window.ui_changes['navbar'] = newClasses;
-        });
-
-        $('#accent-colours div').on('click', function () {
-            $(this).removeClass('inactive').addClass('active').parent().find(
-                'div'
-            ).not(this).removeClass('active').addClass('inactive');
-
-            var newClasses = $(this).data('classes');
-
-            $body.removeClass(function (index, className) {
-                return (className.match(/(^|\s)accent-\S+/g) || []).join(' ');
-            }).addClass(newClasses);
-
-            window.ui_changes['accent'] = newClasses;
-        });
-
-        $('#dark-sidebar-variants div, #light-sidebar-variants div').on('click', function () {
-            $(this).removeClass('inactive').addClass('active').parent().find(
-                'div'
-            ).not(this).removeClass('active').addClass('inactive');
-
-            var newClasses = $(this).data('classes');
-
-            $sidebar.removeClass(function (index, className) {
-                return (className.match(/(^|\s)sidebar-[\S|-]+/g) || []).join(' ');
-            }).addClass(newClasses);
-
-            window.ui_changes['sidebar'] = newClasses.trim();
-        });
-
-        $('#brand-logo-variants div').on('click', function () {
-            $(this).removeClass('inactive').addClass('active').parent().find(
-                'div'
-            ).not(this).removeClass('active').addClass('inactive');
-
-            var newClasses = $(this).data('classes');
-
-            $logo.removeClass(function (index, className) {
-                return (className.match(/(^|\s)navbar-\S+/g) || []).join(' ');
-            }).addClass(newClasses);
-
-            if (newClasses === "") {
-                newClasses = false;
-                $(this).parent().find('div').removeClass('active inactive');
+        $('#body-small-text').on('click', function () {
+            $body.toggleClass('text-sm');
+            window.ui_changes['body_small_text'] = this.checked;
+            const $smallTextControls = $('#navbar-small-text, #brand-small-text, #footer-small-text, #sidebar-nav-small-text');
+            if (this.checked) {
+                window.ui_changes['navbar_small_text'] = false;
+                window.ui_changes['brand_small_text'] = false;
+                window.ui_changes['footer_small_text'] = false;
+                window.ui_changes['sidebar_nav_small_text'] = false;
+                $smallTextControls.prop({'checked': false, 'disabled': 'disabled'});
+            } else {
+                $smallTextControls.prop({'checked': false, 'disabled': ''});
             }
-
-            window.ui_changes['brand_colour'] = newClasses;
         });
 
-        $("#codeBox").on('show.bs.modal', function () {
-            $('.modal-body code', this).html(
-                'JAZZMIN_UI_TWEAKS = ' + JSON.stringify(
-                window.ui_changes, null, 4
-                ).replace(
-                /true/g, 'True'
-                ).replace(
-                /false/g, 'False'
-                )
-            );
+        $('#footer-small-text').on('click', function () {
+            $footer.toggleClass('text-sm');
+            window.ui_changes['footer_small_text'] = this.checked;
+        });
+
+        $('#sidebar-nav-small-text').on('click', function () {
+            $sidebar_ul.toggleClass('text-sm');
+            window.ui_changes['sidebar_nav_small_text'] = this.checked;
         });
     }
 
     function setFromExisting() {
+        $('#jazzmin-theme-chooser').val(window.ui_changes['theme']);
+        $('#jazzmin-dark-mode-theme-chooser').val(window.ui_changes['dark_mode_theme']);
+        $('#theme-condition').val(window.ui_changes['theme_condition']);
         $('#body-small-text').get(0).checked = window.ui_changes['body_small_text'];
         $('#footer-small-text').get(0).checked = window.ui_changes['footer_small_text'];
         $('#sidebar-nav-small-text').get(0).checked = window.ui_changes['sidebar_nav_small_text'];
@@ -152,6 +275,7 @@
         $('#main-sidebar-disable-hover-focus-auto-expand').get(0).checked = window.ui_changes['sidebar_disable_expand'];
         $('#no-navbar-border').get(0).checked = window.ui_changes['no_navbar_border'];
         $('#navbar-small-text').get(0).checked = window.ui_changes['navbar_small_text'];
+
         $('#brand-small-text').get(0).checked = window.ui_changes['brand_small_text'];
 
         $('#navbar-variants div, #accent-colours div, #dark-sidebar-variants div, #light-sidebar-variants div, #brand-logo-variants div').addClass('inactive');
@@ -168,7 +292,11 @@
      */
     if (!$body.hasClass("popup")) {
         setFromExisting();
-        addListeners();
+        themeChooserListeners();
+        miscListeners();
+        navBarTweaksListeners();
+        sideBarTweaksListeners();
+        smallTextListeners();
     }
 
 })(jQuery);
