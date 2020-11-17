@@ -428,14 +428,14 @@ def style_bold_first_word(message: str) -> SafeText:
     """
     Wraps first word in a message with <strong> HTML element
     """
-    message_words = message.split()
+    message_words = escape(message).split()
 
     if not len(message_words):
         return ""
 
-    message_words[0] = "<strong>{}</strong>".format(escape(message_words[0]))
+    message_words[0] = "<strong>{}</strong>".format(message_words[0])
 
-    message = " ".join([escape(word) for word in message_words])
+    message = " ".join([word for word in message_words])
 
     return mark_safe(message)
 
