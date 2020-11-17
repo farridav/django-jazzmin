@@ -19,7 +19,7 @@ from django.template import Library, Context
 from django.template.loader import get_template
 from django.templatetags.static import static
 from django.utils import translation
-from django.utils.html import format_html
+from django.utils.html import format_html, escape
 from django.utils.safestring import mark_safe, SafeText
 from django.utils.text import get_text_list, slugify
 from django.utils.translation import gettext
@@ -428,7 +428,7 @@ def style_bold_first_word(message: str) -> SafeText:
     """
     Wraps first word in a message with <strong> HTML element
     """
-    message_words = message.split()
+    message_words = escape(message).split()
 
     if not len(message_words):
         return ""
