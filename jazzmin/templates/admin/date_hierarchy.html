@@ -1,14 +1,17 @@
+{% load jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
 {% if show %}
     <div class="btn-group date-hierarchy text-sm mt-2">
         {% block date-hierarchy-toplinks %}
             {% block date-hierarchy-back %}
                 {% if back %}
-                    <a class="btn btn-outline btn-secondary" href="{{ back.link }}">&lsaquo; {{ back.title }}</a>
+                    <a class="btn {{ jazzmin_ui.button_classes.secondary }}" href="{{ back.link }}">&lsaquo; {{ back.title }}</a>
                 {% endif %}
             {% endblock %}
             {% block date-hierarchy-choices %}
                 {% for choice in choices %}
-                    <a {% if choice.link %}href="{{ choice.link }}" class="btn btn-outline-primary"{% else %}class="btn btn-outline-primary active"{% endif %}>
+                    <a {% if choice.link %}href="{{ choice.link }}" class="btn {{ jazzmin_ui.button_classes.primary }}"{% else %}class="btn {{ jazzmin_ui.button_classes.primary }} active"{% endif %}>
                         {{ choice.title }}
                     </a>
                 {% endfor %}

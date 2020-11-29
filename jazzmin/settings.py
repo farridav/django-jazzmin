@@ -134,6 +134,16 @@ DEFAULT_UI_TWEAKS = {
     "theme": "default",
     # Theme to use instead if the user has opted for dark mode (e.g darkly/cyborg/slate/solar/superhero)
     "dark_mode_theme": None,
+    # The classes/styles to use with buttons
+    "button_classes": {
+        "default": "btn-outline-default",
+        "primary": "btn-outline-primary",
+        "secondary": "btn-outline-secondary",  # Doesnt work so well with dark themes
+        "info": "btn-outline-info",
+        "warning": "btn-outline-warning",
+        "danger": "btn-outline-danger",
+        "success": "btn-outline-success",
+    },
 }
 
 THEMES = {
@@ -287,4 +297,5 @@ def get_ui_tweaks() -> Dict:
         ),
         "brand_classes": classes("brand_small_text", "brand_colour"),
         "footer_classes": classes("footer_small_text"),
+        "button_classes": tweaks["button_classes"],
     }
