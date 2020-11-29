@@ -23,7 +23,8 @@
     {% if jazzmin_ui.theme.name != 'default' %}
         <link rel="stylesheet" href="{{ jazzmin_ui.theme.src }}" id="jazzmin-theme" />
     {% endif %}
-    {% if jazzmin_ui.dark_mode_theme %}
+
+    {% if jazzmin_ui.dark_mode_theme.name %}
         <link rel="stylesheet" href="{{ jazzmin_ui.dark_mode_theme.src }}" id="jazzmin-dark-mode-theme" media="(prefers-color-scheme: dark)"/>
     {% endif %}
 
@@ -45,17 +46,15 @@
     {% block extrastyle %} {% endblock %}
     {% block extrahead %} {% endblock %}
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition jazzmin-login-page">
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="{% url 'admin:index' %}">
-            <b>{{ jazzmin_settings.site_header }}</b>
-        </a>
+        <h1>{{ jazzmin_settings.site_header }}</h1>
     </div>
 
     <div class="card">
-        <div class="card-body login-card-body">
+        <div class="card-body">
             <p class="login-box-msg">{{ jazzmin_settings.welcome_sign }}</p>
             <form action="{{ app_path }}" method="post">
                 {% csrf_token %}
@@ -106,7 +105,6 @@
             </form>
 
         </div>
-
     </div>
 </div>
 
