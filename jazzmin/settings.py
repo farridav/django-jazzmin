@@ -136,9 +136,8 @@ DEFAULT_UI_TWEAKS = {
     "dark_mode_theme": None,
     # The classes/styles to use with buttons
     "button_classes": {
-        "default": "btn-outline-default",
         "primary": "btn-outline-primary",
-        "secondary": "btn-outline-secondary",  # Doesnt work so well with dark themes
+        "secondary": "btn-outline-secondary",
         "info": "btn-outline-info",
         "warning": "btn-outline-warning",
         "danger": "btn-outline-danger",
