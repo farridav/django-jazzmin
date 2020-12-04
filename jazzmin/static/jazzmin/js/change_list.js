@@ -1,4 +1,7 @@
-$.fn.search_filters = function () {
+(function($) {
+    'use strict';
+
+    $.fn.search_filters = function () {
     $(this).change(function () {
         const $field = $(this);
         const $option = $field.find('option:selected');
@@ -12,7 +15,7 @@ $.fn.search_filters = function () {
     $(this).trigger('change');
 };
 
-$(document).ready(function () {
+    $(document).ready(function () {
     // Ensure all raw_id_fields have the search icon in them
     $('.related-lookup').append('<i class="fa fa-search"></i>')
 
@@ -45,3 +48,5 @@ $(document).ready(function () {
         });
     }
 });
+
+})(jQuery);

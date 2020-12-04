@@ -8,6 +8,11 @@ div.inline-related {
     padding: 5px;
 }
 
+.help-block ul {
+    margin: 10px 0 0 15px;
+    padding: 0;
+}
+
 .table tr.form-row {
     display: table-row;
 }
@@ -799,4 +804,30 @@ iframe.related-iframe {
 
 .control-sidebar {
     overflow: hidden scroll;
+}
+
+/* tweaks to allow bootstrap styling */
+body.jazzmin-login-page {
+    -ms-flex-align: center;
+    align-items: center;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100vh;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.callout {
+    color: black;
+}
+
+.timeline>div>.timeline-item {
+    background: inherit;
+    color: inherit;
+    border: 1px solid #495057;
+}
+
+.timeline>div>.timeline-item>.timeline-header {
+    color: inherit;
 }

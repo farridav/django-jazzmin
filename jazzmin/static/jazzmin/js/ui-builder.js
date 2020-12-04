@@ -8,8 +8,17 @@
     const $navbar = $('nav#jazzy-navbar');
     const $logo = $('#jazzy-logo');
     const $actions = $('#jazzy-actions');
+    const buttons = [
+        "primary",
+        "secondary",
+        "info",
+        "warning",
+        "danger",
+        "success",
+    ]
+    const darkThemes = ["darkly", "cyborg", "slate", "solar", "superhero"]
 
-    window.ui_changes = window.ui_changes || {};
+    window.ui_changes = window.ui_changes || {'button_classes': {}};
 
     function miscListeners() {
         $('#footer-fixed').on('click', function () {
@@ -103,7 +112,7 @@
 
             const currentSrc = $themeCSS.attr('href');
             const currentTheme = currentSrc.split('/')[4];
-            const newTheme = $(this).val();
+            let newTheme = $(this).val();
 
             $themeCSS.attr('href', currentSrc.replace(currentTheme, newTheme));
 
@@ -112,8 +121,9 @@
             });
             $body.addClass('theme-' + newTheme);
 
-            if (newTheme === "darkly") {
+            if (darkThemes.indexOf(newTheme) > -1) {
                 $('#navbar-variants .bg-dark').click();
+                $("#jazzmin-btn-style-secondary").val('btn-secondary').change();
             }
 
             window.ui_changes['theme'] = newTheme;
@@ -262,6 +272,17 @@
         });
     }
 
+    function buttonStyleListeners() {
+        buttons.forEach(function(btn) {
+            $("#jazzmin-btn-style-" + btn).on('change', function () {
+                const btnClasses = ['btn-' + btn, 'btn-outline-' + btn];
+                const selectorClasses = '.btn-' + btn + ', .btn-outline-' + btn;
+                $(selectorClasses).removeClass(btnClasses).addClass(this.value);
+                window.ui_changes['button_classes'][btn] = this.value;
+            });
+        });
+    }
+
     function setFromExisting() {
         $('#jazzmin-theme-chooser').val(window.ui_changes['theme']);
         $('#jazzmin-dark-mode-theme-chooser').val(window.ui_changes['dark_mode_theme']);
@@ -275,11 +296,17 @@
         $('#main-sidebar-disable-hover-focus-auto-expand').get(0).checked = window.ui_changes['sidebar_disable_expand'];
         $('#no-navbar-border').get(0).checked = window.ui_changes['no_navbar_border'];
         $('#navbar-small-text').get(0).checked = window.ui_changes['navbar_small_text'];
-
         $('#brand-small-text').get(0).checked = window.ui_changes['brand_small_text'];
 
+        // deactivate colours
         $('#navbar-variants div, #accent-colours div, #dark-sidebar-variants div, #light-sidebar-variants div, #brand-logo-variants div').addClass('inactive');
 
+        // set button styles
+        buttons.forEach(function(btn) {
+            $("#jazzmin-btn-style-" + btn).val(window.ui_changes['button_classes'][btn]);
+        });
+
+        // set colours
         $('#navbar-variants div[data-classes="' + window.ui_changes['navbar'] + '"]').addClass('active');
         $('#accent-colours div[data-classes="' + window.ui_changes['accent'] + '"]').addClass('active');
         $('#dark-sidebar-variants div[data-classes="' + window.ui_changes['sidebar'] + '"]').addClass('active');
@@ -297,6 +324,7 @@
         navBarTweaksListeners();
         sideBarTweaksListeners();
         smallTextListeners();
+        buttonStyleListeners();
     }
 
 })(jQuery);

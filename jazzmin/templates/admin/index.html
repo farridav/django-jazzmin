@@ -1,5 +1,6 @@
 {% extends "admin/base_site.html" %}
 {% load i18n static jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 {% block bodyclass %}{{ block.super }} dashboard{% endblock %}
 
@@ -38,13 +39,13 @@
                                         <td>
                                             <div class="btn-group float-right">
                                                 {% if model.add_url %}
-                                                    <a href="{{ model.add_url }}" class="btn btn-sm btn-success btn-flat addlink">{% trans 'Add' %}</a>
+                                                    <a href="{{ model.add_url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.success }} btn-flat addlink">{% trans 'Add' %}</a>
                                                 {% endif %}
                                                 {% if model.url %}
                                                     {% if model.view_only %}
-                                                        <a href="{{ model.url }}" class="btn btn-sm btn-outline-info btn-flat viewlink">{% trans 'View' %}</a>
+                                                        <a href="{{ model.url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.info }} btn-flat viewlink">{% trans 'View' %}</a>
                                                     {% else %}
-                                                        <a href="{{ model.url }}" class="btn btn-sm btn-outline-info btn-flat changelink">{% if model.custom %}{% trans 'Go' %}{% else %}{% trans 'Change' %}{% endif %}</a>
+                                                        <a href="{{ model.url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.info }} btn-flat changelink">{% if model.custom %}{% trans 'Go' %}{% else %}{% trans 'Change' %}{% endif %}</a>
                                                     {% endif %}
                                                 {% endif %}
                                             </div>

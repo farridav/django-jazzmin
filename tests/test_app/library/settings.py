@@ -1,5 +1,6 @@
 import os
 
+from django.conf.global_settings import LANGUAGES as DJANGO_LANGUAGES
 import dj_database_url
 
 ###################
@@ -89,15 +90,7 @@ USE_L10N = True
 USE_TZ = True
 
 # English default
-gettext = lambda s: s  # NOQA
-LANGUAGES = (
-    ("en", gettext("English")),
-    ("de", gettext("German")),
-    ("es", gettext("Spanish")),
-    ("hu", gettext("Hungarian")),
-    ("zh-hans", gettext("Simplified Chinese")),
-    ("zh-hant", gettext("Traditional Chinese")),
-)
+LANGUAGES = DJANGO_LANGUAGES
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
@@ -168,7 +161,7 @@ JAZZMIN_SETTINGS = {
     # Hide these models when generating side menu (e.g auth.user)
     "hide_models": [],
     # List of apps to base side menu (app or model) ordering off of
-    "order_with_respect_to": ["Make Messages", "auth", "books", "books.author", "books.book", "loans",],
+    "order_with_respect_to": ["Make Messages", "auth", "books", "books.author", "books.book", "loans"],
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
         "loans": [
@@ -227,6 +220,38 @@ JAZZMIN_SETTINGS = {
 
 if not DEBUG and not TEST:
     JAZZMIN_SETTINGS["welcome_sign"] = "Username: test@test.com, Password: test (Data resets nightly)"
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-white navbar-light",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "default",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-outline-primary",
+        "secondary": "btn-outline-secondary",
+        "info": "btn-outline-info",
+        "warning": "btn-outline-warning",
+        "danger": "btn-outline-danger",
+        "success": "btn-outline-success",
+    },
+}
 
 ################
 # App settings #

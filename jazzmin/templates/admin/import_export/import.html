@@ -1,8 +1,6 @@
 {% extends "admin/import_export/base.html" %}
-{% load i18n %}
-{% load admin_urls %}
-{% load import_export_tags %}
-{% load static %}
+{% load i18n admin_urls import_export_tags static jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 {% block extrastyle %}
     {{ block.super }}
@@ -47,7 +45,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-success form-control" name="confirm" value="{% trans "Confirm import" %}">
+                                    <input type="submit" class="btn {{ jazzmin_ui.button_classes.success }} form-control" name="confirm" value="{% trans "Confirm import" %}">
                                 </div>
                             </div>
                         </div>
@@ -109,7 +107,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-success form-control" name="confirm" value="{% trans "Submit" %}">
+                                    <input type="submit" class="btn {{ jazzmin_ui.button_classes.success }} form-control" name="confirm" value="{% trans "Submit" %}">
                                 </div>
                             </div>
                         </div>

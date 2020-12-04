@@ -1,5 +1,6 @@
 {% extends "admin/change_form.html" %}
-{% load admin_urls i18n %}
+{% load admin_urls i18n jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 {% block breadcrumbs %}
     <ol class="breadcrumb float-sm-right">
@@ -11,9 +12,9 @@
 
 {% block object-tools-items %}
     {% if perms.administration.can_change_logs or perms.administration.can_view_logs %}
-        <a class="btn btn-block btn-outline-secondary btn-sm" href="{% url opts|admin_urlname:'history' %}">{% trans 'History' %}</a>
+        <a class="btn btn-block {{ jazzmin_ui.button_classes.secondary }} btn-sm" href="{% url opts|admin_urlname:'history' %}">{% trans 'History' %}</a>
     {% endif %}
     {% if has_absolute_url %}
-        <a href="{% url 'admin:view_on_site' content_type_id original.pk %}" class="btn btn-block btn-outline-secondary btn-sm">{% trans "View on site" %}</a>
+        <a href="{% url 'admin:view_on_site' content_type_id original.pk %}" class="btn btn-block {{ jazzmin_ui.button_classes.secondary }} btn-sm">{% trans "View on site" %}</a>
     {% endif %}
 {% endblock %}
