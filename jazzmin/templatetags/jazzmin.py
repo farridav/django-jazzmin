@@ -263,7 +263,7 @@ def change_lang(request: HttpRequest, language_code: str) -> str:
     Change the url to use the given language
     """
     current_language = translation.get_language()
-    return request.get_full_path().replace(current_language, language_code)
+    return request.get_full_path().replace(current_language, language_code, 1)
 
 
 @register.filter
