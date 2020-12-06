@@ -43,6 +43,10 @@ tr.djn-tr>.original {
     padding-left: 20px;
 }
 
+.hidden {
+    display: none;
+}
+
 /* Checkbox selection table header */
 .djn-checkbox-select-all {
     padding-right: 0 !important;
