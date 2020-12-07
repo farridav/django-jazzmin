@@ -14,4 +14,4 @@
             return false;
         });
     });
-})(jQuery);
+})(django.jQuery);

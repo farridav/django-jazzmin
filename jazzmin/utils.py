@@ -3,7 +3,7 @@ from typing import List, Union, Dict, Set, Callable
 from urllib.parse import urlencode
 
 from django.apps import apps
-from django.contrib.admin import BooleanFieldListFilter
+from django.contrib.admin import ListFilter
 from django.contrib.admin.helpers import AdminForm
 from django.contrib.auth.models import AbstractUser
 from django.db.models.base import ModelBase
@@ -15,18 +15,13 @@ from jazzmin.compat import NoReverseMatch, reverse
 logger = logging.getLogger(__name__)
 
 
-def order_with_respect_to(original: List, reference: List, getter: Callable = None) -> List:
+def order_with_respect_to(original: List, reference: List, getter: Callable = lambda x: x) -> List:
     """
     Order a list based on the location of items in the reference list, optionally, use a getter to pull values out of
     the first list
     """
     ranking = []
     max_num = len(original)
-    if not getter:
-
-        def getter(x):
-            return x
-
     for item in original:
         try:
             pos = reference.index(getter(item))
@@ -80,7 +75,7 @@ def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **
     return url
 
 
-def get_filter_id(spec: BooleanFieldListFilter) -> str:
+def get_filter_id(spec: ListFilter) -> str:
     return getattr(spec, "field_path", getattr(spec, "parameter_name", spec.title))
 
 
@@ -161,11 +156,7 @@ def get_view_permissions(user: AbstractUser) -> Set[str]:
 
 
 def make_menu(
-    user: AbstractUser,
-    links: List[Dict],
-    options: Dict,
-    allow_appmenus: bool = True,
-    admin_site: str = "admin",
+    user: AbstractUser, links: List[Dict], options: Dict, allow_appmenus: bool = True, admin_site: str = "admin"
 ) -> List[Dict]:
     """
     Make a menu from a list of user supplied links

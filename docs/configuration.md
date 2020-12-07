@@ -288,7 +288,7 @@ defaults to `True`
 Add a template for your model on your main template directory, 
 e.g [app/templates/admin/app_name/model_name/submit_line.html](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/books/templates/admin/loans/bookloan/submit_line.html)
 
-```djangotemplate
+```html
 {% extends "admin/submit_line.html" %}
 
 {% block extra-actions %}

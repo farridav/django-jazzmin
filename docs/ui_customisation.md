@@ -116,7 +116,7 @@ custom CSS and/or JS file, just pass a relative path to your files e.g:
 ```
 "custom_css": "common/css/main.css",
 "custom_js": "common/js/main.js"
- ```
+```
 
 Into your jazzmin settings (Ensure these files can be found by the static file finder)
 
@@ -126,5 +126,15 @@ If you want to manually tweak CSS styles for a particular theme, you can start y
 ```
 body.theme-darkly p {
     color: pink;
+}
+```
+
+Or to target your `dark_mode_theme` wrap it like this:
+
+```
+@media (prefers-color-scheme: dark) {
+    body.theme-darkly p {
+        color: pink;
+    }
 }
 ```

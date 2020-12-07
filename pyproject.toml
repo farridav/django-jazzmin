@@ -43,6 +43,10 @@ exclude = ["tests", "docs"]
 python = ">=3.5"
 django = ">=2"
 
+[tool.black]
+line-length = 120
+target-version = ['py37']
+
 [tool.poetry.dev-dependencies]
 django-debug-toolbar = "*"  # unparallelled debugging in django
 werkzeug = "*"              # support for werkzeug debugger in runserver_plus
@@ -74,12 +78,9 @@ django-import-export = "^2.4.0"
 [tool.pytest.ini_options]
 addopts = "--pdbcls=IPython.terminal.debugger:TerminalPdb -p no:warnings --junitxml=.reports/coverage.xml --cov-report=html:.reports/htmlcov --cov jazzmin"
 junit_family = "xunit2"
-norecursedirs = ".git .tox _resource build dist docs"
+norecursedirs = ".git .tox _resource .mypy_cache build dist docs"
 DJANGO_SETTINGS_MODULE = "tests.test_app.library.settings"
 FAIL_INVALID_TEMPLATE_VARS = 1
-
-[tool.black]
-line-length = 120
 
 [tool.flake8]
 max-complexity = 10
@@ -90,18 +91,18 @@ show-source = true
 statistics = false
 
 [tool.coverage.run]
-omit = ["*/__init__.py", ".tox", ".reports", ".git"]
+omit = ["*/__init__.py", ".tox",  ".mypy_cache", ".reports", ".git"]
 
 [tool.coverage.report]
-omit = ["*/__init__.py", ".tox", ".reports", ".git"]
+omit = ["*/__init__.py", ".tox",  ".mypy_cache", ".reports", ".git"]
 show_missing = true
 
 [tool.tox]
 legacy_tox_ini = """
 [tox]
 envlist =
-    django2-{py36,py37},
-    django3-{py36,py37,py38},
+    django2-{py35,py36,py37},
+    django3-{py35,py36,py37,py38},
     # run one of the tests again but with coverage
     coveralls-django3-py38,
 skipsdist = True
@@ -135,6 +136,8 @@ deps =
 [testenv:coveralls-django3-py38]
 passenv = COVERALLS_REPO_TOKEN
 commands =
+    - mypy jazzmin --ignore-missing-imports
+    black --check jazzmin tests
     pytest
     - coveralls
 """

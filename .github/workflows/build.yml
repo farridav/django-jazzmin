@@ -19,6 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
@@ -30,3 +32,10 @@ jobs:
 
       - name: Run tests
         run: tox
+
+      - name: cache deps
+        uses: actions/cache@v1
+        with:
+          path: ~/.tox
+          key: deps-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: deps-${{ hashFiles('**/pyproject.toml') }}
