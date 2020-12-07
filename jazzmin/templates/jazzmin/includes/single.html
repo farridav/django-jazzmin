@@ -1,7 +1,7 @@
 {% load jazzmin %}
 
 {% for fieldset in adminform %}
-    {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
+    {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets card_header=adminform|has_fieldsets %}
 {% endfor %}
 
 {% for inline_admin_formset in inline_admin_formsets %}
