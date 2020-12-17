@@ -140,7 +140,7 @@ deps =
 passenv = COVERALLS_REPO_TOKEN
 commands =
     - mypy jazzmin --ignore-missing-imports
-    black --check jazzmin tests --target-version py38
+    black --check jazzmin tests --target-version py38 --line-length 120
     pytest
     - coveralls
 """

@@ -52,7 +52,11 @@ DEFAULT_SETTINGS = {
     "custom_links": {},
     # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free
     # for a list of icon classes
-    "icons": {"auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users",},
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
@@ -285,7 +289,12 @@ def get_ui_tweaks() -> Dict:
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
         "body_classes": classes(
-            "accent", "body_small_text", "navbar_fixed", "footer_fixed", "sidebar_fixed", "layout_boxed",
+            "accent",
+            "body_small_text",
+            "navbar_fixed",
+            "footer_fixed",
+            "sidebar_fixed",
+            "layout_boxed",
         )
         + theme_body_classes,
         "actions_classes": classes("actions_sticky_top"),
