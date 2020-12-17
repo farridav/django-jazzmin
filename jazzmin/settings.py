@@ -52,11 +52,7 @@ DEFAULT_SETTINGS = {
     "custom_links": {},
     # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free
     # for a list of icon classes
-    "icons": {
-        "auth": "fas fa-users-cog",
-        "auth.user": "fas fa-user",
-        "auth.Group": "fas fa-users",
-    },
+    "icons": {"auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users",},
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
@@ -278,6 +274,10 @@ def get_ui_tweaks() -> Dict:
         logger.warning("{} is not a dark theme, using darkly".format(dark_mode_theme))
         dark_mode_theme = "darkly"
 
+    theme_body_classes = " theme-{}".format(theme)
+    if theme in DARK_THEMES:
+        theme_body_classes += " dark-mode"
+
     return {
         "raw": raw_tweaks,
         "theme": {"name": theme, "src": static(THEMES[theme])},
@@ -285,14 +285,9 @@ def get_ui_tweaks() -> Dict:
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
         "body_classes": classes(
-            "accent",
-            "body_small_text",
-            "navbar_fixed",
-            "footer_fixed",
-            "sidebar_fixed",
-            "layout_boxed",
+            "accent", "body_small_text", "navbar_fixed", "footer_fixed", "sidebar_fixed", "layout_boxed",
         )
-        + " theme-{}".format(theme),
+        + theme_body_classes,
         "actions_classes": classes("actions_sticky_top"),
         "sidebar_list_classes": classes(
             "sidebar_nav_small_text",
