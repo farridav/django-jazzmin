@@ -102,18 +102,18 @@ show_missing = true
 legacy_tox_ini = """
 [tox]
 envlist =
-    django2-{py35,py36,py37},
-    django3-{py35,py36,py37,py38},
+    django2-{py36,py37},
+    django3-{py36,py37,py38,py39},
     # run one of the tests again but with coverage
     coveralls-django3-py38,
 skipsdist = True
 
 [gh-actions]
 python =
-    3.5: py35
     3.6: py36
     3.7: py37
     3.8: py38
+    3.9: py39
 
 [testenv]
 setenv =
@@ -128,6 +128,7 @@ deps =
     pytest-cov
     coveralls
     mypy
+    black
     beautifulsoup4
     dj-database-url
     factory-boy
@@ -139,7 +140,7 @@ deps =
 passenv = COVERALLS_REPO_TOKEN
 commands =
     - mypy jazzmin --ignore-missing-imports
-    black --check jazzmin tests
+    black --check jazzmin tests --target-version py38
     pytest
     - coveralls
 """
