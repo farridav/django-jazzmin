@@ -825,13 +825,3 @@ body.jazzmin-login-page {
 .callout {
     color: black;
 }
-
-.timeline>div>.timeline-item {
-    background: inherit;
-    color: inherit;
-    border: 1px solid #495057;
-}
-
-.timeline>div>.timeline-item>.timeline-header {
-    color: inherit;
-}

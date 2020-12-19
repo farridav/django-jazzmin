@@ -14,45 +14,40 @@
 {% block title %}{% trans 'Models' %}{% endblock %}
 {% block content_title %}{% trans 'Models' %}{% endblock %}
 
-{% block content %}
+{% block docs_content %}
 
 {% regroup models by app_config as grouped_models %}
 
-<div id="content-main" class=col-12>
-  <div class="col-12">
-    <div class="card card-primary card-outline">
-      <div class="card-body pad table-responsive">
-
+<div class="row">
+    <div class="col-4 col-sm-2">
+        <div class="nav flex-column nav-tabs h-100" id="tabs-tab" role="tablist" aria-orientation="vertical">
             {% for group in grouped_models %}
-            <div class="module">
-                <h5 id="app-{{ group.grouper.label }}">{{ group.grouper.verbose_name }} ({{ group.grouper.name }})</h5>
-
-                <table class="table table-hover text-nowrap">
-                    {% for model in group.list %}
-                        <tr>
-                            <th><a href="{% url 'django-admindocs-models-detail' app_label=model.app_label model_name=model.model_name %}">{{ model.object_name }}</a></th>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
+                <a class="nav-link" id="tabs-{{ group.grouper.label }}-control" data-toggle="pill" href="#tabs-{{ group.grouper.label }}" role="tab" aria-controls="tabs-{{ group.grouper.label }}" aria-selected="true">
+                    <h6>{{ group.grouper.verbose_name }}</h6>
+                </a>
             {% endfor %}
-      </div>
-    </div>
-  </div>
-</div>
-
-{% endblock %}
-
-{% block sidebar %}
-    <div id="content-related" class="sidebar">
-        <div class="module">
-            <h2>{% trans 'Model groups' %}</h2>
-            <ul>
-            {% regroup models by app_config as grouped_models %}
-            {% for group in grouped_models %}
-                <li><a href="#app-{{ group.grouper.label }}">{{ group.grouper.verbose_name }}</a></li>
-            {% endfor %}
-            </ul>
         </div>
     </div>
+
+    <div class="col-7 col-sm-9">
+        <div class="tab-content" id="tabs-tabContent">
+            {% for group in grouped_models %}
+                <div class="tab-pane text-left fade{% if forloop.first %} show active{% endif %}" id="tabs-{{ group.grouper.label }}" role="tabpanel" aria-labelledby="tabs-{{ group.grouper.label }}-control">
+
+                    <ul>
+                        {% for model in group.list %}
+                            <li>
+                                <a href="{% url 'django-admindocs-models-detail' app_label=model.app_label model_name=model.model_name %}">
+                                    {{ model.object_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}

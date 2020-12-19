@@ -43,6 +43,10 @@ exclude = ["tests", "docs"]
 python = ">=3.5"
 django = ">=2"
 
+[tool.black]
+line-length = 120
+target-version = ['py37']
+
 [tool.poetry.dev-dependencies]
 django-debug-toolbar = "*"  # unparallelled debugging in django
 werkzeug = "*"              # support for werkzeug debugger in runserver_plus
@@ -60,6 +64,7 @@ beautifulsoup4 = "*"        # Structure HTML documents into navigable things for
 mkdocs = "^1.1.2"           # Tool for serving rendered markdown docs
 polib = "^1.1.0"            # Tool for dealing with translation files
 factory-boy = "^3.1.0"      # Factory generation
+mypy = "^0.790"             # Type checking
 # 3rd party app support demonstrated in test app
 django-mptt = "^0.11.0"
 django-treebeard = "^4.3.1"
@@ -74,12 +79,9 @@ django-import-export = "^2.4.0"
 [tool.pytest.ini_options]
 addopts = "--pdbcls=IPython.terminal.debugger:TerminalPdb -p no:warnings --junitxml=.reports/coverage.xml --cov-report=html:.reports/htmlcov --cov jazzmin"
 junit_family = "xunit2"
-norecursedirs = ".git .tox _resource build dist docs"
+norecursedirs = ".git .tox _resource .mypy_cache build dist docs"
 DJANGO_SETTINGS_MODULE = "tests.test_app.library.settings"
 FAIL_INVALID_TEMPLATE_VARS = 1
-
-[tool.black]
-line-length = 120
 
 [tool.flake8]
 max-complexity = 10
@@ -90,10 +92,10 @@ show-source = true
 statistics = false
 
 [tool.coverage.run]
-omit = ["*/__init__.py", ".tox", ".reports", ".git"]
+omit = ["*/__init__.py", ".tox",  ".mypy_cache", ".reports", ".git"]
 
 [tool.coverage.report]
-omit = ["*/__init__.py", ".tox", ".reports", ".git"]
+omit = ["*/__init__.py", ".tox",  ".mypy_cache", ".reports", ".git"]
 show_missing = true
 
 [tool.tox]
@@ -101,17 +103,17 @@ legacy_tox_ini = """
 [tox]
 envlist =
     django2-{py36,py37},
-    django3-{py36,py37,py38},
+    django3-{py36,py37,py38,py39},
     # run one of the tests again but with coverage
     coveralls-django3-py38,
 skipsdist = True
 
 [gh-actions]
 python =
-    3.5: py35
     3.6: py36
     3.7: py37
     3.8: py38
+    3.9: py39
 
 [testenv]
 setenv =
@@ -125,6 +127,8 @@ deps =
     pytest-django
     pytest-cov
     coveralls
+    mypy
+    black
     beautifulsoup4
     dj-database-url
     factory-boy
@@ -135,6 +139,8 @@ deps =
 [testenv:coveralls-django3-py38]
 passenv = COVERALLS_REPO_TOKEN
 commands =
+    - mypy jazzmin --ignore-missing-imports
+    black --check jazzmin tests --target-version py38 --line-length 120
     pytest
     - coveralls
 """

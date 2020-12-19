@@ -49,7 +49,7 @@ class BookLoan(models.Model):
         ordering = ("due_back",)
 
     def __str__(self):
-        return f"{self.id} ({self.book.title})"
+        return "{}, ({})".format(self.id, self.book.title)
 
     def save(self, **kwargs):
         self.duration = self.loan_start - timezone.now()

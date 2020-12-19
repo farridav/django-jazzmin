@@ -6,7 +6,7 @@ import urllib.parse
 from typing import List, Dict, Union, Any
 
 from django.conf import settings
-from django.contrib.admin import BooleanFieldListFilter
+from django.contrib.admin import ListFilter
 from django.contrib.admin.helpers import AdminForm
 from django.contrib.admin.models import LogEntry
 from django.contrib.admin.views.main import PAGE_VAR, ChangeList
@@ -84,13 +84,18 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
 
         custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
         model_ordering = list(
-            filter(lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names, ordering,)
+            filter(
+                lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names,
+                ordering,
+            )
         )
 
         if len(menu_items):
             if model_ordering:
                 menu_items = order_with_respect_to(
-                    menu_items, model_ordering, getter=lambda x: x.get("model_str", x.get("name", "").lower()),
+                    menu_items,
+                    model_ordering,
+                    getter=lambda x: x.get("model_str", x.get("name", "").lower()),
                 )
             app["models"] = menu_items
             menu.append(app)
@@ -108,7 +113,13 @@ def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     Produce the menu for the top nav bar
     """
     options = get_settings()
-    return make_menu(user, options.get("topmenu_links", []), options, allow_appmenus=True, admin_site=admin_site,)
+    return make_menu(
+        user,
+        options.get("topmenu_links", []),
+        options,
+        allow_appmenus=True,
+        admin_site=admin_site,
+    )
 
 
 @register.simple_tag
@@ -117,7 +128,13 @@ def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     Produce the menu for the user dropdown
     """
     options = get_settings()
-    return make_menu(user, options.get("usermenu_links", []), options, allow_appmenus=False, admin_site=admin_site,)
+    return make_menu(
+        user,
+        options.get("usermenu_links", []),
+        options,
+        allow_appmenus=False,
+        admin_site=admin_site,
+    )
 
 
 @register.simple_tag
@@ -208,17 +225,26 @@ def admin_extra_filters(cl: ChangeList) -> Dict:
 
 
 @register.simple_tag
-def jazzmin_list_filter(cl: ChangeList, spec: BooleanFieldListFilter) -> SafeText:
+def jazzmin_list_filter(cl: ChangeList, spec: ListFilter) -> SafeText:
+    """
+    Render out our list filter in a dropdown friendly format, for use by filter.html, see original implementation here
+
+    django.contrib.admin.templatetags.admin_list.admin_list_filter
+
+    """
     tpl = get_template(spec.template)
     choices = list(spec.choices(cl))
     field_key = get_filter_id(spec)
     matched_key = field_key
+
     for choice in choices:
-        query_string = choice["query_string"][1:]
-        query_parts = urllib.parse.parse_qs(query_string)
+        qs = choice.get("query_string")
+        if not qs:
+            continue
 
         value = ""
         matches = {}
+        query_parts = urllib.parse.parse_qs(qs[1:])
         for key in query_parts.keys():
             if key == field_key:
                 value = query_parts[key][0]
@@ -238,7 +264,7 @@ def jazzmin_list_filter(cl: ChangeList, spec: BooleanFieldListFilter) -> SafeTex
                 choice["value"] = value
             i += 1
 
-    return tpl.render({"field_name": field_key, "title": spec.title, "choices": choices, "spec": spec,})
+    return tpl.render({"field_name": field_key, "title": spec.title, "choices": choices, "spec": spec})
 
 
 @register.simple_tag
@@ -295,17 +321,17 @@ def get_changeform_template(adminform: AdminForm) -> str:
     model = adminform.model_admin.model
     model_name = "{}.{}".format(model._meta.app_label, model._meta.model_name).lower()
 
-    format = options.get("changeform_format", "")
+    changeform_format = options.get("changeform_format", "")
     if model_name in options.get("changeform_format_overrides", {}):
-        format = options["changeform_format_overrides"][model_name]
+        changeform_format = options["changeform_format_overrides"][model_name]
 
     if not has_fieldsets and not has_inlines:
         return CHANGEFORM_TEMPLATES.get("single")
 
-    if not format or format not in CHANGEFORM_TEMPLATES.keys():
+    if not changeform_format or changeform_format not in CHANGEFORM_TEMPLATES.keys():
         return CHANGEFORM_TEMPLATES.get("horizontal_tabs")
 
-    return CHANGEFORM_TEMPLATES.get(format)
+    return CHANGEFORM_TEMPLATES.get(changeform_format)
 
 
 @register.simple_tag
@@ -408,7 +434,8 @@ def action_message_to_list(action: LogEntry) -> List[Dict]:
 
             elif "changed" in sub_message:
                 sub_message["changed"]["fields"] = get_text_list(
-                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]], gettext("and"),
+                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]],
+                    gettext("and"),
                 )
                 if "name" in sub_message["changed"]:
                     sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])
