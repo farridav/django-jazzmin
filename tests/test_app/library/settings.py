@@ -189,11 +189,7 @@ JAZZMIN_SETTINGS = {
                 "icon": "fas fa-comments",
                 "permissions": ["loans.view_loan"],
             },
-            {
-                "name": "Custom View",
-                "url": "admin:custom_view",
-                "icon": "fas fa-box-open"
-            },
+            {"name": "Custom View", "url": "admin:custom_view", "icon": "fas fa-box-open"},
         ]
     },
     # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free

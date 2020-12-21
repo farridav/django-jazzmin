@@ -35,6 +35,7 @@ def test_side_menu(admin_client, settings):
             "/make_messages/",
             "/en/admin/loans/bookloan/",
             "/en/admin/loans/library/",
+            "/en/admin/loans/bookloan/custom_view",
         ],
     }
 
@@ -53,6 +54,7 @@ def test_side_menu(admin_client, settings):
             "/make_messages/",
             "/en/admin/loans/bookloan/",
             "/en/admin/loans/library/",
+            "/en/admin/loans/bookloan/custom_view",
         ],
         "Administration": ["/en/admin/admin/logentry/"],
     }
