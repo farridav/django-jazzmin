@@ -33,7 +33,9 @@ def order_with_respect_to(original: List, reference: List, getter: Callable = la
     return [y for x, y in sorted(zip(ranking, original), key=lambda x: x[0])]
 
 
-def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **kwargs: str) -> str:
+def get_admin_url(
+    instance: Union[str, ModelBase], admin_site: str = "admin", from_app: bool = False, **kwargs: str
+) -> str:
     """
     Return the admin URL for the given instance, model class or <app>.<model> string
     """
@@ -67,7 +69,9 @@ def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **
             )
 
     except (NoReverseMatch, ValueError):
-        logger.warning(gettext("Could not reverse url from {instance}".format(instance=instance)))
+        # If we are not walking through the models within an app, let the user know this url cant be reversed
+        if not from_app:
+            logger.warning(gettext("Could not reverse url from {instance}".format(instance=instance)))
 
     if kwargs:
         url += "?{params}".format(params=urlencode(kwargs))
@@ -120,7 +124,7 @@ def get_app_admin_urls(app: str, admin_site: str = "admin") -> List[Dict]:
 
     models = []
     for model in apps.app_configs[app].get_models():
-        url = get_admin_url(model, admin_site=admin_site)
+        url = get_admin_url(model, admin_site=admin_site, from_app=True)
 
         # We have no admin class
         if url == "#":
