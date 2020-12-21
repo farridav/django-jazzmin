@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.urls import path
 
 from .models import BookLoan, Library
+from .views import CustomView
 
 
 class BookLoanInline(admin.StackedInline):
@@ -29,6 +31,13 @@ class BookLoanAdmin(admin.ModelAdmin):
         (None, {"fields": ("book", "imprint", "id")}),
         ("Availability", {"fields": ("status", "due_back", "duration", "borrower")}),
     )
+
+    def get_urls(self):
+        """
+        Add in a custom view to demonstrate =
+        """
+        urls = super().get_urls()
+        return urls + [path("custom_view", CustomView.as_view(), name="custom_view")]
 
     def response_change(self, request, obj):
         ret = super().response_change(request, obj)
