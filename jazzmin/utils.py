@@ -1,12 +1,12 @@
 import logging
-from typing import List, Union, Dict, Set, Callable, Any
+from typing import Any, Callable, Dict, List, Set, Union
 from urllib.parse import urlencode
 
 from django.apps import apps
 from django.contrib.admin import ListFilter
 from django.contrib.admin.helpers import AdminForm
 from django.contrib.auth.models import AbstractUser
-from django.db.models.base import ModelBase, Model
+from django.db.models.base import Model, ModelBase
 from django.db.models.options import Options
 from django.utils.translation import gettext
 
@@ -40,7 +40,6 @@ def get_admin_url(instance: Any, admin_site: str = "admin", from_app: bool = Fal
     url = "#"
 
     try:
-
         if type(instance) == str:
             app_label, model_name = instance.split(".")
             model_name = model_name.lower()
@@ -165,12 +164,7 @@ def make_menu(
 
     menu = []
     for link in links:
-
-        perm_matches = []
-        for perm in link.get("permissions", []):
-            perm_matches.append(user.has_perm(perm))
-
-        if not all(perm_matches):
+        if not all([user.has_perm(perm) for perm in link.get("permissions", [])]):
             continue
 
         # Url links
@@ -181,7 +175,7 @@ def make_menu(
                     "url": get_custom_url(link["url"], admin_site=admin_site),
                     "children": None,
                     "new_window": link.get("new_window", False),
-                    "icon": link.get("icon", options["default_icon_children"]),
+                    "icon": link.get("icon"),
                 }
             )
 
@@ -199,7 +193,7 @@ def make_menu(
                     "url": get_admin_url(link["model"], admin_site=admin_site),
                     "children": [],
                     "new_window": link.get("new_window", False),
-                    "icon": options["icons"].get(link["model"], options["default_icon_children"]),
+                    "icon": options["icons"].get(link["model"].lower()),
                 }
             )
 
@@ -218,7 +212,7 @@ def make_menu(
                     "name": getattr(apps.app_configs[link["app"]], "verbose_name", link["app"]).title(),
                     "url": "#",
                     "children": children,
-                    "icon": options["icons"].get(link["app"], options["default_icon_children"]),
+                    "icon": options["icons"].get(link["app"].lower()),
                 }
             )
 
@@ -239,3 +233,32 @@ def attr(**kwargs) -> Callable:
         return func
 
     return decorator
+
+
+def regroup_apps(available_apps: List[Dict], grouping: Dict[str, List[str]]) -> List[Dict]:
+    # Make a list of all apps, and all models, keyed on app name or model name
+    all_models, all_apps = {}, {}
+    for app in available_apps:
+        app_label = app["app_label"].lower()
+        all_apps[app_label] = app
+        for model in app["models"]:
+            model_name = model["object_name"].lower()
+            all_models[app_label + "." + model_name] = model.copy()
+
+    # Start overwriting available_apps
+    new_available_apps = []
+    for group, children in grouping.items():
+        app = all_apps.get(
+            group.lower(),
+            {"name": group.title(), "app_label": group, "app_url": None, "has_module_perms": True, "models": []},
+        )
+
+        app["models"] = []
+        for model in children:
+            model_obj = all_models.get(model.lower())
+            if model_obj:
+                app["models"].append(model_obj)
+
+        new_available_apps.append(app)
+
+    return new_available_apps

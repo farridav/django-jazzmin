@@ -334,9 +334,9 @@ Add a template for your model on your main template directory,
 e.g [app/templates/admin/app_name/model_name/submit_line.html](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/books/templates/admin/loans/bookloan/submit_line.html)
 
 ```djangotemplate
-{# extends "admin/submit_line.html" #}
+{#% extends "admin/submit_line.html" %#}
 
-{# block extra-actions #}
+{#% block extra-actions %#}
 
 {# For a simple link #}
 <div class="form-group">
@@ -347,7 +347,7 @@ e.g [app/templates/admin/app_name/model_name/submit_line.html](https://github.co
 <div class="form-group">
     <input type="submit" class="btn btn-outline-info form-control" value="SomeAction" name="_your_action">
 </div>
-{# endblock #}
+{#% endblock %#}
 ```
 
 If you are adding a button that needs processing with the form, e.g (Save and send) you will need to add the

@@ -28,7 +28,7 @@ from django.utils.translation import gettext
 
 from .. import version
 from ..settings import CHANGEFORM_TEMPLATES, get_settings, get_ui_tweaks
-from ..utils import get_admin_url, get_filter_id, has_fieldsets_check, make_menu, order_with_respect_to
+from ..utils import get_admin_url, get_filter_id, has_fieldsets_check, make_menu, order_with_respect_to, regroup_apps
 
 User = get_user_model()
 register = Library()
@@ -46,17 +46,21 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     if not user:
         return []
 
+    menu = []
     options = get_settings()
     ordering = options.get("order_with_respect_to", [])
     ordering = [x.lower() for x in ordering]
 
-    menu = []
     available_apps = copy.deepcopy(context.get(using, []))
 
     custom_links = {
         app_name: make_menu(user, links, options, allow_appmenus=False)
         for app_name, links in options.get("custom_links", {}).items()
     }
+
+    # If we are using custom grouping, overwrite available_apps based on our grouping
+    if options.get("custom_menu") and options["custom_menu"]:
+        available_apps = regroup_apps(available_apps, options["custom_menu"])
 
     for app in available_apps:
         app_label = app["app_label"].lower()
@@ -521,7 +525,7 @@ def style_bold_first_word(message: str) -> SafeText:
     message_words = escape(message).split()
 
     if not len(message_words):
-        return ""
+        return mark_safe("")
 
     message_words[0] = "<strong>{}</strong>".format(message_words[0])
 

@@ -1,5 +1,7 @@
 import pytest
+from django.contrib.admin import site
 from django.urls import reverse
+from jazzmin.templatetags.jazzmin import get_side_menu
 
 from .test_app.library.factories import UserFactory
 from .utils import parse_sidemenu, parse_topmenu, parse_usermenu
@@ -151,13 +153,75 @@ def test_user_menu(admin_user, client, custom_jazzmin_settings):
         {"link": "/en/admin/password_change/", "name": "Change password"},
         {"link": "/en/admin/logout/", "name": "Log out"},
         {"link": "/en/admin/", "name": "Home"},
-        {
-            "link": "https://github.com/farridav/django-jazzmin/issues",
-            "name": "Support",
-        },
+        {"link": "https://github.com/farridav/django-jazzmin/issues", "name": "Support"},
         {"link": "/en/admin/auth/user/", "name": "Users"},
+        {"link": "/en/admin/auth/user/{}/change/".format(admin_user.pk), "name": "See Profile"},
+    ]
+
+
+def test_custom_menu_grouping(admin_user, custom_jazzmin_settings, rf):
+    """
+    When we use a custom menu we get exactly what we ask for
+    """
+    request = rf.request()
+    request.user = admin_user
+    context = site.each_context(request)
+    context.update({"user": admin_user})
+
+    custom_jazzmin_settings["custom_menu"] = {"auth": ["books.book"], "arbitrary name": ["auth.user", "auth.group"]}
+
+    menu = get_side_menu(context)
+
+    assert menu == [
         {
-            "link": "/en/admin/auth/user/{}/change/".format(admin_user.pk),
-            "name": "See Profile",
+            "app_label": "auth",
+            "app_url": "/en/admin/auth/",
+            "has_module_perms": True,
+            "icon": "fas fa-users-cog",
+            "models": [
+                {
+                    "add_url": "/en/admin/books/book/add/",
+                    "admin_url": "/en/admin/books/book/",
+                    "icon": "fas fa-circle",
+                    "model_str": "auth.book",
+                    "name": "Books",
+                    "object_name": "Book",
+                    "perms": {"add": True, "change": True, "delete": True, "view": True},
+                    "url": "/en/admin/books/book/",
+                    "view_only": False,
+                }
+            ],
+            "name": "Authentication and Authorization",
+        },
+        {
+            "app_label": "arbitrary name",
+            "app_url": None,
+            "has_module_perms": True,
+            "icon": "fas fa-chevron-circle-right",
+            "models": [
+                {
+                    "add_url": "/en/admin/auth/user/add/",
+                    "admin_url": "/en/admin/auth/user/",
+                    "icon": "fas fa-circle",
+                    "model_str": "arbitrary name.user",
+                    "name": "Users",
+                    "object_name": "User",
+                    "perms": {"add": True, "change": True, "delete": True, "view": True},
+                    "url": "/en/admin/auth/user/",
+                    "view_only": False,
+                },
+                {
+                    "add_url": "/en/admin/auth/group/add/",
+                    "admin_url": "/en/admin/auth/group/",
+                    "icon": "fas fa-circle",
+                    "model_str": "arbitrary name.group",
+                    "name": "Groups",
+                    "object_name": "Group",
+                    "perms": {"add": True, "change": True, "delete": True, "view": True},
+                    "url": "/en/admin/auth/group/",
+                    "view_only": False,
+                },
+            ],
+            "name": "Arbitrary Name",
         },
     ]

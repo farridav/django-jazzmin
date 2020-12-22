@@ -75,15 +75,19 @@
                     <li class="nav-item d-none d-sm-inline-block{% if link.children %} dropdown{% endif %}">
                         {% if link.children %}
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ link.name }}
+                                {% if jazzmin_settings.topmenu_icons and link.icon %}<i class="fa-sm {{ link.icon }}">&nbsp;</i> {% endif %}{{ link.name }}
                             </a>
                             <div class="dropdown-menu">
                                 {% for child in link.children %}
-                                    <a class="dropdown-item" href="{{ child.url }}" {% if link.new_window %}target="_blank"{% endif %}>{{ child.name }}</a>
+                                    <a class="dropdown-item" href="{{ child.url }}" {% if link.new_window %}target="_blank"{% endif %}>
+                                        {% if jazzmin_settings.topmenu_icons and child.icon %}<i class="fa-sm {{ child.icon }}">&nbsp;</i> {% endif %}{{ child.name }}
+                                    </a>
                                 {% endfor %}
                             </div>
                         {% else %}
-                            <a href="{{ link.url }}" class="nav-link" {% if link.new_window %}target="_blank"{% endif %}>{{ link.name }}</a>
+                            <a href="{{ link.url }}" class="nav-link" {% if link.new_window %}target="_blank"{% endif %}>
+                                {% if jazzmin_settings.topmenu_icons and link.icon %}<i class="fa-sm {{ link.icon }}">&nbsp;</i> {% endif %}{{ link.name }}
+                            </a>
                         {% endif %}
                     </li>
                 {% endfor %}
