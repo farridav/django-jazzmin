@@ -71,11 +71,7 @@ def test_password_change(admin_client):
 
     response = admin_client.post(
         url,
-        data={
-            "old_password": "password",
-            "new_password1": "PickleRick123!!",
-            "new_password2": "PickleRick123!!",
-        },
+        data={"old_password": "password", "new_password1": "PickleRick123!!", "new_password2": "PickleRick123!!"},
         follow=True,
     )
     templates_used = [t.name for t in response.templates]

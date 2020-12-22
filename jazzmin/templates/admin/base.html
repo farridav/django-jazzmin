@@ -124,11 +124,21 @@
                             <i class="fas fa-globe pr-2" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left" id="jazzy-languagemenu">
-                            {% for language in languages %}
-                            <a href="{{ request|change_lang:language.code }}" class="dropdown-item{% if language.code == LANGUAGE_CODE %} active{% endif %}" lang="{{ language.code }}">
-                                {{ language.name_local|title }}
-                            </a>
-                            {% endfor %}
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input name="next" type="hidden" value="{{ request.get_full_path|remove_lang:LANGUAGE_CODE }}" />
+                                {% for language in languages %}
+                                    <button
+                                        type="submit"
+                                        name="language"
+                                        value="{{ language.code }}"
+                                        class="dropdown-item {% if language.code == LANGUAGE_CODE %}active{% endif %}"
+                                        lang="{{ language.code }}"
+                                    >
+                                        {{ language.name_local|title }}
+                                    </button>
+                                {% endfor %}
+                            </form>
                         </div>
                     </li>
                 {% endif %}

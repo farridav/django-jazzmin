@@ -18,7 +18,6 @@ from django.http import HttpRequest
 from django.template import Library, Context
 from django.template.loader import get_template
 from django.templatetags.static import static
-from django.utils import translation
 from django.utils.html import format_html, escape
 from django.utils.safestring import mark_safe, SafeText
 from django.utils.text import get_text_list, slugify
@@ -113,13 +112,7 @@ def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     Produce the menu for the top nav bar
     """
     options = get_settings()
-    return make_menu(
-        user,
-        options.get("topmenu_links", []),
-        options,
-        allow_appmenus=True,
-        admin_site=admin_site,
-    )
+    return make_menu(user, options.get("topmenu_links", []), options, allow_appmenus=True, admin_site=admin_site)
 
 
 @register.simple_tag
@@ -128,13 +121,7 @@ def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     Produce the menu for the user dropdown
     """
     options = get_settings()
-    return make_menu(
-        user,
-        options.get("usermenu_links", []),
-        options,
-        allow_appmenus=False,
-        admin_site=admin_site,
-    )
+    return make_menu(user, options.get("usermenu_links", []), options, allow_appmenus=False, admin_site=admin_site)
 
 
 @register.simple_tag
@@ -284,12 +271,11 @@ def has_fieldsets(adminform: AdminForm) -> bool:
 
 
 @register.filter
-def change_lang(request: HttpRequest, language_code: str) -> str:
+def remove_lang(url: str, language_code: str) -> str:
     """
-    Change the url to use the given language
+    Remove the language code from the url, if we have one
     """
-    current_language = translation.get_language()
-    return request.get_full_path().replace(current_language, language_code, 1)
+    return url.replace(language_code + "/", "")
 
 
 @register.filter
