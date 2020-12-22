@@ -28,7 +28,7 @@
         //$ele.select2({ width: '100%' });
 
         // Use select2 for mptt dropdowns
-        const $mptt = $('.search-filter-mptt');
+        const $mptt = $('.search-filter');
         if ($mptt.length) {
             $mptt.search_filters();
             $mptt.select2({
