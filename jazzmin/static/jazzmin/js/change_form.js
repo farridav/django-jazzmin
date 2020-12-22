@@ -2,18 +2,18 @@
     'use strict';
 
     function fix_selector_height() {
-    $('.selector .selector-chosen').each(function () {
-        let selector_chosen = $(this);
-        let selector_available = selector_chosen.siblings('.selector-available');
+        $('.selector .selector-chosen').each(function () {
+            let selector_chosen = $(this);
+            let selector_available = selector_chosen.siblings('.selector-available');
 
-        let selector_chosen_select = selector_chosen.find('select').first();
-        let selector_available_select = selector_available.find('select').first();
-        let selector_available_filter = selector_available.find('p.selector-filter').first();
+            let selector_chosen_select = selector_chosen.find('select').first();
+            let selector_available_select = selector_available.find('select').first();
+            let selector_available_filter = selector_available.find('p.selector-filter').first();
 
-        selector_chosen_select.height(selector_available_select.height() + selector_available_filter.outerHeight());
-        selector_chosen_select.css('border-top', selector_chosen_select.css('border-bottom'));
-    });
-}
+            selector_chosen_select.height(selector_available_select.height() + selector_available_filter.outerHeight());
+            selector_chosen_select.css('border-top', selector_chosen_select.css('border-bottom'));
+        });
+    }
 
     function handleCarousel($carousel) {
         const errors = $('.errorlist li', $carousel);
@@ -109,7 +109,7 @@
         // Apply select2 to any select boxes that don't yet have it
         // and are not part of the django's empty-form inline
         const noSelect2 = '.empty-form select, .select2-hidden-accessible, .selectfilter, .selector-available select, .selector-chosen select';
-        $('select').not(noSelect2).select2({ width: '100%', theme: "classic" });
+        $('select').not(noSelect2).select2({ width: 'element' });
     }
 
     $(document).ready(function () {
