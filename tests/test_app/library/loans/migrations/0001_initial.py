@@ -21,20 +21,13 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
+                    models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID"),
                 ),
                 ("address", models.CharField(max_length=255)),
                 (
                     "librarian",
                     models.OneToOneField(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="library",
-                        to=settings.AUTH_USER_MODEL,
+                        on_delete=django.db.models.deletion.CASCADE, related_name="library", to=settings.AUTH_USER_MODEL
                     ),
                 ),
             ],
@@ -72,19 +65,12 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "book",
-                    models.ForeignKey(
-                        null=True,
-                        on_delete=django.db.models.deletion.SET_NULL,
-                        to="books.Book",
-                    ),
+                    models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to="books.Book"),
                 ),
                 (
                     "borrower",
                     models.ForeignKey(
-                        blank=True,
-                        null=True,
-                        on_delete=django.db.models.deletion.SET_NULL,
-                        to=settings.AUTH_USER_MODEL,
+                        blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL
                     ),
                 ),
             ],

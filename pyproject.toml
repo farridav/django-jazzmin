@@ -45,7 +45,7 @@ django = ">=2"
 
 [tool.black]
 line-length = 120
-target-version = ['py37']
+target-version = ['py38']
 
 [tool.poetry.dev-dependencies]
 django-debug-toolbar = "*"  # unparallelled debugging in django
