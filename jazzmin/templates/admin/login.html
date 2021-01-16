@@ -58,6 +58,18 @@
             <p class="login-box-msg">{{ jazzmin_settings.welcome_sign }}</p>
             <form action="{{ app_path }}" method="post">
                 {% csrf_token %}
+                {% if user.is_authenticated %}
+                    <p class="errornote">
+                        <div class="callout callout-danger">
+                            <p>
+                                {% blocktrans trimmed %}
+                                    You are authenticated as {{ username }}, but are not authorized to
+                                    access this page. Would you like to login to a different account?
+                                {% endblocktrans %}
+                            </p>
+                        </div>
+                    </p>
+                {% endif %}
                 {% if form.errors %}
 
                     {% if form.username.errors %}
