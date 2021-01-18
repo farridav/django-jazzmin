@@ -19,25 +19,25 @@ Setup db tables etc.
 
 Generate test data
 
-    python tests/test_app/manage.py loaddata initial_data
+    python tests/test_app/manage.py reset
 
 Run development server (with werkzeug debugger)
 
     python tests/test_app/manage.py runserver_plus
 
 ## Running the tests
-Tests are run via github actions on any pull request into `master`, and are written for use with the [pytest](https://docs.pytest.org/en/latest/) 
-framework, we should have good enough tests for you to base your own off of, though where we are lacking, feel free to contribute, 
+Tests are run via github actions on any pull request into `master`, and are written for use with the [pytest](https://docs.pytest.org/en/latest/)
+framework, we should have good enough tests for you to base your own off of, though where we are lacking, feel free to contribute,
 but keep it clean, concise and simple, leave the magic to the wizards.
 
-Run the test suite with your current python interpreter and Django version using `pytest` or target an individual test 
+Run the test suite with your current python interpreter and Django version using `pytest` or target an individual test
 with `pytest -k my_test_name`
 
 Run against all supported Python and Django Versions using `tox`
 
 ## Contribution guidelines
 - Fork the project
-- Make a pull request against this repositories `master` branch, 
+- Make a pull request against this repositories `master` branch,
 - Include tests unless its a trivial change
 - Add a screenshot if your proposing UI changes
 - Demonstrate the change within the `test_app` if possible
@@ -55,9 +55,9 @@ You can serve the docs locally using `mkdocs serve -a localhost:8001` and visiti
 
 
 ## Translations
-Working with translations in jazzmin is, a bit unorthodox, as we are overriding djangos templates, so it looks like we have a lot of strings that need translating, 
-but in-fact they already have translation strings in Django, heres the process for dealing with translations, though we recommend not adding new strings that need 
-translating if possible, and use suitable iconography instead (See [https://fontawesome.com/icons?d=gallery&m=free](https://fontawesome.com/icons?d=gallery&m=free)), 
+Working with translations in jazzmin is, a bit unorthodox, as we are overriding djangos templates, so it looks like we have a lot of strings that need translating,
+but in-fact they already have translation strings in Django, heres the process for dealing with translations, though we recommend not adding new strings that need
+translating if possible, and use suitable iconography instead (See [https://fontawesome.com/icons?d=gallery&m=free](https://fontawesome.com/icons?d=gallery&m=free)),
 or use a string that is already translated upstream in Django.
 
 
