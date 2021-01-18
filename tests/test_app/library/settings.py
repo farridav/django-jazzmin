@@ -1,7 +1,7 @@
 import os
 
-from django.conf.global_settings import LANGUAGES as DJANGO_LANGUAGES
 import dj_database_url
+from django.conf.global_settings import LANGUAGES as DJANGO_LANGUAGES
 
 ###################
 # Django Settings #
@@ -17,6 +17,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     # Keep this above 'django.contrib.admin'
     "jazzmin",
+    "admin_numeric_filter",
     "django.contrib.admin",
     "django.contrib.admindocs",
     "django.contrib.auth",

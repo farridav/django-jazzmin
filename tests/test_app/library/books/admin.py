@@ -1,3 +1,9 @@
+from admin_numeric_filter.admin import (
+    NumericFilterModelAdmin,
+    RangeNumericFilter,
+    SingleNumericFilter,
+    SliderNumericFilter,
+)
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin
@@ -18,7 +24,7 @@ class BooksInline(admin.TabularInline):
 
 
 @admin.register(Book)
-class BookAdmin(ImportExportMixin, admin.ModelAdmin):
+class BookAdmin(ImportExportMixin, NumericFilterModelAdmin):
     resource_class = BookResource
     fieldsets = (
         ("general", {"fields": ("title", "author", "library")}),
@@ -28,7 +34,13 @@ class BookAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ("__str__", "title", "author", "pages")
     readonly_fields = ("__str__",)
     list_display_links = ()
-    list_filter = ("author", "genre")
+    list_filter = (
+        "author",
+        "genre",
+        ("pages", SingleNumericFilter),
+        ("pages", RangeNumericFilter),
+        ("pages", SliderNumericFilter),
+    )
     list_select_related = False
     list_per_page = 20
     list_max_show_all = 100

@@ -42,6 +42,7 @@ exclude = ["tests", "docs"]
 [tool.poetry.dependencies]
 python = ">=3.5"
 django = ">=2"
+django-admin-numeric-filter = "^0.1.6"
 
 [tool.black]
 line-length = 120
