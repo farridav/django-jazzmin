@@ -6,10 +6,9 @@ from django.utils.html import format_html
 from django.utils.timesince import timesince
 from import_export.admin import ImportExportMixin
 
-from .models import Book, Author, Genre
-from .resources import BookResource
-
 from ..loans.admin import BookLoanInline
+from .models import Author, Book, Genre
+from .resources import BookResource
 
 admin.site.unregister(User)
 
@@ -23,10 +22,10 @@ class BookAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = BookResource
     fieldsets = (
         ("general", {"fields": ("title", "author", "library")}),
-        ("other", {"fields": ("genre", "summary", "isbn", "published_on")}),
+        ("other", {"fields": ("genre", "summary", "isbn", "published_on", "pages")}),
     )
     raw_id_fields = ("author",)
-    list_display = ("__str__", "title", "author")
+    list_display = ("__str__", "title", "author", "pages")
     readonly_fields = ("__str__",)
     list_display_links = ()
     list_filter = ("author", "genre")

@@ -23,6 +23,7 @@ class Book(models.Model):
     )
     genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
     published_on = models.DateField()
+    pages = models.IntegerField(null=True)
 
     def get_absolute_url(self):
         return reverse("admin:books_book_change", args=(self.id,))
