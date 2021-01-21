@@ -114,9 +114,9 @@ if not DEBUG and not TEST:
 # Third party settings #
 ########################
 JAZZMIN_SETTINGS = {
-    # title of the window
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
     "site_title": "Library Admin",
-    # Title on the brand, and the login screen (19 chars max)
+    # Title on the brand, and login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_header": "Library",
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
     "site_logo": "books/img/logo.png",
