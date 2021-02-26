@@ -24,7 +24,12 @@ def test_side_menu(admin_client, settings):
         "Authentication and Authorization": ["/en/admin/auth/group/", "/en/admin/auth/user/",],
         "Books": ["/en/admin/books/author/", "/en/admin/books/book/", "/en/admin/books/genre/",],
         "Global": ["/en/admin/"],
-        "Loans": ["/make_messages/", "/en/admin/loans/bookloan/", "/en/admin/loans/library/",],
+        "Loans": [
+            "/make_messages/",
+            "/en/admin/loans/bookloan/",
+            "/en/admin/loans/library/",
+            "/en/admin/loans/bookloan/custom_view",
+        ],
     }
 
     settings.JAZZMIN_SETTINGS = override_jazzmin_settings(hide_models=["auth.user"])
@@ -34,7 +39,12 @@ def test_side_menu(admin_client, settings):
         "Global": ["/en/admin/"],
         "Authentication and Authorization": ["/en/admin/auth/group/"],
         "Books": ["/en/admin/books/author/", "/en/admin/books/book/", "/en/admin/books/genre/",],
-        "Loans": ["/make_messages/", "/en/admin/loans/bookloan/", "/en/admin/loans/library/",],
+        "Loans": [
+            "/make_messages/",
+            "/en/admin/loans/bookloan/",
+            "/en/admin/loans/library/",
+            "/en/admin/loans/bookloan/custom_view",
+        ],
         "Administration": ["/en/admin/admin/logentry/"],
     }
 

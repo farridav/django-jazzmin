@@ -9,10 +9,12 @@ from django.conf import settings
 from django.contrib.admin import ListFilter
 from django.contrib.admin.helpers import AdminForm
 from django.contrib.admin.models import LogEntry
+from django.contrib.admin.sites import all_sites
 from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.auth import get_user_model
 from django.contrib.auth.context_processors import PermWrapper
 from django.contrib.auth.models import AbstractUser
+from django.core.handlers.wsgi import WSGIRequest
 from django.db.models.base import ModelBase
 from django.http import HttpRequest
 from django.template import Library, Context
@@ -120,11 +122,20 @@ def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
 
 
 @register.simple_tag
-def get_jazzmin_settings() -> Dict:
+def get_jazzmin_settings(request: WSGIRequest) -> Dict:
     """
-    Return Jazzmin settings
+    Get Jazzmin settings, update any defaults from the request, and return
     """
-    return get_settings()
+    settings = get_settings()
+    admin_site = {x.name: x for x in all_sites}.get(request.current_app)
+    if admin_site:
+        if not settings["site_title"]:
+            settings["site_title"] = admin_site.site_title
+
+        if not settings["site_header"]:
+            settings["site_header"] = admin_site.site_header
+
+    return settings
 
 
 @register.simple_tag

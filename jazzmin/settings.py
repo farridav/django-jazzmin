@@ -3,7 +3,6 @@ import logging
 from typing import Dict
 
 from django.conf import settings
-from django.contrib.admin import AdminSite
 from django.templatetags.static import static
 
 from .utils import get_admin_url, get_model_meta
@@ -11,10 +10,10 @@ from .utils import get_admin_url, get_model_meta
 logger = logging.getLogger(__name__)
 
 DEFAULT_SETTINGS = {
-    # title of the window
-    "site_title": AdminSite.site_title,
-    # Title on the brand, and the login screen (19 chars max)
-    "site_header": AdminSite.site_header,
+    # title of the window (Will default to current_admin_site.site_title)
+    "site_title": None,
+    # Title on the brand, and the login screen (19 chars max) (will default to current_admin_site.site_header)
+    "site_header": None,
     # Relative path to logo for your site, used for favicon and brand on top left (must be present in static files)
     "site_logo": "vendor/adminlte/img/AdminLTELogo.png",
     # Welcome text on the login screen

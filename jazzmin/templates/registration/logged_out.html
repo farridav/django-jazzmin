@@ -1,7 +1,7 @@
 {% load i18n static jazzmin admin_urls %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_current_language_bidi as LANGUAGE_BIDI %}
-{% get_jazzmin_settings as jazzmin_settings %}
+{% get_jazzmin_settings request as jazzmin_settings %}
 {% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 <!DOCTYPE html>
