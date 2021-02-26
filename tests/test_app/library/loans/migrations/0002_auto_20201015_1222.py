@@ -10,10 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterModelOptions(
-            name="library",
-            options={"verbose_name_plural": "Libraries"},
-        ),
+        migrations.AlterModelOptions(name="library", options={"verbose_name_plural": "Libraries"},),
         migrations.AddField(
             model_name="library",
             name="name",

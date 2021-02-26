@@ -10,9 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="book",
-            name="pages",
-            field=models.IntegerField(null=True),
-        ),
+        migrations.AddField(model_name="book", name="pages", field=models.IntegerField(null=True),),
     ]

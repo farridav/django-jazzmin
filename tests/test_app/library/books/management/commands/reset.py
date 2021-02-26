@@ -26,10 +26,7 @@ class Command(BaseCommand):
 
         library = LibraryFactory()
         UserFactory(
-            username="test@test.com",
-            email="test@test.com",
-            password="test",
-            is_superuser=True,
+            username="test@test.com", email="test@test.com", password="test", is_superuser=True,
         )
 
         users = UserFactory.create_batch(2, is_staff=False)

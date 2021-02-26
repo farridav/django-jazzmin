@@ -19,9 +19,7 @@ def test_login(client, admin_user):
     assert templates_used == ["admin/login.html"]
 
     response = client.post(
-        url + "?next=/admin/",
-        data={"username": admin_user.username, "password": "password"},
-        follow=True,
+        url + "?next=/admin/", data={"username": admin_user.username, "password": "password"}, follow=True,
     )
 
     assert response.status_code == 200
@@ -71,8 +69,7 @@ def test_password_change(admin_client):
 
     response = admin_client.post(
         url,
-        data={"old_password": "password", "new_password1": "PickleRick123!!",
-              "new_password2": "PickleRick123!!"},
+        data={"old_password": "password", "new_password1": "PickleRick123!!", "new_password2": "PickleRick123!!"},
         follow=True,
     )
     templates_used = [t.name for t in response.templates]
@@ -215,12 +212,12 @@ def test_list(admin_client):
         "django/forms/widgets/hidden.html": 11,
         "django/forms/widgets/attrs.html": 34,
         "jazzmin/includes/ui_builder_panel.html": 1,
-        'admin/filter_numeric_range.html': 1,
-        'admin/filter_numeric_single.html': 1,
-        'admin/filter_numeric_slider.html': 1,
-        'django/forms/widgets/date.html': 2,
-        'django/forms/widgets/number.html': 5,
-        'rangefilter/date_filter.html': 1,
+        "admin/filter_numeric_range.html": 1,
+        "admin/filter_numeric_single.html": 1,
+        "admin/filter_numeric_slider.html": 1,
+        "django/forms/widgets/date.html": 2,
+        "django/forms/widgets/number.html": 5,
+        "rangefilter/date_filter.html": 1,
     }
 
     # The templates that were used
@@ -247,12 +244,12 @@ def test_list(admin_client):
         "django/forms/widgets/hidden.html",
         "django/forms/widgets/attrs.html",
         "jazzmin/includes/ui_builder_panel.html",
-        'admin/filter_numeric_range.html',
-        'admin/filter_numeric_single.html',
-        'admin/filter_numeric_slider.html',
-        'django/forms/widgets/date.html',
-        'django/forms/widgets/number.html',
-        'rangefilter/date_filter.html',
+        "admin/filter_numeric_range.html",
+        "admin/filter_numeric_single.html",
+        "admin/filter_numeric_slider.html",
+        "django/forms/widgets/date.html",
+        "django/forms/widgets/number.html",
+        "rangefilter/date_filter.html",
     }
 
 

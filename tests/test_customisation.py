@@ -55,8 +55,7 @@ def test_changeform_template_override(admin_client, settings):
     users_url = reverse("admin:auth_user_change", args=(user.pk,))
 
     settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
-        changeform_format="vertical_tabs",
-        changeform_format_overrides={"books.book": "carousel"},
+        changeform_format="vertical_tabs", changeform_format_overrides={"books.book": "carousel"},
     )
 
     response = admin_client.get(books_url)

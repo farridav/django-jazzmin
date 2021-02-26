@@ -32,21 +32,9 @@ def test_action_message_to_list(admin_user):
     ]
     log_entry = LogEntry.objects.create(user=admin_user, action_flag=CHANGE, change_message=json.dumps(message))
     assert jazzmin.action_message_to_list(log_entry) == [
-        {
-            "msg": "Changed Owner, Text, Pub date and Active.",
-            "icon": "edit",
-            "colour": "blue",
-        },
-        {
-            "msg": "Added choice “More random choices”.",
-            "icon": "plus-circle",
-            "colour": "success",
-        },
-        {
-            "msg": "Deleted “Person serious choose tea”.",
-            "icon": "trash",
-            "colour": "danger",
-        },
+        {"msg": "Changed Owner, Text, Pub date and Active.", "icon": "edit", "colour": "blue",},
+        {"msg": "Added choice “More random choices”.", "icon": "plus-circle", "colour": "success",},
+        {"msg": "Deleted “Person serious choose tea”.", "icon": "trash", "colour": "danger",},
     ]
 
 

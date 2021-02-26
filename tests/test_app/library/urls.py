@@ -31,13 +31,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(path("admin/", admin.site.urls))
 
 if settings.DEBUG:
-    urlpatterns.append(
-        re_path(
-            r"^static/(?P<path>.*)$",
-            serve,
-            kwargs={"document_root": settings.STATIC_ROOT},
-        )
-    )
+    urlpatterns.append(re_path(r"^static/(?P<path>.*)$", serve, kwargs={"document_root": settings.STATIC_ROOT},))
 
 if "debug_toolbar" in settings.INSTALLED_APPS:
     try:
