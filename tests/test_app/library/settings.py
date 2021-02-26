@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     # Keep this above 'django.contrib.admin'
     "jazzmin",
     "admin_numeric_filter",
+    "rangefilter",
     "django.contrib.admin",
     "django.contrib.admindocs",
     "django.contrib.auth",

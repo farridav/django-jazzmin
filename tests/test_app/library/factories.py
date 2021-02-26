@@ -104,6 +104,7 @@ class BookFactory(DjangoModelFactory):
     summary = factory.Faker("sentence")
     isbn = "9780123456472"
     published_on = FuzzyDate(date(1950, 1, 1), date(1999, 1, 1))
+    last_print = FuzzyDate(date(2000, 1, 1), date(2020, 1, 1))
     pages = FuzzyInteger(50, 1000)
 
     @factory.post_generation

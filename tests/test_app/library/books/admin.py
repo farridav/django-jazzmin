@@ -1,9 +1,7 @@
-from admin_numeric_filter.admin import (
-    NumericFilterModelAdmin,
-    RangeNumericFilter,
-    SingleNumericFilter,
-    SliderNumericFilter,
-)
+from admin_numeric_filter.admin import (NumericFilterModelAdmin,
+                                        RangeNumericFilter,
+                                        SingleNumericFilter,
+                                        SliderNumericFilter)
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin
@@ -11,6 +9,7 @@ from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.timesince import timesince
 from import_export.admin import ImportExportMixin
+from rangefilter.filter import DateRangeFilter
 
 from ..loans.admin import BookLoanInline
 from .models import Author, Book, Genre
@@ -40,6 +39,7 @@ class BookAdmin(ImportExportMixin, NumericFilterModelAdmin):
         ("pages", SingleNumericFilter),
         ("pages", RangeNumericFilter),
         ("pages", SliderNumericFilter),
+        ("last_print", DateRangeFilter),
     )
     list_select_related = False
     list_per_page = 20
@@ -79,7 +79,8 @@ class LogEntryAdmin(admin.ModelAdmin):
     def object(self, obj):
         url = obj.get_admin_url()
         return format_html(
-            '<a href="{url}">{obj} [{model}]</a>'.format(url=url, obj=obj.object_repr, model=obj.content_type.model)
+            '<a href="{url}">{obj} [{model}]</a>'.format(
+                url=url, obj=obj.object_repr, model=obj.content_type.model)
         )
 
     def modified(self, obj):
