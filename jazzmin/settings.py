@@ -276,10 +276,9 @@ def get_ui_tweaks() -> Dict:
     if theme in DARK_THEMES:
         theme_body_classes += " dark-mode"
 
-    return {
+    ret = {
         "raw": raw_tweaks,
         "theme": {"name": theme, "src": static(THEMES[theme])},
-        "dark_mode_theme": {"name": dark_mode_theme, "src": static(THEMES[dark_mode_theme])},
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
         "body_classes": classes(
@@ -298,3 +297,8 @@ def get_ui_tweaks() -> Dict:
         "footer_classes": classes("footer_small_text"),
         "button_classes": tweaks["button_classes"],
     }
+
+    if dark_mode_theme:
+        ret["dark_mode_theme"] = {"name": dark_mode_theme, "src": static(THEMES[dark_mode_theme])}
+
+    return ret
