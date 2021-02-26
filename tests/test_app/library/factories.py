@@ -82,7 +82,9 @@ class AuthorFactory(DjangoModelFactory):
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
     date_of_birth = FuzzyDate(date(1950, 1, 1), NOW.date() - timedelta(days=365))
-    date_of_death = factory.LazyAttribute(lambda x: x.date_of_birth.replace(year=NOW.year))
+    date_of_death = factory.LazyAttribute(
+        lambda x: x.date_of_birth.replace(year=NOW.year, day=min(28, x.date_of_birth.day))
+    )
 
     class Meta:
         model = Author
