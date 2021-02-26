@@ -279,7 +279,7 @@ def get_ui_tweaks() -> Dict:
     return {
         "raw": raw_tweaks,
         "theme": {"name": theme, "src": static(THEMES[theme])},
-        "dark_mode_theme": {"name": dark_mode_theme, "src": static(THEMES[theme])},
+        "dark_mode_theme": {"name": dark_mode_theme, "src": static(THEMES[dark_mode_theme])},
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
         "body_classes": classes(
