@@ -1,7 +1,9 @@
-from admin_numeric_filter.admin import (NumericFilterModelAdmin,
-                                        RangeNumericFilter,
-                                        SingleNumericFilter,
-                                        SliderNumericFilter)
+from admin_numeric_filter.admin import (
+    NumericFilterModelAdmin,
+    RangeNumericFilter,
+    SingleNumericFilter,
+    SliderNumericFilter,
+)
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin
@@ -79,8 +81,7 @@ class LogEntryAdmin(admin.ModelAdmin):
     def object(self, obj):
         url = obj.get_admin_url()
         return format_html(
-            '<a href="{url}">{obj} [{model}]</a>'.format(
-                url=url, obj=obj.object_repr, model=obj.content_type.model)
+            '<a href="{url}">{obj} [{model}]</a>'.format(url=url, obj=obj.object_repr, model=obj.content_type.model)
         )
 
     def modified(self, obj):

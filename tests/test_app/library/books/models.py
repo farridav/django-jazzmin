@@ -3,8 +3,7 @@ from django.urls import reverse
 
 
 class Genre(models.Model):
-    name = models.CharField(
-        max_length=200, help_text="Enter a book genre (e.g. Science Fiction)")
+    name = models.CharField(max_length=200, help_text="Enter a book genre (e.g. Science Fiction)")
 
     def __str__(self):
         return self.name
@@ -12,11 +11,9 @@ class Genre(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
-    library = models.ForeignKey(
-        "loans.Library", related_name="books", on_delete=models.CASCADE)
+    library = models.ForeignKey("loans.Library", related_name="books", on_delete=models.CASCADE)
     author = models.ForeignKey("Author", on_delete=models.SET_NULL, null=True)
-    summary = models.TextField(
-        max_length=1000, help_text="Enter a brief description of the book")
+    summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
     isbn = models.CharField(
         "ISBN",
         max_length=13,
