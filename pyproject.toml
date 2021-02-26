@@ -138,6 +138,7 @@ deps =
     django2: Django<3
     django3: Django<4
     django-admin-numeric-filter
+    django-admin-rangefilter
 
 [testenv:coveralls-django3-py38]
 passenv = COVERALLS_REPO_TOKEN
