@@ -19,7 +19,9 @@ class Library(models.Model):
 
 class BookLoan(models.Model):
     id = models.UUIDField(
-        primary_key=True, default=uuid4, help_text="Unique ID for this particular book across whole library",
+        primary_key=True,
+        default=uuid4,
+        help_text="Unique ID for this particular book across whole library",
     )
     book = models.ForeignKey("books.Book", on_delete=models.SET_NULL, null=True)
     imprint = models.CharField(max_length=200)
@@ -36,7 +38,11 @@ class BookLoan(models.Model):
     )
     borrower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(
-        max_length=1, choices=LOAN_STATUS, blank=True, default="m", help_text="Book availability",
+        max_length=1,
+        choices=LOAN_STATUS,
+        blank=True,
+        default="m",
+        help_text="Book availability",
     )
 
     class Meta:

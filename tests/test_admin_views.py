@@ -19,7 +19,9 @@ def test_login(client, admin_user):
     assert templates_used == ["admin/login.html"]
 
     response = client.post(
-        url + "?next=/admin/", data={"username": admin_user.username, "password": "password"}, follow=True,
+        url + "?next=/admin/",
+        data={"username": admin_user.username, "password": "password"},
+        follow=True,
     )
 
     assert response.status_code == 200

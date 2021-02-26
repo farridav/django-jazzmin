@@ -73,7 +73,9 @@ TEMPLATES = [
 
 DATABASES = {
     "default": dj_database_url.config(
-        env="DATABASE_URL", conn_max_age=500, default="sqlite:///{}".format(os.path.join(BASE_DIR, "db.sqlite3")),
+        env="DATABASE_URL",
+        conn_max_age=500,
+        default="sqlite:///{}".format(os.path.join(BASE_DIR, "db.sqlite3")),
     )
 }
 

@@ -14,27 +14,68 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="Author",
             fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID",),),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("first_name", models.CharField(max_length=100)),
                 ("last_name", models.CharField(max_length=100)),
                 ("date_of_birth", models.DateField(blank=True, null=True)),
-                ("date_of_death", models.DateField(blank=True, null=True, verbose_name="Died"),),
+                (
+                    "date_of_death",
+                    models.DateField(blank=True, null=True, verbose_name="Died"),
+                ),
             ],
-            options={"ordering": ("last_name", "first_name"),},
+            options={
+                "ordering": ("last_name", "first_name"),
+            },
         ),
         migrations.CreateModel(
             name="Genre",
             fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID",),),
-                ("name", models.CharField(help_text="Enter a book genre (e.g. Science Fiction)", max_length=200,),),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Enter a book genre (e.g. Science Fiction)",
+                        max_length=200,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
             name="Book",
             fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID",),),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
                 ("title", models.CharField(max_length=200)),
-                ("summary", models.TextField(help_text="Enter a brief description of the book", max_length=1000,),),
+                (
+                    "summary",
+                    models.TextField(
+                        help_text="Enter a brief description of the book",
+                        max_length=1000,
+                    ),
+                ),
                 (
                     "isbn",
                     models.CharField(
@@ -46,9 +87,16 @@ class Migration(migrations.Migration):
                 ("published_on", models.DateField()),
                 (
                     "author",
-                    models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to="books.Author",),
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="books.Author",
+                    ),
                 ),
-                ("genre", models.ManyToManyField(help_text="Select a genre for this book", to="books.Genre"),),
+                (
+                    "genre",
+                    models.ManyToManyField(help_text="Select a genre for this book", to="books.Genre"),
+                ),
             ],
         ),
     ]

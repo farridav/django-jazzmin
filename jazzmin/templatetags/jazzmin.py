@@ -85,13 +85,18 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
 
         custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
         model_ordering = list(
-            filter(lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names, ordering,)
+            filter(
+                lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names,
+                ordering,
+            )
         )
 
         if len(menu_items):
             if model_ordering:
                 menu_items = order_with_respect_to(
-                    menu_items, model_ordering, getter=lambda x: x.get("model_str", x.get("name", "").lower()),
+                    menu_items,
+                    model_ordering,
+                    getter=lambda x: x.get("model_str", x.get("name", "").lower()),
                 )
             app["models"] = menu_items
             menu.append(app)
@@ -426,7 +431,8 @@ def action_message_to_list(action: LogEntry) -> List[Dict]:
 
             elif "changed" in sub_message:
                 sub_message["changed"]["fields"] = get_text_list(
-                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]], gettext("and"),
+                    [gettext(field_name) for field_name in sub_message["changed"]["fields"]],
+                    gettext("and"),
                 )
                 if "name" in sub_message["changed"]:
                     sub_message["changed"]["name"] = gettext(sub_message["changed"]["name"])
