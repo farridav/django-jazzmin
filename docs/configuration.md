@@ -6,55 +6,55 @@ full example, with some of the more complex items explained below that.
 ## Full example
 ```python
 JAZZMIN_SETTINGS = {
-    # title of the window
-    'site_title': 'Polls Admin',
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "Library Admin",
 
-    # Title on the brand, and the login screen (19 chars max)
-    'site_header': 'Polls',
+    # Title on the brand, and login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "Library",
 
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-    'site_logo': 'polls/img/logo.png',
+    "site_logo": "books/img/logo.png",
 
     # Welcome text on the login screen
-    'welcome_sign': 'Welcome to polls',
+    "welcome_sign": "Welcome to the library",
 
     # Copyright on the footer
-    'copyright': 'Acme Ltd',
+    "copyright": "Acme Library Ltd",
 
     # The model admin to search from the search bar, search bar omitted if excluded
-    'search_model': 'auth.User',
+    "search_model": "auth.User",
 
     # Field name on user model that contains avatar image
-    'user_avatar': None,
+    "user_avatar": None,
 
     ############
     # Top Menu #
     ############
 
     # Links to put along the top menu
-    'topmenu_links': [
+    "topmenu_links": [
 
         # Url that gets reversed (Permissions can be added)
-        {'name': 'Home',  'url': 'admin:index', 'permissions': ['auth.view_user']},
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
 
         # external url that opens in a new window (Permissions can be added)
-        {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
+        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
 
         # model admin to link to (Permissions checked against model)
-        {'model': 'auth.User'},
+        {"model": "auth.User"},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
-        {'app': 'polls'},
+        {"app": "books"},
     ],
 
     #############
     # User Menu #
     #############
 
-    # Additional links to include in the user menu on the top right ('app' url type is not allowed)
-    'usermenu_links': [
-        {'name': 'Support', 'url': 'https://github.com/farridav/django-jazzmin/issues', 'new_window': True},
-        {'model': 'auth.user'}
+    # Additional links to include in the user menu on the top right ("app" url type is not allowed)
+    "usermenu_links": [
+        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+        {"model": "auth.user"}
     ],
 
     #############
@@ -62,40 +62,46 @@ JAZZMIN_SETTINGS = {
     #############
 
     # Whether to display the side menu
-    'show_sidebar': True,
+    "show_sidebar": True,
 
     # Whether to aut expand the menu
-    'navigation_expanded': True,
+    "navigation_expanded": True,
 
     # Hide these apps when generating side menu e.g (auth)
-    'hide_apps': [],
+    "hide_apps": [],
 
     # Hide these models when generating side menu (e.g auth.user)
-    'hide_models': [],
+    "hide_models": [],
 
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": ["auth", "polls", "polls.choice", "polls.poll"],
+    "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
 
     # Custom links to append to app groups, keyed on app name
-    'custom_links': {
-        'polls': [{
-            'name': 'Make Messages', 
-            'url': 'make_messages', 
-            'icon': 'fas fa-comments',
-            'permissions': ['polls.view_poll']
+    "custom_links": {
+        "books": [{
+            "name": "Make Messages", 
+            "url": "make_messages", 
+            "icon": "fas fa-comments",
+            "permissions": ["books.view_book"]
         }]
     },
 
     # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free
     # for a list of icon classes
-    'icons': {
-        'auth': 'fas fa-users-cog',
-        'auth.user': 'fas fa-user',
-        'auth.Group': 'fas fa-users',
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
     },
     # Icons that are used when one is not manually specified
-    'default_icon_parents': 'fas fa-chevron-circle-right',
-    'default_icon_children': 'fas fa-circle',
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    #################
+    # Related Modal #
+    #################
+    # Use modals instead of popups
+    "related_modal_active": False,
 
     #############
     # UI Tweaks #
@@ -117,7 +123,7 @@ JAZZMIN_SETTINGS = {
     # - carousel
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
     # Add a language dropdown into the admin
     "language_chooser": True,
 }
@@ -127,7 +133,7 @@ JAZZMIN_SETTINGS = {
 
 ![Top Menu](./img/top_menu.png)
 
-You can enable the top menu by specifying `'topmenu_links'` in your `JAZZMIN_SETTINGS`, this is a list made up of one of:
+You can enable the top menu by specifying `"topmenu_links"` in your `JAZZMIN_SETTINGS`, this is a list made up of one of:
 
  - app (creates a dropdown of modeladmin links)
  - model (creates a link to a modeladmin)
@@ -136,8 +142,8 @@ You can enable the top menu by specifying `'topmenu_links'` in your `JAZZMIN_SET
 The top menu can be styled with the UI Customiser (See below)
 
 ## User menu
-You can add links to the user menu on the top right of the screen using the `'usermenu_links'` settings key, the format 
-of these links is the same as with top menu (above), though submenus via 'app' are not currently supported and will not 
+You can add links to the user menu on the top right of the screen using the `"usermenu_links"` settings key, the format 
+of these links is the same as with top menu (above), though submenus via "app" are not currently supported and will not 
 be rendered.
 
 ![User Menu](./img/user_menu.png)
@@ -158,20 +164,20 @@ Ordering of the menu can be done using `order_with_respect_to`, which is a list 
 base  the ordering off of, it can be a full, or partial list, some examples:
 
 ```
-# Order the auth app before the polls app, other apps will be alphabetically placed after these
-"order_with_respect_to": ["auth", "polls"],
+# Order the auth app before the books app, other apps will be alphabetically placed after these
+"order_with_respect_to": ["auth", "books"],
 
-# Keep the same app ordering as above, but also order choice and poll model links within the polls app
-"order_with_respect_to": ["auth", "polls", "polls.choice", "polls.poll"],
+# Keep the same app ordering as above, but also order choice and book model links within the books app
+"order_with_respect_to": ["auth", "books", "books.author", "books.book"],
 
 # Just make sure auth is first
 "order_with_respect_to": ["auth"],
 
-# Order apps automatically, but make sure choice and poll admin links are first within the polls app
-"order_with_respect_to": ["polls.choice", "polls.poll"],
+# Order apps automatically, but make sure choice and book admin links are first within the books app
+"order_with_respect_to": ["books.author", "books.book"],
 
-# Place our choice model admin link and our custom link first within the polls app (Note: custom link name used for order key)
-"order_with_respect_to": ["polls.choice", "Make Messages"],
+# Place our choice model admin link and our custom link first within the books app (Note: custom link name used for order key)
+"order_with_respect_to": ["books.author", "Make Messages"],
 
 # do nothing
 "order_with_respect_to": [],
@@ -187,19 +193,19 @@ Currently, custom links (See below) cannot be ordered
 Custom links can be added using `custom_links`, this is a dictionary of links, keyed on the app they will live under. 
 Example:
 
-    'custom_links': {
-        'polls': [{
+    "custom_links": {
+        "books": [{
             # Any Name you like
-            'name': 'Make Messages',                
+            "name": "Make Messages",                
             
             # url name e.g `admin:index`, relative urls e.g `/admin/index` or absolute urls e.g `https://domain.com/admin/index`
-            'url': 'make_messages',                 
+            "url": "make_messages",                 
             
             # any font-awesome icon, see list here https://fontawesome.com/icons?d=gallery&m=free (optional)
-            'icon': 'fas fa-comments',                  
+            "icon": "fas fa-comments",                  
             
             # a list of permissions the user must have to see this link (optional)
-            'permissions': ['polls.view_poll']     
+            "permissions": ["books.view_book"]     
         }]
     },
 
@@ -213,7 +219,7 @@ a dictionary mapping of model names to changeform templates e.g:
 
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
-    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs",},
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
 
 Will use `horizontal_tabs` throughout the admin, but use the `collapsible` template on the user model admin, and 
 `vertical_tabs` on the group model admin.
@@ -266,34 +272,50 @@ Namely:
 - `LOCALE_DIRS` is setup
 - `LANGUAGES` have been defined
 
-See our [test app settings](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/settings.py) 
+See our [test app settings](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/settings.py) 
 for a practical example.
 
 ![Language chooser](./img/language_chooser.png)
 
-## UI Tweaks
+## Related Modal
+Render django related popups inside a modal using `"related_modal_active": True` instead of the old popup window, 
+defaults to `True`
 
-### UI Customiser
+![Related Modal](./img/related_modal_bootstrap.png)
 
-Jazzmin has a built in UI configurator, mimicked from [adminlte demo](https://adminlte.io/themes/v3/index3.html), 
-that allows you to customise parts of the interface interactively.
+### Adding extra actions to model's form view
 
-To enable this, add `'show_ui_builder': True` to your `JAZZMIN_SETTINGS` and there will be an icon in the top right of 
-the screen that allows you to customise the interface.
+Add a template for your model on your main template directory, 
+e.g [app/templates/admin/app_name/model_name/submit_line.html](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/books/templates/admin/loans/bookloan/submit_line.html)
 
-![icon](./img/customise_icon.png)
+```djangotemplate
+{# extends "admin/submit_line.html" #}
 
-When your happy with your customisations, press the "Show Code" button, and it will give you a code snippet to put 
-into your settings that will persist these customisations beyond page refresh.
+{# block extra-actions #}
 
-### DIY with custom CSS/JS
+{# For a simple link #}
+<div class="form-group">
+    <a href="/some/url" class="btn btn-outline-info form-control">Some Action</a>
+</div>
 
-If there are things you need to do with CSS/JS, but want to avoid overriding the templates yourself, you can include a 
-custom CSS and/or JS file, just pass a relative path to your files e.g:
-
+{# Or, to process this with form submission #}
+<div class="form-group">
+    <input type="submit" class="btn btn-outline-info form-control" value="SomeAction" name="_your_action">
+</div>
+{# endblock #}
 ```
-'custom_css': 'common/css/main.css',
-'custom_js': 'common/js/main.js'
- ```
 
-Into your jazzmin settings (Ensure these files can be found by the static file finder)
+If you are adding a button that needs processing with the form, e.g (Save and send) you will need to add the
+following to your admin class:
+
+```python
+def response_change(self, request, obj):
+    ret = super().response_change(request, obj)
+    if '_your_action' in request.POST:
+        # Do something
+        pass
+    return ret
+```
+    
+The implementation might change slightly if your wanting to perform an action on add, or delete, for those, you can
+override the response_add of response_delete methods instead/as well.

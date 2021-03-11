@@ -3,7 +3,7 @@ from typing import List, Union, Dict, Set, Callable
 from urllib.parse import urlencode
 
 from django.apps import apps
-from django.contrib.admin import BooleanFieldListFilter
+from django.contrib.admin import ListFilter
 from django.contrib.admin.helpers import AdminForm
 from django.contrib.auth.models import AbstractUser
 from django.db.models.base import ModelBase
@@ -15,18 +15,13 @@ from jazzmin.compat import NoReverseMatch, reverse
 logger = logging.getLogger(__name__)
 
 
-def order_with_respect_to(original: List, reference: List, getter: Callable = None) -> List:
+def order_with_respect_to(original: List, reference: List, getter: Callable = lambda x: x) -> List:
     """
     Order a list based on the location of items in the reference list, optionally, use a getter to pull values out of
     the first list
     """
     ranking = []
     max_num = len(original)
-    if not getter:
-
-        def getter(x):
-            return x
-
     for item in original:
         try:
             pos = reference.index(getter(item))
@@ -38,7 +33,9 @@ def order_with_respect_to(original: List, reference: List, getter: Callable = No
     return [y for x, y in sorted(zip(ranking, original), key=lambda x: x[0])]
 
 
-def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **kwargs: str) -> str:
+def get_admin_url(
+    instance: Union[str, ModelBase], admin_site: str = "admin", from_app: bool = False, **kwargs: str
+) -> str:
     """
     Return the admin URL for the given instance, model class or <app>.<model> string
     """
@@ -47,7 +44,8 @@ def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **
     try:
 
         if type(instance) == str:
-            app_label, model_name = instance.lower().split(".")
+            app_label, model_name = instance.split(".")
+            model_name = model_name.lower()
             url = reverse(
                 "admin:{app_label}_{model_name}_changelist".format(app_label=app_label, model_name=model_name),
                 current_app=admin_site,
@@ -71,7 +69,9 @@ def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **
             )
 
     except (NoReverseMatch, ValueError):
-        logger.warning(gettext("Could not reverse url from {instance}".format(instance=instance)))
+        # If we are not walking through the models within an app, let the user know this url cant be reversed
+        if not from_app:
+            logger.warning(gettext("Could not reverse url from {instance}".format(instance=instance)))
 
     if kwargs:
         url += "?{params}".format(params=urlencode(kwargs))
@@ -79,7 +79,7 @@ def get_admin_url(instance: Union[str, ModelBase], admin_site: str = "admin", **
     return url
 
 
-def get_filter_id(spec: BooleanFieldListFilter) -> str:
+def get_filter_id(spec: ListFilter) -> str:
     return getattr(spec, "field_path", getattr(spec, "parameter_name", spec.title))
 
 
@@ -124,7 +124,7 @@ def get_app_admin_urls(app: str, admin_site: str = "admin") -> List[Dict]:
 
     models = []
     for model in apps.app_configs[app].get_models():
-        url = get_admin_url(model, admin_site=admin_site)
+        url = get_admin_url(model, admin_site=admin_site, from_app=True)
 
         # We have no admin class
         if url == "#":
@@ -145,7 +145,12 @@ def get_view_permissions(user: AbstractUser) -> Set[str]:
     """
     Get model names based on a users view/change permissions
     """
-    lower_perms = map(lambda x: x.lower(), user.get_all_permissions())
+    perms = user.get_all_permissions()
+    # the perm codenames should always be lower case
+    lower_perms = []
+    for perm in perms:
+        app, perm_codename = perm.split(".")
+        lower_perms.append("{app}.{perm_codename}".format(app=app, perm_codename=perm_codename.lower()))
     return {x.replace("view_", "") for x in lower_perms if "view" in x or "change" in x}
 
 
@@ -177,6 +182,7 @@ def make_menu(
                     "name": link.get("name", "unspecified"),
                     "url": get_custom_url(link["url"], admin_site=admin_site),
                     "children": None,
+                    "new_window": link.get("new_window", False),
                     "icon": link.get("icon", options["default_icon_children"]),
                 }
             )
@@ -194,6 +200,7 @@ def make_menu(
                     "name": name,
                     "url": get_admin_url(link["model"], admin_site=admin_site),
                     "children": [],
+                    "new_window": link.get("new_window", False),
                     "icon": options["icons"].get(link["model"], options["default_icon_children"]),
                 }
             )
@@ -201,7 +208,7 @@ def make_menu(
         # App links
         elif "app" in link and allow_appmenus:
             children = [
-                {"name": child.get("verbose_name", child["name"]), "url": child["url"], "children": None,}
+                {"name": child.get("verbose_name", child["name"]), "url": child["url"], "children": None}
                 for child in get_app_admin_urls(link["app"], admin_site=admin_site)
                 if child["model"] in model_permissions
             ]

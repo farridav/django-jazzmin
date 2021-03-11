@@ -1,14 +1,15 @@
-{% load jazzmin %}
+{% load i18n jazzmin %}
+{% trans "General" as general_tab %}
 
 <div id="jazzy-collapsible">
     {% for fieldset in adminform %}
         <div class="card card-default">
-            <div class="card-header collapsible-header" data-toggle="collapse" data-parent="#jazzy-collapsible" data-target="#{{ fieldset.name|default:"General"|unicode_slugify }}-tab">
+            <div class="card-header collapsible-header" data-toggle="collapse" data-parent="#jazzy-collapsible" data-target="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
                 <h4 class="card-title">
-                    {{ fieldset.name|default:"General" }}
+                    {{ fieldset.name|default:general_tab }}
                 </h4>
             </div>
-            <div id="{{ fieldset.name|default:"General"|unicode_slugify }}-tab" class="panel-collapse in {% if forloop.first %}show{% else %}collapse{% endif %}">
+            <div id="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" class="panel-collapse in {% if forloop.first %}show{% else %}collapse{% endif %}">
                 <div class="card-body">
                     {% include "admin/includes/fieldset.html" with card=False %}
                 </div>
@@ -20,7 +21,7 @@
         <div class="card card-default">
             <div class="card-header collapsible-header" data-toggle="collapse" data-parent="#jazzy-collapsible" data-target="#{{ inline_admin_formset.opts.verbose_name|unicode_slugify }}-tab">
                 <h4 class="card-title">
-                    {{ inline_admin_formset.opts.verbose_name_plural|title }}
+                    {{ inline_admin_formset.opts.verbose_name_plural|capfirst }}
                 </h4>
             </div>
             <div id="{{ inline_admin_formset.opts.verbose_name|unicode_slugify }}-tab" class="panel-collapse in collapse">

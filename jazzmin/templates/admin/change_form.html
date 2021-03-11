@@ -1,10 +1,10 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_urls static admin_modify jazzmin %}
-{% get_jazzmin_settings as jazzmin_settings %}
+{% get_jazzmin_settings request as jazzmin_settings %}
 
 {% block extrastyle %}
     {{ block.super }}
-    <link rel="stylesheet" href="{% static 'adminlte/plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/select2/css/select2.min.css' %}">
 {% endblock %}
 
 {% block extrahead %}
@@ -92,21 +92,23 @@
                 {% block after_related_objects %}{% endblock %}
 
                 <div class="col-12 col-lg-3">
-                    {% block submit_buttons_bottom %}
-                        {% submit_row %}
-                        {% block object-tools %}
-                            {% if change %}
-                                {% if not is_popup %}
-                                    <div class="object-tools">
-                                        {% block object-tools-items %}
-                                            {% change_form_object_tools %}
-                                            {% block extra_actions %}{% endblock %}
-                                        {% endblock %}
-                                    </div>
+                    <div id="jazzy-actions" class="{{ jazzmin_ui.actions_classes }}">
+                        {% block submit_buttons_bottom %}
+                            {% submit_row %}
+                            {% block object-tools %}
+                                {% if change %}
+                                    {% if not is_popup %}
+                                        <div class="object-tools">
+                                            {% block object-tools-items %}
+                                                {% change_form_object_tools %}
+                                                {% block extra_actions %}{% endblock %}
+                                            {% endblock %}
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
+                            {% endblock %}
                         {% endblock %}
-                    {% endblock %}
+                    </div>
                 </div>
 
                 {% block admin_change_form_document_ready %}
@@ -122,6 +124,10 @@
 
 {% block extrajs %}
     {{  block.super }}
-    <script type="text/javascript" src="{% static 'adminlte/plugins/select2/js/select2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'jazzmin/js/change_form.js' %}"></script>
+    {% if jazzmin_settings.related_modal_active %}
+    <script type="text/javascript" src="{% static 'jazzmin/plugins/bootstrap-show-modal/bootstrap-show-modal.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jazzmin/js/related-modal.js' %}"></script>
+    {% endif %}
 {% endblock %}

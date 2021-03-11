@@ -1,7 +1,13 @@
 import pytest
 from django.urls import reverse
 
-from .utils import parse_sidemenu, user_with_permissions, parse_topmenu, parse_usermenu, override_jazzmin_settings
+from .test_app.library.factories import UserFactory
+from .utils import (
+    parse_sidemenu,
+    parse_topmenu,
+    parse_usermenu,
+    override_jazzmin_settings,
+)
 
 
 @pytest.mark.django_db
@@ -14,17 +20,23 @@ def test_side_menu(admin_client, settings):
     response = admin_client.get(url)
 
     assert parse_sidemenu(response) == {
-        "Global": ["/en/admin/"],
-        "Polls": [
-            "/make_messages/",
-            "/en/admin/polls/choice/",
-            "/en/admin/polls/poll/",
-            "/en/admin/polls/campaign/",
-            "/en/admin/polls/cheese/",
-            "/en/admin/polls/vote/",
-        ],
         "Administration": ["/en/admin/admin/logentry/"],
-        "Authentication and Authorization": ["/en/admin/auth/group/", "/en/admin/auth/user/"],
+        "Authentication and Authorization": [
+            "/en/admin/auth/group/",
+            "/en/admin/auth/user/",
+        ],
+        "Books": [
+            "/en/admin/books/author/",
+            "/en/admin/books/book/",
+            "/en/admin/books/genre/",
+        ],
+        "Global": ["/en/admin/"],
+        "Loans": [
+            "/make_messages/",
+            "/en/admin/loans/bookloan/",
+            "/en/admin/loans/library/",
+            "/en/admin/loans/bookloan/custom_view",
+        ],
     }
 
     settings.JAZZMIN_SETTINGS = override_jazzmin_settings(hide_models=["auth.user"])
@@ -32,16 +44,19 @@ def test_side_menu(admin_client, settings):
 
     assert parse_sidemenu(response) == {
         "Global": ["/en/admin/"],
-        "Polls": [
+        "Authentication and Authorization": ["/en/admin/auth/group/"],
+        "Books": [
+            "/en/admin/books/author/",
+            "/en/admin/books/book/",
+            "/en/admin/books/genre/",
+        ],
+        "Loans": [
             "/make_messages/",
-            "/en/admin/polls/choice/",
-            "/en/admin/polls/poll/",
-            "/en/admin/polls/campaign/",
-            "/en/admin/polls/cheese/",
-            "/en/admin/polls/vote/",
+            "/en/admin/loans/bookloan/",
+            "/en/admin/loans/library/",
+            "/en/admin/loans/bookloan/custom_view",
         ],
         "Administration": ["/en/admin/admin/logentry/"],
-        "Authentication and Authorization": ["/en/admin/auth/group/"],
     }
 
 
@@ -50,19 +65,19 @@ def test_permissions_on_custom_links(client, settings):
     """
     we honour permissions for the rendering of custom links
     """
-    user = user_with_permissions()
-    user2 = user_with_permissions("polls.view_poll")
+    user = UserFactory()
+    user2 = UserFactory(permissions=("books.view_book",))
 
     url = reverse("admin:index")
 
     settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
         custom_links={
-            "polls": [
+            "books": [
                 {
                     "name": "Make Messages",
                     "url": "make_messages",
                     "icon": "fa-comments",
-                    "permissions": ["polls.view_poll"],
+                    "permissions": ["books.view_book"],
                 }
             ]
         }
@@ -76,7 +91,7 @@ def test_permissions_on_custom_links(client, settings):
     response = client.get(url)
     assert parse_sidemenu(response) == {
         "Global": ["/en/admin/"],
-        "Polls": ["/make_messages/", "/en/admin/polls/poll/"],
+        "Books": ["/make_messages/", "/en/admin/books/book/"],
     }
 
 
@@ -90,9 +105,13 @@ def test_top_menu(admin_client, settings):
     settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
         topmenu_links=[
             {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-            {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+            {
+                "name": "Support",
+                "url": "https://github.com/farridav/django-jazzmin/issues",
+                "new_window": True,
+            },
             {"model": "auth.User"},
-            {"app": "polls"},
+            {"app": "books"},
         ]
     )
 
@@ -100,17 +119,18 @@ def test_top_menu(admin_client, settings):
 
     assert parse_topmenu(response) == [
         {"name": "Home", "link": "/en/admin/"},
-        {"name": "Support", "link": "https://github.com/farridav/django-jazzmin/issues"},
+        {
+            "name": "Support",
+            "link": "https://github.com/farridav/django-jazzmin/issues",
+        },
         {"name": "Users", "link": "/en/admin/auth/user/"},
         {
-            "name": "Polls",
+            "name": "Books",
             "link": "#",
             "children": [
-                {"name": "Polls", "link": reverse("admin:polls_poll_changelist")},
-                {"name": "Choices", "link": reverse("admin:polls_choice_changelist")},
-                {"name": "Votes", "link": reverse("admin:polls_vote_changelist")},
-                {"name": "Cheeses", "link": reverse("admin:polls_cheese_changelist")},
-                {"name": "Campaigns", "link": reverse("admin:polls_campaign_changelist")},
+                {"name": "Genres", "link": "/en/admin/books/genre/"},
+                {"name": "Books", "link": "/en/admin/books/book/"},
+                {"name": "Authors", "link": "/en/admin/books/author/"},
             ],
         },
     ]
@@ -126,7 +146,11 @@ def test_user_menu(admin_user, client, settings):
     settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
         usermenu_links=[
             {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-            {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+            {
+                "name": "Support",
+                "url": "https://github.com/farridav/django-jazzmin/issues",
+                "new_window": True,
+            },
             {"model": "auth.User"},
         ]
     )
@@ -138,7 +162,13 @@ def test_user_menu(admin_user, client, settings):
         {"link": "/en/admin/password_change/", "name": "Change password"},
         {"link": "/en/admin/logout/", "name": "Log out"},
         {"link": "/en/admin/", "name": "Home"},
-        {"link": "https://github.com/farridav/django-jazzmin/issues", "name": "Support"},
+        {
+            "link": "https://github.com/farridav/django-jazzmin/issues",
+            "name": "Support",
+        },
         {"link": "/en/admin/auth/user/", "name": "Users"},
-        {"link": "/en/admin/auth/user/{}/change/".format(admin_user.pk), "name": "See Profile"},
+        {
+            "link": "/en/admin/auth/user/{}/change/".format(admin_user.pk),
+            "name": "See Profile",
+        },
     ]

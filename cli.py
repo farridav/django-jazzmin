@@ -20,7 +20,15 @@ def locales(cmd_args: argparse.Namespace):
     our_po = polib.pofile(os.path.join(LOCALE_DIR, cmd_args.locale, "LC_MESSAGES", "django.po"))
     admin_po = polib.pofile(os.path.join(DJANGO_PATH, "contrib", "admin", "locale", "en", "LC_MESSAGES", "django.po"))
     admindocs_po = polib.pofile(
-        os.path.join(DJANGO_PATH, "contrib", "admindocs", "locale", "en", "LC_MESSAGES", "django.po")
+        os.path.join(
+            DJANGO_PATH,
+            "contrib",
+            "admindocs",
+            "locale",
+            "en",
+            "LC_MESSAGES",
+            "django.po",
+        )
     )
     existing_strings = {x.msgid for x in chain(admin_po, admindocs_po)}
     new_po = polib.POFile()
@@ -54,7 +62,8 @@ def templates(cmd_args: argparse.Namespace):
             original = template.replace(jazzmin_dir, django_dir)
             if os.path.isfile(original):
                 result = subprocess.run(
-                    ["diff", "-u", "-w", "--suppress-common-lines", original, template], stdout=subprocess.PIPE
+                    ["diff", "-u", "-w", "--suppress-common-lines", original, template],
+                    stdout=subprocess.PIPE,
                 )
                 out_file = template.replace(jazzmin_dir, diffs) + ".patch"
                 os.makedirs(os.path.dirname(out_file), exist_ok=True)
@@ -73,7 +82,12 @@ def main():
     parser_locales.set_defaults(func=locales)
 
     parser_templates = subparsers.add_parser("templates", help="Deal with templates")
-    parser_templates.add_argument("--diff", action="store_true", dest="template_diff", help="generate template diff")
+    parser_templates.add_argument(
+        "--diff",
+        action="store_true",
+        dest="template_diff",
+        help="generate template diff",
+    )
     parser_templates.set_defaults(func=templates)
 
     try:

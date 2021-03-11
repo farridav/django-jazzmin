@@ -1,10 +1,12 @@
-{% load i18n admin_urls %}
+{% load i18n admin_urls jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
 {% block object-tools-items %}
     {% if perms.administration.can_change_logs or perms.administration.can_view_logs %}
         {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
-        <a class="btn btn-block btn-outline-secondary btn-sm" href="{% add_preserved_filters history_url %}">{% trans 'History' %}</a>
+        <a class="btn btn-block {{ jazzmin_ui.button_classes.secondary }} btn-sm" href="{% add_preserved_filters history_url %}">{% trans 'History' %}</a>
     {% endif %}
     {% if has_absolute_url %}
-        <a href="{{ absolute_url }}" class="btn btn-block btn-outline-secondary btn-sm">{% trans "View on site" %}</a>
+        <a href="{{ absolute_url }}" class="btn btn-block {{ jazzmin_ui.button_classes.secondary }} btn-sm">{% trans "View on site" %}</a>
     {% endif %}
 {% endblock %}

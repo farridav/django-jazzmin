@@ -1,0 +1,16 @@
+{% extends "admin/submit_line.html" %}
+{% load jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
+{% block extra-actions %}
+
+{# Simple link #}
+<div class="form-group">
+    <a href="https://www.djangoproject.com/" class="btn {{ jazzmin_ui.button_classes.warning }} form-control" target="_blank">Go Django</a>
+</div>
+
+{# Process with form submission #}
+<div class="form-group">
+    <input type="submit" class="btn {{ jazzmin_ui.button_classes.primary }} form-control" value="Reserve" name="reserve">
+</div>
+{% endblock %}

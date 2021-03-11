@@ -41,11 +41,10 @@
                                             {% endif %}
                                         </a>
                                     {% endif %}
-                                    {{ inline_admin_form.original }}
 
                                     {% if inline_admin_form.show_url %}
-                                        <a href="{{ inline_admin_form.absolute_url }}">
-                                            <i class="fas fa-eye fa-sm"> </i> {% trans "View on site" %}
+                                        <a href="{{ inline_admin_form.absolute_url }}" title="{% trans "View on site" %}">
+                                            <i class="fas fa-eye fa-sm"> </i>
                                         </a>
                                     {% endif %}
                                 {% endif %}

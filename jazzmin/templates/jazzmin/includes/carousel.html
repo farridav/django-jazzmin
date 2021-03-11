@@ -1,17 +1,20 @@
-{% load jazzmin %}
+{% load i18n jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+
+{% trans "General" as general_tab %}
 
 <div id="jazzy-carousel" class="carousel slide" data-ride="false" data-wrap="false" data-keyboard="true" data-interval="false">
     <div class="row">
         <div class="col-sm-2">
-            <a href="#jazzy-carousel" role="button" data-slide="prev" class="btn btn-outline-primary"><i class="fas fa-arrow-left"></i></a>
+            <a href="#jazzy-carousel" role="button" data-slide="prev" class="btn {{ jazzmin_ui.button_classes.primary }}"><i class="fas fa-arrow-left"></i></a>
         </div>
         <div class="col-sm-8 text-center">
             <p class="carousel-fieldset-label">
-                {{ adminform.fieldsets.0.0|default:"General" }}
+                {{ adminform.fieldsets.0.0|default:general_tab }}
             </p>
         </div>
         <div class="col-sm-2">
-            <a href="#jazzy-carousel" role="button" data-slide="next" class="btn btn-outline-primary float-right"><i class="fas fa-arrow-right"></i></a>
+            <a href="#jazzy-carousel" role="button" data-slide="next" class="btn {{ jazzmin_ui.button_classes.primary }} float-right"><i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
     <ol class="carousel-indicators">
@@ -25,12 +28,12 @@
     </ol>
     <div class="carousel-inner">
         {% for fieldset in adminform %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-carouselId="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:"General"|title }}" data-target="#{{ fieldset.name|default:"General"|unicode_slugify }}-tab">
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-carouselId="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:general_tab|capfirst }}" data-target="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
                 {% include "admin/includes/fieldset.html" with card=adminform|has_fieldsets %}
             </div>
         {% endfor %}
         {% for inline_admin_formset in inline_admin_formsets %}
-            <div class="carousel-item" data-label="{{ inline_admin_formset.opts.verbose_name_plural|title }}" data-target="#{{ inline_admin_formset.opts.verbose_name|unicode_slugify }}-tab">
+            <div class="carousel-item" data-label="{{ inline_admin_formset.opts.verbose_name_plural|capfirst }}" data-target="#{{ inline_admin_formset.opts.verbose_name|unicode_slugify }}-tab">
                 {% include inline_admin_formset.opts.template %}
             </div>
         {% endfor %}

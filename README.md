@@ -15,7 +15,7 @@ pip install django-jazzmin
 ```
 
 ## Documentation
-See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/settings.py)
+See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/settings.py)
 
 ## Demo
 Live demo https://django-jazzmin.herokuapp.com/admin
@@ -32,6 +32,7 @@ Live demo https://django-jazzmin.herokuapp.com/admin
 - Customisable top menu
 - Customisable user menu
 - 4 different Change form templates (horizontal tabs, vertical tabs, carousel, collapsible)
+- Bootstrap 4 modal (instead of the old popup window, optional)
 - Search bar for any given model admin
 - Customisable UI (via Live UI changes, or custom CSS/JS)
 - Responsive
@@ -66,6 +67,9 @@ Live demo https://django-jazzmin.herokuapp.com/admin
 
 ### Carousel
 ![Carousel](https://django-jazzmin.readthedocs.io/img/changeform_carousel.png)
+
+### Related modal
+![Related modal](https://django-jazzmin.readthedocs.io/img/related_modal_bootstrap.png)
 
 ## History page
 ![form page](https://django-jazzmin.readthedocs.io/img/history_page.png)

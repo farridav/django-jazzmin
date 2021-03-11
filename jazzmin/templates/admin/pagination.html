@@ -1,5 +1,5 @@
-{% load admin_list jazzmin %}
-{% load i18n %}
+{% load admin_list jazzmin i18n %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 <div class="col-5">
     <div class="dataTables_info" role="status" aria-live="polite">
@@ -11,10 +11,10 @@
         {% endif %}
 
         {% if show_all_url %}&nbsp;&nbsp;
-            <a href="{{ show_all_url }}" class="btn btn-outline-primary">{% trans 'Show all' %}</a>
+            <a href="{{ show_all_url }}" class="btn {{ jazzmin_ui.button_classes.primary }}">{% trans 'Show all' %}</a>
         {% endif %}
         {% if cl.formset and cl.result_count %}
-            <input type="submit" name="_save" class="btn btn-primary" value="{% trans 'Save' %}">
+            <input type="submit" name="_save" class="btn {{ jazzmin_ui.button_classes.primary }}" value="{% trans 'Save' %}">
         {% endif %}
     </div>
 </div>

@@ -1,4 +1,5 @@
 {% load i18n static admin_list jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 <form id="changelist-search" class="form-inline mt-2" method="GET">
     {% block filters %}
@@ -15,7 +16,7 @@
 
     {% if cl.has_filters or cl.search_fields %}
         <div class="form-group" id="search_group">
-            <button type="submit" class="btn btn-primary" style="margin-right: 5px;">{% trans 'Search' %}</button>
+            <button type="submit" class="btn {{ jazzmin_ui.button_classes.primary }}" style="margin-right: 5px;">{% trans 'Search' %}</button>
             {% if show_result_count %}
                 <span class="small quiet">
                     {% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %}
