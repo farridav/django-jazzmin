@@ -72,8 +72,10 @@
                                             {% if field.is_readonly %}
                                                 <p>{{ field.contents }}</p>
                                             {% else %}
-                                                {{ field.field.errors.as_ul }}
                                                 {{ field.field }}
+                                                <div class="help-block text-red">
+                                                    {{ field.field.errors.as_ul }}
+                                                </div>
                                             {% endif %}
                                         </td>
                                     {% endif %}
