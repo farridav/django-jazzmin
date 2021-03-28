@@ -831,20 +831,23 @@ body.jazzmin-login-page {
 }
 
 /* sidebar scrolling */
-#jazzy-sidebar {
+.layout-fixed #jazzy-sidebar {
+    top: 0;
+    bottom: 0;
     /* Enable y scroll */
     overflow-y: scroll;
     /* May inherit scroll, so we need to explicitly hide */
     overflow-x: hidden;
-    /* support for position absolute/fixed */
-    top: 0;
-    bottom: 0;
+}
+/* calculate height to fit content, we don't to enable scrolling if the content fits */
+.layout-fixed #jazzy-sidebar .sidebar {
+    height: auto !important;
 }
 /* Hide scrollbar */
-#jazzy-sidebar {
+.layout-fixed #jazzy-sidebar {
     scrollbar-width: none;
 }
-#jazzy-sidebar::-webkit-scrollbar {
+.layout-fixed #jazzy-sidebar::-webkit-scrollbar {
     width: 0;
 }
 /* nav-item will overflow container in width if scrollbar is visible */
