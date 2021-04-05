@@ -56,7 +56,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     ordering = [x.lower() for x in ordering]
 
     menu = []
-    available_apps = copy.deepcopy(context.get(using, []))
+    available_apps = copy.deepcopy(list(context.get(using, [])))
 
     custom_links = {
         app_name: make_menu(user, links, options, allow_appmenus=False)
