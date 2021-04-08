@@ -41,6 +41,15 @@
         }
     }
 
+    function callResizeOnTabSwitch() {
+        /*
+        used to reinitialize the map on a GeoDjango Pointfield
+        */
+        $('a[data-toggle="pill"]').on('shown.bs.tab', function (event) {
+        window.dispatchEvent(new Event('resize'));
+        });
+    }
+
     $(document).ready(function () {
         // Set active status on links
         setActiveLinks()
@@ -55,6 +64,9 @@
         if ($changeListTable.length && !$changeListTable.hasClass('table table-striped')) {
             $changeListTable.addClass('table table-striped');
         }
+
+        // call resize in change view after tab switch
+        callResizeOnTabSwitch();
 
     });
 
