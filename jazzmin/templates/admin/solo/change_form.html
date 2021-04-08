@@ -11,9 +11,7 @@
 {% endblock %}
 
 {% block object-tools-items %}
-    {% if perms.administration.can_change_logs or perms.administration.can_view_logs %}
-        <a class="btn btn-block {{ jazzmin_ui.button_classes.secondary }} btn-sm" href="{% url opts|admin_urlname:'history' %}">{% trans 'History' %}</a>
-    {% endif %}
+    <a class="btn btn-block {{ jazzmin_ui.button_classes.secondary }} btn-sm" href="{% url opts|admin_urlname:'history' %}">{% trans 'History' %}</a>
     {% if has_absolute_url %}
         <a href="{% url 'admin:view_on_site' content_type_id original.pk %}" class="btn btn-block {{ jazzmin_ui.button_classes.secondary }} btn-sm">{% trans "View on site" %}</a>
     {% endif %}
