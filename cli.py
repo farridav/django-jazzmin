@@ -1,23 +1,33 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import argparse
 import os
 import subprocess
 from itertools import chain
 
+import click
 import django
 import polib
 
 THIS_DIR = os.path.dirname(__file__)
 LOCALE_DIR = os.path.join(THIS_DIR, "jazzmin", "locale")
+LOCALES = os.listdir(LOCALE_DIR)
 DJANGO_PATH = django.__path__[0]
 
 
-def locales(cmd_args: argparse.Namespace):
+@click.group()
+def main():
+    pass
+
+
+@main.command()
+@click.option("--prune", type=click.Choice(LOCALES), help="locale to prune", required=True)
+def locales(locale: str):
     """
+    Remove the django provided strings
+
     e.g - ./cli.py locales --prune de
     """
-    our_po = polib.pofile(os.path.join(LOCALE_DIR, cmd_args.locale, "LC_MESSAGES", "django.po"))
+    our_po = polib.pofile(os.path.join(LOCALE_DIR, locale, "LC_MESSAGES", "django.po"))
     admin_po = polib.pofile(os.path.join(DJANGO_PATH, "contrib", "admin", "locale", "en", "LC_MESSAGES", "django.po"))
     admindocs_po = polib.pofile(
         os.path.join(
@@ -37,15 +47,15 @@ def locales(cmd_args: argparse.Namespace):
         if po.msgid not in existing_strings:
             new_po.append(po)
 
-    new_po.save(os.path.join(LOCALE_DIR, cmd_args.locale, "LC_MESSAGES", "django.po"))
+    new_po.save(os.path.join(LOCALE_DIR, locale, "LC_MESSAGES", "django.po"))
 
 
-def templates(cmd_args: argparse.Namespace):
+@main.command()
+def templates():
     """
     Generate diffs/patch files for all the templates we override, useful for seeing whats changed
 
     ./cli.py templates --diff
-
     """
     diffs = os.path.join(THIS_DIR, "diffs")
     templates = {
@@ -70,33 +80,6 @@ def templates(cmd_args: argparse.Namespace):
 
                 with open(out_file, "wb+") as fp:
                     fp.write(result.stdout)
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers()
-    subparsers.required = True
-
-    parser_locales = subparsers.add_parser("locales", help="remove the django provided strings")
-    parser_locales.add_argument("--prune", action="store", dest="locale", help="locale to prune", default="de")
-    parser_locales.set_defaults(func=locales)
-
-    parser_templates = subparsers.add_parser("templates", help="Deal with templates")
-    parser_templates.add_argument(
-        "--diff",
-        action="store_true",
-        dest="template_diff",
-        help="generate template diff",
-    )
-    parser_templates.set_defaults(func=templates)
-
-    try:
-        cmd_args = parser.parse_args()
-    except TypeError:
-        parser.print_help()
-        return
-
-    cmd_args.func(cmd_args)
 
 
 if __name__ == "__main__":
