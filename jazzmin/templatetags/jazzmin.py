@@ -183,7 +183,7 @@ def jazzmin_paginator_number(cl: ChangeList, i: int) -> SafeText:
     """
     Generate an individual page index link in a paginated list.
     """
-    if i == ".":
+    if i in (".", "…"):
         html_str = """
             <li class="page-item">
             <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>
