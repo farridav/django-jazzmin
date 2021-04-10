@@ -1,7 +1,7 @@
 (function($) {
     'use strict';
 
-    function fix_selector_height() {
+    function FixSelectorHeight() {
         $('.selector .selector-chosen').each(function () {
             let selector_chosen = $(this);
             let selector_available = selector_chosen.siblings('.selector-available');
@@ -34,7 +34,9 @@
         // Update page hash/history on slide
         $carousel.on('slide.bs.carousel', function (e) {
 
-            fix_selector_height();
+            FixSelectorHeight();
+            // call resize in change view after tab switch
+            window.dispatchEvent(new Event('resize'));
 
             if (e.relatedTarget.dataset.hasOwnProperty("label")) {
                 $('.carousel-fieldset-label', $carousel).text(e.relatedTarget.dataset.label);
@@ -57,16 +59,17 @@
         if (errors.length) {
             const tabId = errors.eq(0).closest('.tab-pane').attr('id');
             $('a[href="#' + tabId + '"]').tab('show');
-
-            // If we have a tab hash, open that
         } else if (hash) {
+            // If we have a tab hash, open that
             $('a[href="' + hash + '"]', $tabs).tab('show');
         }
 
         // Change hash for page-reload
         $('a', $tabs).on('shown.bs.tab', function (e) {
 
-            fix_selector_height();
+            FixSelectorHeight();
+            // call resize in change view after tab switch
+            window.dispatchEvent(new Event('resize'));
 
             e.preventDefault();
             if (history.pushState) {
@@ -95,7 +98,9 @@
         // Change hash for page-reload
         $collapsible.on('shown.bs.collapse', function (e) {
 
-            fix_selector_height();
+            FixSelectorHeight();
+            // call resize in change view after tab switch
+            window.dispatchEvent(new Event('resize'));
 
             if (history.pushState) {
                 history.pushState(null, null, '#' + e.target.id);
