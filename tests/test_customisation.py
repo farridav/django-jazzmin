@@ -1,13 +1,11 @@
-from unittest import mock
-
 import pytest
 from bs4 import BeautifulSoup
 from django.urls import reverse
 
 from jazzmin.settings import CHANGEFORM_TEMPLATES
-
-from .test_app.library.factories import BookFactory, UserFactory
+from jazzmin.templatetags.jazzmin import get_sections
 from .test_app.library.books.admin import BookAdmin
+from .test_app.library.factories import BookFactory, UserFactory
 from .utils import override_jazzmin_settings
 
 
@@ -86,18 +84,31 @@ def test_changeform_template_default(admin_client):
 
 
 @pytest.mark.django_db
-@mock.patch.object(BookAdmin, "fieldsets", None)
-@mock.patch.object(BookAdmin, "inlines", [])
-def test_changeform_single(admin_client):
+def test_changeform_single(admin_client, monkeypatch):
     """
     The single template is used when the modeladmin has no fieldsets, or inlines
     """
     book = BookFactory()
-
     books_url = reverse("admin:books_book_change", args=(book.pk,))
+    monkeypatch.setattr(BookAdmin, "fieldsets", None)
+    monkeypatch.setattr(BookAdmin, "inlines", [])
 
     response = admin_client.get(books_url)
 
     templates_used = [t.name for t in response.templates]
-
     assert CHANGEFORM_TEMPLATES["single"] in templates_used
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("order", [("Book loans", "general", "other"), ("other", "Book loans", "general")])
+def test_changeform_section_ordering(change_form_context, order):
+    """
+    We respect the given order for sections
+    """
+    admin_form = change_form_context["adminform"]
+    inline_formsets = change_form_context["inline_admin_formsets"]
+
+    admin_form.model_admin.jazzmin_section_order = order
+    fieldsets = get_sections(admin_form, inline_formsets)
+
+    assert tuple(x.name for x in fieldsets) == order

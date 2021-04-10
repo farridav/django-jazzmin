@@ -259,11 +259,28 @@ Puts fieldsets and inlines into a bootstrap carousel, and allows paginaton with 
 
 ![Carousel](./img/changeform_carousel.png)
 
+## Ordering of page content
+If you want to order the sections within your pages, you can specify `jazzmin_section_order` on your model admin class e.g:
+
+```python
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    resource_class = BookResource
+    fieldsets = (
+        ("general", {"fields": ("title", "author", "library")}),
+        ("other", {"fields": ("genre", "summary", "isbn", "published_on")}),
+    )
+    inlines = (BookLoanInline,)
+
+    # Order the sections within the change form
+    jazzmin_section_order = ("book loans", "general", "other")
+```
+
 ## Language Chooser
 You can enable a language chooser dropdown using `"language_chooser": True` in your `JAZZMIN_SETTINGS`, we mainly use this for 
 assisting with translations, but it could be of use to some people in their admin site.
 
-To make proper use of this, please ensure you have internationalisation setup properly, See https://docs.djangoproject.com/en/3.1/topics/i18n/translation/
+To make proper use of this, please ensure you have internationalisation setup properly, See [https://docs.djangoproject.com/en/3.1/topics/i18n/translation/](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/)
 
 Namely:
 
@@ -279,7 +296,7 @@ for a practical example.
 
 ## Related Modal
 Render django related popups inside a modal using `"related_modal_active": True` instead of the old popup window, 
-defaults to `True`
+defaults to `False`
 
 ![Related Modal](./img/related_modal_bootstrap.png)
 

@@ -1,6 +1,6 @@
 import copy
 import logging
-from typing import Dict
+from typing import Dict, Any
 
 from django.conf import settings
 from django.templatetags.static import static
@@ -9,7 +9,7 @@ from .utils import get_admin_url, get_model_meta
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_SETTINGS = {
+DEFAULT_SETTINGS: Dict[str, Any] = {
     # title of the window (Will default to current_admin_site.site_title)
     "site_title": None,
     # Title on the brand, and the login screen (19 chars max) (will default to current_admin_site.site_header)
@@ -91,7 +91,7 @@ DEFAULT_SETTINGS = {
 # Use the UI builder to generate this #
 #######################################
 
-DEFAULT_UI_TWEAKS = {
+DEFAULT_UI_TWEAKS: Dict[str, Any] = {
     # Small text on the top navbar
     "navbar_small_text": False,
     # Small text on the footer
