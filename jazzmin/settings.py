@@ -14,8 +14,12 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "site_title": None,
     # Title on the brand, and the login screen (19 chars max) (will default to current_admin_site.site_header)
     "site_header": None,
-    # Relative path to logo for your site, used for favicon and brand on top left (must be present in static files)
+    # Relative path to logo for your site, used for brand on top left (must be present in static files)
     "site_logo": "vendor/adminlte/img/AdminLTELogo.png",
+    # CSS classes that are applied to the logo
+    "site_logo_classes": "img-circle",
+    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+    "site_icon": None,
     # Welcome text on the login screen
     "welcome_sign": "Welcome",
     # Copyright on the footer
@@ -219,6 +223,9 @@ def get_settings() -> Dict:
 
     # Ensure icon model names and classes are lower case
     jazzmin_settings["icons"] = {x.lower(): y.lower() for x, y in jazzmin_settings.get("icons", {}).items()}
+
+    # Default the site icon using the site logo
+    jazzmin_settings["site_icon"] = jazzmin_settings["site_icon"] or jazzmin_settings["site_logo"]
 
     # ensure all model names are lower cased
     jazzmin_settings["changeform_format_overrides"] = {
