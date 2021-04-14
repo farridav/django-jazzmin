@@ -8,7 +8,8 @@ COFF ?= \033[0m
 help: ## Display help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "$(CYAN)%-30s$(COFF) %s\n", $$1, $$2}'
 
-environment := $(shell poetry env info --path > /dev/null 2>&1 && echo "poetry run")
+# Check whether there is a poetry env and it is a directory (env info may persist even after removing env)
+environment := $(shell [ -d "$$(poetry env info -p)" ] && echo "poetry run")
 
 check-venv:
 	$(if $(environment),, $(error No poetry environment found, either run "make deps" or "poetry install"))
