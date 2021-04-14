@@ -1,5 +1,5 @@
 import os
-from typing import Dict, Any
+from typing import Any, Dict
 
 import dj_database_url
 from django.conf.global_settings import LANGUAGES as DJANGO_LANGUAGES
@@ -18,8 +18,10 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     # Keep this above 'django.contrib.admin'
     "jazzmin",
+    # 3rd party app support demonstrated in test app (not a jazzmin requirement)
     "admin_numeric_filter",
     "rangefilter",
+    # Django apps
     "django.contrib.admin",
     "django.contrib.admindocs",
     "django.contrib.auth",
