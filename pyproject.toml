@@ -100,10 +100,14 @@ show_missing = true
 legacy_tox_ini = """
 [tox]
 envlist =
-    django2-{py36,py37},
-    django3-{py36,py37,py38,py39},
+    django20-{py36,py37},
+    django21-{py36,py37},
+    django22-{py36,py37},
+    django30-{py36,py37,py38,py39},
+    django31-{py36,py37,py38,py39},
+    django32-{py36,py37,py38,py39},
     # run one of the tests again but with coverage
-    coveralls-django3-py38,
+    coveralls-django31-py38,
 skipsdist = True
 
 [gh-actions]
@@ -130,8 +134,12 @@ deps =
     beautifulsoup4
     dj-database-url
     factory-boy
-    django2: Django<3
-    django3: Django<4
+    django20: Django<2.1
+    django21: Django<2.2
+    django22: Django<3
+    django30: Django<3.1
+    django31: Django<3.2
+    django32: Django<3.3
 
 [testenv:coveralls-django3-py39]
 passenv = COVERALLS_REPO_TOKEN
