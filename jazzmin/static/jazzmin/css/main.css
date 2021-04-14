@@ -829,3 +829,28 @@ body.jazzmin-login-page {
 .callout {
     color: black;
 }
+
+/* sidebar scrolling */
+.layout-fixed #jazzy-sidebar {
+    top: 0;
+    bottom: 0;
+    /* Enable y scroll */
+    overflow-y: scroll;
+    /* May inherit scroll, so we need to explicitly hide */
+    overflow-x: hidden;
+}
+/* calculate height to fit content, we don't to enable scrolling if the content fits */
+.layout-fixed #jazzy-sidebar .sidebar {
+    height: auto !important;
+}
+/* Hide scrollbar */
+.layout-fixed #jazzy-sidebar {
+    scrollbar-width: none;
+}
+.layout-fixed #jazzy-sidebar::-webkit-scrollbar {
+    width: 0;
+}
+/* nav-item will overflow container in width if scrollbar is visible */
+#jazzy-sidebar .nav-sidebar > .nav-item {
+    width: 100%;
+}

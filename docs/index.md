@@ -18,11 +18,11 @@ customise, including a built-in UI customizer
 - Based on the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 
 ## Demo
-Live demo https://django-jazzmin.herokuapp.com/admin
+Live demo [https://django-jazzmin.herokuapp.com/admin](https://django-jazzmin.herokuapp.com/admin)
 
-**Username**: test@test.com
+> **Username**: test@test.com
 
-**Password**: test
+> **Password**: test
 
 *Note: Data resets nightly*
 

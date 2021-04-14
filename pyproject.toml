@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-jazzmin"
-version = "2.4.4"
+version = "2.4.5"
 description = "Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy"
 license = "MIT"
 authors = ["Shipit <packages@shipit.ltd>"]
@@ -28,6 +28,7 @@ classifiers = [
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     "Topic :: Internet :: WWW/HTTP :: WSGI",
@@ -63,14 +64,16 @@ tox = "*"                   # Test runner for python packages
 faker = "*"                 # less fake fake data
 coveralls = "*"             # Publish code coverage to coveralls
 beautifulsoup4 = "*"        # Structure HTML documents into navigable things for test assertions
-mkdocs = "^1.1.2"           # Tool for serving rendered markdown docs
-polib = "^1.1.0"            # Tool for dealing with translation files
-factory-boy = "^3.1.0"      # Factory generation
-mypy = "^0.790"             # Type checking
+mkdocs = "*"                # Tool for serving rendered markdown docs
+polib = "*"                 # Tool for dealing with translation files
+factory-boy = "*"           # Factory generation
+mypy = "*"                  # Type checking
+click = "^7.1.2"            # Framework for building cli's
 # 3rd party app support demonstrated in test app
 django-mptt = "^0.11.0"
 django-treebeard = "^4.3.1"
 django-import-export = "^2.4.0"
+dj-database-url = "^0.5.0"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
@@ -89,7 +92,7 @@ FAIL_INVALID_TEMPLATE_VARS = 1
 max-complexity = 10
 ignore = ["C901" ,"W504", "W503", "E231", "E203"]
 exclude = [".git", ".tox", "_resource", "migrations", "build", "dist", "docs"]
-max-line-length = 150
+max-line-length = 120
 show-source = true
 statistics = false
 
@@ -140,11 +143,11 @@ deps =
     django-admin-numeric-filter
     django-admin-rangefilter
 
-[testenv:coveralls-django3-py38]
+[testenv:coveralls-django3-py39]
 passenv = COVERALLS_REPO_TOKEN
 commands =
     - mypy jazzmin --ignore-missing-imports
-    black --check jazzmin tests --target-version py38 --line-length 120
+    black --check jazzmin tests --target-version py39 --line-length 120
     pytest
     - coveralls
 """

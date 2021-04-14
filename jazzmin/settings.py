@@ -1,6 +1,6 @@
 import copy
 import logging
-from typing import Dict
+from typing import Dict, Any
 
 from django.conf import settings
 from django.templatetags.static import static
@@ -9,7 +9,7 @@ from .utils import get_admin_url, get_model_meta
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_SETTINGS = {
+DEFAULT_SETTINGS: Dict[str, Any] = {
     # title of the window (Will default to current_admin_site.site_title)
     "site_title": None,
     # Title on the brand, and the login screen (19 chars max) (will default to current_admin_site.site_header)
@@ -49,8 +49,10 @@ DEFAULT_SETTINGS = {
     "order_with_respect_to": [],
     # Custom links to append to side menu app groups, keyed on app name
     "custom_links": {},
-    # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free
-    # for a list of icon classes
+    # Custom icons for side menu apps/models See the link below
+    # https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,
+    # 5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
+    # for the full list of 5.13.0 free icon classes
     "icons": {"auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users"},
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -89,7 +91,7 @@ DEFAULT_SETTINGS = {
 # Use the UI builder to generate this #
 #######################################
 
-DEFAULT_UI_TWEAKS = {
+DEFAULT_UI_TWEAKS: Dict[str, Any] = {
     # Small text on the top navbar
     "navbar_small_text": False,
     # Small text on the footer
@@ -276,10 +278,9 @@ def get_ui_tweaks() -> Dict:
     if theme in DARK_THEMES:
         theme_body_classes += " dark-mode"
 
-    return {
+    ret = {
         "raw": raw_tweaks,
         "theme": {"name": theme, "src": static(THEMES[theme])},
-        "dark_mode_theme": {"name": dark_mode_theme, "src": static(THEMES[theme])},
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
         "body_classes": classes(
@@ -298,3 +299,8 @@ def get_ui_tweaks() -> Dict:
         "footer_classes": classes("footer_small_text"),
         "button_classes": tweaks["button_classes"],
     }
+
+    if dark_mode_theme:
+        ret["dark_mode_theme"] = {"name": dark_mode_theme, "src": static(THEMES[dark_mode_theme])}
+
+    return ret

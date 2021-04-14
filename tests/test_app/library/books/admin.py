@@ -13,6 +13,8 @@ from django.utils.timesince import timesince
 from import_export.admin import ImportExportMixin
 from rangefilter.filter import DateRangeFilter
 
+from jazzmin.utils import attr
+
 from ..loans.admin import BookLoanInline
 from .models import Author, Book, Genre
 from .resources import BookResource
@@ -34,7 +36,6 @@ class BookAdmin(ImportExportMixin, NumericFilterModelAdmin):
     raw_id_fields = ("author",)
     list_display = ("__str__", "title", "author", "pages")
     readonly_fields = ("__str__",)
-    list_display_links = ()
     list_filter = (
         "author",
         "genre",
@@ -43,7 +44,6 @@ class BookAdmin(ImportExportMixin, NumericFilterModelAdmin):
         ("pages", SliderNumericFilter),
         ("last_print", DateRangeFilter),
     )
-    list_select_related = False
     list_per_page = 20
     list_max_show_all = 100
     list_editable = ("title",)
@@ -51,15 +51,13 @@ class BookAdmin(ImportExportMixin, NumericFilterModelAdmin):
     autocomplete_fields = ("genre",)
     date_hierarchy = "published_on"
     save_as = True
-    save_as_continue = True
     save_on_top = True
-    preserve_filters = True
     inlines = (BookLoanInline,)
 
-    actions = []
-    actions_on_top = True
     actions_on_bottom = True
-    actions_selection_counter = True
+
+    # Order the sections within the change form
+    jazzmin_section_order = ("book loans", "general", "other")
 
 
 @admin.register(Author)
@@ -84,12 +82,11 @@ class LogEntryAdmin(admin.ModelAdmin):
             '<a href="{url}">{obj} [{model}]</a>'.format(url=url, obj=obj.object_repr, model=obj.content_type.model)
         )
 
+    @attr(admin_order_field="action_time")
     def modified(self, obj):
         if not obj.action_time:
             return "Never"
         return "{} ago".format(timesince(obj.action_time))
-
-    modified.admin_order_field = "action_time"
 
 
 @admin.register(User)

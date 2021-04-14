@@ -1,12 +1,12 @@
 import logging
-from typing import List, Union, Dict, Set, Callable
+from typing import List, Union, Dict, Set, Callable, Any
 from urllib.parse import urlencode
 
 from django.apps import apps
 from django.contrib.admin import ListFilter
 from django.contrib.admin.helpers import AdminForm
 from django.contrib.auth.models import AbstractUser
-from django.db.models.base import ModelBase
+from django.db.models.base import ModelBase, Model
 from django.db.models.options import Options
 from django.utils.translation import gettext
 
@@ -33,9 +33,7 @@ def order_with_respect_to(original: List, reference: List, getter: Callable = la
     return [y for x, y in sorted(zip(ranking, original), key=lambda x: x[0])]
 
 
-def get_admin_url(
-    instance: Union[str, ModelBase], admin_site: str = "admin", from_app: bool = False, **kwargs: str
-) -> str:
+def get_admin_url(instance: Any, admin_site: str = "admin", from_app: bool = False, **kwargs: str) -> str:
     """
     Return the admin URL for the given instance, model class or <app>.<model> string
     """
@@ -108,8 +106,8 @@ def get_model_meta(model_str: str) -> Union[None, Options]:
     """
     try:
         app, model = model_str.split(".")
-        Model = apps.get_registered_model(app, model)
-        return Model._meta
+        model_klass: Model = apps.get_registered_model(app, model)
+        return model_klass._meta
     except (ValueError, LookupError):
         return None
 
@@ -232,3 +230,12 @@ def has_fieldsets_check(adminform: AdminForm) -> bool:
     if not fieldsets or (len(fieldsets) == 1 and fieldsets[0][0] is None):
         return False
     return True
+
+
+def attr(**kwargs) -> Callable:
+    def decorator(func: Callable):
+        for key, value in kwargs.items():
+            setattr(func, key, value)
+        return func
+
+    return decorator

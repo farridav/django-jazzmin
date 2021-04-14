@@ -1,92 +1,111 @@
-# Переводил HurmaDev
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-19 20:23+0200\n"
+"POT-Creation-Date: 2021-03-12 00:37+1000\n"
 "PO-Revision-Date: 2020-11-14 00:53+0800\n"
 "Last-Translator: HurmaDev <nuwetsky@gmail.com>\n"
 "Language-Team: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: templates/admin/base.html:125
+#: templates/admin/auth/user/add_form.html:6
+msgid ""
+"First, enter a username and password. Then, you'll be able to edit more user"
+" options."
+msgstr ""
+"Сначала введите имя пользователя и пароль,"
+" после чего вы сможете изменить остальную информацию о пользователе."
+
+#: templates/admin/base.html:151
 msgid "Account"
 msgstr "Аккаунт"
 
-#: templates/admin/base.html:143
+#: templates/admin/base.html:169
 msgid "See Profile"
-msgstr "Открыть профиль"
+msgstr "Профиль"
 
-#: templates/admin/base.html:183 templates/admin/index.html:6
-#: templates/admin/index.html:11
+#: templates/admin/base.html:209 templates/admin/index.html:7
+#: templates/admin/index.html:12
 msgid "Dashboard"
-msgstr "Админ-панель"
+msgstr "Админпанель"
 
-#: templates/admin/base.html:294
+#: templates/admin/base.html:322
 msgid "Jazzmin version"
 msgstr "Jazzmin Version"
 
-#: templates/admin/base.html:297
+#: templates/admin/base.html:325
 msgid "Copyright"
 msgstr ""
 
-#: templates/admin/base.html:297
+#: templates/admin/base.html:325
 msgid "All rights reserved."
 msgstr "Все права защищены."
 
-#: templates/admin/base.html:313
+#: templates/admin/base.html:341
 msgid "UI Configuration"
-msgstr "UI конфигурация"
+msgstr "Настройки UI"
 
-#: templates/admin/base.html:317
+#: templates/admin/base.html:345
 msgid "Copy this info your settings file to persist these UI changes"
 msgstr ""
-"Скопируйте этот текст в свой settings проекта, чтобы применитьизменения"
+"Скопируйте этот текст в свои настройки проекта, чтобы применить изменения"
 
-#: templates/admin/index.html:90
-#| msgid "%(entry.action_time|timesince)s ago"
+#: templates/admin/edit_inline/stacked.html:30
+msgid "New"
+msgstr "Новый"
+
+#: templates/admin/submit_line.html:9
+msgid "Actions"
+msgstr "Действия"
+
+#: templates/admin/index.html:91
+#, fuzzy, python-format
+#| msgid "%(timesince)s ago"
 msgid "%(timesince)s ago"
 msgstr "%(timesince) назад"
 
-#: templates/admin/submit_line.html:8
-msgid "Actions"
-msgstr "Экшены"
+#: templates/admin/object_history.html:58
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this"
+" admin site."
+msgstr ""
 
-#: templates/admin_doc/template_detail.html:13
-#, python-format
-msgid "Template: <q>%(name)s</q>"
-msgstr "Vorlage: <q>%(name)</q>"
-
-#. Translators: Search is not a verb here, it qualifies path (a search path)
-#: templates/admin_doc/template_detail.html:17
-#, python-format
-msgid "Search path for template <q>%(name)s</q>:"
-msgstr "Искать path в шаблоне <q>%(name)</q>:"
+#: templates/admin/popup_response.html:5
+msgid "Popup closing..."
+msgstr ""
 
 #: templates/admin_doc/template_filter_index.html:37
-#: templates/admin_doc/view_index.html:43
+#: templates/admin_doc/view_index.html:49
 #, python-format
 msgid ""
 "View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
 msgstr ""
-"Показать функцию: <code>%(full_name)</code>. Имя: <code>%(url_name)</code>."
 
-#: templatetags/jazzmin.py:390
-#, python-brace-format
-msgid "Added {name} “{object}”."
-msgstr "Добавить {name} “{object}”."
+#: templates/includes/carousel.html:4
+#: templates/includes/collapsible.html:2
+#: templates/includes/horizontal_tabs.html:2
+#: templates/includes/vertical_tabs.html:2
+msgid "General"
+msgstr "Основная информация"
 
-#: templatetags/jazzmin.py:406
+#: templates/registration/password_change_form.html:28
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new"
+" password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#: templatetags/jazzmin.py:439
 #, python-brace-format
 msgid "Deleted “{object}”."
-msgstr "“Удалить {object}”."
+msgstr "Удалено «{object}»."
 
-#: utils.py:66
+#: utils.py:74
 #, python-brace-format
 msgid "Could not reverse url from {instance}"
-msgstr "Не удалось получить обратный url от {instance}"
+msgstr "Не удалось получить обратный url для {instance}"
