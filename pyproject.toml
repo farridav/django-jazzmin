@@ -24,7 +24,6 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
@@ -41,7 +40,7 @@ include = ["jazzmin"]
 exclude = ["tests", "docs"]
 
 [tool.poetry.dependencies]
-python = ">=3.5"
+python = ">=3.6"
 django = ">=2"
 
 [tool.black]
@@ -55,6 +54,7 @@ ipython = "*"               # enhanced python shell
 ipdb = "*"                  # ipython breakpoints
 django-extensions = "*"     # Django Sugar for development
 flake9 = "*"                # Static code checking (with pyproject.toml support)
+black = "*"                 # Code formatting and linting (with pyproject.toml support)
 pytest = "*"                # Test runner
 pytest-django = "*"         # Django integration for pytest
 pytest-cov = "*"            # Measure code coverage durign tests
