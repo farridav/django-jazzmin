@@ -197,7 +197,7 @@ def jazzmin_paginator_number(cl: ChangeList, i: int) -> SafeText:
             </a>
             </li>
         """.format(
-            num=i + 1
+            num=i
         )
 
     else:
@@ -208,7 +208,7 @@ def jazzmin_paginator_number(cl: ChangeList, i: int) -> SafeText:
             <a href="{query_string}" class="page-link {end}" data-dt-idx="3" tabindex="0">{num}</a>
             </li>
         """.format(
-            num=i + 1, query_string=query_string, end=end
+            num=i, query_string=query_string, end=end
         )
 
     return format_html(html_str)
