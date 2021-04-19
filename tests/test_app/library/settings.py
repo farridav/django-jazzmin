@@ -1,7 +1,8 @@
 import os
+from typing import Any, Dict
 
-from django.conf.global_settings import LANGUAGES as DJANGO_LANGUAGES
 import dj_database_url
+from django.conf.global_settings import LANGUAGES as DJANGO_LANGUAGES
 
 ###################
 # Django Settings #
@@ -17,6 +18,10 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     # Keep this above 'django.contrib.admin'
     "jazzmin",
+    # 3rd party app support demonstrated in test app (not a jazzmin requirement)
+    "admin_numeric_filter",
+    "rangefilter",
+    # Django apps
     "django.contrib.admin",
     "django.contrib.admindocs",
     "django.contrib.auth",
@@ -113,7 +118,7 @@ if not DEBUG and not TEST:
 ########################
 # Third party settings #
 ########################
-JAZZMIN_SETTINGS = {
+JAZZMIN_SETTINGS: Dict[str, Any] = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
     "site_title": "Library Admin",
     # Title on the brand, and login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)

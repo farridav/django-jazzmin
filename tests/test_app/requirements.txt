@@ -12,3 +12,5 @@ https://github.com/farridav/django-jazzmin/archive/master.zip
 django-mptt
 django-treebeard
 django-import-export
+django-admin-numeric-filter
+django-admin-rangefilter

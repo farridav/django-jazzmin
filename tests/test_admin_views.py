@@ -1,8 +1,8 @@
 import pytest
-
 from jazzmin.compat import reverse
-from .test_app.library.factories import BookFactory
+
 from .test_app.library.books.models import Book
+from .test_app.library.factories import BookFactory
 
 
 @pytest.mark.django_db
@@ -131,10 +131,11 @@ def test_detail(admin_client):
         "admin/widgets/foreign_key_raw_id.html": 1,
         "admin/widgets/related_widget_wrapper.html": 4,
         "admin/widgets/split_datetime.html": 2,
-        "django/forms/widgets/attrs.html": 46,
+        "django/forms/widgets/attrs.html": 47,
         "django/forms/widgets/date.html": 5,
         "django/forms/widgets/hidden.html": 6,
-        "django/forms/widgets/input.html": 18,
+        "django/forms/widgets/input.html": 19,
+        "django/forms/widgets/number.html": 1,
         "django/forms/widgets/select.html": 6,
         "django/forms/widgets/select_option.html": 21,
         "django/forms/widgets/text.html": 4,
@@ -161,6 +162,7 @@ def test_detail(admin_client):
         "django/forms/widgets/date.html",
         "django/forms/widgets/hidden.html",
         "django/forms/widgets/input.html",
+        "django/forms/widgets/number.html",
         "django/forms/widgets/select.html",
         "django/forms/widgets/select_option.html",
         "django/forms/widgets/text.html",
@@ -208,10 +210,16 @@ def test_list(admin_client):
         "django/forms/widgets/text.html": 5,
         "django/forms/widgets/select_option.html": 4,
         "django/forms/widgets/select.html": 2,
-        "django/forms/widgets/input.html": 21,
+        "django/forms/widgets/input.html": 28,
         "django/forms/widgets/hidden.html": 11,
-        "django/forms/widgets/attrs.html": 27,
+        "django/forms/widgets/attrs.html": 34,
         "jazzmin/includes/ui_builder_panel.html": 1,
+        "admin/filter_numeric_range.html": 1,
+        "admin/filter_numeric_single.html": 1,
+        "admin/filter_numeric_slider.html": 1,
+        "django/forms/widgets/date.html": 2,
+        "django/forms/widgets/number.html": 5,
+        "rangefilter/date_filter.html": 1,
     }
 
     # The templates that were used
@@ -238,6 +246,12 @@ def test_list(admin_client):
         "django/forms/widgets/hidden.html",
         "django/forms/widgets/attrs.html",
         "jazzmin/includes/ui_builder_panel.html",
+        "admin/filter_numeric_range.html",
+        "admin/filter_numeric_single.html",
+        "admin/filter_numeric_slider.html",
+        "django/forms/widgets/date.html",
+        "django/forms/widgets/number.html",
+        "rangefilter/date_filter.html",
     }
 
 
