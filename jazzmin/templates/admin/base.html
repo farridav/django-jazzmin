@@ -37,8 +37,8 @@
     {% endif %}
 
     <!-- favicons -->
-    <link rel="shortcut icon" href="{% static jazzmin_settings.site_logo %}" type="image/png">
-    <link rel="icon" href="{% static jazzmin_settings.site_logo %}" sizes="32x32" type="image/png">
+    <link rel="shortcut icon" href="{% static jazzmin_settings.site_icon %}" type="image/png">
+    <link rel="icon" href="{% static jazzmin_settings.site_icon %}" sizes="32x32" type="image/png">
 
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -61,7 +61,7 @@
                 {% else %}
                     <li class="nav-item">
                         <a href="{% url 'admin:index' %}" class="brand-link">
-                            <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8; margin: 0 0 0 5px;">
+                            <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="{{ jazzmin_settings.site_logo_classes }} brand-image elevation-3" style="opacity: .8; margin: 0 0 0 5px;">
                         </a>
                     </li>
                 {% endif %}
@@ -178,7 +178,7 @@
 
             <aside class="main-sidebar elevation-4 {{ jazzmin_ui.sidebar_classes }}" id="jazzy-sidebar">
                 <a href="{% url 'admin:index' %}" class="brand-link {{ jazzmin_ui.brand_classes }}" id="jazzy-logo">
-                    <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <img src="{% static jazzmin_settings.site_logo %}" alt="{{ jazzmin_settings.site_header }} Logo" class="{{ jazzmin_settings.site_logo_classes }} brand-image elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light">{{ jazzmin_settings.site_header }}</span>
                 </a>
 

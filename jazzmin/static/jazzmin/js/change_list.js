@@ -15,13 +15,7 @@
         $(this).trigger('change');
     };
 
-    $(document).ready(function () {
-        // Ensure all raw_id_fields have the search icon in them
-        $('.related-lookup').append('<i class="fa fa-search"></i>')
-
-        // Allow for styling of selects
-        $('.actions select').addClass('form-control');
-
+    function searchFilters() {
         // Make search filters select2 and ensure they work for filtering
         const $ele = $('.search-filter');
         $ele.search_filters();
@@ -47,6 +41,16 @@
                 },
             });
         }
+    }
+
+    $(document).ready(function () {
+        // Ensure all raw_id_fields have the search icon in them
+        $('.related-lookup').append('<i class="fa fa-search"></i>')
+
+        // Allow for styling of selects
+        $('.actions select').addClass('form-control');
+
+        searchFilters();
     });
 
 })(jQuery);
