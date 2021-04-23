@@ -18,9 +18,6 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     # Keep this above 'django.contrib.admin'
     "jazzmin",
-    # 3rd party app support demonstrated in test app (not a jazzmin requirement)
-    "admin_numeric_filter",
-    "rangefilter",
     # Django apps
     "django.contrib.admin",
     "django.contrib.admindocs",
@@ -29,7 +26,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "import_export",
     # Our apps
     "{}library.books.apps.BooksConfig".format(PREFIX),
     "{}library.loans.apps.LoansConfig".format(PREFIX),
