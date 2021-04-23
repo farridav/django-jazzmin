@@ -1,23 +1,13 @@
-from admin_numeric_filter.admin import (
-    NumericFilterModelAdmin,
-    RangeNumericFilter,
-    SingleNumericFilter,
-    SliderNumericFilter,
-)
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.timesince import timesince
-from import_export.admin import ImportExportMixin
-from rangefilter.filter import DateRangeFilter
 
 from jazzmin.utils import attr
-
-from ..loans.admin import BookLoanInline
 from .models import Author, Book, Genre
-from .resources import BookResource
+from ..loans.admin import BookLoanInline
 
 admin.site.unregister(User)
 
@@ -27,8 +17,7 @@ class BooksInline(admin.TabularInline):
 
 
 @admin.register(Book)
-class BookAdmin(ImportExportMixin, NumericFilterModelAdmin):
-    resource_class = BookResource
+class BookAdmin(admin.ModelAdmin):
     fieldsets = (
         ("general", {"fields": ("title", "author", "library")}),
         ("other", {"fields": ("genre", "summary", "isbn", "published_on", "pages")}),
@@ -36,14 +25,6 @@ class BookAdmin(ImportExportMixin, NumericFilterModelAdmin):
     raw_id_fields = ("author",)
     list_display = ("__str__", "title", "author", "pages")
     readonly_fields = ("__str__",)
-    list_filter = (
-        "author",
-        "genre",
-        ("pages", SingleNumericFilter),
-        ("pages", RangeNumericFilter),
-        ("pages", SliderNumericFilter),
-        ("last_print", DateRangeFilter),
-    )
     list_per_page = 20
     list_max_show_all = 100
     list_editable = ("title",)

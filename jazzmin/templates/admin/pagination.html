@@ -22,15 +22,9 @@
 <div class="col-7">
     <ul class="pagination pagination-sm m-0 float-right">
         {% if pagination_required %}
-            <li class="page-item previous disabled">
-                <a class="page-link" href="#" data-dt-idx="0" tabindex="0">«</a>
-            </li>
             {% for i in page_range %}
                 {% jazzmin_paginator_number cl i %}
             {% endfor %}
-            <li class="page-item next disabled">
-                <a class="page-link" href="#" data-dt-idx="7" tabindex="0">»</a>
-            </li>
         {% endif %}
     </ul>
 </div>

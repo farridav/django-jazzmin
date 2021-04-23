@@ -67,13 +67,6 @@ polib = "*"                 # Tool for dealing with translation files
 factory-boy = "*"           # Factory generation
 mypy = "*"                  # Type checking
 click = "^7.1.2"            # Framework for building cli's
-# 3rd party app support demonstrated in test app
-django-mptt = "^0.11.0"
-django-treebeard = "^4.3.1"
-django-import-export = "^2.4.0"
-dj-database-url = "^0.5.0"
-django-admin-numeric-filter = "^0.1.6"
-django-admin-rangefilter = "^0.7.0"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
@@ -137,11 +130,8 @@ deps =
     beautifulsoup4
     dj-database-url
     factory-boy
-    django-import-export
     django2: Django<3
     django3: Django<4
-    django-admin-numeric-filter
-    django-admin-rangefilter
 
 [testenv:coveralls-django3-py39]
 passenv = COVERALLS_REPO_TOKEN
