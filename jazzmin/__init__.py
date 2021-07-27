@@ -1,2 +1,2 @@
-version = "2.4.7"
+version = "2.4.8"
 default_app_config = "jazzmin.apps.JazzminConfig"
