@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third party apps
+    "nested_admin",
     # Our apps
     "{}library.books.apps.BooksConfig".format(PREFIX),
     "{}library.loans.apps.LoansConfig".format(PREFIX),
@@ -208,7 +210,7 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     # UI Tweaks #
     #############
     # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": None,
+    "custom_css": "nested_admin/jazzmin.css",
     "custom_js": None,
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": True,

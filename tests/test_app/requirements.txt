@@ -5,6 +5,7 @@ psycopg2-binary
 dj-database-url
 factory-boy
 docutils
+django-nested-admin
 
 # Latest jazzmin
 https://github.com/farridav/django-jazzmin/archive/master.zip

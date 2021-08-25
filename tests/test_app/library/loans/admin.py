@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.urls import path
+from nested_admin.nested import NestedModelAdmin, NestedStackedInline
 
 from .models import BookLoan, Library
 from .views import CustomView
+from ..books.models import Author, Book
 
 
 class BookLoanInline(admin.StackedInline):
@@ -48,6 +50,17 @@ class BookLoanAdmin(admin.ModelAdmin):
         return ret
 
 
+class BookLoansNestedInline(NestedStackedInline):
+    model = BookLoan
+
+
+class BooksNestedInline(NestedStackedInline):
+    model = Book
+    inlines = [BookLoansNestedInline]
+
+
 @admin.register(Library)
-class LibraryAdmin(admin.ModelAdmin):
+class LibraryAdmin(NestedModelAdmin):
     list_display = ("name", "address", "librarian")
+    inlines = [BooksNestedInline]
+

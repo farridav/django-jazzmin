@@ -10,6 +10,7 @@
 /diffs
 /build
 /dist
+/venv
 *.reports
 __pycache__
 _resource
@@ -17,3 +18,4 @@ admin_templates
 admindocs_templates
 *.sqlite3
 tests/test_app/static/
+
