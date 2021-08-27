@@ -1,0 +1,467 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-03 10:27+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: jazzmin/templates/admin/actions.html:10
+msgid "Run the selected action"
+msgstr "Изпълни избраното действие"
+
+#: jazzmin/templates/admin/actions.html:11
+#: jazzmin/templates/admin/index.html:48
+msgid "Go"
+msgstr "Изпълни"
+
+#: jazzmin/templates/admin/actions.html:20
+msgid "Click here to select the objects across all pages"
+msgstr "Кликнете тук за избор на обектите във всички страници"
+
+#: jazzmin/templates/admin/actions.html:21
+#, python-format
+msgid "Select all %(total_count)s %(module_name)s"
+msgstr "Изберете всички %(total_count)s %(module_name)s"
+
+#: jazzmin/templates/admin/actions.html:24
+msgid "Clear selection"
+msgstr "Изчисти избраното"
+
+#: jazzmin/templates/admin/app_index.html:11
+#: jazzmin/templates/admin/auth/user/change_password.html:14
+#: jazzmin/templates/admin/change_form.html:23
+#: jazzmin/templates/admin/change_list.html:28
+#: jazzmin/templates/admin/delete_confirmation.html:15
+#: jazzmin/templates/admin/delete_selected_confirmation.html:15
+#: jazzmin/templates/admin/filer/breadcrumbs.html:4
+#: jazzmin/templates/admin/filer/folder/change_form.html:6
+#: jazzmin/templates/admin/filer/folder/directory_listing.html:42
+#: jazzmin/templates/admin/import_export/base.html:12
+#: jazzmin/templates/admin/index.html:11
+#: jazzmin/templates/admin/object_history.html:6
+#: jazzmin/templates/admin/solo/change_form.html:7
+#: jazzmin/templates/admin/solo/object_history.html:6
+#: jazzmin/templates/admin_doc/bookmarklets.html:6
+#: jazzmin/templates/admin_doc/index.html:6
+#: jazzmin/templates/admin_doc/missing_docutils.html:6
+#: jazzmin/templates/admin_doc/model_detail.html:14
+#: jazzmin/templates/admin_doc/model_index.html:8
+#: jazzmin/templates/admin_doc/template_detail.html:6
+#: jazzmin/templates/admin_doc/template_filter_index.html:8
+#: jazzmin/templates/admin_doc/template_tag_index.html:8
+#: jazzmin/templates/admin_doc/view_detail.html:7
+#: jazzmin/templates/admin_doc/view_index.html:8
+#: jazzmin/templates/registration/password_change_done.html:11
+#: jazzmin/templates/registration/password_change_form.html:14
+msgid "Home"
+msgstr "Начало"
+
+#: jazzmin/templates/admin/auth/user/add_form.html:6
+msgid ""
+"First, enter a username and password. Then, you'll be able to edit more user "
+"options."
+msgstr ""
+"Първо въведете потребителско име и парола. След това ще можете да редактирате още потребителски "
+"настройки."
+
+#: jazzmin/templates/admin/auth/user/add_form.html:8
+msgid "Enter a username and password."
+msgstr "Въведете потребител и парола."
+
+#: jazzmin/templates/admin/auth/user/change_password.html:18
+#: jazzmin/templates/admin/auth/user/change_password.html:23
+#: jazzmin/templates/admin/auth/user/change_password.html:96
+#: jazzmin/templates/admin/base.html:154
+#: jazzmin/templates/registration/password_change_done.html:6
+#: jazzmin/templates/registration/password_change_form.html:9
+#: jazzmin/templates/registration/password_change_form.html:103
+msgid "Change password"
+msgstr "Сменете паролата"
+
+#: jazzmin/templates/admin/auth/user/change_password.html:31
+#: jazzmin/templates/admin/change_form.html:55
+#: jazzmin/templates/admin/change_list.html:57
+#: jazzmin/templates/registration/password_change_form.html:38
+msgid "Please correct the error below."
+msgstr "Моля поправете грешката по-долу."
+
+#: jazzmin/templates/admin/auth/user/change_password.html:33
+#: jazzmin/templates/admin/change_form.html:57
+#: jazzmin/templates/admin/change_list.html:59
+#: jazzmin/templates/registration/password_change_form.html:38
+msgid "Please correct the errors below."
+msgstr "Моля поправете грешките по-долу."
+
+#: jazzmin/templates/admin/auth/user/change_password.html:41
+#, python-format
+msgid "Enter a new password for the user <strong>%(username)s</strong>."
+msgstr "Въведете нова парола за потребител <strong>%(username)s</strong>."
+
+#: jazzmin/templates/admin/base.html:91
+#: jazzmin/templates/admin/filer/folder/directory_listing.html:151
+#: jazzmin/templates/admin/search_form.html:19
+msgid "Search"
+msgstr "Търсене"
+
+#: jazzmin/templates/admin/base.html:151
+msgid "Account"
+msgstr "Акаунт"
+
+#: jazzmin/templates/admin/base.html:158
+#: jazzmin/templates/registration/password_change_done.html:7
+#: jazzmin/templates/registration/password_change_form.html:9
+msgid "Log out"
+msgstr "Изход"
+
+#: jazzmin/templates/admin/base.html:169
+msgid "See Profile"
+msgstr "Виж профила"
+
+#: jazzmin/templates/admin/base.html:209 jazzmin/templates/admin/index.html:7
+#: jazzmin/templates/admin/index.html:12
+msgid "Dashboard"
+msgstr "Табло"
+
+#: jazzmin/templates/admin/base.html:322
+msgid "Jazzmin version"
+msgstr "Версия на Jazzmin"
+
+#: jazzmin/templates/admin/base.html:325
+msgid "Copyright"
+msgstr ""
+
+#: jazzmin/templates/admin/base.html:325
+msgid "All rights reserved."
+msgstr "Всички права запазени."
+
+#: jazzmin/templates/admin/base.html:341
+msgid "UI Configuration"
+msgstr "Конфигурация на UI"
+
+#: jazzmin/templates/admin/base.html:345
+msgid "Copy this info your settings file to persist these UI changes"
+msgstr ""
+"Копирайте това във вашия файл с настройки, за да запазите тези промени по настройките на потребителския интерфейс"
+
+#: jazzmin/templates/admin/index.html:73
+msgid "Recent actions"
+msgstr "Скорошни действия"
+
+#: jazzmin/templates/admin/index.html:77
+msgid "None available"
+msgstr "Няма налични"
+
+#: jazzmin/templates/admin/index.html:91
+#, python-format
+msgid "%(timesince)s ago"
+msgstr "преди %(timesince)s"
+
+#: jazzmin/templates/admin/login.html:14
+#: jazzmin/templates/registration/logged_out.html:15
+#: jazzmin/templates/registration/logged_out.html:60
+msgid "Log in again"
+msgstr "Влезте отново"
+
+#: jazzmin/templates/admin/login.html:65
+#, python-format
+msgid ""
+"You are authenticated as %(username)s, but are not authorized to access this "
+"page. Would you like to login to a different account?"
+msgstr ""
+"Влезли сте като %(username)s, но нямате права да достъпите тази "
+"страница. Искате ли за влезете като друг потребител?"
+
+#: jazzmin/templates/admin/login.html:114
+msgid "Log in"
+msgstr "Вход"
+
+#: jazzmin/templates/admin/object_history.html:58
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this "
+"admin site."
+msgstr ""
+"Този обект няма история на промените. Вероятно не е добавян чрез този "
+"администраторски сайт."
+#: jazzmin/templates/admin/pagination.html:14
+#: jazzmin/templates/admin/search_form.html:27
+msgid "Show all"
+msgstr "Покажи всички"
+
+#: jazzmin/templates/admin/pagination.html:17
+#: jazzmin/templates/admin/submit_line.html:15
+msgid "Save"
+msgstr "Запиши"
+
+#: jazzmin/templates/admin/popup_response.html:5
+msgid "Popup closing..."
+msgstr "Затваряне на прозорец..."
+
+#: jazzmin/templates/admin/search_form.html:22
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] "%(counter)s резултат"
+msgstr[1] "%(counter)s резултати"
+
+#: jazzmin/templates/admin/search_form.html:25
+#, python-format
+msgid "%(full_result_count)s total"
+msgstr "%(full_result_count)s общо"
+
+#: jazzmin/templates/admin/submit_line.html:26
+msgid "Save as new"
+msgstr "Запиши като нов"
+
+#: jazzmin/templates/admin/submit_line.html:31
+msgid "Save and add another"
+msgstr "Запиши и добави нов"
+
+#: jazzmin/templates/admin/submit_line.html:36
+msgid "Save and continue editing"
+msgstr "Запиши и продължи с редакцията"
+
+#: jazzmin/templates/admin/submit_line.html:36
+msgid "Save and view"
+msgstr "Запиши и покажи"
+
+#: jazzmin/templates/admin_doc/bookmarklets.html:7
+#: jazzmin/templates/admin_doc/index.html:7
+#: jazzmin/templates/admin_doc/index.html:11
+#: jazzmin/templates/admin_doc/index.html:12
+#: jazzmin/templates/admin_doc/missing_docutils.html:7
+#: jazzmin/templates/admin_doc/missing_docutils.html:12
+#: jazzmin/templates/admin_doc/model_detail.html:15
+#: jazzmin/templates/admin_doc/model_index.html:9
+#: jazzmin/templates/admin_doc/template_detail.html:7
+#: jazzmin/templates/admin_doc/template_filter_index.html:9
+#: jazzmin/templates/admin_doc/template_tag_index.html:9
+#: jazzmin/templates/admin_doc/view_detail.html:8
+#: jazzmin/templates/admin_doc/view_index.html:9
+#: jazzmin/templates/registration/password_change_done.html:5
+#: jazzmin/templates/registration/password_change_form.html:8
+msgid "Documentation"
+msgstr "Документация"
+
+#: jazzmin/templates/admin_doc/bookmarklets.html:8
+#: jazzmin/templates/admin_doc/index.html:32
+msgid "Bookmarklets"
+msgstr "Указатели"
+
+#: jazzmin/templates/admin_doc/bookmarklets.html:12
+msgid "Documentation bookmarklets"
+msgstr "Указатели към документация"
+
+#: jazzmin/templates/admin_doc/bookmarklets.html:19
+msgid ""
+"To install bookmarklets, drag the link to your bookmarks toolbar, or right-"
+"click the link and add it to your bookmarks. Now you can select the "
+"bookmarklet from any page in the site."
+msgstr ""
+"За да инсталирате указатели, провлачете връзката към вашата лентата с указатели или кликнете с десен бутон "
+"върху връзката и добавете към вашите указатели. Вече можете да избирате "
+"указателя от която и да е страница в този сайт."
+
+#: jazzmin/templates/admin_doc/bookmarklets.html:30
+msgid "Documentation for this page"
+msgstr "Документация за тази страница"
+
+#: jazzmin/templates/admin_doc/bookmarklets.html:31
+msgid ""
+"Jumps you from any page to the documentation for the view that generates "
+"that page."
+msgstr ""
+"Прехвърля ви от която и да е страница към документацията за изгледа, който генерира "
+"тази страница."
+
+#: jazzmin/templates/admin_doc/index.html:20
+#: jazzmin/templates/admin_doc/template_tag_index.html:10
+msgid "Tags"
+msgstr "Тагове"
+
+#: jazzmin/templates/admin_doc/index.html:21
+msgid "List of all the template tags and their functions."
+msgstr "Списък с всички тагове за шаблони и техните функции."
+
+#: jazzmin/templates/admin_doc/index.html:23
+#: jazzmin/templates/admin_doc/template_filter_index.html:10
+msgid "Filters"
+msgstr "Филтри"
+
+#: jazzmin/templates/admin_doc/index.html:24
+msgid ""
+"Filters are actions which can be applied to variables in a template to alter "
+"the output."
+msgstr ""
+"Филтрите са действия, които могат да се приложат към променливи в шаблона, за да промените "
+"резултата."
+
+#: jazzmin/templates/admin_doc/index.html:26
+#: jazzmin/templates/admin_doc/model_detail.html:16
+#: jazzmin/templates/admin_doc/model_index.html:10
+#: jazzmin/templates/admin_doc/model_index.html:14
+#: jazzmin/templates/admin_doc/model_index.html:15
+msgid "Models"
+msgstr "Модели"
+
+#: jazzmin/templates/admin_doc/index.html:27
+msgid ""
+"Models are descriptions of all the objects in the system and their "
+"associated fields. Each model has a list of fields which can be accessed as "
+"template variables"
+msgstr ""
+"Моделите описват всички обекти в системата и техните "
+"полета. Всеки модел има списък с полета, които могат да се достъпват като "
+"променливи в шаблона"
+
+#: jazzmin/templates/admin_doc/index.html:29
+#: jazzmin/templates/admin_doc/view_detail.html:9
+#: jazzmin/templates/admin_doc/view_index.html:10
+#: jazzmin/templates/admin_doc/view_index.html:14
+msgid "Views"
+msgstr "Изгледи"
+
+#: jazzmin/templates/admin_doc/index.html:30
+msgid ""
+"Each page on the public site is generated by a view. The view defines which "
+"template is used to generate the page and which objects are available to "
+"that template."
+msgstr ""
+"Всяка страница от публичния сайт е генерирана от изглед. Изгледът дефинира кой "
+"шаблон да се използва за генериране на страницата и кои обекти ще са налични за "
+"този шаблон."
+
+#: jazzmin/templates/admin_doc/index.html:33
+msgid "Tools for your browser to quickly access admin functionality."
+msgstr "Инструменти за вашия браузър, с които бързо достъпвате функционалностите на административния сайт."
+
+#: jazzmin/templates/admin_doc/missing_docutils.html:11
+msgid "Please install docutils"
+msgstr "Моля инсталирайте docutils"
+
+#: jazzmin/templates/admin_doc/missing_docutils.html:15
+#, python-format
+msgid ""
+"The admin documentation system requires Python's <a href=\"%(link)s"
+"\">docutils</a> library."
+msgstr ""
+"Документацията на административния сайт изисква Python <a href=\"%(link)s"
+"\">docutils</a> библиотеката."
+
+#: jazzmin/templates/admin_doc/missing_docutils.html:17
+#, python-format
+msgid ""
+"Please ask your administrators to install <a href=\"%(link)s\">docutils</a>."
+msgstr ""
+"Моля поискайте от вашия администратор да инсталира <a href=\"%(link)s\">docutils</a>."
+
+#: jazzmin/templates/admin_doc/model_detail.html:21
+#, python-format
+msgid "Model: %(name)s"
+msgstr "Модел: %(name)s"
+
+#: jazzmin/templates/admin_doc/model_detail.html:26
+#: jazzmin/templates/admin_doc/model_detail.html:41
+#: jazzmin/templates/admin_doc/model_detail.html:67
+msgid "Description"
+msgstr "Описание"
+
+#: jazzmin/templates/admin_doc/model_detail.html:34
+msgid "Fields"
+msgstr "Полета"
+
+#: jazzmin/templates/admin_doc/model_detail.html:39
+msgid "Field"
+msgstr "Поле"
+
+#: jazzmin/templates/admin_doc/model_detail.html:60
+msgid "Methods with arguments"
+msgstr "Методи с аргументи"
+
+#: jazzmin/templates/admin_doc/model_detail.html:65
+msgid "Method"
+msgstr "Метод"
+
+#: jazzmin/templates/admin_doc/model_detail.html:66
+msgid "Arguments"
+msgstr "Аргументи"
+
+#: jazzmin/templates/admin_doc/model_detail.html:85
+msgid "Back to Model documentation"
+msgstr "Назад към документация за модели"
+
+#: jazzmin/templates/admin_doc/template_detail.html:8
+msgid "Templates"
+msgstr "Шаблони"
+
+#: jazzmin/templates/admin_doc/template_detail.html:12
+#, python-format
+msgid "Template: %(name)s"
+msgstr "Шаблон: %(name)s"
+
+#: jazzmin/templates/admin_doc/template_detail.html:13
+#, python-format
+msgid "Template: <q>%(name)s</q>"
+msgstr "Шаблон: <q>%(name)s</q>"
+
+#. Translators: Search is not a verb here, it qualifies path (a search path)
+#: jazzmin/templates/admin_doc/template_detail.html:17
+#, python-format
+msgid "Search path for template <q>%(name)s</q>:"
+msgstr "Път за търсене за шаблон <q>%(name)s</q>:"
+
+#: jazzmin/templates/admin_doc/template_filter_index.html:25
+msgid "Built-in filters"
+msgstr "Вградени филтри"
+
+#: jazzmin/templates/admin_doc/template_filter_index.html:37
+#: jazzmin/templates/admin_doc/view_index.html:49
+#, python-format
+msgid ""
+"View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
+msgstr ""
+"View-Функция: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
+
+#: jazzmin/templates/registration/password_change_form.html:28
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Моля въведете старата си парола, за потвърждение, след това въведете новата си "
+"парола два пъти, за да се уверим, че е написана коректно."
+
+#: jazzmin/templatetags/jazzmin.py:476
+#, python-brace-format
+msgid "Added {name} “{object}”."
+msgstr "Добавен {name} “{object}”."
+
+#: jazzmin/templatetags/jazzmin.py:483
+msgid "and"
+msgstr "и"
+
+#: jazzmin/templatetags/jazzmin.py:487 jazzmin/templatetags/jazzmin.py:489
+#, python-brace-format
+msgid "Changed {fields}."
+msgstr "Променени {fields}."
+
+#: jazzmin/templatetags/jazzmin.py:493
+#, python-brace-format
+msgid "Deleted “{object}”."
+msgstr "Изтрит “{object}”"
+
+#: jazzmin/utils.py:72
+#, python-brace-format
+msgid "Could not reverse url from {instance}"
+msgstr "Не може да се реверсира url от {instance}"
