@@ -23,7 +23,7 @@
 
     // select before last iframe content window if exists else select openerRef
     let openerRef2;
-    var iframeHTMLCollection = openerRef.document.getElementsByTagName('iframe');
+    var iframeHTMLCollection = openerRef.document.getElementsByClassName('related-iframe');
     if (iframeHTMLCollection.length >= 2) {
         var beforeLastIframeIndex = iframeHTMLCollection.length - 2;
         openerRef2 = iframeHTMLCollection[beforeLastIframeIndex].contentWindow;

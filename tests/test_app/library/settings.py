@@ -18,9 +18,6 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     # Keep this above 'django.contrib.admin'
     "jazzmin",
-    # 3rd party app support demonstrated in test app (not a jazzmin requirement)
-    "admin_numeric_filter",
-    "rangefilter",
     # Django apps
     "django.contrib.admin",
     "django.contrib.admindocs",
@@ -29,7 +26,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "import_export",
     # Our apps
     "{}library.books.apps.BooksConfig".format(PREFIX),
     "{}library.loans.apps.LoansConfig".format(PREFIX),
@@ -123,8 +119,12 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "site_title": "Library Admin",
     # Title on the brand, and login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_header": "Library",
-    # square logo to use for your site, must be present in static files, used for favicon and brand on top left
+    # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "books/img/logo.png",
+    # CSS classes that are applied to the logo
+    "site_logo_classes": None,
+    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+    "site_icon": "books/img/icon.png",
     # Welcome text on the login screen
     "welcome_sign": "Welcome to the library",
     # Copyright on the footer

@@ -854,3 +854,8 @@ body.jazzmin-login-page {
 #jazzy-sidebar .nav-sidebar > .nav-item {
     width: 100%;
 }
+/* tweeks for django-filer*/
+.navigator-top-nav + #content-main {
+    float: left;
+    width: 100%;
+}

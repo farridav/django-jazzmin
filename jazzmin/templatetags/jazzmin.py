@@ -133,8 +133,9 @@ def get_jazzmin_settings(request: WSGIRequest) -> Dict:
     Get Jazzmin settings, update any defaults from the request, and return
     """
     settings = get_settings()
-    admin_site = {x.name: x for x in all_sites}.get(request.current_app)
-    if admin_site:
+
+    if hasattr(request, "current_app"):
+        admin_site = {x.name: x for x in all_sites}.get(request.current_app, "admin")
         if not settings["site_title"]:
             settings["site_title"] = admin_site.site_title
 
@@ -179,36 +180,59 @@ def get_user_avatar(user: AbstractUser) -> str:
 
 
 @register.simple_tag
-def jazzmin_paginator_number(cl: ChangeList, i: int) -> SafeText:
+def jazzmin_paginator_number(change_list: ChangeList, i: int) -> SafeText:
     """
     Generate an individual page index link in a paginated list.
     """
-    if i in (".", "…"):
-        html_str = """
-            <li class="page-item">
-            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>
-            </li>
-        """
+    html_str = ""
+    start = i == 1
+    end = i == change_list.paginator.num_pages
+    spacer = i in (".", "…")
+    current_page = i == change_list.page_num
 
-    elif i == cl.page_num:
-        html_str = """
-            <li class="page-item active">
-            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">{num}
-            </a>
-            </li>
+    if start:
+        link = change_list.get_query_string({PAGE_VAR: change_list.page_num - 1}) if change_list.page_num > 1 else "#"
+        html_str += """
+        <li class="page-item previous {disabled}">
+            <a class="page-link" href="{link}" data-dt-idx="0" tabindex="0">«</a>
+        </li>
         """.format(
-            num=i + 1
+            link=link, disabled="disabled" if link == "#" else ""
         )
 
+    if current_page:
+        html_str += """
+        <li class="page-item active">
+            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">{num}</a>
+        </li>
+        """.format(
+            num=i
+        )
+    elif spacer:
+        html_str += """
+        <li class="page-item">
+            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>
+        </li>
+        """
     else:
-        query_string = cl.get_query_string({PAGE_VAR: i})
-        end = mark_safe("end" if i == cl.paginator.num_pages - 1 else "")
-        html_str = """
+        query_string = change_list.get_query_string({PAGE_VAR: i})
+        end = "end" if end else ""
+        html_str += """
             <li class="page-item">
             <a href="{query_string}" class="page-link {end}" data-dt-idx="3" tabindex="0">{num}</a>
             </li>
         """.format(
-            num=i + 1, query_string=query_string, end=end
+            num=i, query_string=query_string, end=end
+        )
+
+    if end:
+        link = change_list.get_query_string({PAGE_VAR: change_list.page_num + 1}) if change_list.page_num < i else "#"
+        html_str += """
+        <li class="page-item next {disabled}">
+            <a class="page-link" href="{link}" data-dt-idx="7" tabindex="0">»</a>
+        </li>
+        """.format(
+            link=link, disabled="disabled" if link == "#" else ""
         )
 
     return format_html(html_str)

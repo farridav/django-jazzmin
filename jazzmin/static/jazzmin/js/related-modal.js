@@ -67,7 +67,7 @@
 
         if (checkIfInIframe) {
             // select second to last iframe in the main parent document
-            const secondLastIframe = $('iframe', win.parent.document).eq(-2);
+            const secondLastIframe = $('iframe.related-iframe', win.parent.document).eq(-2);
             let documentContext;
 
             // if second to last iframe exists get its contents
@@ -182,5 +182,7 @@
     $(document).ready(function(){
         init()
     });
+
+    django.jQuery(document).on('formset:added', init);
 
 })(jQuery);

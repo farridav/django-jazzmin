@@ -4,11 +4,7 @@ gunicorn
 psycopg2-binary
 dj-database-url
 factory-boy
+docutils
 
 # Latest jazzmin
 https://github.com/farridav/django-jazzmin/archive/master.zip
-
-# Apps we provide additional support for
-django-mptt
-django-treebeard
-django-import-export

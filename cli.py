@@ -21,13 +21,13 @@ def main():
 
 @main.command()
 @click.option("--prune", type=click.Choice(LOCALES), help="locale to prune", required=True)
-def locales(locale: str):
+def locales(prune: str):
     """
     Remove the django provided strings
 
     e.g - ./cli.py locales --prune de
     """
-    our_po = polib.pofile(os.path.join(LOCALE_DIR, locale, "LC_MESSAGES", "django.po"))
+    our_po = polib.pofile(os.path.join(LOCALE_DIR, prune, "LC_MESSAGES", "django.po"))
     admin_po = polib.pofile(os.path.join(DJANGO_PATH, "contrib", "admin", "locale", "en", "LC_MESSAGES", "django.po"))
     admindocs_po = polib.pofile(
         os.path.join(
@@ -47,7 +47,7 @@ def locales(locale: str):
         if po.msgid not in existing_strings:
             new_po.append(po)
 
-    new_po.save(os.path.join(LOCALE_DIR, locale, "LC_MESSAGES", "django.po"))
+    new_po.save(os.path.join(LOCALE_DIR, prune, "LC_MESSAGES", "django.po"))
 
 
 @main.command()
