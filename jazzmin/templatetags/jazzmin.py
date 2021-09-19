@@ -142,6 +142,9 @@ def get_jazzmin_settings(request: WSGIRequest) -> Dict:
         if not settings["site_header"]:
             settings["site_header"] = admin_site.site_header
 
+        if not settings["site_brand"]:
+            settings["site_brand"] = admin_site.site_header
+
     return settings
 
 

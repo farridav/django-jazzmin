@@ -12,8 +12,10 @@ logger = logging.getLogger(__name__)
 DEFAULT_SETTINGS: Dict[str, Any] = {
     # title of the window (Will default to current_admin_site.site_title)
     "site_title": None,
-    # Title on the brand, and the login screen (19 chars max) (will default to current_admin_site.site_header)
+    # Title on the login screen (19 chars max) (will default to current_admin_site.site_header)
     "site_header": None,
+    # Title on the brand (19 chars max) (will default to current_admin_site.site_header)
+    "site_brand": None,
     # Relative path to logo for your site, used for brand on top left (must be present in static files)
     "site_logo": "vendor/adminlte/img/AdminLTELogo.png",
     # CSS classes that are applied to the logo
