@@ -2,16 +2,11 @@ import pytest
 from django.urls import reverse
 
 from .test_app.library.factories import UserFactory
-from .utils import (
-    parse_sidemenu,
-    parse_topmenu,
-    parse_usermenu,
-    override_jazzmin_settings,
-)
+from .utils import parse_sidemenu, parse_topmenu, parse_usermenu
 
 
 @pytest.mark.django_db
-def test_side_menu(admin_client, settings):
+def test_side_menu(admin_client, custom_jazzmin_settings):
     """
     All menu tweaking settings work as expected
     """
@@ -39,7 +34,7 @@ def test_side_menu(admin_client, settings):
         ],
     }
 
-    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(hide_models=["auth.user"])
+    custom_jazzmin_settings["hide_models"] = ["auth.user"]
     response = admin_client.get(url)
 
     assert parse_sidemenu(response) == {
@@ -61,7 +56,7 @@ def test_side_menu(admin_client, settings):
 
 
 @pytest.mark.django_db
-def test_permissions_on_custom_links(client, settings):
+def test_permissions_on_custom_links(client, custom_jazzmin_settings):
     """
     we honour permissions for the rendering of custom links
     """
@@ -70,18 +65,16 @@ def test_permissions_on_custom_links(client, settings):
 
     url = reverse("admin:index")
 
-    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
-        custom_links={
-            "books": [
-                {
-                    "name": "Make Messages",
-                    "url": "make_messages",
-                    "icon": "fa-comments",
-                    "permissions": ["books.view_book"],
-                }
-            ]
-        }
-    )
+    custom_jazzmin_settings["custom_links"] = {
+        "books": [
+            {
+                "name": "Make Messages",
+                "url": "make_messages",
+                "icon": "fa-comments",
+                "permissions": ["books.view_book"],
+            }
+        ]
+    }
 
     client.force_login(user)
     response = client.get(url)
@@ -96,24 +89,22 @@ def test_permissions_on_custom_links(client, settings):
 
 
 @pytest.mark.django_db
-def test_top_menu(admin_client, settings):
+def test_top_menu(admin_client, custom_jazzmin_settings):
     """
     Top menu renders out as expected
     """
     url = reverse("admin:index")
 
-    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
-        topmenu_links=[
-            {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-            {
-                "name": "Support",
-                "url": "https://github.com/farridav/django-jazzmin/issues",
-                "new_window": True,
-            },
-            {"model": "auth.User"},
-            {"app": "books"},
-        ]
-    )
+    custom_jazzmin_settings["topmenu_links"] = [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {
+            "name": "Support",
+            "url": "https://github.com/farridav/django-jazzmin/issues",
+            "new_window": True,
+        },
+        {"model": "auth.User"},
+        {"app": "books"},
+    ]
 
     response = admin_client.get(url)
 
@@ -137,23 +128,21 @@ def test_top_menu(admin_client, settings):
 
 
 @pytest.mark.django_db
-def test_user_menu(admin_user, client, settings):
+def test_user_menu(admin_user, client, custom_jazzmin_settings):
     """
     The User menu renders out as expected
     """
     url = reverse("admin:index")
 
-    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
-        usermenu_links=[
-            {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-            {
-                "name": "Support",
-                "url": "https://github.com/farridav/django-jazzmin/issues",
-                "new_window": True,
-            },
-            {"model": "auth.User"},
-        ]
-    )
+    custom_jazzmin_settings["usermenu_links"] = [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {
+            "name": "Support",
+            "url": "https://github.com/farridav/django-jazzmin/issues",
+            "new_window": True,
+        },
+        {"model": "auth.User"},
+    ]
 
     client.force_login(admin_user)
     response = client.get(url)

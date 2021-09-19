@@ -3,7 +3,7 @@ import itertools
 import json
 import logging
 import urllib.parse
-from typing import List, Dict, Union, Any
+from typing import List, Dict, Union, Any, Callable, Optional
 
 from django.conf import settings
 from django.contrib.admin import ListFilter
@@ -167,17 +167,31 @@ def get_jazzmin_version() -> str:
 @register.simple_tag
 def get_user_avatar(user: AbstractUser) -> str:
     """
-    For the given user, try to get the avatar image
+    For the given user, try to get the avatar image, which can be one of:
+
+        - ImageField on the user model
+        - URLField/Charfield on the model
+        - A callable that receives the user instance e.g lambda u: u.profile.image.url
     """
     no_avatar = static("vendor/adminlte/img/user2-160x160.jpg")
     options = get_settings()
+    avatar_field_name: Optional[Union[str, Callable]] = options.get("user_avatar")
 
-    if not options.get("user_avatar"):
+    if not avatar_field_name:
         return no_avatar
 
-    avatar_field = getattr(user, options["user_avatar"], None)
+    if callable(avatar_field_name):
+        return avatar_field_name(user)
+
+    # If we find the property directly on the user model (imagefield or URLfield)
+    avatar_field = getattr(user, avatar_field_name, None)
     if avatar_field:
-        return avatar_field.url
+        if type(avatar_field) == str:
+            return avatar_field
+        elif hasattr(avatar_field, "url"):
+            return avatar_field.url
+
+    logger.warning("avatar field must be an ImageField/URLField on the user model, or a callable")
 
     return no_avatar
 
@@ -299,6 +313,11 @@ def jazzy_admin_url(value: Union[str, ModelBase], admin_site: str = "admin") -> 
     Get the admin url for a given object
     """
     return get_admin_url(value, admin_site=admin_site)
+
+
+@register.filter
+def has_jazzmin_setting(settings: Dict[str, Any], key: str) -> bool:
+    return key in settings and settings[key] is not None
 
 
 @register.filter

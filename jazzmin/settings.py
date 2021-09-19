@@ -28,8 +28,8 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "copyright": "",
     # The model admin to search from the search bar, search bar omitted if excluded
     "search_model": None,
-    # Field name on user model that contains avatar image
-    "user_avatar": "avatar",
+    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
+    "user_avatar": None,
     ############
     # Top Menu #
     ############
