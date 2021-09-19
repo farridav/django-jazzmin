@@ -131,7 +131,7 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "copyright": "Acme Library Ltd",
     # The model admin to search from the search bar, search bar omitted if excluded
     "search_model": "auth.User",
-    # Field name on user model that contains avatar image
+    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
     ############
     # Top Menu #

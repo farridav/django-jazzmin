@@ -6,17 +6,16 @@ from jazzmin.settings import CHANGEFORM_TEMPLATES
 from jazzmin.templatetags.jazzmin import get_sections
 from .test_app.library.books.admin import BookAdmin
 from .test_app.library.factories import BookFactory, UserFactory
-from .utils import override_jazzmin_settings
 
 
 @pytest.mark.django_db
-def test_update_site_logo(admin_client, settings):
+def test_update_site_logo(admin_client, custom_jazzmin_settings):
     """
     We can add a site logo, and it renders out
     """
     url = reverse("admin:index")
 
-    settings.JAZZMIN_SETTINGS["site_logo"] = "books/img/logo.png"
+    custom_jazzmin_settings["site_logo"] = "books/img/logo.png"
     response = admin_client.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
 
@@ -25,15 +24,13 @@ def test_update_site_logo(admin_client, settings):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("config_value,template", [(k, v) for k, v in CHANGEFORM_TEMPLATES.items()])
-def test_changeform_templates(admin_client, settings, config_value, template):
+def test_changeform_templates(config_value, template, admin_client, custom_jazzmin_settings):
     """
     All changeform config values use the correct templates
     """
+    custom_jazzmin_settings["changeform_format"] = config_value
     book = BookFactory()
-
     url = reverse("admin:books_book_change", args=(book.pk,))
-
-    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(changeform_format=config_value)
 
     response = admin_client.get(url)
     templates_used = [t.name for t in response.templates]
@@ -42,20 +39,19 @@ def test_changeform_templates(admin_client, settings, config_value, template):
 
 
 @pytest.mark.django_db
-def test_changeform_template_override(admin_client, settings):
+def test_changeform_template_override(admin_client, custom_jazzmin_settings):
     """
     We can set a global template, and override it per model
     """
+    custom_jazzmin_settings.update(
+        {"changeform_format": "vertical_tabs", "changeform_format_overrides": {"books.book": "carousel"}}
+    )
+
     user = UserFactory()
     book = BookFactory()
 
     books_url = reverse("admin:books_book_change", args=(book.pk,))
     users_url = reverse("admin:auth_user_change", args=(user.pk,))
-
-    settings.JAZZMIN_SETTINGS = override_jazzmin_settings(
-        changeform_format="vertical_tabs",
-        changeform_format_overrides={"books.book": "carousel"},
-    )
 
     response = admin_client.get(books_url)
     templates_used = [t.name for t in response.templates]
@@ -69,10 +65,11 @@ def test_changeform_template_override(admin_client, settings):
 
 
 @pytest.mark.django_db
-def test_changeform_template_default(admin_client):
+def test_changeform_template_default(admin_client, custom_jazzmin_settings):
     """
     The horizontal_tabs template is used by default
     """
+    assert custom_jazzmin_settings["changeform_format"] == "horizontal_tabs"
     book = BookFactory()
 
     books_url = reverse("admin:books_book_change", args=(book.pk,))
