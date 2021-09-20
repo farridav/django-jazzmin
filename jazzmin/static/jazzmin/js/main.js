@@ -56,7 +56,14 @@
         const $changeListTable = $('#changelist .results table');
         if ($changeListTable.length && !$changeListTable.hasClass('table table-striped')) {
             $changeListTable.addClass('table table-striped');
-        }
+        };
+
+        var a_active = $('a.nav-link.active');
+        var main_li_parent = a_active.closest('li.nav-item.has-treeview');
+        var ul_child = main_li_parent.children('ul');
+
+        ul_child.show();
+        main_li_parent.addClass('menu-is-opening menu-open');
 
     });
 
