@@ -13,6 +13,45 @@ div.inline-related {
     padding: 0;
 }
 
+
+/** Fix bug of adminLTE, since django is using th headers in middle of table **/
+.card-body.p-0 .table thead > tr > th:first-of-type,
+.card-body.p-0 .table thead > tr > td:first-of-type,
+.card-body.p-0 .table tfoot > tr > th:first-of-type,
+.card-body.p-0 .table tfoot > tr > td:first-of-type,
+.card-body.p-0 .table tbody > tr > th:first-of-type,
+.card-body.p-0 .table tbody > tr > td:first-of-type {
+  padding-left: 0.75rem;
+}
+
+.card-body.p-0 .table thead > tr > th:last-of-type,
+.card-body.p-0 .table thead > tr > td:last-of-type,
+.card-body.p-0 .table tfoot > tr > th:last-of-type,
+.card-body.p-0 .table tfoot > tr > td:last-of-type,
+.card-body.p-0 .table tbody > tr > th:last-of-type,
+.card-body.p-0 .table tbody > tr > td:last-of-type {
+  padding-right: 0.75rem;
+}
+
+.card-body.p-0 .table thead > tr > th:first-child,
+.card-body.p-0 .table thead > tr > td:first-child,
+.card-body.p-0 .table tfoot > tr > th:first-child,
+.card-body.p-0 .table tfoot > tr > td:first-child,
+.card-body.p-0 .table tbody > tr > th:first-child,
+.card-body.p-0 .table tbody > tr > td:first-child {
+  padding-left: 1.5rem;
+}
+
+.card-body.p-0 .table thead > tr > th:last-child,
+.card-body.p-0 .table thead > tr > td:last-child,
+.card-body.p-0 .table tfoot > tr > th:last-child,
+.card-body.p-0 .table tfoot > tr > td:last-child,
+.card-body.p-0 .table tbody > tr > th:last-child,
+.card-body.p-0 .table tbody > tr > td:last-child {
+  padding-right: 1.5rem;
+}
+
+
 .table tr.form-row {
     display: table-row;
 }
