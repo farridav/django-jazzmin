@@ -175,6 +175,10 @@ msgstr "преди %(timesince)s"
 msgid "Log in again"
 msgstr "Влезте отново"
 
+#: templates/admin/submit_line.html:8
+msgid "Actions"
+msgstr "Действия"
+
 #: jazzmin/templates/admin/login.html:65
 #, python-format
 msgid ""
