@@ -285,6 +285,25 @@ class BookAdmin(admin.ModelAdmin):
     jazzmin_section_order = ("book loans", "general", "other")
 ```
 
+## Filter perfomance
+If your filter will contain a lot of options, like when you use M2M filter or it's a big filter itself, then rendering every option can hurt user perfomance. This is solved by providing `filter_input_length` dictionary with filter name as the key and the value will determine how much characters should be entered before rendering options.
+
+```python
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    resource_class = BookResource
+    fieldsets = (
+        ("general", {"fields": ("title", "author", "library")}),
+        ("other", {"fields": ("genre", "summary", "isbn", "published_on")}),
+    )
+    list_filter = ("title",)
+
+    # Render filtered options only after 5 characters were entered
+    filter_input_length = {
+        "title": 5,
+    }
+```
+
 ## Language Chooser
 You can enable a language chooser dropdown using `"language_chooser": True` in your `JAZZMIN_SETTINGS`, we mainly use this for 
 assisting with translations, but it could be of use to some people in their admin site.
