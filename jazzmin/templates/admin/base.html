@@ -42,8 +42,10 @@
     <link rel="shortcut icon" href="{% static jazzmin_settings.site_icon %}" type="image/png">
     <link rel="icon" href="{% static jazzmin_settings.site_icon %}" sizes="32x32" type="image/png">
 
+    {% if jazzmin_settings.use_google_fonts_cdn %}
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    {% endif %}
 
     {% block extrastyle %} {% endblock %}
     {% block extrahead %} {% endblock %}
