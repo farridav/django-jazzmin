@@ -101,6 +101,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 if DEBUG and not TEST:
     os.environ.setdefault("WERKZEUG_DEBUG_PIN", "off")
     INSTALLED_APPS.extend(["debug_toolbar", "django_extensions"])

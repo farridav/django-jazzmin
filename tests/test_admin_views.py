@@ -1,6 +1,7 @@
+import django
 import pytest
-
 from jazzmin.compat import reverse
+
 from .test_app.library.books.models import Book
 from .test_app.library.factories import BookFactory
 
@@ -51,9 +52,7 @@ def test_password_change(admin_client):
 
     response = admin_client.get(url)
     templates_used = [t.name for t in response.templates]
-
-    assert response.status_code == 200
-    assert set(templates_used) == {
+    expected_templates_used = {
         "registration/password_change_form.html",
         "admin/base_site.html",
         "admin/base.html",
@@ -68,6 +67,12 @@ def test_password_change(admin_client):
         "django/forms/widgets/attrs.html",
         "jazzmin/includes/ui_builder_panel.html",
     }
+
+    if django.VERSION[0] == 4:
+        expected_templates_used.update({"django/forms/errors/list/default.html", "django/forms/errors/list/ul.html"})
+
+    assert response.status_code == 200
+    assert set(templates_used) == expected_templates_used
 
     response = admin_client.post(
         url,
@@ -118,8 +123,7 @@ def test_detail(admin_client):
     assert response.status_code == 200
     render_counts = {x: templates_used.count(x) for x in set(templates_used)}
 
-    # The number of times each template was rendered
-    assert render_counts == {
+    expected_render_counts = {
         "admin/base.html": 1,
         "admin/base_site.html": 1,
         "admin/change_form.html": 1,
@@ -145,8 +149,20 @@ def test_detail(admin_client):
         "jazzmin/includes/ui_builder_panel.html": 1,
     }
 
-    # The templates that were used
-    assert set(templates_used) == {
+    if django.VERSION[0] == 4:
+        expected_render_counts.update(
+            {
+                "django/forms/default.html": 1,
+                "django/forms/errors/list/default.html": 1,
+                "django/forms/errors/list/ul.html": 55,
+                "django/forms/table.html": 1,
+            }
+        )
+
+    # The number of times each template was rendered
+    assert render_counts == expected_render_counts
+
+    expected_templates_used = {
         "admin/base.html",
         "admin/base_site.html",
         "admin/change_form.html",
@@ -172,6 +188,19 @@ def test_detail(admin_client):
         "jazzmin/includes/ui_builder_panel.html",
     }
 
+    if django.VERSION[0] == 4:
+        expected_templates_used.update(
+            {
+                "django/forms/default.html",
+                "django/forms/errors/list/default.html",
+                "django/forms/errors/list/ul.html",
+                "django/forms/table.html",
+            }
+        )
+
+    # The templates that were used
+    assert set(templates_used) == expected_templates_used
+
     # TODO: post data and confirm we can change model instances
 
 
@@ -190,8 +219,7 @@ def test_list(admin_client):
     assert response.status_code == 200
     render_counts = {x: templates_used.count(x) for x in set(templates_used)}
 
-    # The number of times each template was rendered
-    assert render_counts == {
+    expected_render_counts = {
         "admin/actions.html": 2,
         "admin/base.html": 1,
         "admin/base_site.html": 1,
@@ -211,8 +239,20 @@ def test_list(admin_client):
         "jazzmin/includes/ui_builder_panel.html": 1,
     }
 
-    # The templates that were used
-    assert set(templates_used) == {
+    if django.VERSION[0] == 4:
+        expected_render_counts.update(
+            {
+                "django/forms/default.html": 1,
+                "django/forms/errors/list/default.html": 5,
+                "django/forms/errors/list/ul.html": 5,
+                "django/forms/table.html": 1,
+            }
+        )
+
+    # The number of times each template was rendered
+    assert render_counts == expected_render_counts
+
+    expected_templates = {
         "admin/actions.html",
         "admin/base.html",
         "admin/base_site.html",
@@ -231,6 +271,19 @@ def test_list(admin_client):
         "django/forms/widgets/text.html",
         "jazzmin/includes/ui_builder_panel.html",
     }
+
+    if django.VERSION[0] == 4:
+        expected_templates.update(
+            {
+                "django/forms/default.html",
+                "django/forms/errors/list/default.html",
+                "django/forms/errors/list/ul.html",
+                "django/forms/table.html",
+            }
+        )
+
+    # The templates that were used
+    assert set(templates_used) == expected_templates
 
 
 @pytest.mark.django_db
