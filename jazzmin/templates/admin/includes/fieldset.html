@@ -1,10 +1,20 @@
 {% load jazzmin %}
 {% if card %}
 <div class="card {{ fieldset.classes|cut:"collapse" }}">
-    {% if card_header and fieldset.name %}<div class="card-header">{{ fieldset.name }}</div>{%endif%}
-    {% if fieldset.description %}
-        <div class="p-2">{{ fieldset.description }}</div>
-    {% endif %}
+    {% if card_header and fieldset.name %}
+        <div class="card-header">
+            <div class="card-title">
+                <strong>{{ fieldset.name }}</strong>{% if fieldset.description %} - <i>{{ fieldset.description }}</i>{% endif %}
+            </div>
+        </div>
+    {%elif fieldset.description %}
+    <div class="card-header">
+        <div class="card-title">
+            {{ fieldset.description }}
+        </div>
+    </div>
+    {%endif%}
+
     <div class="p-5{% if fieldset.name %} card-body{% endif %}">
 {% endif %}
 

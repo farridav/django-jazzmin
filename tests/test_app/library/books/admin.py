@@ -4,10 +4,10 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.timesince import timesince
-
 from jazzmin.utils import attr
-from .models import Author, Book, Genre
+
 from ..loans.admin import BookLoanInline
+from .models import Author, Book, Genre
 
 admin.site.unregister(User)
 
@@ -19,7 +19,7 @@ class BooksInline(admin.TabularInline):
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     fieldsets = (
-        ("general", {"fields": ("title", "author", "library")}),
+        ("general", {"fields": ("title", "author", "library"), "description": "General book fields"}),
         ("other", {"fields": ("genre", "summary", "isbn", "published_on", "pages")}),
     )
     raw_id_fields = ("author",)
