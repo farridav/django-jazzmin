@@ -2,14 +2,16 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin, messages
 from django.http import HttpResponseRedirect
-from django.urls import re_path, reverse, path
+from django.urls import path, re_path, reverse
 from django.views.generic import RedirectView
 from django.views.static import serve
 
 try:
-    from django.conf.urls import url, include
+    from django.urls import include, path
 except ImportError:
-    from django.conf.urls.defaults import url, include
+    from django.conf.urls import include, path
+except ImportError:
+    from django.conf.urls.defaults import include, path
 
 
 def make_messages(request):
@@ -22,9 +24,9 @@ def make_messages(request):
 
 
 urlpatterns = [
-    url(r"^$", RedirectView.as_view(pattern_name="admin:index", permanent=False)),
-    url(r"admin/doc/", include("django.contrib.admindocs.urls")),
-    url(r"make_messages/", make_messages, name="make_messages"),
+    path("", RedirectView.as_view(pattern_name="admin:index", permanent=False)),
+    path("admin/doc/", include("django.contrib.admindocs.urls")),
+    path("make_messages/", make_messages, name="make_messages"),
     path("i18n/", include("django.conf.urls.i18n")),
 ]
 
@@ -43,6 +45,6 @@ if "debug_toolbar" in settings.INSTALLED_APPS:
     try:
         import debug_toolbar
 
-        urlpatterns.append(url(r"__debug__/", include(debug_toolbar.urls)))
+        urlpatterns.append(path("__debug__/", include(debug_toolbar.urls)))
     except ImportError:
         pass

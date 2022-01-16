@@ -1,9 +1,9 @@
 import pytest
 from bs4 import BeautifulSoup
 from django.urls import reverse
-
 from jazzmin.settings import CHANGEFORM_TEMPLATES
 from jazzmin.templatetags.jazzmin import get_sections
+
 from .test_app.library.books.admin import BookAdmin
 from .test_app.library.factories import BookFactory, UserFactory
 
