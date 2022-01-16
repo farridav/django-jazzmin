@@ -3,7 +3,7 @@ import itertools
 import json
 import logging
 import urllib.parse
-from typing import List, Dict, Union, Any, Callable, Optional
+from typing import Any, Callable, Dict, List, Optional, Union
 
 from django.conf import settings
 from django.contrib.admin import ListFilter
@@ -17,24 +17,18 @@ from django.contrib.auth.models import AbstractUser
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models.base import ModelBase
 from django.http import HttpRequest
-from django.template import Library, Context
+from django.template import Context, Library
 from django.template.defaultfilters import capfirst
 from django.template.loader import get_template
 from django.templatetags.static import static
-from django.utils.html import format_html, escape
-from django.utils.safestring import mark_safe, SafeText
+from django.utils.html import escape, format_html
+from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import get_text_list, slugify
 from django.utils.translation import gettext
 
 from .. import version
-from ..settings import get_settings, get_ui_tweaks, CHANGEFORM_TEMPLATES
-from ..utils import (
-    order_with_respect_to,
-    get_filter_id,
-    get_admin_url,
-    make_menu,
-    has_fieldsets_check,
-)
+from ..settings import CHANGEFORM_TEMPLATES, get_settings, get_ui_tweaks
+from ..utils import get_admin_url, get_filter_id, has_fieldsets_check, make_menu, order_with_respect_to
 
 User = get_user_model()
 register = Library()
@@ -188,10 +182,10 @@ def get_user_avatar(user: AbstractUser) -> str:
     if avatar_field:
         if type(avatar_field) == str:
             return avatar_field
-        elif callable(avatar_field):
-            return avatar_field()
         elif hasattr(avatar_field, "url"):
             return avatar_field.url
+        elif callable(avatar_field):
+            return avatar_field()
 
     logger.warning("avatar field must be an ImageField/URLField on the user model, or a callable")
 
