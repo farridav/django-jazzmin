@@ -188,6 +188,8 @@ def get_user_avatar(user: AbstractUser) -> str:
     if avatar_field:
         if type(avatar_field) == str:
             return avatar_field
+        elif callable(avatar_field):
+            return avatar_field()
         elif hasattr(avatar_field, "url"):
             return avatar_field.url
 
