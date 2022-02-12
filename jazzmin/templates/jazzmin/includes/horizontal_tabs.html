@@ -14,7 +14,7 @@
 
 <div class="tab-content">
     {% for fieldset in forms %}
-        <div id="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" class="tab-pane fade{% if forloop.first %} active show{% endif %}" role="tabpanel" aria-labelledby="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
+        <div id="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" class="tab-pane fade{% if forloop.first %} active show{% endif %} {{ fieldset.classes }}" role="tabpanel" aria-labelledby="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
             {% if fieldset.is_inline %}
                 {% include fieldset.opts.template with inline_admin_formset=fieldset %}
             {% else %}
