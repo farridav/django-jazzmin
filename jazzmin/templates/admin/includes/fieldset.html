@@ -34,7 +34,7 @@
                              {% if field.field.is_hidden %} hidden {% endif %}
                              {% if field.is_checkcard %} checkcard-row{% endif %}">
                     {% if field.is_readonly %}
-                        <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
+                        <div class="readonly">{{ field.contents }}</div>
                     {% else %}
                         {{ field.field }}
                     {% endif %}
