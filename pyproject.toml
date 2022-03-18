@@ -115,7 +115,7 @@ python =
 setenv =
     PYTHONPATH = {toxinidir}
 commands =
-    {envpython} -m flake8 jazzmin
+    {envpython} -m flake8 jazzmin --max-line-length 120
     {envpython} -m py.test
 deps =
     flake9
