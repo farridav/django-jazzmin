@@ -127,6 +127,7 @@
 
         // Style the inline fieldset button
         $('.inline-related fieldset.module .add-row a').addClass('btn btn-sm btn-default float-right');
+        $('div.add-row>a').addClass('btn btn-sm btn-default float-right');
 
         // Ensure we preserve the tab the user was on using the url hash, even on page reload
         if ($tabs.length) { handleTabs($tabs); }
