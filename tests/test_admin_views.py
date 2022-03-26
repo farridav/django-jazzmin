@@ -17,7 +17,10 @@ def test_login(client, admin_user):
     templates_used = [t.name for t in response.templates]
 
     assert response.status_code == 200
-    assert templates_used == ["admin/login.html"]
+    assert templates_used == [
+        "admin/login.html",
+        "registration/base.html",
+    ]
 
     response = client.post(
         url + "?next=/admin/",
