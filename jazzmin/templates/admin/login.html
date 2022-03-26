@@ -55,6 +55,16 @@
                 </div>
             </div>
         </div>
+        {% url 'admin_password_reset' as password_reset_url %}
+        {% if password_reset_url %}
+            <div class="mb-3">
+                <div class="password-reset-link" style="text-align: center;">
+                    <a href="{{ password_reset_url }}">
+                        {% trans 'Forgotten your password or username?' %}
+                    </a>
+                </div>
+            </div>
+        {% endif %}
         <div class="row">
             <div class="col-12">
                 <button type="submit" class="btn {{ jazzmin_ui.button_classes.primary }} btn-block">
