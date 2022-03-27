@@ -37,3 +37,6 @@ test_app: check-venv ## Run the test app
 	@printf "$(CYAN)Running test app$(COFF)\n"
 	$(environment) python tests/test_app/manage.py migrate
 	$(environment) python tests/test_app/manage.py runserver_plus
+
+test_user:  ## Make the test user
+	$(environment) python tests/test_app/manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('test@test.com', password='test')"
