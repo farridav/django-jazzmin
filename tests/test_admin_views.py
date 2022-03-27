@@ -1,3 +1,4 @@
+import re
 import django
 import pytest
 from jazzmin.compat import reverse
@@ -17,7 +18,10 @@ def test_login(client, admin_user):
     templates_used = [t.name for t in response.templates]
 
     assert response.status_code == 200
-    assert templates_used == ["admin/login.html"]
+    assert templates_used == [
+        "admin/login.html",
+        "registration/base.html",
+    ]
 
     response = client.post(
         url + "?next=/admin/",
@@ -41,6 +45,71 @@ def test_logout(admin_client):
 
     assert response.status_code == 200
     assert templates_used == ["registration/logged_out.html"]
+
+
+@pytest.mark.django_db
+def test_reset_password(client, admin_user):
+    """
+    We can render the password reset views
+    """
+    # Step 1: Password reset form
+    url = reverse("admin_password_reset")
+
+    response = client.get(url)
+    templates_used = [t.name for t in response.templates]
+
+    assert response.status_code == 200
+    assert templates_used == [
+        "registration/password_reset_form.html",
+        "registration/base.html",
+    ]
+
+    # Step 2: Password reset done
+    response = client.post(
+        url,
+        data={"email": admin_user.email},
+        follow=True,
+    )
+    templates_used = [t.name for t in response.templates]
+
+    assert response.status_code == 200
+    assert response.resolver_match.url_name == "password_reset_done"
+    assert templates_used == [
+        "registration/password_reset_done.html",
+        "registration/base.html",
+    ]
+    assert "We’ve emailed you instructions for setting your password" in response.content.decode()
+
+    # Get password reset link from reset email
+    email = django.core.mail.outbox[0]
+    url = re.search(r"https?://[^/]*(/.*reset/\S*)", email.body).group(1)
+
+    # Step 3: Password reset confirm
+    response = client.get(url, follow=True)
+    templates_used = [t.name for t in response.templates]
+
+    assert response.status_code == 200
+    assert response.resolver_match.url_name == "password_reset_confirm"
+    assert templates_used == [
+        "registration/password_reset_confirm.html",
+        "registration/base.html",
+    ]
+
+    # Step 4: Password reset complete
+    response = client.post(
+        response.request["PATH_INFO"],
+        data={"username": admin_user.username, "new_password1": "new_password", "new_password2": "new_password"},
+        follow=True,
+    )
+    templates_used = [t.name for t in response.templates]
+
+    assert response.status_code == 200
+    assert response.resolver_match.url_name == "password_reset_complete"
+    assert templates_used == [
+        "registration/password_reset_complete.html",
+        "registration/base.html",
+    ]
+    assert "Your password has been set." in response.content.decode()
 
 
 @pytest.mark.django_db
