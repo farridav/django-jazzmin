@@ -134,7 +134,15 @@
         else if ($carousel.length) { handleCarousel($carousel); }
         else if ($collapsible.length) { handleCollapsible($collapsible); }
 
-        applySelect2()
+        applySelect2();
+
+        $('body').on('change', '.related-widget-wrapper select', function(e) {
+            const event = $.Event('django:update-related');
+            $(this).trigger(event);
+            if (!event.isDefaultPrevented() && typeof(window.updateRelatedObjectLinks) !== 'undefined') {
+                updateRelatedObjectLinks(this);
+            }
+        });
     });
 
     // Apply select2 to all select boxes when new inline row is created
