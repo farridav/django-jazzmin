@@ -18,6 +18,9 @@ JAZZMIN_SETTINGS = {
     # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "books/img/logo.png",
 
+    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
+    "login_logo": None,
+
     # CSS classes that are applied to the logo above
     "site_logo_classes": "img-circle",
 
