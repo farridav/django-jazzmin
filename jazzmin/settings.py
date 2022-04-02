@@ -18,6 +18,8 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "site_brand": None,
     # Relative path to logo for your site, used for brand on top left (must be present in static files)
     "site_logo": "vendor/adminlte/img/AdminLTELogo.png",
+    # Relative path to logo for your site, used for login logo (must be present in static files. Defaults to site_logo)
+    "login_logo": None,
     # CSS classes that are applied to the logo
     "site_logo_classes": "img-circle",
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
