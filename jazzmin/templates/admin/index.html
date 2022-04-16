@@ -1,133 +1,50 @@
 {% extends "admin/base_site.html" %}
-{% load i18n static jazzmin %}
-{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
 
 {% block bodyclass %}{{ block.super }} dashboard{% endblock %}
 
-{% block content_title %} {% trans 'Dashboard' %} {% endblock %}
+{% block breadcrumbs %}{% endblock %}
 
-{% block breadcrumbs %}
-    <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
-        <li class="breadcrumb-item">{% trans 'Dashboard' %}</li>
-    </ol>
-{% endblock %}
-
+{% block nav-sidebar %}{% endblock %}
 
 {% block content %}
-    {% get_side_menu using="app_list" as dashboard_list %}
-    {% if dashboard_list %}
-        {% widthratio dashboard_list|length 2 1 as middle %}
-    {% endif %}
+<div id="content-main">
+  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endblock %}
 
-    <div class="col-lg-9 col-12">
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                {% for app in dashboard_list %}
-                    <div class="card card-primary card-outline">
-                        <div class="card-header">
-                            <h5 class="m-0">{{ app.name }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-sm">
-                                <tbody>
-                                {% for model in app.models %}
-                                    <tr>
-                                        <td>
-                                            {% if model.url %}<a href="{{ model.url }}">{{ model.name }}</a>{% else %}{{ model.name }}{% endif %}
-                                        </td>
-                                        <td>
-                                            <div class="btn-group float-right">
-                                                {% if model.add_url %}
-                                                    <a href="{{ model.add_url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.success }} btn-flat addlink">{% trans 'Add' %}</a>
-                                                {% endif %}
-                                                {% if model.url %}
-                                                    {% if model.view_only %}
-                                                        <a href="{{ model.url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.info }} btn-flat viewlink">{% trans 'View' %}</a>
-                                                    {% else %}
-                                                        <a href="{{ model.url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.info }} btn-flat changelink">{% if model.custom %}{% trans 'Go' %}{% else %}{% trans 'Change' %}{% endif %}</a>
-                                                    {% endif %}
-                                                {% endif %}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    {% if forloop.counter == middle|add:"0" %}
-                    </div>
-                    <div class="col-md-6 col-sm-12">
-                    {% endif %}
-
-                {% endfor %}
-                </div>
-        </div>
-
-    </div>
-    <div class="col-lg-3 col-12">
-        <div id="content-related">
-            <div class="module" id="recent-actions-module">
-                <h3>{% trans 'Recent actions' %}</h3>
-                {% load log %}
-                {% get_admin_log 6 as admin_log for_user user %}
-                {% if not admin_log %}
-                    <p>{% trans 'None available' %}</p>
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% translate 'Recent actions' %}</h2>
+        <h3>{% translate 'My actions' %}</h3>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% translate 'None available' %}</p>
+            {% else %}
+            <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                {% if entry.is_deletion or not entry.get_admin_url %}
+                    {{ entry.object_repr }}
                 {% else %}
-                    <div class="timeline">
-                        {% for entry in admin_log %}
-                            <div>
-                                {% if entry.is_change %}
-                                    <i class="fas fa-edit bg-blue"></i>
-                                {% elif entry.is_deletion %}
-                                    <i class="fas fa-trash bg-danger"></i>
-                                {% elif entry.is_addition %}
-                                    <i class="fas fa-plus-circle bg-success"></i>
-                                {% endif %}
-
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fas fa-clock"></i> {% blocktrans with timesince=entry.action_time|timesince %}{{ timesince }} ago{% endblocktrans %}</span>
-                                    <h3 class="timeline-header no-border">
-                                        {% if entry.is_deletion or not entry.get_admin_url %}
-                                            {{ entry.object_repr }}
-                                        {% else %}
-                                            <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
-                                        {% endif %}
-
-                                        {% if entry.model %}
-                                            <span class="mini quiet">
-                                                {% filter capfirst %}
-                                                    {{ entry.model }}
-                                                {% endfilter %}
-                                            </span>
-                                        {% endif %}
-                                    </h3>
-                                    {% if not entry.is_deletion %}
-                                        <div class="timeline-body">
-                                            {% if entry.is_addition %}
-                                                {{ entry }}
-                                            {% else %}
-                                                <ul style="list-style: none; padding: 0;">
-                                                    {% action_message_to_list entry as action_message_list %}
-                                                    {% for action_message in action_message_list %}
-                                                        <li>{{ action_message.msg|style_bold_first_word }}</li>
-                                                    {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        {% endfor %}
-                        <div>
-                            <i class="fa fa-clock bg-gray"></i>
-                        </div>
-                    </div>
+                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
                 {% endif %}
-            </div>
-        </div>
+                <br>
+                {% if entry.content_type %}
+                    <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+                {% else %}
+                    <span class="mini quiet">{% translate 'Unknown content' %}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
     </div>
-
+</div>
 {% endblock %}

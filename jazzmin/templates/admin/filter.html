@@ -1,15 +1,8 @@
 {% load i18n %}
-
-<div class="form-group">
-    <select class="form-control search-filter" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
-        <option value="">{{ title }}</option>
-        <option value="">---------</option>
-        {% for choice in choices %}
-            {% if choice.name %}
-                <option data-name="{{ choice.name }}" value="{{ choice.value }}" {% if choice.selected %}selected {% endif %}>
-                    {{ choice.display }}
-                </option>
-            {% endif %}
-        {% endfor %}
-    </select>
-</div>
+<h3>{% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}</h3>
+<ul>
+{% for choice in choices %}
+    <li{% if choice.selected %} class="selected"{% endif %}>
+    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">{{ choice.display }}</a></li>
+{% endfor %}
+</ul>

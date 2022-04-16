@@ -1,22 +1,16 @@
-{% load jazzmin %}
-{% get_jazzmin_ui_tweaks as jazzmin_ui %}
-
 {% if show %}
-    <div class="btn-group date-hierarchy text-sm mt-2">
-        {% block date-hierarchy-toplinks %}
-            {% block date-hierarchy-back %}
-                {% if back %}
-                    <a class="btn {{ jazzmin_ui.button_classes.secondary }}" href="{{ back.link }}">&lsaquo; {{ back.title }}</a>
-                {% endif %}
-            {% endblock %}
-            {% block date-hierarchy-choices %}
-                {% for choice in choices %}
-                    <a {% if choice.link %}href="{{ choice.link }}" class="btn {{ jazzmin_ui.button_classes.primary }}"{% else %}class="btn {{ jazzmin_ui.button_classes.primary }} active"{% endif %}>
-                        {{ choice.title }}
-                    </a>
-                {% endfor %}
-            {% endblock %}
-        {% endblock %}
-    </div>
-    <hr class="clear"/>
+<div class="xfull">
+<ul class="toplinks">
+{% block date-hierarchy-toplinks %}
+{% block date-hierarchy-back %}
+{% if back %}<li class="date-back"><a href="{{ back.link }}">&lsaquo; {{ back.title }}</a></li>{% endif %}
+{% endblock %}
+{% block date-hierarchy-choices %}
+{% for choice in choices %}
+<li> {% if choice.link %}<a href="{{ choice.link }}">{% endif %}{{ choice.title }}{% if choice.link %}</a>{% endif %}</li>
+{% endfor %}
+{% endblock %}
+{% endblock %}
+</ul><br class="clear">
+</div>
 {% endif %}

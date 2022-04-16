@@ -1,83 +1,55 @@
 {% extends "admin/base_site.html" %}
-{% load i18n l10n admin_urls static jazzmin %}
-{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+{% load i18n l10n admin_urls static %}
 
 {% block extrahead %}
     {{ block.super }}
     {{ media }}
-    <script type="text/javascript" src="{% static 'admin/js/cancel.js' %}"></script>
+    <script src="{% static 'admin/js/cancel.js' %}" async></script>
 {% endblock %}
 
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation delete-selected-confirmation{% endblock %}
 
 {% block breadcrumbs %}
-<ol class="breadcrumb float-sm-right">
-    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a></li>
-    <li class="breadcrumb-item"><a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a></li>
-    <li class="breadcrumb-item active">{% trans 'Delete multiple objects' %}</li>
-</ol>
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+&rsaquo; {% translate 'Delete multiple objects' %}
+</div>
 {% endblock %}
 
-{% block content_title %} {% trans 'Delete multiple objects' %} {% endblock %}
-
 {% block content %}
-
-<div class="col-12">
-    <div class="card card-danger card-outline">
-        <div class="card-header with-border">
-            <h4 class="card-title">
-                {% trans 'Delete multiple objects' %}
-            </h4>
-        </div>
-
-        <div class="card-body">
-            <div id="content-main">
-                {% if perms_lacking %}
-                    <p>{% blocktrans %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktrans %}</p>
-                    <ol>
-                        {% for obj in perms_lacking %}
-                        <li>{{ obj }}</li>
-                        {% endfor %}
-                    </ol>
-                {% elif protected %}
-                    <p>{% blocktrans %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktrans %}</p>
-                    <ol>
-                        {% for obj in protected %}
-                        <li>{{ obj }}</li>
-                        {% endfor %}
-                    </ol>
-                {% else %}
-                    <p>{% blocktrans %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktrans %}</p>
-                    <div class="row">
-                        <div class="col-12 col-sm-9">
-                            <h4>{% trans "Objects" %}</h4>
-                            {% for deletable_object in deletable_objects %}
-                                <ol>{{ deletable_object|unordered_list }}</ol>
-                            {% endfor %}
-                        </div>
-                        <div class="col-12 col-sm-3">
-                            {% include "admin/includes/object_delete_summary.html" %}
-                            <hr />
-                            <form method="post">
-                                {% csrf_token %}
-                                {% for obj in queryset %}
-                                    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
-                                {% endfor %}
-                                <input type="hidden" name="action" value="delete_selected">
-                                <input type="hidden" name="post" value="yes">
-                                <div class="form-group">
-                                    <input type="submit" class="btn {{ jazzmin_ui.button_classes.danger }} form-control" value="{% trans 'Yes, I’m sure' %}">
-                                </div>
-                                <div class="form-group">
-                                    <a href="#" class="btn {{ jazzmin_ui.button_classes.danger }} cancel-link form-control">{% trans "No, take me back" %}</a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
+{% if perms_lacking %}
+    <p>{% blocktranslate %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}</p>
+    <ul>
+    {% for obj in perms_lacking %}
+        <li>{{ obj }}</li>
+    {% endfor %}
+    </ul>
+{% elif protected %}
+    <p>{% blocktranslate %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktranslate %}</p>
+    <ul>
+    {% for obj in protected %}
+        <li>{{ obj }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>{% blocktranslate %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktranslate %}</p>
+    {% include "admin/includes/object_delete_summary.html" %}
+    <h2>{% translate "Objects" %}</h2>
+    {% for deletable_object in deletable_objects %}
+        <ul>{{ deletable_object|unordered_list }}</ul>
+    {% endfor %}
+    <form method="post">{% csrf_token %}
+    <div>
+    {% for obj in queryset %}
+    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
+    {% endfor %}
+    <input type="hidden" name="action" value="delete_selected">
+    <input type="hidden" name="post" value="yes">
+    <input type="submit" value="{% translate 'Yes, I’m sure' %}">
+    <a href="#" class="button cancel-link">{% translate "No, take me back" %}</a>
     </div>
-</div>
+    </form>
+{% endif %}
 {% endblock %}

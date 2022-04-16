@@ -1,76 +1,68 @@
-{% extends "registration/base.html" %}
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
 
-{% load i18n jazzmin %}
-{% get_jazzmin_settings request as jazzmin_settings %}
-{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}">
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
 
 {% block content %}
-    <p class="login-box-msg">{{ jazzmin_settings.welcome_sign }}</p>
-    <form action="{{ app_path }}" method="post">
-        {% csrf_token %}
-        {% if user.is_authenticated %}
-            <p class="errornote">
-                <div class="callout callout-danger">
-                    <p>
-                        {% blocktrans trimmed %}
-                            You are authenticated as {{ username }}, but are not authorized to
-                            access this page. Would you like to login to a different account?
-                        {% endblocktrans %}
-                    </p>
-                </div>
-            </p>
-        {% endif %}
-        {% if form.errors %}
-            {% if form.username.errors %}
-                <div class="callout callout-danger">
-                    <p>{{ form.username.label }}: {{ form.username.errors|join:', ' }}</p>
-                </div>
-            {% endif %}
-            {% if form.password.errors %}
-                <div class="callout callout-danger">
-                    <p>{{ form.password.label }}: {{ form.password.errors|join:', ' }}</p>
-                </div>
-            {% endif %}
-            {% if form.non_field_errors %}
-                <div class="callout callout-danger">
-                    {% for error in form.non_field_errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endif %}
-        <div class="input-group mb-3">
-            <input type="text" name="username" class="form-control" placeholder="{{ form.username.label }}" required>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user"></span>
-                </div>
-            </div>
-        </div>
-        <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control" placeholder="{{ form.password.label }}" required>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                </div>
-            </div>
-        </div>
-        {% url 'admin_password_reset' as password_reset_url %}
-        {% if password_reset_url %}
-            <div class="mb-3">
-                <div class="password-reset-link" style="text-align: center;">
-                    <a href="{{ password_reset_url }}">
-                        {% trans 'Forgotten your password or username?' %}
-                    </a>
-                </div>
-            </div>
-        {% endif %}
-        <div class="row">
-            <div class="col-12">
-                <button type="submit" class="btn {{ jazzmin_ui.button_classes.primary }} btn-block">
-                    {% trans "Log in" %}
-                </button>
-            </div>
-        </div>
-    </form>
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+{% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div id="content-main">
+
+{% if user.is_authenticated %}
+<p class="errornote">
+{% blocktranslate trimmed %}
+    You are authenticated as {{ username }}, but are not authorized to
+    access this page. Would you like to login to a different account?
+{% endblocktranslate %}
+</p>
+{% endif %}
+
+<form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    {{ form.username.errors }}
+    {{ form.username.label_tag }} {{ form.username }}
+  </div>
+  <div class="form-row">
+    {{ form.password.errors }}
+    {{ form.password.label_tag }} {{ form.password }}
+    <input type="hidden" name="next" value="{{ next }}">
+  </div>
+  {% url 'admin_password_reset' as password_reset_url %}
+  {% if password_reset_url %}
+  <div class="password-reset-link">
+    <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+  </div>
+  {% endif %}
+  <div class="submit-row">
+    <input type="submit" value="{% translate 'Log in' %}">
+  </div>
+</form>
+
+</div>
 {% endblock %}
