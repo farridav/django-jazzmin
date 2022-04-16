@@ -40,3 +40,10 @@ test_app: check-venv ## Run the test app
 
 test_user:  ## Make the test user
 	$(environment) python tests/test_app/manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('test@test.com', password='test')"
+
+download_bootswatch:  ## Updat4e bootswatch themes
+	THEMES="cerulean cosmo cyborg darkly flatly journal litera lumen lux materia minty morph pulse quartz regent sandstone simplex sketchy slate solar spacelab superhero united vapor yeti zephyr"; \
+	for theme in $$THEMES; \
+	do mkdir -p jazzmin/static/vendor/bootswatch/$$theme/ && \
+	wget https://raw.githubusercontent.com/thomaspark/bootswatch/v5/dist/$$theme/bootstrap.min.css -O jazzmin/static/vendor/bootswatch/$$theme/bootstrap.min.css; \
+	done;

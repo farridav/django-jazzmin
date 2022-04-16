@@ -63,6 +63,8 @@ mypy = "^0.931"                 # Type checking
 click = "^8.0.3"                # Framework for building cli's
 ipdb = "^0.13.9"                # ipython breakpoints
 black = "^21.12b0"              # Code formatting and linting (with pyproject.toml support)
+dj-database-url = "^0.5.0"
+docutils = "^0.18.1"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"

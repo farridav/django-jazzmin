@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{% static "vendor/fontawesome-free/css/all.min.css" %}">
 
     <!-- Bootstrap and adminLTE -->
-    <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte.min.css" %}">
+    <link rel="stylesheet" href="{% static "vendor/adminlte/css/tb-adminlte.min.css" %}">
 
     <!-- Bootswatch theme -->
     {% if jazzmin_ui.theme.name != 'default' %}
@@ -62,10 +62,8 @@
 
 <!-- jQuery -->
 <script src="{% static "admin/js/vendor/jquery/jquery.js" %}"></script>
-<!-- Bootstrap 4 -->
-<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
 <!-- AdminLTE App -->
-<script src="{% static 'vendor/adminlte/js/adminlte.min.js' %}"></script>
+<script src="{% static 'vendor/adminlte/js/tb-adminlte.min.js' %}"></script>
 
 {% if jazzmin_settings.custom_js %}
     <script src="{% static jazzmin_settings.custom_js %}"></script>

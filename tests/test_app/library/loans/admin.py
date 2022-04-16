@@ -7,7 +7,7 @@ from .views import CustomView
 
 class BookLoanInline(admin.StackedInline):
     model = BookLoan
-    extra = 1
+    extra = 3
     readonly_fields = ("id", "duration")
     fields = (
         "book",

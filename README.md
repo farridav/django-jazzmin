@@ -8,7 +8,7 @@
 ![Django Versions](https://img.shields.io/badge/django-%3E%3D2-brightgreen)
 [![Coverage Status](https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=master)](https://coveralls.io/github/farridav/django-jazzmin?branch=master)
 
-Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy
+Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 5 to make yo' admin look jazzy
 
 ## Installation
 ```
@@ -38,7 +38,7 @@ Live demo https://django-jazzmin.herokuapp.com/admin
 - Customisable UI (via Live UI changes, or custom CSS/JS)
 - Responsive
 - Select2 drop-downs
-- Bootstrap 4 & AdminLTE UI components
+- Bootstrap 5 & AdminLTE UI components
 - Using the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 
 ## Screenshots

@@ -20,8 +20,9 @@ class BooksInline(admin.TabularInline):
 class BookAdmin(admin.ModelAdmin):
     fieldsets = (
         ("general", {"fields": ("title", "author", "library"), "description": "General book fields"}),
-        ("other", {"fields": ("genre", "summary", "isbn", "published_on", "pages")}),
+        ("other", {"fields": ("genre", "summary", "isbn", "published_on", "pages"), "classes": ("collapse",)}),
     )
+
     raw_id_fields = ("author",)
     list_display = ("__str__", "title", "author", "pages")
     readonly_fields = ("__str__",)
