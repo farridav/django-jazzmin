@@ -51,13 +51,7 @@
 <div class="login-box">
     <div class="login-logo">
         <h1>
-            <img src="
-                {% if jazzmin_settings.login_logo %}
-                    {% static jazzmin_settings.login_logo %}
-                {% else %}
-                    {% static jazzmin_settings.site_logo %}
-                {% endif %}
-            " alt="{{ jazzmin_settings.site_header }}">
+            <img src="{% static jazzmin_settings.login_logo %}" alt="{{ jazzmin_settings.site_header }}">
         </h1>
     </div>
 

@@ -233,6 +233,9 @@ def get_settings() -> Dict:
     # Default the site icon using the site logo
     jazzmin_settings["site_icon"] = jazzmin_settings["site_icon"] or jazzmin_settings["site_logo"]
 
+    # Default the login logo using the site logo
+    jazzmin_settings["login_logo"] = jazzmin_settings["login_logo"] or jazzmin_settings["site_logo"]
+
     # ensure all model names are lower cased
     jazzmin_settings["changeform_format_overrides"] = {
         x.lower(): y.lower() for x, y in jazzmin_settings.get("changeform_format_overrides", {}).items()
