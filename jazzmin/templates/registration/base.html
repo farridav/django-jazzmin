@@ -51,7 +51,12 @@
 <div class="login-box">
     <div class="login-logo">
         <h1>
-            <img src="{% static jazzmin_settings.login_logo %}" alt="{{ jazzmin_settings.site_header }}">
+            <picture>
+                <source
+                    srcset="{% static jazzmin_settings.login_logo_dark %}"
+                    media="(prefers-color-scheme: dark)">
+                 <img src="{% static jazzmin_settings.login_logo %}" alt="{{ jazzmin_settings.site_header }}">
+            </picture>
         </h1>
     </div>
 

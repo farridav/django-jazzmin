@@ -127,6 +127,8 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "site_logo": "books/img/logo.png",
     # Relative path to logo for your site, used for login logo (must be present in static files. Defaults to site_logo)
     "login_logo": "books/img/logo-login.png",
+    # Logo to use for login form in dark themes (must be present in static files. Defaults to login_logo)
+    "login_logo_dark": "books/img/logo-login-dark-mode.png",
     # CSS classes that are applied to the logo
     "site_logo_classes": None,
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
@@ -258,7 +260,7 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False,
     "theme": "default",
-    "dark_mode_theme": None,
+    "dark_mode_theme": "darkly",
     "button_classes": {
         "primary": "btn-outline-primary",
         "secondary": "btn-outline-secondary",
