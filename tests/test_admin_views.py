@@ -44,7 +44,10 @@ def test_logout(admin_client):
     templates_used = [t.name for t in response.templates]
 
     assert response.status_code == 200
-    assert templates_used == ["registration/logged_out.html"]
+    assert templates_used == [
+        "registration/logged_out.html",
+        "registration/base.html",
+    ]
 
 
 @pytest.mark.django_db
