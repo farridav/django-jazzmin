@@ -125,6 +125,9 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "site_header": "Library",
     # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "books/img/logo.png",
+    # Logo to use for your site, must be present in static files, used for brand on login screen
+    # (Defaults to site_logo if absent or None)
+    "login_logo": None,
     # CSS classes that are applied to the logo
     "site_logo_classes": None,
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
