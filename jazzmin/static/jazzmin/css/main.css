@@ -735,8 +735,8 @@ body.no-sidebar .main-header {
 
 .login-box,
 .register-box {
-    width: auto;
-    max-width: 700px;
+    width: 500px;
+    max-width: 100%;
 }
 
 #jazzy-collapsible .collapsible-header:hover {
