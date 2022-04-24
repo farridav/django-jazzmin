@@ -1,157 +1,814 @@
 {% load i18n static %}
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}"
-      dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
+
     <head>
         <title>
             {% block title %}{% endblock %}
         </title>
-        <link rel="stylesheet"
-              type="text/css"
-              href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+        <!--<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'admin/css/base.css' %}{% endblock %}">-->
         {% if not is_popup and is_nav_sidebar_enabled %}
-            <link rel="stylesheet"
-                  type="text/css"
-                  href="{% static "admin/css/nav_sidebar.css" %}">
-            <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
+        <!--
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/nav_sidebar.css' %}">
+        <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
+        -->
         {% endif %}
-        {# Start admin lte #}
-        <!-- OPTIONAL LINKS -->
-        <!-- Google Font: Source Sans Pro -->
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"/>
-        <!-- overlayScrollbars -->
-        <link rel="stylesheet"
-              href="https://cdn.jsdelivr.net/npm/overlayscrollbars@1.13.1/css/OverlayScrollbars.min.css"
-              integrity="sha256-WKijf8KI68sbq8Znd6yMepIuFF0wdWfIt6gk3JWcQfk="
-              crossorigin="anonymous"/>
-        <!-- Font Awesome -->
-        <link rel="stylesheet"
-              href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"
-              integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4="
-              crossorigin="anonymous"/>
-        <!-- REQUIRED LINKS -->
-        <!-- Theme style -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+        <link rel="stylesheet" href="{% static 'vendor/overlayscrollbars/css/OverlayScrollbars.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'vendor/ionicons/css/ionicons.min.css' %}" />
         {% if LANGUAGE_BIDI %}
-            <link rel="stylesheet"
-                  href="{% static 'vendor/adminlte/css/rtl/adminlte.rtl.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'vendor/adminlte/css/rtl/adminlte.rtl.min.css' %}" />
         {% else %}
-            <link rel="stylesheet"
-                  href="{% static 'vendor/adminlte/css/adminlte.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'vendor/adminlte/css/adminlte.min.css' %}" />
         {% endif %}
-        <link rel="stylesheet"
-              href="{% static 'vendor/adminlte/css/dark/adminlte-dark-addon.min.css' %}"
-              media="(prefers-color-scheme: dark)"/>
-        <link rel="stylesheet"
-              href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+        <!--<link rel="stylesheet" href="{% static 'vendor/adminlte/css/dark/adminlte-dark-addon.min.css' %}" media="(prefers-color-scheme: dark)" />-->
         {# End admin lte #}
         {% block extrastyle %}{% endblock %}
         {% if LANGUAGE_BIDI %}
-            <link rel="stylesheet"
-                  type="text/css"
-                  href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">
+        <!--<link rel=" stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static 'admin/css/rtl.css' %}{% endblock %}">-->
         {% endif %}
         {% block extrahead %}{% endblock %}
         {% block responsive %}
-            <meta name="viewport"
-                  content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
-            <link rel="stylesheet"
-                  type="text/css"
-                  href="{% static "admin/css/responsive.css" %}">
-            {% if LANGUAGE_BIDI %}
-                <link rel="stylesheet"
-                      type="text/css"
-                      href="{% static 'admin/css/responsive_rtl.css' %}">
-            {% endif %}
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <!--<link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}"> -->
+        {% if LANGUAGE_BIDI %}
+        <!-- <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive_rtl.css' %}"> -->
+        {% endif %}
         {% endblock %}
         <meta name="color-scheme" content="light dark">
-        {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+        {% block blockbots %}
+        <meta name="robots" content="NONE,NOARCHIVE">
+        {% endblock %}
     </head>
-    <body class="{% if is_popup %}popup{% endif %}{% block bodyclass %}layout-fixed{% endblock %}"
-          data-admin-utc-offset="{% now "Z" %}">
-        <!-- Container -->
-        <div id="container" class="wrapper">
-            {% if not is_popup %}
-                <!-- Header -->
-                {% block header %}
-                    <div id="header">
-                        <div id="branding">
-                            {% block branding %}{% endblock %}
-                        </div>
+
+    <body class="{% if is_popup %}popup{% endif %}{% block bodyclass %}layout-fixed{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
+        <div class="wrapper">
+            <!-- Navbar -->
+            {% block header %}
+            <nav class="main-header navbar navbar-expand navbar-light">
+                <div class="container-fluid">
+                    <!-- Start navbar links -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" data-lte-toggle="sidebar-full" href="#" role="button"><i class="fas fa-bars"></i></a>
+                        </li>
+                        <li class="nav-item d-none d-md-block">
+                            <a href="#" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item d-none d-md-block">
+                            <a href="#" class="nav-link">Contact</a>
+                        </li>
+                    </ul>
+                    <!-- End navbar links -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Navbar Search -->
+                        <li class="nav-item">
+                            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                                <i class="fas fa-search"></i>
+                            </a>
+                        </li>
+                        <!-- Messages Dropdown Menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                                <i class="far fa-comments"></i>
+                                <span class="navbar-badge badge bg-danger">3</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                                <a href="#" class="dropdown-item">
+                                    <!-- Message Start -->
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0">
+                                            <img src="./assets/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle me-3">
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h3 class="dropdown-item-title">
+                                                Brad Diesel
+                                                <span class="float-end fs-7 text-danger"><i class="fas fa-star"></i></span>
+                                            </h3>
+                                            <p class="fs-7">
+                                                Call me whenever you can...
+                                            </p>
+                                            <p class="fs-7 text-muted">
+                                                <i class="far fa-clock me-1"></i> 4 Hours Ago
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- Message End -->
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <!-- Message Start -->
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0">
+                                            <img src="./assets/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle me-3">
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h3 class="dropdown-item-title">
+                                                John Pierce
+                                                <span class="float-end fs-7 text-muted"><i class="fas fa-star"></i></span>
+                                            </h3>
+                                            <p class="fs-7">
+                                                I got your message bro
+                                            </p>
+                                            <p class="fs-7 text-muted">
+                                                <i class="far fa-clock me-1"></i> 4 Hours Ago
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- Message End -->
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <!-- Message Start -->
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0">
+                                            <img src="./assets/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle me-3">
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h3 class="dropdown-item-title">
+                                                Nora Silvester
+                                                <span class="float-end fs-7 text-warning"><i class="fas fa-star"></i></span>
+                                            </h3>
+                                            <p class="fs-7">
+                                                The subject goes here
+                                            </p>
+                                            <p class="fs-7 text-muted">
+                                                <i class="far fa-clock me-1"></i> 4 Hours Ago
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- Message End -->
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                            </div>
+                        </li>
+                        <!-- Notifications Dropdown Menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                                <i class="far fa-bell"></i>
+                                <span class="navbar-badge badge bg-warning">15</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                                <span class="dropdown-item dropdown-header">15 Notifications</span>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-envelope me-2"></i> 4 new messages
+                                    <span class="float-end text-muted fs-7">3 mins</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-users me-2"></i> 8 friend requests
+                                    <span class="float-end text-muted fs-7">12 hours</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-file me-2"></i> 3 new reports
+                                    <span class="float-end text-muted fs-7">2 days</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                            </div>
+                        </li>
                         {% block usertools %}
-                            {% if has_permission %}
-                                <div id="user-tools">
-                                    {% block welcome-msg %}
-                                        {% translate 'Welcome,' %}
-                                        <strong>{% firstof user.get_short_name user.get_username %}</strong>.
-                                {% endblock %}
-                                {% block userlinks %}
-                                    {% if site_url %}
-                                        <a href="{{ site_url }}">{% translate 'View site' %}</a> /
-                                {% endif %}
-                                {% if user.is_active and user.is_staff %}
-                                    {% url 'django-admindocs-docroot' as docsroot %}
-                                    {% if docsroot %}
-                                        <a href="{{ docsroot }}">{% translate 'Documentation' %}</a> /
-                                {% endif %}
-                            {% endif %}
-                            {% if user.has_usable_password %}
-                                <a href="{% url 'admin:password_change' %}">{% translate 'Change password' %}</a> /
-                        {% endif %}
-                        <a href="{% url 'admin:logout' %}">{% translate 'Log out' %}</a>
-                    {% endblock %}
+                        <li class="nav-item dropdown user-menu">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <!-- <img src="{% static 'vendor/adminlte/assets/img/user2-160x160.jpg' %}" class="user-image img-circle shadow" alt="User Image">-->
+                                <i class="far fa-user" aria-hidden="true"> </i>
+                                <span class="d-none d-md-inline">{% firstof user.get_short_name user.get_username %}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                                <!-- User image -->
+                                <li class="user-header bg-primary">
+                                    <img src="./assets/img/user2-160x160.jpg" class="img-circle shadow" alt="User Image">
+                                    <p>
+                                        Alexander Pierce - Web Developer
+                                        <small>Member since Nov. 2012</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class="col-4 text-center">
+                                            <a href="#">Followers</a>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <a href="#">Sales</a>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <a href="#">Friends</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.row -->
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endblock %}
+                        <!-- TODO tackel in v4.1 -->
+                        <!-- <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+            <i class="fas fa-th-large"></i>
+          </a>
+        </li> -->
+                    </ul>
                 </div>
-            {% endif %}
-        {% endblock %}
-        {% block nav-global %}{% endblock %}
-    </div>
-{% endblock %}
-<!-- END Header -->
-{% block breadcrumbs %}
-    <div class="breadcrumbs">
-        <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
-        {% if title %}&rsaquo; {{ title }}{% endif %}
-    </div>
-{% endblock %}
-{% endif %}
-<div class="main" id="main">
-    {% if not is_popup and is_nav_sidebar_enabled %}
-        {% block nav-sidebar %}
-            {% include "admin/nav_sidebar.html" %}
-        {% endblock %}
-    {% endif %}
-    <div class="content">
-        {% block messages %}
-            {% if messages %}
-                <ul class="messagelist">
-                    {% for message in messages %}
-                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endblock messages %}
-        <!-- Content -->
-        <div id="content" class="{% block coltype %}colM{% endblock %}">
-            {% block pretitle %}{% endblock %}
-            {% block content_title %}
-                {% if title %}<h1>{{ title }}</h1>{% endif %}
+            </nav>
             {% endblock %}
-            {% block content_subtitle %}
-                {% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}
-            {% endblock %}
-            {% block content %}
-                {% block object-tools %}{% endblock %}
-                {{ content }}
-            {% endblock %}
-            {% block sidebar %}{% endblock %}
-            <br class="clear">
+            <!-- /.navbar -->
+
+            <!-- Main Sidebar Container -->
+            <aside class="main-sidebar sidebar-bg-dark sidebar-color-primary shadow">
+                <div class="brand-container">
+                    {% block branding %}
+                    <a href="javascript:;" class="brand-link">
+                        <img src="{% static 'vendor/adminlte/assets/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image opacity-80 shadow">
+                        <span class="brand-text fw-light">AdminLTE 4</span>
+                    </a>
+                    {% endblock %}
+                    <a class="pushmenu mx-1" data-lte-toggle="sidebar-mini" href="javascript:;" role="button"><i class="fas fa-angle-double-left"></i></a>
+                </div>
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <nav class="mt-2">
+                        <!-- Sidebar Menu -->
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+                            <li class="nav-item menu-open">
+                                <a href="javascript:;" class="nav-link active">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Dashboard
+                                        <i class="end fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="./index.html" class="nav-link active">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>Dashboard v1</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="./index2.html" class="nav-link ">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>Dashboard v2</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="./index3.html" class="nav-link ">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>Dashboard v3</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Widgets
+                                        <i class="end fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="./pages/widgets/small-box.html" class="nav-link ">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>Small Box</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="./pages/widgets/info-box.html" class="nav-link ">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>info Box</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="./pages/widgets/cards.html" class="nav-link ">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>Cards</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Layout Options
+                                        <span class="badge bg-info float-end me-3">6</span>
+                                        <i class="end fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="./pages/layout/fixed-sidebar.html" class="nav-link ">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>Fixed Sidebar</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Forms
+                                        <i class="end fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="./pages/forms/general.html" class="nav-link ">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>General Elements</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="javascript:;" class="nav-link ">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Tables
+                                        <i class="end fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="./pages/tables/simple.html" class="nav-link ">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>Simple Tables</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-header">MULTI LEVEL EXAMPLE</li>
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>Level 1</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>
+                                        Level 1
+                                        <i class="end fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="javascript:;" class="nav-link">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>Level 2</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="javascript:;" class="nav-link">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>
+                                                Level 2
+                                                <i class="end fas fa-angle-left"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="javascript:;" class="nav-link">
+                                                    <i class="nav-icon far fa-dot-circle"></i>
+                                                    <p>Level 3</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="javascript:;" class="nav-link">
+                                                    <i class="nav-icon far fa-dot-circle"></i>
+                                                    <p>Level 3</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="javascript:;" class="nav-link">
+                                                    <i class="nav-icon far fa-dot-circle"></i>
+                                                    <p>Level 3</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="javascript:;" class="nav-link">
+                                            <i class="nav-icon far fa-circle"></i>
+                                            <p>Level 2</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link">
+                                    <i class="nav-icon fas fa-circle"></i>
+                                    <p>Level 1</p>
+                                </a>
+                            </li>
+                            <li class="nav-header">LABELS</li>
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link">
+                                    <i class="nav-icon far fa-circle text-danger"></i>
+                                    <p class="text">Important</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link">
+                                    <i class="nav-icon far fa-circle text-warning"></i>
+                                    <p>Warning</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:;" class="nav-link">
+                                    <i class="nav-icon far fa-circle text-info"></i>
+                                    <p>Informational</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- /.sidebar -->
+            </aside>
+
+            <!-- Main content -->
+            <main class="content-wrapper">
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <div class="fs-3">Dashboard</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-end">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="container-fluid">
+                        <!-- Small boxes (Stat box) -->
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-primary">
+                                    <div class="inner">
+                                        <h3>150</h3>
+
+                                        <p>New Orders</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="inner-icon ion ion-bag"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-success">
+                                    <div class="inner">
+                                        <h3>53<sup class="fs-5">%</sup></h3>
+
+                                        <p>Bounce Rate</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="inner-icon ion ion-stats-bars"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3>44</h3>
+
+                                        <p>User Registrations</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="inner-icon ion ion-person-add"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-danger">
+                                    <div class="inner">
+                                        <h3>65</h3>
+
+                                        <p>Unique Visitors</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="inner-icon ion ion-pie-graph"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                        </div>
+                        <!-- /.row -->
+                        <!-- Main row -->
+                        <div class="row">
+                            <!-- Start col -->
+                            <div class="col-lg-7">
+                                <!-- Custom tabs (Charts with tabs)-->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-chart-pie me-1"></i>
+                                            Sales
+                                        </h3>
+                                        <div class="card-tools">
+                                            <ul class="nav nav-pills ms-auto">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" href="#revenue-chart" data-bs-toggle="tab">Area</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#sales-chart" data-bs-toggle="tab">Donut</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!-- /.card-header -->
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <!-- Morris chart - Sales -->
+                                            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                                                <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                            </div>
+                                            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                                                <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+
+                                <!-- DIRECT CHAT -->
+                                <div class="card direct-chat direct-chat-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Direct Chat</h3>
+
+                                        <div class="card-tools">
+                                            <span title="3 New Messages" class="badge bg-primary">3</span>
+                                            <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" title="Contacts" data-lte-toggle="chat-pane">
+                                                <i class="fas fa-comments"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-lte-dismiss="card-remove">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <!-- Conversations are loaded here -->
+                                        <div class="direct-chat-messages">
+                                            <!-- Message. Default to the start -->
+                                            <div class="direct-chat-msg">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-start">Alexander Pierce</span>
+                                                    <span class="direct-chat-timestamp float-end">23 Jan 2:00 pm</span>
+                                                </div>
+                                                <!-- /.direct-chat-infos -->
+                                                <img class="direct-chat-img" src="./assets/img/user1-128x128.jpg" alt="message user image">
+                                                <!-- /.direct-chat-img -->
+                                                <div class="direct-chat-text">
+                                                    Is this template really for free? That's unbelievable!
+                                                </div>
+                                                <!-- /.direct-chat-text -->
+                                            </div>
+                                            <!-- /.direct-chat-msg -->
+
+                                            <!-- Message to the end -->
+                                            <div class="direct-chat-msg end">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-end">Sarah Bullock</span>
+                                                    <span class="direct-chat-timestamp float-start">23 Jan 2:05 pm</span>
+                                                </div>
+                                                <!-- /.direct-chat-infos -->
+                                                <img class="direct-chat-img" src="./assets/img/user3-128x128.jpg" alt="message user image">
+                                                <!-- /.direct-chat-img -->
+                                                <div class="direct-chat-text">
+                                                    You better believe it!
+                                                </div>
+                                                <!-- /.direct-chat-text -->
+                                            </div>
+                                            <!-- /.direct-chat-msg -->
+
+                                            <!-- Message. Default to the start -->
+                                            <div class="direct-chat-msg">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-start">Alexander Pierce</span>
+                                                    <span class="direct-chat-timestamp float-end">23 Jan 5:37 pm</span>
+                                                </div>
+                                                <!-- /.direct-chat-infos -->
+                                                <img class="direct-chat-img" src="./assets/img/user1-128x128.jpg" alt="message user image">
+                                                <!-- /.direct-chat-img -->
+                                                <div class="direct-chat-text">
+                                                    Working with AdminLTE on a great new app! Wanna join?
+                                                </div>
+                                                <!-- /.direct-chat-text -->
+                                            </div>
+                                            <!-- /.direct-chat-msg -->
+
+                                            <!-- Message to the end -->
+                                            <div class="direct-chat-msg end">
+                                                <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-end">Sarah Bullock</span>
+                                                    <span class="direct-chat-timestamp float-start">23 Jan 6:10 pm</span>
+                                                </div>
+                                                <!-- /.direct-chat-infos -->
+                                                <img class="direct-chat-img" src="./assets/img/user3-128x128.jpg" alt="message user image">
+                                                <!-- /.direct-chat-img -->
+                                                <div class="direct-chat-text">
+                                                    I would love to.
+                                                </div>
+                                                <!-- /.direct-chat-text -->
+                                            </div>
+                                            <!-- /.direct-chat-msg -->
+
+                                        </div>
+                                        <!--/.direct-chat-messages-->
+
+                                        <!-- Contacts are loaded here -->
+                                        <div class="direct-chat-contacts">
+                                            <ul class="contacts-list">
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="./assets/img/user1-128x128.jpg" alt="User Avatar">
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Count Dracula
+                                                                <small class="contacts-list-date float-end">2/28/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">How have you been? I was...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="./assets/img/user7-128x128.jpg" alt="User Avatar">
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Sarah Doe
+                                                                <small class="contacts-list-date float-end">2/23/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">I will be waiting for...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="./assets/img/user3-128x128.jpg" alt="User Avatar">
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Nadia Jolie
+                                                                <small class="contacts-list-date float-end">2/20/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">I'll call you back at...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="./assets/img/user5-128x128.jpg" alt="User Avatar">
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Nora S. Vans
+                                                                <small class="contacts-list-date float-end">2/10/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">Where is your new...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="./assets/img/user6-128x128.jpg" alt="User Avatar">
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                John K.
+                                                                <small class="contacts-list-date float-end">1/27/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">Can I take a look at...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                                <li>
+                                                    <a href="#">
+                                                        <img class="contacts-list-img" src="./assets/img/user8-128x128.jpg" alt="User Avatar">
+
+                                                        <div class="contacts-list-info">
+                                                            <span class="contacts-list-name">
+                                                                Kenneth M.
+                                                                <small class="contacts-list-date float-end">1/4/2015</small>
+                                                            </span>
+                                                            <span class="contacts-list-msg">Never mind I found...</span>
+                                                        </div>
+                                                        <!-- /.contacts-list-info -->
+                                                    </a>
+                                                </li>
+                                                <!-- End Contact Item -->
+                                            </ul>
+                                            <!-- /.contacts-list -->
+                                        </div>
+                                        <!-- /.direct-chat-pane -->
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer">
+                                        <form action="#" method="post">
+                                            <div class="input-group">
+                                                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                                <span class="input-group-append">
+                                                    <button type="button" class="btn btn-primary">Send</button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.card-footer-->
+                                </div>
+                                <!--/.direct-chat -->
+                            </div>
+                            <!-- /.Start col -->
+                        </div>
+                        <!-- /.row (main row) -->
+                    </div><!-- /.container-fluid -->
+                </div>
+            </main>
+            <!-- /.content-wrapper -->
+
+            <!-- Main Footer -->
+            <footer class="main-footer">
+                <!-- To the end -->
+                <div class="float-end d-none d-sm-inline">
+                    Anything you want
+                </div>
+                <!-- Default to the start -->
+                <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            </footer>
+
         </div>
-        <!-- END Content -->
-        {% block footer %}<div id="footer"></div>{% endblock %}
-    </div>
-</div>
-</div>
-<!-- END Container -->
-</body>
+        <!--  ./wrapper -->
+
+        <script src="{% static 'vendor/overlayscrollbars/js/OverlayScrollbars.min.js' %}" crossorigin="anonymous"></script>
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}" crossorigin="anonymous"></script>
+        <script src="{% static 'vendor/adminlte/js/adminlte.min.js' %}"></script>
+        <script>
+            const SELECTOR_SIDEBAR = '.sidebar'
+            const Default = {
+                scrollbarTheme: 'os-theme-light',
+                scrollbarAutoHide: 'leave'
+            }
+            document.addEventListener("DOMContentLoaded", function () {
+                if (typeof OverlayScrollbars !== 'undefined') {
+                    OverlayScrollbars(document.querySelectorAll(SELECTOR_SIDEBAR), {
+                        className: Default.scrollbarTheme,
+                        sizeAutoCapable: true,
+                        scrollbars: {
+                            autoHide: Default.scrollbarAutoHide,
+                            clickScrolling: true
+                        }
+                    })
+                }
+            })
+        </script>
+    </body>
+
 </html>
