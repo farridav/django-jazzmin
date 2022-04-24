@@ -18,6 +18,10 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "site_brand": None,
     # Relative path to logo for your site, used for brand on top left (must be present in static files)
     "site_logo": "vendor/adminlte/img/AdminLTELogo.png",
+    # Relative path to logo for your site, used for login logo (must be present in static files. Defaults to site_logo)
+    "login_logo": None,
+    # Logo to use for login form in dark themes (must be present in static files. Defaults to login_logo)
+    "login_logo_dark": None,
     # CSS classes that are applied to the logo
     "site_logo_classes": "img-circle",
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
@@ -230,6 +234,12 @@ def get_settings() -> Dict:
 
     # Default the site icon using the site logo
     jazzmin_settings["site_icon"] = jazzmin_settings["site_icon"] or jazzmin_settings["site_logo"]
+
+    # Default the login logo using the site logo
+    jazzmin_settings["login_logo"] = jazzmin_settings["login_logo"] or jazzmin_settings["site_logo"]
+
+    # Default the login logo dark using the login logo
+    jazzmin_settings["login_logo_dark"] = jazzmin_settings["login_logo_dark"] or jazzmin_settings["login_logo"]
 
     # ensure all model names are lower cased
     jazzmin_settings["changeform_format_overrides"] = {
