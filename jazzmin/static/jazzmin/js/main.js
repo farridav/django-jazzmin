@@ -38,17 +38,17 @@
             $link.addClass('active');
         } else if ($parent_link.length) {
             $parent_link.addClass('active');
-        }
-    }
+        };
 
-    function callResizeOnTabSwitch() {
-        /*
-        used to reinitialize the map on a GeoDjango Pointfield
-        */
-        $('a[data-toggle="pill"]').on('shown.bs.tab', function (event) {
-        window.dispatchEvent(new Event('resize'));
-        });
-    }
+        const $a_active = $('a.nav-link.active');
+        const $main_li_parent = $a_active.closest('li.nav-item.has-treeview');
+        const $ul_child = $main_li_parent.children('ul');
+
+        $ul_child.show();
+        $main_li_parent.addClass('menu-is-opening menu-open');
+    };
+
+
 
     $(document).ready(function () {
         // Set active status on links
@@ -63,11 +63,7 @@
         const $changeListTable = $('#changelist .results table');
         if ($changeListTable.length && !$changeListTable.hasClass('table table-striped')) {
             $changeListTable.addClass('table table-striped');
-        }
-
-        // call resize in change view after tab switch
-        callResizeOnTabSwitch();
-
+        };
     });
 
 })(jQuery);

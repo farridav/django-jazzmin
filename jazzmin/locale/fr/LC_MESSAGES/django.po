@@ -1,0 +1,104 @@
+# This file is distributed under the same license as the Django package.
+#
+# Translators:
+# Bruno Brouard <annoa.b@gmail.com>, 2021
+# Claude Paroz <claude@2xlibre.net>, 2013-2020
+# Claude Paroz <claude@2xlibre.net>, 2011,2013
+# Jannis Leidel <jannis@leidel.info>, 2011
+msgid ""
+msgstr ""
+"Project-Id-Version: django\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-29 17:38+0100\n"
+"PO-Revision-Date: 2021-03-04 20:53+0000\n"
+"Last-Translator: Bruno Brouard <annoa.b@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/django/django/language/fr/)\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+
+msgid "First, enter a username and password. Then, you'll be able to edit more user options."
+msgstr ""
+"Saisissez tout d’abord un nom d’utilisateur et un mot de passe. Vous pourrez "
+"ensuite modifier plus d’options."
+
+msgid "Account"
+msgstr "Compte utilisateur"
+
+msgid "See Profile"
+msgstr "Voir le profil"
+
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "Jazzmin version"
+msgstr "Version de Jazzmin"
+
+msgid "Copyright"
+msgstr "Copyright"
+
+msgid "All rights reserved."
+msgstr "Tous droits réservés."
+
+msgid "UI Configuration"
+msgstr "Configuration de l'interface"
+
+msgid "Copy this info your settings file to persist these UI changes"
+msgstr ""
+"Copiez cette configuration dans votre fichier de paramètres pour conserver "
+"ces modifications de l'interface utilisateur"
+
+msgid "Confirm Import"
+msgstr "Confirmer l'import"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Some rows failed to validate"
+msgstr "Certaines lignes n'ont pas réussi à valider"
+
+msgid "Please correct these errors in your data where possible, then reupload it using the form above."
+msgstr "Veuillez corriger ces erreurs dans vos données, puis re téléchargez le à l'aide du formulaire ci-dessus."
+
+msgid "Row"
+msgstr "Ligne"
+
+msgid "Non field specific"
+msgstr "Non spécifique à un champ"
+
+#, python-format
+msgid "%(timesince)s ago"
+msgstr "Depuis %(timesince)s"
+
+msgid "This object doesn't have a change history. It probably wasn't added via this admin site."
+msgstr ""
+"Cet objet n’a pas d’historique de modification. Il n’a probablement pas été "
+"ajouté au moyen de ce site d’administration."
+
+msgid "Popup closing..."
+msgstr "Fenêtre en cours de fermeture…"
+
+msgid "The admin documentation system requires Python's <a href=\"%(link)s\">docutils</a> library."
+msgstr "Le système de documentation de l'interface d'administration nécessite la bibliothèque Python <a href=\"%(link)s\">docutils</a>."
+
+msgid "View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
+msgstr ""
+"\n"
+"Fonction de vue : <code>%(full_name)s</code>. Nom : <code>%(url_name)s</code>.\n"
+
+msgid "General"
+msgstr "Général"
+
+msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
+msgstr "Pour des raisons de sécurité, saisissez votre ancien mot de passe puis votre nouveau mot de passe à deux reprises afin de vérifier qu’il est correctement saisi."
+
+msgid "Deleted “{object}”."
+msgstr "« {object} » supprimé."
+
+#, python-brace-format
+msgid "Could not reverse url from {instance}"
+msgstr "Impossible de résoudre l'URL de {instance}"
+

@@ -1,8 +1,8 @@
 import json
+from unittest.mock import MagicMock
 
 import pytest
-from django.contrib.admin.models import LogEntry, CHANGE
-
+from django.contrib.admin.models import CHANGE, LogEntry
 from jazzmin.templatetags import jazzmin
 
 
@@ -45,3 +45,20 @@ def test_style_bold_first_word():
     message = "The bomb has been planted"
 
     assert jazzmin.style_bold_first_word(message) == "<strong>The</strong> bomb has been planted"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "case,test_input,field,expected",
+    [
+        (1, MagicMock(avatar="image.jpg"), "avatar", "image.jpg"),
+        (2, MagicMock(avatar="image.jpg"), lambda u: u.avatar, "image.jpg"),
+        (3, MagicMock(avatar=MagicMock(url="image.jpg")), "avatar", "image.jpg"),
+    ],
+)
+def test_get_user_avatar(case, test_input, field, expected, custom_jazzmin_settings):
+    """
+    We can specify the name of a charfield or imagefield on our user model, or a callable that receives our user
+    """
+    custom_jazzmin_settings["user_avatar"] = field
+    assert jazzmin.get_user_avatar(test_input) == expected

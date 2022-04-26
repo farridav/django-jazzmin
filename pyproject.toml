@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "django-jazzmin"
-version = "2.4.6"
+version = "2.5.0"
 description = "Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy"
 license = "MIT"
 authors = ["Shipit <packages@shipit.ltd>"]
 maintainers = ["Shipit <packages@shipit.ltd>"]
-readme  = "README.md"
+readme = "README.md"
 homepage = "https://github.com/farridav/django-jazzmin"
 repository = "https://github.com/farridav/django-jazzmin"
 documentation = "https://django-jazzmin.readthedocs.io"
@@ -16,8 +16,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Development Status :: 4 - Beta",
     "Framework :: Django",
-    "Framework :: Django :: 2.0",
-    "Framework :: Django :: 2.1",
     "Framework :: Django :: 2.2",
     "Framework :: Django :: 3.0",
     "Framework :: Django :: 3.1",
@@ -28,52 +26,43 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     "Topic :: Internet :: WWW/HTTP :: WSGI",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-packages = [
-    { include = "jazzmin" },
-]
+packages = [{ include = "jazzmin" }]
 include = ["jazzmin"]
 exclude = ["tests", "docs"]
 
 [tool.poetry.dependencies]
-python = ">=3.6"
-django = ">=2"
+python = ">=3.6.2"
+django = ">=2.2"
 
 [tool.black]
 line-length = 120
-target-version = ['py38']
+target-version = ['py310']
 
 [tool.poetry.dev-dependencies]
-django-debug-toolbar = "*"  # unparallelled debugging in django
-werkzeug = "*"              # support for werkzeug debugger in runserver_plus
-ipython = "*"               # enhanced python shell
-ipdb = "*"                  # ipython breakpoints
-django-extensions = "*"     # Django Sugar for development
-flake9 = "*"                # Static code checking (with pyproject.toml support)
-black = "*"                 # Code formatting and linting (with pyproject.toml support)
-pytest = "*"                # Test runner
-pytest-django = "*"         # Django integration for pytest
-pytest-cov = "*"            # Measure code coverage durign tests
-tox = "*"                   # Test runner for python packages
-faker = "*"                 # less fake fake data
-coveralls = "*"             # Publish code coverage to coveralls
-beautifulsoup4 = "*"        # Structure HTML documents into navigable things for test assertions
-mkdocs = "*"                # Tool for serving rendered markdown docs
-polib = "*"                 # Tool for dealing with translation files
-factory-boy = "*"           # Factory generation
-mypy = "*"                  # Type checking
-click = "^7.1.2"            # Framework for building cli's
-# 3rd party app support demonstrated in test app
-django-mptt = "^0.11.0"
-django-treebeard = "^4.3.1"
-django-import-export = "^2.4.0"
-dj-database-url = "^0.5.0"
-django-admin-numeric-filter = "^0.1.6"
-django-admin-rangefilter = "^0.7.0"
+django-debug-toolbar = "^3.2.4" # unparallelled debugging in django
+Werkzeug = "^2.0.2"             # support for werkzeug debugger in runserver_plus
+django-extensions = "^3.1.5"    # Django Sugar for development
+flake9 = "^3.8.3"               # Static code checking (with pyproject.toml support)
+pytest = "^6.2.5"               # Test runner
+pytest-django = "^4.5.2"        # Django integration for pytest
+pytest-cov = "^3.0.0"           # Measure code coverage during tests
+tox = "^3.24.5"                 # Test runner for python packages
+Faker = "^11.3.0"               # less fake fake data
+coveralls = "^3.3.1"            # Publish code coverage to coveralls
+beautifulsoup4 = "^4.10.0"      # Structure HTML documents into navigable things for test assertions
+mkdocs = "^1.2.3"               # Tool for serving rendered markdown docs
+polib = "^1.1.1"                # Tool for dealing with translation files
+factory-boy = "^3.2.1"          # Factory generation
+mypy = "^0.931"                 # Type checking
+click = "^8.0.3"                # Framework for building cli's
+ipdb = "^0.13.9"                # ipython breakpoints
+black = "^21.12b0"              # Code formatting and linting (with pyproject.toml support)
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
@@ -90,17 +79,17 @@ FAIL_INVALID_TEMPLATE_VARS = 1
 
 [tool.flake8]
 max-complexity = 10
-ignore = ["C901" ,"W504", "W503", "E231", "E203"]
+ignore = ["C901", "W504", "W503", "E231", "E203"]
 exclude = [".git", ".tox", "_resource", "migrations", "build", "dist", "docs"]
 max-line-length = 120
 show-source = true
 statistics = false
 
 [tool.coverage.run]
-omit = ["*/__init__.py", ".tox",  ".mypy_cache", ".reports", ".git"]
+omit = ["*/__init__.py", ".tox", ".mypy_cache", ".reports", ".git"]
 
 [tool.coverage.report]
-omit = ["*/__init__.py", ".tox",  ".mypy_cache", ".reports", ".git"]
+omit = ["*/__init__.py", ".tox", ".mypy_cache", ".reports", ".git"]
 show_missing = true
 
 [tool.tox]
@@ -109,8 +98,9 @@ legacy_tox_ini = """
 envlist =
     django2-{py36,py37},
     django3-{py36,py37,py38,py39},
+    django4-{py38,py39,py310},
     # run one of the tests again but with coverage
-    coveralls-django3-py38,
+    coveralls-django4-py310,
 skipsdist = True
 
 [gh-actions]
@@ -119,12 +109,13 @@ python =
     3.7: py37
     3.8: py38
     3.9: py39
+    3.10: py310
 
 [testenv]
 setenv =
     PYTHONPATH = {toxinidir}
 commands =
-    {envpython} -m flake8 jazzmin
+    {envpython} -m flake8 jazzmin --max-line-length 120
     {envpython} -m py.test
 deps =
     flake9
@@ -137,17 +128,15 @@ deps =
     beautifulsoup4
     dj-database-url
     factory-boy
-    django-import-export
     django2: Django<3
     django3: Django<4
-    django-admin-numeric-filter
-    django-admin-rangefilter
+    django4: Django<5
 
-[testenv:coveralls-django3-py39]
+[testenv:coveralls-django4-py310]
 passenv = COVERALLS_REPO_TOKEN
 commands =
     - mypy jazzmin --ignore-missing-imports
-    black --check jazzmin tests --target-version py39 --line-length 120
+    black --check jazzmin tests --target-version py310 --line-length 120
     pytest
     - coveralls
 """

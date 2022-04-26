@@ -3,7 +3,7 @@ import itertools
 import json
 import logging
 import urllib.parse
-from typing import List, Dict, Union, Any
+from typing import Any, Callable, Dict, List, Optional, Union
 
 from django.conf import settings
 from django.contrib.admin import ListFilter
@@ -17,24 +17,18 @@ from django.contrib.auth.models import AbstractUser
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models.base import ModelBase
 from django.http import HttpRequest
-from django.template import Library, Context
+from django.template import Context, Library
 from django.template.defaultfilters import capfirst
 from django.template.loader import get_template
 from django.templatetags.static import static
-from django.utils.html import format_html, escape
-from django.utils.safestring import mark_safe, SafeText
+from django.utils.html import escape, format_html
+from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import get_text_list, slugify
 from django.utils.translation import gettext
 
 from .. import version
-from ..settings import get_settings, get_ui_tweaks, CHANGEFORM_TEMPLATES
-from ..utils import (
-    order_with_respect_to,
-    get_filter_id,
-    get_admin_url,
-    make_menu,
-    has_fieldsets_check,
-)
+from ..settings import CHANGEFORM_TEMPLATES, get_settings, get_ui_tweaks
+from ..utils import get_admin_url, get_filter_id, has_fieldsets_check, make_menu, order_with_respect_to
 
 User = get_user_model()
 register = Library()
@@ -133,13 +127,17 @@ def get_jazzmin_settings(request: WSGIRequest) -> Dict:
     Get Jazzmin settings, update any defaults from the request, and return
     """
     settings = get_settings()
-    admin_site = {x.name: x for x in all_sites}.get(request.current_app)
-    if admin_site:
+
+    if hasattr(request, "current_app"):
+        admin_site = {x.name: x for x in all_sites}.get(request.current_app, "admin")
         if not settings["site_title"]:
             settings["site_title"] = admin_site.site_title
 
         if not settings["site_header"]:
             settings["site_header"] = admin_site.site_header
+
+        if not settings["site_brand"]:
+            settings["site_brand"] = admin_site.site_header
 
     return settings
 
@@ -163,52 +161,91 @@ def get_jazzmin_version() -> str:
 @register.simple_tag
 def get_user_avatar(user: AbstractUser) -> str:
     """
-    For the given user, try to get the avatar image
+    For the given user, try to get the avatar image, which can be one of:
+
+        - ImageField on the user model
+        - URLField/Charfield on the model
+        - A callable that receives the user instance e.g lambda u: u.profile.image.url
     """
     no_avatar = static("vendor/adminlte/img/user2-160x160.jpg")
     options = get_settings()
+    avatar_field_name: Optional[Union[str, Callable]] = options.get("user_avatar")
 
-    if not options.get("user_avatar"):
+    if not avatar_field_name:
         return no_avatar
 
-    avatar_field = getattr(user, options["user_avatar"], None)
+    if callable(avatar_field_name):
+        return avatar_field_name(user)
+
+    # If we find the property directly on the user model (imagefield or URLfield)
+    avatar_field = getattr(user, avatar_field_name, None)
     if avatar_field:
-        return avatar_field.url
+        if type(avatar_field) == str:
+            return avatar_field
+        elif hasattr(avatar_field, "url"):
+            return avatar_field.url
+        elif callable(avatar_field):
+            return avatar_field()
+
+    logger.warning("avatar field must be an ImageField/URLField on the user model, or a callable")
 
     return no_avatar
 
 
 @register.simple_tag
-def jazzmin_paginator_number(cl: ChangeList, i: int) -> SafeText:
+def jazzmin_paginator_number(change_list: ChangeList, i: int) -> SafeText:
     """
     Generate an individual page index link in a paginated list.
     """
-    if i in (".", "…"):
-        html_str = """
-            <li class="page-item">
-            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>
-            </li>
-        """
+    html_str = ""
+    start = i == 1
+    end = i == change_list.paginator.num_pages
+    spacer = i in (".", "…")
+    current_page = i == change_list.page_num
 
-    elif i == cl.page_num:
-        html_str = """
-            <li class="page-item active">
-            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">{num}
-            </a>
-            </li>
+    if start:
+        link = change_list.get_query_string({PAGE_VAR: change_list.page_num - 1}) if change_list.page_num > 1 else "#"
+        html_str += """
+        <li class="page-item previous {disabled}">
+            <a class="page-link" href="{link}" data-dt-idx="0" tabindex="0">«</a>
+        </li>
+        """.format(
+            link=link, disabled="disabled" if link == "#" else ""
+        )
+
+    if current_page:
+        html_str += """
+        <li class="page-item active">
+            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">{num}</a>
+        </li>
         """.format(
             num=i
         )
-
+    elif spacer:
+        html_str += """
+        <li class="page-item">
+            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>
+        </li>
+        """
     else:
-        query_string = cl.get_query_string({PAGE_VAR: i})
-        end = mark_safe("end" if i == cl.paginator.num_pages - 1 else "")
-        html_str = """
+        query_string = change_list.get_query_string({PAGE_VAR: i})
+        end = "end" if end else ""
+        html_str += """
             <li class="page-item">
             <a href="{query_string}" class="page-link {end}" data-dt-idx="3" tabindex="0">{num}</a>
             </li>
         """.format(
             num=i, query_string=query_string, end=end
+        )
+
+    if end:
+        link = change_list.get_query_string({PAGE_VAR: change_list.page_num + 1}) if change_list.page_num < i else "#"
+        html_str += """
+        <li class="page-item next {disabled}">
+            <a class="page-link" href="{link}" data-dt-idx="7" tabindex="0">»</a>
+        </li>
+        """.format(
+            link=link, disabled="disabled" if link == "#" else ""
         )
 
     return format_html(html_str)
@@ -272,6 +309,11 @@ def jazzy_admin_url(value: Union[str, ModelBase], admin_site: str = "admin") -> 
     Get the admin url for a given object
     """
     return get_admin_url(value, admin_site=admin_site)
+
+
+@register.filter
+def has_jazzmin_setting(settings: Dict[str, Any], key: str) -> bool:
+    return key in settings and settings[key] is not None
 
 
 @register.filter

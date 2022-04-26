@@ -7,6 +7,7 @@
 .venv
 .env
 .vscode
+.vim
 /diffs
 /build
 /dist
@@ -17,3 +18,4 @@ admin_templates
 admindocs_templates
 *.sqlite3
 tests/test_app/static/
+.python-version

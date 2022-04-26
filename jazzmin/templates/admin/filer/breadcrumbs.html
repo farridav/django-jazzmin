@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}" title="{% trans 'Go back to admin homepage' %}"><i class="fas fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a></li>
+    {% if not instance.is_root and instance.is_smart_folder %}
+        <li class="breadcrumb-item">
+            <a href="{% url 'admin:filer-directory_listing-root' %}" title="{% trans 'Go back to root folder' %}">{% trans "root" %}</a>
+        </li>
+    {% endif %}
+    {% for ancestor_folder in instance.logical_path %}
+        <li class="breadcrumb-item">
+            <a href="{{ ancestor_folder.get_admin_directory_listing_url_path }}" title="{% blocktrans with ancestor_folder.name as folder_name %}Go back to '{{ folder_name }}' folder{% endblocktrans %}">
+            {% if ancestor_folder.label %}
+                {{ ancestor_folder.label }}
+            {% else %}
+                {{ ancestor_folder.name }}
+            {% endif %}
+            </a>
+        </li>
+    {% endfor %}
+    {% if breadcrumbs_action %}
+        <li class="breadcrumb-item">{% if instance.label or instance.name %}
+            <a href="{{ instance.get_admin_directory_listing_url_path }}" title="{% blocktrans with instance.name as folder_name %}Go back to '{{ folder_name }}' folder{% endblocktrans %}">{% if instance.label %}{{ instance.label }}{% else %}{{ instance.name }}{% endif %}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active">{{ breadcrumbs_action }}</li>
+    {% else %}
+        <li class="breadcrumb-item active">{% if instance.label %}{{ instance.label }}{% else %}{{ instance.name }}{% endif %}</li>
+    {% endif %}
+</ol>

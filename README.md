@@ -1,3 +1,4 @@
+
 # Django jazzmin (Jazzy Admin)
 
 [![Docs](https://readthedocs.org/projects/django-jazzmin/badge/?version=latest)](https://django-jazzmin.readthedocs.io)
@@ -93,6 +94,8 @@ Live demo https://django-jazzmin.herokuapp.com/admin
 This was initially a Fork of https://github.com/wuyue92tree/django-adminlte-ui that we refactored so much we thought it
 deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, we are still patching into that
 project were possible, but this project has taken a different direction.
+
+The javascript modal implementation uses some code from [django-admin-interface](https://github.com/fabiocaccamo/django-admin-interface/blob/master/admin_interface/static/admin/js/popup_response.js), so thanks to @fabiocaccamo for original work
 
 - Based on AdminLTE 3: https://adminlte.io/
 - Using Bootstrap 4: https://getbootstrap.com/

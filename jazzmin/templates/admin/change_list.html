@@ -111,5 +111,14 @@
 {% block extrajs %}
     {{  block.super }}
     <script type="text/javascript" src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
+    <script>
+        {% comment %} set filterInputLength default and custom values {% endcomment %}
+        window.filterInputLengthDefault = 0;
+        window.filterInputLength = {
+            {% for k,v in cl.model_admin.filter_input_length.items %}
+                '{{ k }}': {{ v }},
+            {% endfor %}
+        }
+    </script>
     <script type="text/javascript" src="{% static 'jazzmin/js/change_list.js' %}"></script>
 {% endblock %}

@@ -18,9 +18,6 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     # Keep this above 'django.contrib.admin'
     "jazzmin",
-    # 3rd party app support demonstrated in test app (not a jazzmin requirement)
-    "admin_numeric_filter",
-    "rangefilter",
     # Django apps
     "django.contrib.admin",
     "django.contrib.admindocs",
@@ -29,7 +26,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "import_export",
     # Our apps
     "{}library.books.apps.BooksConfig".format(PREFIX),
     "{}library.loans.apps.LoansConfig".format(PREFIX),
@@ -105,6 +101,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 if DEBUG and not TEST:
     os.environ.setdefault("WERKZEUG_DEBUG_PIN", "off")
     INSTALLED_APPS.extend(["debug_toolbar", "django_extensions"])
@@ -123,15 +123,23 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "site_title": "Library Admin",
     # Title on the brand, and login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_header": "Library",
-    # square logo to use for your site, must be present in static files, used for favicon and brand on top left
+    # Logo to use for your site, must be present in static files, used for brand on top left
     "site_logo": "books/img/logo.png",
+    # Relative path to logo for your site, used for login logo (must be present in static files. Defaults to site_logo)
+    "login_logo": "books/img/logo-login.png",
+    # Logo to use for login form in dark themes (must be present in static files. Defaults to login_logo)
+    "login_logo_dark": "books/img/logo-login-dark-mode.png",
+    # CSS classes that are applied to the logo
+    "site_logo_classes": None,
+    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+    "site_icon": "books/img/icon.png",
     # Welcome text on the login screen
     "welcome_sign": "Welcome to the library",
     # Copyright on the footer
     "copyright": "Acme Library Ltd",
     # The model admin to search from the search bar, search bar omitted if excluded
     "search_model": "auth.User",
-    # Field name on user model that contains avatar image
+    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
     ############
     # Top Menu #
@@ -252,7 +260,7 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False,
     "theme": "default",
-    "dark_mode_theme": None,
+    "dark_mode_theme": "darkly",
     "button_classes": {
         "primary": "btn-outline-primary",
         "secondary": "btn-outline-secondary",

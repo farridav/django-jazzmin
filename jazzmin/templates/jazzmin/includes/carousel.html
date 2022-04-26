@@ -25,7 +25,7 @@
     </ol>
     <div class="carousel-inner">
         {% for fieldset in forms %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-carouselid="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:general_tab|capfirst }}" data-target="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
+            <div class="carousel-item {% if forloop.first %}active{% endif %} {{ fieldset.classes }}" data-carouselid="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:general_tab|capfirst }}" data-target="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
                 {% if fieldset.is_inline %}
                     {% include fieldset.opts.template with inline_admin_formset=fieldset %}
                 {% else %}

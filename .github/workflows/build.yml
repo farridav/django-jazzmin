@@ -11,21 +11,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
+      max-parallel: 5
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.6, 3.7, 3.8, 3.9, '3.10']
     env:
       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
 
       - name: Install dependencies
         run: python -m pip install --upgrade pip tox tox-gh-actions
@@ -34,7 +35,7 @@ jobs:
         run: tox
 
       - name: cache deps
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/.tox
           key: deps-${{ hashFiles('**/pyproject.toml') }}
