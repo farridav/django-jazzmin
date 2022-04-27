@@ -38,7 +38,7 @@
 
 {% block breadcrumbs %}
    {% if not is_popup %}
-   <ol class="breadcrumb float-sm-right">
+   <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'admin:index' %}" title="{% trans 'Go back to admin homepage' %}"><i class="fas fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
         <li class="breadcrumb-item"><a href="{% url 'admin:app_list' app_label='filer' %}">Файлы</a></li>
         {% if not folder.is_root and folder.is_smart_folder %}

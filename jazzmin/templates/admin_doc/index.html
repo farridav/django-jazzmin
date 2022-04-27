@@ -2,8 +2,8 @@
 {% load i18n %}
 
 {% block breadcrumbs %}
-<ol class="breadcrumb float-sm-right">
-    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
     <li class="breadcrumb-item active">{% trans 'Documentation' %}</li>
 </ol>
 {% endblock %}
@@ -15,7 +15,7 @@
 
 <div id="content-main" class=col-12>
   <div class="col-12">
-    <div class="card card-primary card-outline">
+    <div class="card">
       <div class="card-body pad table-responsive">
         <h5><a href="tags/">{% trans 'Tags' %}</a></h5>
         <p>{% trans 'List of all the template tags and their functions.' %}</p>
