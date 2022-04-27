@@ -128,16 +128,15 @@ def get_jazzmin_settings(request: WSGIRequest) -> Dict:
     """
     settings = get_settings()
 
-    if hasattr(request, "current_app"):
-        admin_site = {x.name: x for x in all_sites}.get(request.current_app, "admin")
-        if not settings["site_title"]:
-            settings["site_title"] = admin_site.site_title
+    admin_site = {x.name: x for x in all_sites}.get("admin", {})
+    if not settings["site_title"]:
+        settings["site_title"] = getattr(admin_site, "site_title", None)
 
-        if not settings["site_header"]:
-            settings["site_header"] = admin_site.site_header
+    if not settings["site_header"]:
+        settings["site_header"] = getattr(admin_site, "site_header", None)
 
-        if not settings["site_brand"]:
-            settings["site_brand"] = admin_site.site_header
+    if not settings["site_brand"]:
+        settings["site_brand"] = getattr(admin_site, "site_header", None)
 
     return settings
 
