@@ -51,60 +51,6 @@ div.inline-related {
   padding-right: 1.5rem;
 }
 
-.accent-primary .btn-link, .accent-primary .nav-tabs .nav-link,
-.accent-primary a:not(.dropdown-item):not(.btn-app):not(.nav-link):not(.brand-link):not(.page-link):not(.btn) {
-    color:#64748b;
-}
-
-/* Bootstrap original alert styles */
-.alert-primary {
-    color: #004085;
-    background-color: #cce5ff;
-    border-color: #b8daff;
-}
-
-.alert-secondary {
-    color: #383d41;
-    background-color: #e2e3e5;
-    border-color: #d6d8db;
-}
-
-.alert-success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-}
-
-.alert-info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-}
-
-.alert-warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-}
-
-.alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
-
-.alert-light {
-    color: #818182;
-    background-color: #fefefe;
-    border-color: #fdfdfe;
-}
-
-.alert-dark {
-    color: #1b1e21;
-    background-color: #d6d8d9;
-    border-color: #c6c8ca;
-}
-
 [class*=sidebar-dark-] .nav-header {
     color: rgb(255,255,255,0.3);
     margin-top: 1rem;
@@ -122,10 +68,6 @@ div.inline-related {
 .table thead th {
     color: #64748b;
     border-bottom: 0;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f1f5f9;
 }
 
 .empty-form {
@@ -804,23 +746,6 @@ body.no-sidebar .main-header {
     padding-top: 3px;
 }
 
-.nav-tabs {
-    border-bottom: 0;
-}
-
-.nav-tabs .nav-link {
-    border: 0;
-    border-bottom: 2px solid #fff;
-}
-
-.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
-    border-color: #ccc;
-}
-
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    border-color: #007bff;
-}
-
 .breadcrumb {
     background: transparent;
     margin: 0;
@@ -877,10 +802,6 @@ form ul.inline li {
     padding-right: 7px;
 }
 
-.content-wrapper {
-    background: #f1f5f9;
-}
-
 .content-wrapper>.content {
     padding: 1rem 2rem;
 }
@@ -890,10 +811,14 @@ form ul.inline li {
 }
 
 .main-footer {
-    background-color: #f1f5f9;
     color: #869099;
     padding: 1rem 2rem;
     font-size: 14px;
+}
+
+.page-actions > a {
+    margin-right:0.25rem;
+    margin-left: 0.25rem;
 }
 
 #jazzy-actions.sticky-top {

@@ -36,11 +36,13 @@
 {% block coltype %}flex{% endblock %}
 
     {% block page_actions %}
-        {% block object-tools %}
-            {% block object-tools-items %}
-                {% change_list_object_tools %}
+        <div class="col-12 col-md-auto d-flex align-items-center justify-content-end page-actions">
+            {% block object-tools %}
+                {% block object-tools-items %}
+                    {% change_list_object_tools %}
+                {% endblock %}
             {% endblock %}
-        {% endblock %}
+        </div>
     {% endblock %}
 
 
