@@ -2,7 +2,8 @@
 {% trans "General" as general_tab %}
 {% get_sections adminform inline_admin_formsets as forms %}
 
-<ul class="nav nav-tabs" role="tablist" id="jazzy-tabs">
+{% block tabs %}
+<ul class="nav nav-tabs mb-3" role="tablist" id="jazzy-tabs">
     {% for fieldset in forms %}
         <li class="nav-item">
             <a class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
@@ -11,6 +12,7 @@
         </li>
     {% endfor %}
 </ul>
+{% endblock tabs %}
 
 <div class="tab-content">
     {% for fieldset in forms %}

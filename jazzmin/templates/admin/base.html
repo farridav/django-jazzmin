@@ -50,7 +50,7 @@
     {% block extrastyle %} {% endblock %}
     {% block extrahead %} {% endblock %}
 </head>
-<body class="hold-transition{% if not jazzmin_settings.show_sidebar %} no-sidebar{% else %} sidebar-mini{% endif %} {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }}" data-admin-utc-offset="{% now "Z" %}">
+<body class="hold-transition{% if not jazzmin_settings.show_sidebar %} no-sidebar{% else %} sidebar-mini{% endif %} {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }} {% if jazzmin_ui.dark_mode_theme %}theme-dark{% endif %}" data-admin-utc-offset="{% now "Z" %}">
 
 <div class="wrapper">
 
@@ -209,7 +209,7 @@
 
                             <li class="nav-item">
                                 <a href="{% url 'admin:index' %}" class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <i class="nav-icon fas fa-th-large"></i>
                                     <p>{% trans 'Dashboard' %}</p>
                                 </a>
                             </li>
@@ -262,15 +262,14 @@
     <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 20px;"{% endif %}>
         {% block page_content %}
             {% if not is_popup %}
-            <div class="content-header">
+            <div class="content border-bottom mb-2">
                 <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-auto col-sm-3">
-                            <h1 class="m-0">{% block content_title %}{% endblock %}</h1>
-                        </div>
-                        <div class="col-auto col-sm-9">
+                    <div class="row">
+                        <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+                            <h1 class="h4 m-0 pr-3 mr-3 border-right">{% block content_title %}{% endblock %}</h1>
                             {% block breadcrumbs %}{% endblock %}
                         </div>
+                        {% block page_actions %}{% endblock %}
                     </div>
                 </div>
             </div>

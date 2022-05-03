@@ -11,10 +11,10 @@
         {% endif %}
 
         {% if show_all_url %}&nbsp;&nbsp;
-            <a href="{{ show_all_url }}" class="btn {{ jazzmin_ui.button_classes.primary }}">{% trans 'Show all' %}</a>
+            <a href="{{ show_all_url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.secondary }}">{% trans 'Show all' %}</a>
         {% endif %}
         {% if cl.formset and cl.result_count %}
-            <input type="submit" name="_save" class="btn {{ jazzmin_ui.button_classes.primary }}" value="{% trans 'Save' %}">
+            <input type="submit" name="_save" class="btn btn-sm {{ jazzmin_ui.button_classes.success }}" value="{% trans 'Save' %}">
         {% endif %}
     </div>
 </div>
