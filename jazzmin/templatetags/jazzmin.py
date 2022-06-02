@@ -429,7 +429,11 @@ def header_class(header: Dict, forloop: Dict) -> str:
         header.get("descending"),
     )
 
-    if forloop["counter0"] == 0:
+    is_checkbox_column_conditions = (
+        forloop["counter0"] == 0,
+        header.get("class_attrib") == ' class="action-checkbox-column"',
+    )
+    if all(is_checkbox_column_conditions):
         classes.append("djn-checkbox-select-all")
 
     if not header["sortable"]:
