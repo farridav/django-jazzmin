@@ -22,7 +22,7 @@
     <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
         <div class="row">
             {% for field in line %}
-                <label class="{% if not line.fields|length_is:'1' and forloop.counter != 1 %}col-auto {% else %}col-sm-3 {% endif %}text-left" for="id_{{ field.field.name }}">
+                <label class="{% if not line.fields|length_is:'1' and forloop.counter != 1 %}col-auto {% else %}col-sm-3 {% endif %}text-left" for={{ field.field.id_for_label }}>
                     {{ field.field.label|capfirst }}
                     {% if field.field.field.required %}
                     <span class="text-red">* </span>
