@@ -23,7 +23,7 @@ class Book(models.Model):
     )
     genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
     published_on = models.DateField()
-    last_print = models.DateField()
+    last_print = models.DateField(auto_now_add=True)
     pages = models.IntegerField(null=True)
 
     def get_absolute_url(self):
