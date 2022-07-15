@@ -205,8 +205,8 @@ table.dataTable thead .sorting_desc_disabled::after {
 .form-group div .vLargeTextField,
 .form-group div .vURLField,
 .form-group div .vBigIntegerField,
-.form-group div input[type="text"],
-.form-group select {
+.form-group div input[type="text"]
+{
     display: block;
     width: 100%;
 }
