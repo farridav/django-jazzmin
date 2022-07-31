@@ -207,11 +207,8 @@ table.dataTable thead .sorting_desc_disabled::after {
 .form-group div .vLargeTextField,
 .form-group div .vURLField,
 .form-group div .vBigIntegerField,
-.form-group div.field-duration input[type="text"],
-.form-group div.field-identifier input[type="text"],
-.form-group div.field-generic_ip_address input[type="text"],
-.form-group .field-null_boolean select,
-.form-group .field-file_path select {
+.form-group div input[type="text"]
+{
     display: block;
     width: 100%;
 }
@@ -224,14 +221,9 @@ table.dataTable thead .sorting_desc_disabled::after {
 .vForeignKeyRawIdAdminField,
 .vDateField,
 .vTimeField,
-.field-float input[type="number"],
-.field-decimal input[type="number"],
-.field-time input[type="text"],
-.field-duration input[type="text"],
-.field-identifier input[type="text"],
-.field-generic_ip_address input[type="text"],
-.field-null_boolean select,
-.field-file_path select {
+input[type="number"],
+input[type="text"]
+{
     height: calc(2.25rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
