@@ -165,7 +165,9 @@ table.dataTable thead .sorting_desc_disabled::after {
 .select2-container .select2-selection--single {
     border: 1px solid #ced4da !important;
     min-height: 38px;
-    /* padding-top: 5px; */
+    /* Center text inside */
+    display: flex !important;
+    align-items: center;
 }
 
 .select2-container--default .select2-selection--single {
@@ -174,7 +176,7 @@ table.dataTable thead .sorting_desc_disabled::after {
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     right: 5px !important;
-    top: 5px !important;
+    top: unset !important;
 }
 
 .select2-results__option {
