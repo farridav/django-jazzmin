@@ -262,7 +262,7 @@ def test_detail(admin_client):
     if django.VERSION[0] == 4:
         expected_templates_used.update(
             {
-                'django/forms/div.html',
+                "django/forms/div.html",
                 "django/forms/errors/list/default.html",
                 "django/forms/errors/list/ul.html",
             }
