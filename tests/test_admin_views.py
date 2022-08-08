@@ -224,10 +224,9 @@ def test_detail(admin_client):
     if django.VERSION[0] == 4:
         expected_render_counts.update(
             {
-                "django/forms/default.html": 1,
-                "django/forms/errors/list/default.html": 1,
-                "django/forms/errors/list/ul.html": 55,
-                "django/forms/table.html": 1,
+                "django/forms/div.html": 1,
+                "django/forms/errors/list/default.html": 2,
+                "django/forms/errors/list/ul.html": 56,
             }
         )
 
@@ -263,10 +262,9 @@ def test_detail(admin_client):
     if django.VERSION[0] == 4:
         expected_templates_used.update(
             {
-                "django/forms/default.html",
+                "django/forms/div.html",
                 "django/forms/errors/list/default.html",
                 "django/forms/errors/list/ul.html",
-                "django/forms/table.html",
             }
         )
 
@@ -314,10 +312,9 @@ def test_list(admin_client):
     if django.VERSION[0] == 4:
         expected_render_counts.update(
             {
-                "django/forms/default.html": 1,
-                "django/forms/errors/list/default.html": 5,
-                "django/forms/errors/list/ul.html": 5,
-                "django/forms/table.html": 1,
+                "django/forms/div.html": 1,
+                "django/forms/errors/list/default.html": 6,
+                "django/forms/errors/list/ul.html": 6,
             }
         )
 
@@ -347,10 +344,9 @@ def test_list(admin_client):
     if django.VERSION[0] == 4:
         expected_templates.update(
             {
-                "django/forms/default.html",
+                "django/forms/div.html",
                 "django/forms/errors/list/default.html",
                 "django/forms/errors/list/ul.html",
-                "django/forms/table.html",
             }
         )
 
