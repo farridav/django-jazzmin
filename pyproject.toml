@@ -39,6 +39,8 @@ exclude = ["tests", "docs"]
 [tool.poetry.dependencies]
 python = ">=3.6.2"
 django = ">=2.2"
+dj-database-url = "^1.0.0"
+fontawesomefree = "^6.1.2"
 
 [tool.black]
 line-length = 120
