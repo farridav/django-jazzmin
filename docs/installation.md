@@ -2,10 +2,11 @@
 
 Install the latest [pypi](https://pypi.org/project/django-jazzmin/) release with `pip install -U django-jazzmin`
 
-Add `jazzmin` to your `INSTALLED_APPS` before `django.contrib.admin`, and Voila!
+Add `fontawesomefree` and `jazzmin` to your `INSTALLED_APPS` before `django.contrib.admin`, and Voila!
 
 ```python
 INSTALLED_APPS = [
+    'fontawesomefree',
     'jazzmin',
 
     'django.contrib.admin',
