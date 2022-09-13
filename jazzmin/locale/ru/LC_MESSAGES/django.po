@@ -74,18 +74,28 @@ msgstr "%(timesince) назад"
 msgid ""
 "This object doesn't have a change history. It probably wasn't added via this"
 " admin site."
-msgstr ""
+msgstr "У этого объекта нет истории изменений. Вероятно, он был добавлен не через эту админ-панель."
 
 #: templates/admin/popup_response.html:5
 msgid "Popup closing..."
-msgstr ""
+msgstr "Закрытие всплывающего окна..."
+
+#: templates/admin_doc/view_index.html:28
+#, python-format
+msgid "Views by namespace %(name)"
+msgstr "Представления по пространству имён %(name)"
+
+#: templates/admin_doc/view_index.html:30
+#, python-format
+msgid "Views by empty namespace"
+msgstr "Представления по пустому пространству имён"
 
 #: templates/admin_doc/template_filter_index.html:37
 #: templates/admin_doc/view_index.html:49
 #, python-format
 msgid ""
 "View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
-msgstr ""
+msgstr "Функция представления: <code>%(full_name)s</code>. Название: <code>%(url_name)s</code>."
 
 #: templates/includes/carousel.html:4
 #: templates/includes/collapsible.html:2
@@ -99,11 +109,13 @@ msgid ""
 "Please enter your old password, for security's sake, and then enter your new"
 " password twice so we can verify you typed it in correctly."
 msgstr ""
+"В целях безопасности введите свой старый пароль, а затем дважды введите новый пароль, "
+"чтобы мы могли убедиться, что вы ввели его правильно."
 
 #: templatetags/jazzmin.py:439
 #, python-brace-format
 msgid "Deleted “{object}”."
-msgstr "Удалено «{object}»."
+msgstr "Удалено “{object}”."
 
 #: utils.py:74
 #, python-brace-format
