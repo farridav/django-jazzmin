@@ -17,6 +17,7 @@ PREFIX = "" if os.getenv("STANDALONE") else "tests.test_app."
 ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     # Keep this above 'django.contrib.admin'
+    "fontawesomefree",
     "jazzmin",
     # Django apps
     "django.contrib.admin",

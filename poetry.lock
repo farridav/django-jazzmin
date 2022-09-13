@@ -187,6 +187,17 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "dj-database-url"
+version = "1.0.0"
+description = "Use Database URLs in your Django Application."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Django = ">3.2"
+
+[[package]]
 name = "django"
 version = "3.2.14"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
@@ -289,6 +300,14 @@ pycodestyle = ">=2.6.0a1,<2.7.0"
 pyflakes = ">=2.2.0,<2.3.0"
 
 [[package]]
+name = "fontawesomefree"
+version = "6.1.2"
+description = "Font Awesome Free"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "ghp-import"
 version = "2.0.2"
 description = "Copy your docs directly to the gh-pages branch."
@@ -300,7 +319,7 @@ python-versions = "*"
 python-dateutil = ">=2.8.1"
 
 [package.extras]
-dev = ["twine", "markdown", "flake8", "wheel"]
+dev = ["wheel", "flake8", "markdown", "twine"]
 
 [[package]]
 name = "idna"
@@ -599,7 +618,7 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [package.extras]
-testing = ["docopt", "pytest (>=3.0.7)"]
+testing = ["pytest (>=3.0.7)", "docopt"]
 
 [[package]]
 name = "parso"
@@ -664,8 +683,8 @@ python-versions = ">=3.6"
 importlib-metadata = {version = ">=0.12", markers = "python_version < \"3.8\""}
 
 [package.extras]
-dev = ["pre-commit", "tox"]
-testing = ["pytest", "pytest-benchmark"]
+testing = ["pytest-benchmark", "pytest"]
+dev = ["tox", "pre-commit"]
 
 [[package]]
 name = "polib"
@@ -772,7 +791,7 @@ coverage = {version = ">=5.2.1", extras = ["toml"]}
 pytest = ">=4.6"
 
 [package.extras]
-testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtualenv"]
+testing = ["virtualenv", "pytest-xdist", "six", "process-tests", "hunter", "fields"]
 
 [[package]]
 name = "pytest-django"
@@ -1028,7 +1047,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.6.2"
-content-hash = "2df09062092e1c0b2e3d200ae53af606d398ecfb7000b71884a876518fd478a8"
+content-hash = "f5db65a92acf0fdfa5a24ef66e123eb5f7ea69c5a00ae868912afe51e6ce097e"
 
 [metadata.files]
 appnope = [
@@ -1140,6 +1159,10 @@ distlib = [
     {file = "distlib-0.3.4-py2.py3-none-any.whl", hash = "sha256:6564fe0a8f51e734df6333d08b8b94d4ea8ee6b99b5ed50613f731fd4089f34b"},
     {file = "distlib-0.3.4.zip", hash = "sha256:e4b58818180336dc9c529bfb9a0b58728ffc09ad92027a3f30b7cd91e3458579"},
 ]
+dj-database-url = [
+    {file = "dj-database-url-1.0.0.tar.gz", hash = "sha256:ccf3e8718f75ddd147a1e212fca88eecdaa721759ee48e38b485481c77bca3dc"},
+    {file = "dj_database_url-1.0.0-py3-none-any.whl", hash = "sha256:cd354a3b7a9136d78d64c17b2aec369e2ae5616fbca6bfbe435ef15bb372ce39"},
+]
 django = [
     {file = "Django-3.2.14-py3-none-any.whl", hash = "sha256:a8681e098fa60f7c33a4b628d6fcd3fe983a0939ff1301ecacac21d0b38bad56"},
     {file = "Django-3.2.14.tar.gz", hash = "sha256:677182ba8b5b285a4e072f3ac17ceee6aff1b5ce77fd173cc5b6a2d3dc022fcf"},
@@ -1170,6 +1193,9 @@ filelock = [
 flake9 = [
     {file = "flake9-3.8.3.post2-py3-none-any.whl", hash = "sha256:47dced969a802a8892740bcaa35ae07232709b2ade803c45f48dd03ccb7f825f"},
     {file = "flake9-3.8.3.post2.tar.gz", hash = "sha256:daefdbfb3d320eb215a4a52c62a4b4a027cbe11d39f5dab30df908b40fce5ba7"},
+]
+fontawesomefree = [
+    {file = "fontawesomefree-6.1.2-py3-none-any.whl", hash = "sha256:451e670afe9f8d646db7ef4878df9b9cf9a16186a6aa3d5ce052742524de44b1"},
 ]
 ghp-import = [
     {file = "ghp-import-2.0.2.tar.gz", hash = "sha256:947b3771f11be850c852c64b561c600fdddf794bab363060854c1ee7ad05e071"},
