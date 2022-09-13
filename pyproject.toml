@@ -96,20 +96,20 @@ show_missing = true
 legacy_tox_ini = """
 [tox]
 envlist =
-    django2-{py36,py37},
-    django3-{py36,py37,py38,py39},
-    django4-{py38,py39,py310},
+    django2-{python3.6,python3.7},
+    django3-{python3.6,python3.7,python3.8,python3.9},
+    django4-{python3.8,python3.9,python3.10},
     # run one of the tests again but with coverage
-    coveralls-django4-py310,
+    coveralls-django4-python3.10,
 skipsdist = True
 
 [gh-actions]
 python =
-    3.6: py36
-    3.7: py37
-    3.8: py38
-    3.9: py39
-    3.10: py310
+    3.6: python3.6
+    3.7: python3.7
+    3.8: python3.8
+    3.9: python3.9
+    3.10: python3.10
 
 [testenv]
 setenv =
@@ -132,7 +132,7 @@ deps =
     django3: Django<4
     django4: Django<5
 
-[testenv:coveralls-django4-py310]
+[testenv:coveralls-django4-python3.10]
 passenv = COVERALLS_REPO_TOKEN
 commands =
     - mypy jazzmin --ignore-missing-imports
