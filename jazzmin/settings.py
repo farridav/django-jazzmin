@@ -195,14 +195,14 @@ CHANGEFORM_TEMPLATES = {
 }
 
 
-def get_search_model_string(jazzmin_settings: Dict) -> str:
+def get_search_model_string(search_model: str) -> str:
     """
     Get a search model string for reversing an admin url.
 
     Ensure the model name is lower cased but remain the app name untouched.
     """
 
-    app, model_name = jazzmin_settings["search_model"].split(".")
+    app, model_name = search_model.split(".")
     return "{app}.{model_name}".format(app=app, model_name=model_name.lower())
 
 
@@ -211,14 +211,22 @@ def get_settings() -> Dict:
     user_settings = {x: y for x, y in getattr(settings, "JAZZMIN_SETTINGS", {}).items() if y is not None}
     jazzmin_settings.update(user_settings)
 
-    # Extract search url from search model
+    # Extract search model configuration from search_model setting
     if jazzmin_settings["search_model"]:
-        jazzmin_settings["search_url"] = get_admin_url(get_search_model_string(jazzmin_settings))
-        model_meta = get_model_meta(jazzmin_settings["search_model"])
-        if model_meta:
-            jazzmin_settings["search_name"] = model_meta.verbose_name_plural.title()
-        else:
-            jazzmin_settings["search_name"] = jazzmin_settings["search_model"].split(".")[-1] + "s"
+        if not isinstance(jazzmin_settings["search_model"], list):
+            jazzmin_settings["search_model"] = [jazzmin_settings["search_model"]]
+
+        jazzmin_settings["search_models_parsed"] = []
+        for search_model in jazzmin_settings["search_model"]:
+            jazzmin_search_model = {}
+            jazzmin_search_model["search_url"] = get_admin_url(get_search_model_string(search_model))
+
+            model_meta = get_model_meta(search_model)
+            if model_meta:
+                jazzmin_search_model["search_name"] = model_meta.verbose_name_plural.title()
+            else:
+                jazzmin_search_model["search_name"] = search_model.split(".")[-1] + "s"
+            jazzmin_settings["search_models_parsed"].append(jazzmin_search_model)
 
     # Deal with single strings in hide_apps/hide_models and make sure we lower case 'em
     if type(jazzmin_settings["hide_apps"]) == str:
