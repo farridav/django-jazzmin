@@ -1,5 +1,5 @@
 ---
-name: Deploy to Heroku
+name: Deploy to test.pypi.org
 on:
   push:
     branches: [master]
@@ -23,11 +23,3 @@ jobs:
         run: |
           poetry config repositories.testpypi https://test.pypi.org/legacy/
           poetry publish --build -r testpypi --username ${{ secrets.TESTPYPI_USERNAME }} --password ${{ secrets.TESTPYPI_PASSWORD }} || :
-
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "django-jazzmin"
-          heroku_email: "${{secrets.HEROKU_EMAIL}}"
-          appdir: tests/test_app
