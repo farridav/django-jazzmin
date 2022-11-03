@@ -1,5 +1,4 @@
 ---
-
 name: Deploy to Heroku
 on:
   push:
@@ -14,7 +13,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.x'
+          python-version: "3.x"
           cache: pip
 
       - name: Install dependencies
@@ -26,7 +25,9 @@ jobs:
           poetry publish --build -r testpypi --username ${{ secrets.TESTPYPI_USERNAME }} --password ${{ secrets.TESTPYPI_PASSWORD }} || :
 
       - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          git push https://heroku:$HEROKU_API_KEY@git.heroku.com/django-jazzmin.git `git subtree split --prefix tests/test_app HEAD`:master --force
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "django-jazzmin"
+          heroku_email: "${{secrets.HEROKU_EMAIL}}"
+          appdir: tests/test_app
