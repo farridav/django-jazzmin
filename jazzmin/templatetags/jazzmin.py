@@ -285,8 +285,12 @@ def jazzmin_list_filter(cl: ChangeList, spec: ListFilter) -> SafeText:
                 value = query_parts[key][0]
                 matched_key = key
             elif key.startswith(field_key + "__") or "__" + field_key + "__" in key:
-                value = query_parts[key][0]
-                matched_key = key
+                if not key.endswith("id__exact"):
+                    value = query_parts[key][0]
+                    matched_key = key
+                elif key.count("__") == field_key.count("__") + 2:
+                    value = query_parts[key][0]
+                    matched_key = key
 
             if value:
                 matches[matched_key] = value
