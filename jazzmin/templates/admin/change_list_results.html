@@ -9,35 +9,57 @@
 {% if results %}
     <div class="card">
         <div class="card-body table-responsive p-0">
-            <table id="result_list" class="table table-striped">
+            <table id="result_list" class="table table-hover table-bordered">
                 <thead>
                     <tr>
                         {% for header in result_headers %}
-                        <th class="{% header_class header forloop %}" tabindex="0" rowspan="1" colspan="1">
-                            <div class="text">
-                                {% if header.sortable %}
-                                    <a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>
-                                {% else %}
-                                    <span>{{ header.text|capfirst }}</span>
-                                {% endif %}
-                                {% if header.sorted %}
-                                    <a href="{{ header.url_remove }}">
-                                        <div style="margin-top: .2em;" class="fa fa-times float-right"> </div>
-                                    </a>
-                                    {% if header.ascending %}
-                                        <i style="margin-top: .2em;" class="fa fa-sort-alpha-down"> </i>
+                            {% if forloop.counter0 != 0%}
+                                <th class="{% header_class header forloop %} text-center" tabindex="0" rowspan="1" colspan="1">
+                                    <div class="text">
+                                        {% if header.sortable %}
+                                            <a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>
+                                        {% else %}
+                                            <span>{{ header.text|capfirst }}</span>
+                                        {% endif %}
+                                        {% if header.sorted %}
+                                            <a href="{{ header.url_remove }}">
+                                                <div style="margin-top: .2em;" class="fa fa-times float-right"> </div>
+                                            </a>
+                                            {% if header.ascending %}
+                                                <i style="margin-top: .2em;" class="fa fa-sort-alpha-down"> </i>
+                                            {% else %}
+                                                <i style="margin-top: .2em;" class="fa fa-sort-alpha-up"> </i>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </th>
+                            {% else %}
+                            <th class="{% header_class header forloop %}" tabindex="0" rowspan="1" colspan="1">
+                                <div class="text">
+                                    {% if header.sortable %}
+                                        <a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>
                                     {% else %}
-                                        <i style="margin-top: .2em;" class="fa fa-sort-alpha-up"> </i>
+                                        <span>{{ header.text|capfirst }}</span>
                                     {% endif %}
-                                {% endif %}
-                            </div>
-                        </th>
+                                    {% if header.sorted %}
+                                        <a href="{{ header.url_remove }}">
+                                            <div style="margin-top: .2em;" class="fa fa-times float-right"> </div>
+                                        </a>
+                                        {% if header.ascending %}
+                                            <i style="margin-top: .2em;" class="fa fa-sort-alpha-down"> </i>
+                                        {% else %}
+                                            <i style="margin-top: .2em;" class="fa fa-sort-alpha-up"> </i>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </th>
+                            {% endif%}
                         {% endfor %}
                     </tr>
                 </thead>
                 <tbody>
                     {% for result in results %}
-                    <tr role="row" class="{% cycle 'even' 'odd' %}">
+                    <tr role="row" class="{% cycle 'even' 'odd' %} text-center">
                         {% for item in result %}{{ item }}{% endfor %}
                     </tr>
                 {% endfor %}
