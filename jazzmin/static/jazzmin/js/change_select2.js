@@ -8,7 +8,7 @@ window.onload = function() {
             )
             select.setAttribute(
                 "style",
-                "width: 100%"
+                "width: auto;"
             )
         }
     )
