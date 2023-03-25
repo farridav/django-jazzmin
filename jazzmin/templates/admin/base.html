@@ -32,6 +32,7 @@
 
     <!-- Custom fixes for django -->
     <link rel="stylesheet" href="{% static "jazzmin/css/main.css" %}">
+    <link rel="stylesheet" href="{% static "jazzmin/css/loader.css" %}">
 
     {% if jazzmin_settings.custom_css %}
     <!-- Custom CSS -->
@@ -52,6 +53,13 @@
 </head>
 <body class="hold-transition{% if not jazzmin_settings.show_sidebar %} no-sidebar{% else %} sidebar-mini{% endif %} {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }} {% if jazzmin_ui.dark_mode_theme %}theme-dark{% endif %}" data-admin-utc-offset="{% now "Z" %}">
 
+    {% block loader %}
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    {% endblock %}
 <div class="wrapper">
 
     {% if not is_popup %}
@@ -368,6 +376,7 @@
 <!-- Django customisations -->
 <script src="{% static "jazzmin/js/main.js" %}"></script>
 <script src="{% static "jazzmin/js/change_select2.js" %}"></script>
+<script src="{% static "jazzmin/js/loader.js" %}"></script>
 
 {% if jazzmin_settings.custom_js %}
 <script src="{% static jazzmin_settings.custom_js %}"></script>
