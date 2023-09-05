@@ -19,3 +19,4 @@ admindocs_templates
 *.sqlite3
 tests/test_app/static/
 .python-version
+*.mo
