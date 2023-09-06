@@ -75,6 +75,11 @@ artifacts = [
   "*.mo",
 ]
 
+[tool.hatch.build.targets.wheel.hooks.custom]
+dependencies = [
+  "django",
+]
+
 [tool.black]
 line-length = 120
 target-version = ['py310']
