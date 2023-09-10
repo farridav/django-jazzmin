@@ -536,3 +536,13 @@ def style_bold_first_word(message: str) -> SafeText:
 @register.filter
 def unicode_slugify(message: str) -> str:
     return slugify(message, allow_unicode=True)
+
+
+@register.filter(name='has_error')
+def has_error(fieldset):
+    if hasattr(fieldset, 'form'):
+        return not set(fieldset.form.errors.keys()).isdisjoint(set(fieldset.fields))
+    elif hasattr(fieldset, 'formset'):
+        return any(fieldset.formset.errors)
+
+    return True

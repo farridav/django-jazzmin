@@ -3,15 +3,15 @@
 {% get_sections adminform inline_admin_formsets as forms %}
 
 {% block tabs %}
-<ul class="nav nav-tabs mb-3" role="tablist" id="jazzy-tabs">
-    {% for fieldset in forms %}
-        <li class="nav-item">
-            <a class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
-                {{ fieldset.name|default:general_tab }}
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+    <ul class="nav nav-tabs mb-3" role="tablist" id="jazzy-tabs">
+        {% for fieldset in forms %}
+            <li class="nav-item">
+                <a class="nav-link{% if forloop.first %} active{% endif %}{% if fieldset|has_error %} text-danger{% endif %}" data-toggle="pill" role="tab" aria-controls="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
+                    {{ fieldset.name|default:general_tab }}{% if fieldset|has_error %}*{% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock tabs %}
 
 <div class="tab-content">
