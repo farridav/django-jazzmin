@@ -11,6 +11,27 @@
         <div class="card-body table-responsive p-0">
             <table id="result_list" class="table table-hover table-bordered">
                 <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for header in cl.summary %}
+                            {% if forloop.counter0 != 0 %}
+                                <th class="{% header_class header forloop %} text-center" tabindex="0" rowspan="1" colspan="1">
+                                    <div class="text">
+                                        <a>{{ header.value }}</a>
+                                    </div>
+                                </th>
+                            {% else %}
+                            <th class="{% header_class header forloop %}" tabindex="0" rowspan="1" colspan="1">
+                                <div class="text">
+                                    <a></a>
+                                </div>
+                            </th>
+                            {% endif%}
+                        {% endfor %}
+                    </tr>
+                </tbody>
+                <thead>
                     <tr>
                         {% for header in result_headers %}
                             {% if forloop.counter0 != 0%}
