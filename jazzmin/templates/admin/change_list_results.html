@@ -7,34 +7,85 @@
 {% endif %}
 
 {% if results %}
+    {% if cl.statistics_grid %}
+        <div class="card collapsed-card table-responsive p-0">
+            <div class="card-header">
+                <h3 class="card-title text">
+                    <i class="fas fa-th mr-1"></i>
+                    Statistics
+                </h3>
+                <div class="card-tools">
+                    <button 
+                        onclick="draw_statistics(this);"
+                        data-card-widget="collapse"
+                        class="btn btn-sm"
+                        type="button"
+                    >
+                        <a class="fas fa-plus"></a>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="display: none; overflow-x: auto;">
+                <table id="result_list" class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            {% for row in cl.statistics_grid %}
+                                <th class="chart-row text-center">
+                                    {% for statistics in row %}
+                                        {% if statistics.object %}
+                                            <div
+                                                data-statisticslink="{{ statistics.object.link }}"
+                                                style="
+                                                    max-height: {{ statistics.object.height }}px;
+                                                    max-width: {{ statistics.object.width }}px;
+                                                "
+                                                id="chart-order-{{ statistics.order }}"
+                                            >
+                                            </div>
+                                        {% else %}
+                                            <div 
+                                                id="chart-order-{{ statistics.order }}"
+                                            >
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    {% endif %}
     <div class="card">
         <div class="card-body table-responsive p-0">
             <table id="result_list" class="table table-hover table-bordered">
-                <thead>
-                </thead>
-                <tbody>
-                    <tr>
-                        {% for header in cl.summary %}
-                            {% if forloop.counter0 != 0 %}
-                                <th class="{% header_class header forloop %} text-center" tabindex="0" rowspan="1" colspan="1">
+                {% if cl.summary %}
+                    <thead></thead>
+                    <tbody>
+                        <tr>
+                            {% for header in cl.summary %}
+                                {% if forloop.counter0 != 0 %}
+                                    <th class="{% header_class header forloop %} text-center" tabindex="0" rowspan="1" colspan="1">
+                                        <div class="text">
+                                            <a>{{ header.value }}</a>
+                                        </div>
+                                    </th>
+                                {% else %}
+                                <th class="{% header_class header forloop %}" tabindex="0" rowspan="1" colspan="1">
                                     <div class="text">
-                                        <a>{{ header.value }}</a>
+                                        <a></a>
                                     </div>
                                 </th>
-                            {% else %}
-                            <th class="{% header_class header forloop %}" tabindex="0" rowspan="1" colspan="1">
-                                <div class="text">
-                                    <a></a>
-                                </div>
-                            </th>
-                            {% endif%}
-                        {% endfor %}
-                    </tr>
-                </tbody>
+                                {% endif%}
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                {% endif %}
                 <thead>
                     <tr>
                         {% for header in result_headers %}
-                            {% if forloop.counter0 != 0%}
+                            {% if forloop.counter0 != 0 %}
                                 <th class="{% header_class header forloop %} text-center" tabindex="0" rowspan="1" colspan="1">
                                     <div class="text">
                                         {% if header.sortable %}
