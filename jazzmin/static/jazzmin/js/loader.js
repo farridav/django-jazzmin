@@ -2,7 +2,7 @@ window.addEventListener('load', function(){
     document.querySelector('body').classList.add("loaded")
     
     const allItems = document.querySelectorAll(
-        'ul.nav-sidebar li.nav-item, th.sorting div.text, th.sorting_asc div.text, th.sorting_desc div.text'
+        'ul.nav-sidebar li.nav-item, th.sorting div.text, th.sorting_asc div.text, th.sorting_desc div.text, li.page-item a.page-link'
     );
 
     allItems.forEach(item => {
