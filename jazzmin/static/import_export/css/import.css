@@ -1,0 +1,22 @@
+table.import-preview tr.new ins{
+    background-color: #FFFFFF !important;
+}
+
+table.import-preview tr.new {
+    background-color: #FFFFFF;
+}
+
+table.import-preview tr.skip {
+    background-color: #d8d5d5;
+}
+
+table.import-preview tr.skip ins{
+    background-color: #d8d5d5 !important;
+}
+
+table.import-preview tr ins {
+    text-decoration: none;
+}
+div.field-name label {
+    font-size: 15px;
+}
