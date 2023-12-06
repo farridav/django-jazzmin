@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-12 col-lg-9">
                                 <p>
-                                    <b>{% trans "This importer will import the following fields: " %}</b>
+                                    <b>{% trans "The file needs to contain the following column headers: " %}</b>
                                     {% autoescape off %}
                                     {{ fields_list.0.1|join:", "|escape }}
                                     {% endautoescape %}
