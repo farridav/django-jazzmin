@@ -222,7 +222,21 @@
     </table>
 
     {% else %}
-
+    <div class="mt-2 mb-3">
+        <span class="h5 font-weight-bold not_found">
+            {% trans "Not found records" %}: {{ not_found|default:0 }}
+        </span>
+    </div>
+    <div class="mt-2 mb-3">
+        <span class="h5 font-weight-bold skip">
+            {% trans "Skipped records" %}: {{ skip|default:0 }}
+        </span>
+    </div>
+    <div class="mt-2 mb-3">
+        <span class="h5 font-weight-bold new">
+            {% trans "New records" %}: {{ new|default:0 }}
+        </span>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -252,6 +266,8 @@
                                 {% trans "Delete" %}
                                 {% elif row.import_type == 'update' %}
                                 {% trans "Update" %}
+                                {% elif row.import_type == 'not_found' %}
+                                {% trans "Not found" %}
                                 {% endif %}
                             </td>
                             {% for field in row.diff %}
