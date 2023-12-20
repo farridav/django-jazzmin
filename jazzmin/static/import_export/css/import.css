@@ -10,13 +10,32 @@ table.import-preview tr.skip {
     background-color: #d8d5d5;
 }
 
+
 table.import-preview tr.skip ins{
     background-color: #d8d5d5 !important;
+}
+
+span.h5.font-weight-bold.skip{
+    color: #808080;
+}
+
+table.import-preview tr.not_found {
+    background-color: #b61111 !important;
+    color: #FFFFFF;
+}
+
+table.import-preview tr.not_found ins{
+    background-color: #b61111 !important;
+}
+
+span.h5.font-weight-bold.not_found{
+    color: #b61111;
 }
 
 table.import-preview tr ins {
     text-decoration: none;
 }
+
 div.field-name label {
     font-size: 15px;
 }
