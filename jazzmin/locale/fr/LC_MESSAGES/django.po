@@ -85,9 +85,7 @@ msgid "The admin documentation system requires Python's <a href=\"%(link)s\">doc
 msgstr "Le système de documentation de l'interface d'administration nécessite la bibliothèque Python <a href=\"%(link)s\">docutils</a>."
 
 msgid "View function: <code>%(full_name)s</code>. Name: <code>%(url_name)s</code>."
-msgstr ""
-"\n"
-"Fonction de vue : <code>%(full_name)s</code>. Nom : <code>%(url_name)s</code>.\n"
+msgstr "Fonction de vue : <code>%(full_name)s</code>. Nom : <code>%(url_name)s</code>."
 
 msgid "General"
 msgstr "Général"
