@@ -142,12 +142,7 @@
                     <ul>
                         {% for error in result.base_errors %}
                         <li>
-                            {{ error.error }}
-                            <div class="language-bash traceback">
-                                <div class="highlight">
-                                    {{ error.traceback|linebreaks }}
-                                </div>
-                            </div>
+                            <span class="text-danger">{{ error.error }}
                         </li>
                         {% endfor %}
                         {% for line, errors in result.row_errors %}
