@@ -18,8 +18,13 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{% static "vendor/fontawesome-free/css/all.min.css" %}">
 
-    <!-- Bootstrap and adminLTE -->
-    <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte.min.css" %}" id="adminlte-css">
+    {% if not LANGUAGE_BIDI %}
+        <!-- Bootstrap and adminLTE LTR -->
+        <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte.min.css" %}" id="adminlte-css">
+    {% else %}
+        <!-- Bootstrap and adminLTE RTL -->
+        <link rel="stylesheet" href="{% static "vendor/adminlte/css/adminlte-rtl.min.css" %}" id="adminlte-css">
+    {% endif %}
 
     <!-- Bootswatch theme -->
     {% if jazzmin_ui.theme.name != 'default' %}
@@ -30,8 +35,13 @@
         <link rel="stylesheet" href="{{ jazzmin_ui.dark_mode_theme.src }}" id="jazzmin-dark-mode-theme" media="(prefers-color-scheme: dark)"/>
     {% endif %}
 
-    <!-- Custom fixes for django -->
-    <link rel="stylesheet" href="{% static "jazzmin/css/main.css" %}">
+    {% if not LANGUAGE_BIDI %}
+        <!-- Custom fixes for django -->
+        <link rel="stylesheet" href="{% static "jazzmin/css/main.css" %}">
+    {% else %}
+        <!-- Custom fixes for django -->
+        <link rel="stylesheet" href="{% static "jazzmin/css/main-rtl.css" %}">
+    {% endif %}
 
     {% if jazzmin_settings.custom_css %}
     <!-- Custom CSS -->
