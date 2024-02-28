@@ -34,10 +34,14 @@ test: check-venv ## Run the test suite
 	@printf "$(CYAN)Running test suite$(COFF)\n"
 	$(environment) pytest
 
+reset_app: check-venv ## Reset the DB for a fresh install.
+	@printf "$(CYAN)Resetting the local DB$(COFF)\n"
+	$(environment) python tests/test_app/manage.py reset
+
 test_app: check-venv ## Run the test app
 	@printf "$(CYAN)Running test app$(COFF)\n"
-	$(environment) python tests/test_app/manage.py migrate
-	$(environment) python tests/test_app/manage.py runserver_plus
+	$(environment) python tests/test_app/manage.py migrate  # Setup db tables etc.
+	$(environment) python tests/test_app/manage.py runserver_plus  # Run development server (with werkzeug debugger).
 
 test_user:  ## Make the test user
 	$(environment) python tests/test_app/manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('test@test.com', password='test')"

@@ -6,24 +6,15 @@ This project manages dependencies using [poetry](https://python-poetry.org/)
 
 Ensure you have poetry installed (`pip install poetry`)
 
-Then get setup with `poetry install`
+Then get setup with `poetry install` you will need to fork the repo and then clone.
 
-    git clone git@github.com:farridav/django-jazzmin.git
+    git clone git@github.com:{github_username}/django-jazzmin.git
     poetry install
 
-## Running the test project
-
-Setup db tables etc.
-
-    python tests/test_app/manage.py migrate
-
-Generate test data
-
-    python tests/test_app/manage.py reset
-
-Run development server (with werkzeug debugger)
-
-    python tests/test_app/manage.py runserver_plus
+## Running the test project (See the [Makefile](../Makefile) for more details)
+    
+    make reset_app
+    make test_app
 
 ## Running the tests
 
