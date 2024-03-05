@@ -160,9 +160,12 @@
                             <i class="fas fa-key mr-2"></i> {% trans 'Change password' %}
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="{% url 'admin:logout' %}" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> {% trans 'Log out' %}
-                        </a>
+                        <form action="{% url 'admin:logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item">
+                                <i class="fas fa-users mr-2"></i> {% trans 'Log out' %}
+                            </button>
+                        </form>
                         {% get_user_menu user request.current_app|default:"admin" as user_menu %}
                         {% for link in user_menu %}
                             <div class="dropdown-divider"></div>
