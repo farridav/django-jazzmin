@@ -127,8 +127,9 @@ deps =
     black
     beautifulsoup4
     dj-database-url
-    importlib-metadata==4.13.0
     factory-boy
+    python3.6: importlib-metadata<5.0  # Needed for compatibility reasons - https://stackoverflow.com/a/73932581
+    python3.7: importlib-metadata<5.0  # Needed for compatibility reasons - https://stackoverflow.com/a/73932581
     django2: Django<3
     django3: Django<4
     django4: Django<5
