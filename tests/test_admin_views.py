@@ -226,6 +226,7 @@ def test_detail(admin_client):
             {
                 "django/forms/div.html": 1,
                 "django/forms/errors/list/default.html": 2,
+                "admin/widgets/date.html": 3,
                 "django/forms/errors/list/ul.html": 56,
             }
         )
@@ -264,6 +265,7 @@ def test_detail(admin_client):
             {
                 "django/forms/div.html",
                 "django/forms/errors/list/default.html",
+                "admin/widgets/date.html",
                 "django/forms/errors/list/ul.html",
             }
         )
