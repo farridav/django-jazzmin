@@ -1,5 +1,5 @@
 import json
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, NonCallableMock
 
 import pytest
 from django.contrib.admin.models import CHANGE, LogEntry
@@ -49,16 +49,47 @@ def test_style_bold_first_word():
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "case,test_input,field,expected",
+    "case,test_input,field,expected,log",
     [
-        (1, MagicMock(avatar="image.jpg"), "avatar", "image.jpg"),
-        (2, MagicMock(avatar="image.jpg"), lambda u: u.avatar, "image.jpg"),
-        (3, MagicMock(avatar=MagicMock(url="image.jpg")), "avatar", "image.jpg"),
+        (1, MagicMock(avatar="image.jpg"), "avatar", "image.jpg", None),
+        (2, MagicMock(avatar="image.jpg"), lambda u: u.avatar, "image.jpg", None),
+        (3, MagicMock(avatar=MagicMock(url="image.jpg")), "avatar", "image.jpg", None),
+        # Properly set file field but empty (no image uploaded)
+        (
+            4,
+            MagicMock(avatar=MagicMock(__bool__=lambda x: False)),
+            "avatar",
+            "/static/vendor/adminlte/img/user2-160x160.jpg",
+            None,
+        ),
+        # No avatar field set
+        (
+            5,
+            MagicMock(
+                avatar="image.jpg",
+            ),
+            None,
+            "/static/vendor/adminlte/img/user2-160x160.jpg",
+            None,
+        ),
+        # No proper avatar field set
+        (
+            6,
+            MagicMock(avatar=NonCallableMock(spec_set=["__bool__"], __bool__=lambda x: True)),
+            "avatar",
+            "/static/vendor/adminlte/img/user2-160x160.jpg",
+            "Avatar field must be",
+        ),
     ],
 )
-def test_get_user_avatar(case, test_input, field, expected, custom_jazzmin_settings):
+def test_get_user_avatar(case, test_input, field, expected, log, custom_jazzmin_settings, caplog):
     """
     We can specify the name of a charfield or imagefield on our user model, or a callable that receives our user
     """
     custom_jazzmin_settings["user_avatar"] = field
     assert jazzmin.get_user_avatar(test_input) == expected
+    print(caplog.text)
+    if log:
+        assert log in caplog.text
+    else:
+        assert not caplog.text

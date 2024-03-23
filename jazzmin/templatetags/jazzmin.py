@@ -178,15 +178,17 @@ def get_user_avatar(user: AbstractUser) -> str:
 
     # If we find the property directly on the user model (imagefield or URLfield)
     avatar_field = getattr(user, avatar_field_name, None)
-    if avatar_field:
-        if type(avatar_field) == str:
+    if avatar_field is not None:
+        if not avatar_field:
+            return no_avatar
+        elif type(avatar_field) == str:
             return avatar_field
         elif hasattr(avatar_field, "url"):
             return avatar_field.url
         elif callable(avatar_field):
             return avatar_field()
 
-    logger.warning("avatar field must be an ImageField/URLField on the user model, or a callable")
+    logger.warning("Avatar field must be an ImageField/URLField on the user model, or a callable")
 
     return no_avatar
 
