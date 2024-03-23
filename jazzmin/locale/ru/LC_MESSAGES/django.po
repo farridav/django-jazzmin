@@ -19,8 +19,8 @@ msgid ""
 "First, enter a username and password. Then, you'll be able to edit more user"
 " options."
 msgstr ""
-"Сначала введите имя пользователя и пароль,"
-" после чего вы сможете изменить остальную информацию о пользователе."
+"Сначала введите имя пользователя и пароль, после чего вы сможете изменить "
+"остальную информацию о пользователе."
 
 #: templates/admin/base.html:151
 msgid "Account"
@@ -74,7 +74,9 @@ msgstr "%(timesince) назад"
 msgid ""
 "This object doesn't have a change history. It probably wasn't added via this"
 " admin site."
-msgstr "У этого объекта нет истории изменений. Вероятно, он был добавлен не через эту админ-панель."
+msgstr ""
+"У этого объекта нет истории изменений. Вероятно, он был добавлен не через "
+"эту админ-панель."
 
 #: templates/admin/popup_response.html:5
 msgid "Popup closing..."
@@ -121,3 +123,11 @@ msgstr "Удалено “{object}”."
 #, python-brace-format
 msgid "Could not reverse url from {instance}"
 msgstr "Не удалось получить обратный url для {instance}"
+
+#: templates/admin/import_export/export.html
+msgid "Export"
+msgstr "Экспорт"
+
+#: template/admin/import_export/import.html
+msgid "Confirm import"
+msgstr "Импорт"
