@@ -7,11 +7,10 @@ When reporting bugs, or compatibility issues, here is a general guide on the bes
 First of all, ask yourself these questions:
 
 1. Does your app behave as expected if `jazzmin` is commented out of your `INSTALLED_APPS`?
-2. Can you easily demonstrate the problem without code changes in our live test app https://django-jazzmin.herokuapp.com/admin/ ?
-3. Can you reproduce the problem locally in our test app, and submit it as a Pull request for us to work against (see [development.md](./development.md)) ? 
-4. Can you add a failing test for the problem (see [development.md](./development.md))?
-5. Can you screenshot the issue and attach it to an issue or pull request?
-6. Can you solve the problem (and not introduce other issues) by changing HTML, or CSS, or JS
+2. Can you reproduce the problem locally in our test app, and submit it as a Pull request for us to work against (see [development.md](./development.md)) ?
+3. Can you add a failing test for the problem (see [development.md](./development.md))?
+4. Can you screenshot the issue and attach it to an issue or pull request?
+5. Can you solve the problem (and not introduce other issues) by changing HTML, or CSS, or JS
 
 If you can solve the problem using CSS/JS then you can temporarily use "custom CSS/JS" within jazzmin settings, see [configuration.md](./configuration.md) until we have the fix released
 
@@ -31,7 +30,7 @@ We welcome new features, here is a list of guidelines to consider:
 
 When making changes, see if you can achieve your goal by removing code, failing that, try changing code, failing that, add new code
 
-We prefer to use HTML first, failing that, use CSS, failing that, use JavaScript (This approach helps with maintainability) 
+We prefer to use HTML first, failing that, use CSS, failing that, use JavaScript (This approach helps with maintainability)
 
 
 Some useful links for feature development:

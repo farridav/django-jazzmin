@@ -1,6 +1,19 @@
 
 # Django jazzmin (Jazzy Admin)
 
+## Project Status
+This project is being actively maintained, though with a reduced feature set, we are looking for contributors to help
+maintain and improve the project, please get in touch if you would like to help.
+
+Help needed with:
+- Triaging issues
+- Frontend fixes and UI improvements
+- Testing
+- Documentation
+
+Pull requests are welcome, though ive been pre-occupied with other projects lately, so have not been able to review
+them as quickly as I would like, but im trying to get through them all now, hopefully with some outside help.
+
 [![Docs](https://readthedocs.org/projects/django-jazzmin/badge/?version=latest)](https://django-jazzmin.readthedocs.io)
 ![PyPI download month](https://img.shields.io/pypi/dm/django-jazzmin.svg)
 [![PyPI version](https://badge.fury.io/py/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
@@ -18,14 +31,6 @@ pip install django-jazzmin
 ## Documentation
 See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/settings.py)
 
-## Demo
-Live demo https://django-jazzmin.herokuapp.com/admin
-
-**Username**: test@test.com
-
-**Password**: test
-
-*Note: Data resets nightly*
 
 ## Features
 - Drop-in admin skin, all configuration optional
