@@ -304,7 +304,7 @@ def get_ui_tweaks() -> Dict:
         dark_mode_theme = "darkly"
 
     theme_body_classes = " theme-{}".format(theme)
-    if theme in DARK_THEMES:
+    if theme in DARK_THEMES or dark_mode_theme:
         theme_body_classes += " dark-mode"
 
     ret = {
