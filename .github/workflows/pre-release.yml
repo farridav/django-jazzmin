@@ -22,4 +22,4 @@ jobs:
       - name: Deploy to testpypi.org
         run: |
           poetry config repositories.test_pypi https://test.pypi.org/legacy/
-          poetry publish --build -r test_pypi --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }}
+          poetry publish --build -r test_pypi --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
