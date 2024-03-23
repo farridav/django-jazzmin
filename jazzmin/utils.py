@@ -162,15 +162,23 @@ def make_menu(
         return []
 
     model_permissions = get_view_permissions(user)
+    user_groups = user.groups.all()
 
     menu = []
     for link in links:
 
         perm_matches = []
-        for perm in link.get("permissions", []):
+        permissions = link.get("permissions", [])
+        for perm in permissions:
             perm_matches.append(user.has_perm(perm))
 
-        if not all(perm_matches):
+        group_matches = []
+        user_groups_names = [g.name for g in user_groups]
+        groups = link.get("groups", [])
+        for group in groups:
+            group_matches.append(group in user_groups_names)
+
+        if not all(perm_matches) or not all(group_matches):
             continue
 
         # Url links
