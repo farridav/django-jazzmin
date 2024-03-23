@@ -37,8 +37,11 @@ include = ["jazzmin"]
 exclude = ["tests", "docs"]
 
 [tool.poetry.dependencies]
-python = ">=3.6.2"
-django = ">=2.2"
+python = ">=3.7"
+django = ">=3"
+
+[tool.poetry.group.dev.dependencies]
+pytest-cov = "^4.1.0"
 
 [tool.black]
 line-length = 120
@@ -51,7 +54,7 @@ django-extensions = "^3.1.5"    # Django Sugar for development
 flake9 = "^3.8.3"               # Static code checking (with pyproject.toml support)
 pytest = "^6.2.5"               # Test runner
 pytest-django = "^4.5.2"        # Django integration for pytest
-pytest-cov = "^3.0.0"           # Measure code coverage during tests
+pytest-cov = "^4.1.0"           # Measure code coverage during tests
 tox = "^3.24.5"                 # Test runner for python packages
 Faker = "^11.3.0"               # less fake fake data
 coveralls = "^3.3.1"            # Publish code coverage to coveralls
@@ -71,7 +74,7 @@ black = "^21.12b0"              # Code formatting and linting (with pyproject.to
 "Source" = "https://github.com/farridav/django-jazzmin"
 
 [tool.pytest.ini_options]
-addopts = "--pdbcls=IPython.terminal.debugger:TerminalPdb -p no:warnings --junitxml=.reports/coverage.xml --cov-report=html:.reports/htmlcov --cov jazzmin"
+addopts = "--pdbcls=IPython.terminal.debugger:TerminalPdb -p no:warnings --cov=jazzmin"
 junit_family = "xunit2"
 norecursedirs = ".git .tox _resource .mypy_cache build dist docs"
 DJANGO_SETTINGS_MODULE = "tests.test_app.library.settings"
@@ -96,7 +99,6 @@ show_missing = true
 legacy_tox_ini = """
 [tox]
 envlist =
-    django2-{python3.6,python3.7},
     django3-{python3.6,python3.7,python3.8,python3.9},
     django4-{python3.8,python3.9,python3.10},
     # run one of the tests again but with coverage
@@ -126,21 +128,19 @@ deps =
     mypy
     black
     beautifulsoup4
-    dj-database-url
     factory-boy
     python3.6: importlib-metadata<5.0  # Needed for compatibility reasons - https://stackoverflow.com/a/73932581
     python3.7: importlib-metadata<5.0  # Needed for compatibility reasons - https://stackoverflow.com/a/73932581
-    django2: Django<3
     django3: Django<4
     django4: Django<5
 
 [testenv:coveralls-django4-python3.10]
 passenv = COVERALLS_REPO_TOKEN
 commands =
-    - mypy jazzmin --ignore-missing-imports
+    mypy jazzmin --ignore-missing-imports
     black --check jazzmin tests --target-version py310 --line-length 120
     pytest
-    - coveralls
+    coveralls
 """
 
 [build-system]
