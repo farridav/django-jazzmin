@@ -1,7 +1,7 @@
 # Jazzmin
 
-Welcome to Jazzmin, intended as a drop-in app to jazz up your django admin site, with plenty of things you can easily 
-customise, including a built-in UI customizer 
+Welcome to Jazzmin, intended as a drop-in app to jazz up your django admin site, with plenty of things you can easily
+customise, including a built-in UI customizer
 
 ## Features
 
@@ -18,13 +18,14 @@ customise, including a built-in UI customizer
 - Based on the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 
 ## Demo
-Live demo [https://django-jazzmin.herokuapp.com/admin](https://django-jazzmin.herokuapp.com/admin)
+You can view the demo app by cloning the repository, and running the following commands:
 
-> **Username**: test@test.com
-
-> **Password**: test
-
-*Note: Data resets nightly*
+```bash
+    poetry install
+	./tests/test_app/manage.py migrate
+	./tests/test_app/manage.py reset
+	./tests/test_app/manage.py runserver_plus
+```
 
 ## Screenshots
 
