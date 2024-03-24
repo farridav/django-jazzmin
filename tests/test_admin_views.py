@@ -1,6 +1,8 @@
 import re
+
 import django
 import pytest
+
 from jazzmin.compat import reverse
 
 from .test_app.library.books.models import Book
@@ -40,7 +42,11 @@ def test_logout(admin_client):
     """
     url = reverse("admin:logout")
 
-    response = admin_client.get(url)
+    if django.VERSION[0] >= 4:
+        response = admin_client.post(url)
+    else:
+        response = admin_client.get(url)
+
     templates_used = [t.name for t in response.templates]
 
     assert response.status_code == 200
@@ -140,7 +146,7 @@ def test_password_change(admin_client):
         "jazzmin/includes/ui_builder_panel.html",
     }
 
-    if django.VERSION[0] == 4:
+    if django.VERSION[0] >= 4:
         expected_templates_used.update({"django/forms/errors/list/default.html", "django/forms/errors/list/ul.html"})
 
     assert response.status_code == 200
@@ -221,7 +227,7 @@ def test_detail(admin_client):
         "jazzmin/includes/ui_builder_panel.html": 1,
     }
 
-    if django.VERSION[0] == 4:
+    if django.VERSION[0] >= 4:
         expected_render_counts.update(
             {
                 "django/forms/div.html": 1,
@@ -260,7 +266,7 @@ def test_detail(admin_client):
         "jazzmin/includes/ui_builder_panel.html",
     }
 
-    if django.VERSION[0] == 4:
+    if django.VERSION[0] >= 4:
         expected_templates_used.update(
             {
                 "django/forms/div.html",
@@ -311,7 +317,7 @@ def test_list(admin_client):
         "jazzmin/includes/ui_builder_panel.html": 1,
     }
 
-    if django.VERSION[0] == 4:
+    if django.VERSION[0] >= 4:
         expected_render_counts.update(
             {
                 "django/forms/div.html": 1,
@@ -343,7 +349,7 @@ def test_list(admin_client):
         "jazzmin/includes/ui_builder_panel.html",
     }
 
-    if django.VERSION[0] == 4:
+    if django.VERSION[0] >= 4:
         expected_templates.update(
             {
                 "django/forms/div.html",
