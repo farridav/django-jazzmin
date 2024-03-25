@@ -138,6 +138,8 @@ setenv =
     PYTHONPATH = {toxinidir}
 commands =
     {envpython} -m flake8 jazzmin --max-line-length 120
+    {envpython} -m black --check jazzmin tests
+	{envpython} -m mypy jazzmin tests --ignore-missing-imports
     {envpython} -m pytest
 deps =
     flake9
