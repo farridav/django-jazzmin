@@ -80,9 +80,29 @@ norecursedirs = ".git .tox _resource .mypy_cache build dist docs"
 DJANGO_SETTINGS_MODULE = "tests.test_app.library.settings"
 FAIL_INVALID_TEMPLATE_VARS = 1
 
+[tool.mypy]
+python_version = "3.11"
+disallow_any_generics = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_untyped_decorators = true
+ignore_errors = false
+ignore_missing_imports = true
+implicit_reexport = false
+strict_optional = true
+strict_equality = true
+no_implicit_optional = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unreachable = true
+warn_no_return = true
+warn_return_any = true
+plugins = []
+
 [tool.flake8]
 max-complexity = 10
-ignore = ["C901", "W504", "W503", "E231", "E203"]
+# ignore = ["C901", "W504", "W503", "E231", "E203"]
 exclude = [".git", ".tox", "_resource", "migrations", "build", "dist", "docs"]
 max-line-length = 120
 show-source = true
