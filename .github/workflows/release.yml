@@ -21,4 +21,5 @@ jobs:
 
       - name: Deploy to pypi.org
         run: |
+          poetry version ${GITHUB_REF_NAME/#v}
           poetry publish --build --username __token__ --password ${{ secrets.PYPI_TOKEN }}

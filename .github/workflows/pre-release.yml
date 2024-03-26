@@ -21,5 +21,8 @@ jobs:
 
       - name: Deploy to testpypi.org
         run: |
+          LATEST_RELEASE=${curl "https://api.github.com/repos/farridav/django-jazzmin/tags" | jq -r '.[0].name'/#v}
+          poetry version $LATEST_RELEASE
+          poetry version patch
           poetry config repositories.test_pypi https://test.pypi.org/legacy/
           poetry publish --build -r test_pypi --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
