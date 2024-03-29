@@ -21,5 +21,21 @@ jobs:
 
       - name: Deploy to testpypi.org
         run: |
+          LATEST_RELEASE=${curl -s "https://api.github.com/repos/farridav/django-jazzmin/tags" | jq -r '[0].name[1:]'}
+          poetry version $LATEST_RELEASE
+          poetry version prepatch
           poetry config repositories.test_pypi https://test.pypi.org/legacy/
           poetry publish --build -r test_pypi --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
+
+  update_release_draft:
+    permissions:
+      contents: write
+      pull-requests: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release-drafter.yml
+          disable-autolabeler: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
