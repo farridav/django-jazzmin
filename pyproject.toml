@@ -40,14 +40,11 @@ exclude = ["tests", "docs"]
 python = ">=3.7"
 django = ">=3"
 
-[tool.poetry.group.dev.dependencies]
-pytest-cov = "^4.1.0"
-
 [tool.black]
 line-length = 120
 target-version = ['py310']
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^3.2.4" # unparallelled debugging in django
 Werkzeug = "^2.0.2"             # support for werkzeug debugger in runserver_plus
 django-extensions = "^3.1.5"    # Django Sugar for development
