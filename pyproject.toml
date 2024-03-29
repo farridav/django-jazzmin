@@ -146,3 +146,10 @@ commands =
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+
+[[tool.mypy.overrides]]
+module = [
+    "pkg_resources.*",
+]
+ignore_missing_imports = true
