@@ -23,6 +23,6 @@ jobs:
         run: |
           LATEST_RELEASE=${curl -s "https://api.github.com/repos/farridav/django-jazzmin/tags" | jq -r '[0].name[1:]'}
           poetry version $LATEST_RELEASE
-          poetry version patch
+          poetry version prepatch
           poetry config repositories.test_pypi https://test.pypi.org/legacy/
           poetry publish --build -r test_pypi --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
