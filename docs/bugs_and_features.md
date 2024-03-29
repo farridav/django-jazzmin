@@ -27,11 +27,9 @@ We welcome new features, here is a list of guidelines to consider:
 5. Ensure that all configuration is optional
 6. Ensure that any new strings are translated (but ideally try to use icons, or fallback on the comprehensive translations from Django)
 
-
 When making changes, see if you can achieve your goal by removing code, failing that, try changing code, failing that, add new code
 
 We prefer to use HTML first, failing that, use CSS, failing that, use JavaScript (This approach helps with maintainability)
-
 
 Some useful links for feature development:
 
