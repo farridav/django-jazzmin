@@ -1,4 +1,3 @@
-import django
 import sys
 
 # We automatically grab the version of `django-jazzmin` from the package manager instead of
@@ -13,7 +12,3 @@ else:
     import pkg_resources
 
     version = pkg_resources.get_distribution("django-jazzmin").version
-
-
-if django.VERSION < (3, 2):
-    default_app_config = "jazzmin.apps.JazzminConfig"

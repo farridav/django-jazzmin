@@ -16,17 +16,15 @@ classifiers = [
     "Operating System :: OS Independent",
     "Development Status :: 4 - Beta",
     "Framework :: Django",
-    "Framework :: Django :: 2.2",
-    "Framework :: Django :: 3.0",
-    "Framework :: Django :: 3.1",
+    "Framework :: Django :: 4.2",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     "Topic :: Internet :: WWW/HTTP :: WSGI",
@@ -37,12 +35,12 @@ include = ["jazzmin"]
 exclude = ["tests", "docs"]
 
 [tool.poetry.dependencies]
-python = ">=3.7"
-django = ">=3"
+python = ">=3.8"
+django = ">=4.2,<5.0"
 
 [tool.black]
 line-length = 120
-target-version = ['py310']
+target-version = ['py311']
 
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^3.2.4" # unparallelled debugging in django
@@ -96,19 +94,19 @@ show_missing = true
 legacy_tox_ini = """
 [tox]
 envlist =
-    django3-{python3.6,python3.7,python3.8,python3.9},
-    django4-{python3.8,python3.9,python3.10},
+    django4-{python3.8,python3.9,python3.10,python3.11,python3.12},
+    django5-{python3.10,python3.11,python3.12},
     # run one of the tests again but with coverage
-    coveralls-django4-python3.10,
+    coveralls-django4-python3.12,
 skipsdist = True
 
 [gh-actions]
 python =
-    3.6: python3.6
-    3.7: python3.7
     3.8: python3.8
     3.9: python3.9
     3.10: python3.10
+    3.11: python3.11
+    3.12: python3.12
 
 [testenv]
 setenv =
@@ -127,12 +125,10 @@ deps =
     black
     beautifulsoup4
     factory-boy
-    python3.6: importlib-metadata<5.0  # Needed for compatibility reasons - https://stackoverflow.com/a/73932581
-    python3.7: importlib-metadata<5.0  # Needed for compatibility reasons - https://stackoverflow.com/a/73932581
-    django3: Django<4
     django4: Django<5
+    django5: Django<6
 
-[testenv:coveralls-django4-python3.10]
+[testenv:coveralls-django4-python3.12]
 passenv = COVERALLS_REPO_TOKEN
 commands =
     mypy jazzmin --ignore-missing-imports

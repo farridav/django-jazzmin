@@ -19,8 +19,8 @@ them as quickly as I would like, but im trying to get through them all now, hope
 [![Docs](https://readthedocs.org/projects/django-jazzmin/badge/?version=latest)](https://django-jazzmin.readthedocs.io)
 ![PyPI download month](https://img.shields.io/pypi/dm/django-jazzmin.svg)
 [![PyPI version](https://badge.fury.io/py/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
-![Python versions](https://img.shields.io/badge/python-%3E%3D3.6-brightgreen)
-![Django Versions](https://img.shields.io/badge/django-%3E%3D2-brightgreen)
+![Python versions](https://img.shields.io/badge/python-%3E=3.8-brightgreen)
+![Django Versions](https://img.shields.io/badge/django-%3E=4.2-brightgreen)
 [![Coverage Status](https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=master)](https://coveralls.io/github/farridav/django-jazzmin?branch=master)
 
 Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy
