@@ -38,15 +38,10 @@ exclude = ["tests", "docs"]
 python = ">=3.8"
 django = ">=4.2,<5.0"
 
-[tool.black]
-line-length = 120
-target-version = ['py311']
-
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^3.2.4" # unparallelled debugging in django
 Werkzeug = "^2.0.2"             # support for werkzeug debugger in runserver_plus
 django-extensions = "^3.1.5"    # Django Sugar for development
-flake9 = "^3.8.3"               # Static code checking (with pyproject.toml support)
 pytest = "^6.2.5"               # Test runner
 pytest-django = "^4.5.2"        # Django integration for pytest
 pytest-cov = "^4.1.0"           # Measure code coverage during tests
@@ -60,7 +55,7 @@ factory-boy = "^3.2.1"          # Factory generation
 mypy = "^0.931"                 # Type checking
 click = "^8.0.3"                # Framework for building cli's
 ipdb = "^0.13.9"                # ipython breakpoints
-black = "^22.3.0"               # Code formatting and linting (with pyproject.toml support)
+ruff = "*"                      # linter and code formatter
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
@@ -75,13 +70,27 @@ norecursedirs = ".git .tox _resource .mypy_cache build dist docs"
 DJANGO_SETTINGS_MODULE = "tests.test_app.library.settings"
 FAIL_INVALID_TEMPLATE_VARS = 1
 
-[tool.flake8]
+[tool.ruff]
+target-version = "py38"
+line-length = 120
+extend-exclude = ["migrations"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # PEP8 errors
+    "W",    # PEP8 warnings
+    "F",    # PyFlakes
+    "I",    # isort
+    "C",    # mccabe
+    "T201", # flake8-print
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["jazzmin"]
+known-local-folder = ["tests"]
+
+[tool.ruff.lint.mccabe]
 max-complexity = 10
-ignore = ["C901", "W504", "W503", "E231", "E203"]
-exclude = [".git", ".tox", "_resource", "migrations", "build", "dist", "docs"]
-max-line-length = 120
-show-source = true
-statistics = false
 
 [tool.coverage.run]
 omit = ["*/__init__.py", ".tox", ".mypy_cache", ".reports", ".git"]
@@ -112,17 +121,17 @@ python =
 setenv =
     PYTHONPATH = {toxinidir}
 commands =
-    {envpython} -m flake8 jazzmin --max-line-length 120
+    {envpython} -m ruff format --check jazzmin
+    {envpython} -m ruff check jazzmin
     {envpython} -m pytest
 deps =
     django-jazzmin  # Installing self to allow automatic getting of `version` which needs `django-jazzmin` to be install to get information about the package.
-    flake9
     pytest
     pytest-django
     pytest-cov
     coveralls
     mypy
-    black
+    ruff
     beautifulsoup4
     factory-boy
     django4: Django<5
@@ -132,7 +141,8 @@ deps =
 passenv = COVERALLS_REPO_TOKEN
 commands =
     mypy jazzmin --ignore-missing-imports
-    black --check jazzmin tests --target-version py310 --line-length 120
+    ruff format --check jazzmin tests
+    ruff check jazzmin tests
     pytest
     coveralls
 """
