@@ -1,6 +1,8 @@
 import re
+
 import django
 import pytest
+
 from jazzmin.compat import reverse
 
 from .test_app.library.books.models import Book

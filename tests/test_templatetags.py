@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 from django.contrib.admin.models import CHANGE, LogEntry
+
 from jazzmin.templatetags import jazzmin
 
 
