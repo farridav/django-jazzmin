@@ -21,9 +21,10 @@ jobs:
 
       - name: Deploy to testpypi.org
         run: |
-          LATEST_RELEASE=$(curl -s "https://api.github.com/repos/farridav/django-jazzmin/tags" | jq -r '.[0].name[1:]')
+          # Using `pypi` rather than our own tags as we don't create a "release" for test version of our package.
+          LATEST_RELEASE=$(curl -s https://test.pypi.org/rss/project/django-jazzmin/releases.xml | sed -n 's/\s*<title>\([{a,b}0-9.]*\).*/\1/p' | head -n 2 | xargs)
           poetry version $LATEST_RELEASE
-          poetry version prepatch
+          poetry version prerelease  # Using `prerelease` rather than `prepatch` due to a bug in Poetry (latest checked 1.8.1 - https://github.com/python-poetry/poetry/issues/879)
           poetry config repositories.test_pypi https://test.pypi.org/legacy/
           poetry publish --build -r test_pypi --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
 
