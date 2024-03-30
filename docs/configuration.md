@@ -1,9 +1,10 @@
 # Configuration
 
-To configure the general behaviour of jazzmin, you can use `JAZZMIN_SETTINGS` within your django settings, below is a 
+To configure the general behaviour of jazzmin, you can use `JAZZMIN_SETTINGS` within your django settings, below is a
 full example, with some of the more complex items explained below that.
 
 ## Full example
+
 ```python
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
@@ -153,35 +154,36 @@ JAZZMIN_SETTINGS = {
 
 You can enable the top menu by specifying `"topmenu_links"` in your `JAZZMIN_SETTINGS`, this is a list made up of one of:
 
- - app (creates a dropdown of modeladmin links)
- - model (creates a link to a modeladmin)
- - url (url name, or absolute link)
+- app (creates a dropdown of modeladmin links)
+- model (creates a link to a modeladmin)
+- url (url name, or absolute link)
 
 The top menu can be styled with the UI Customiser (See below)
 
 ## User menu
-You can add links to the user menu on the top right of the screen using the `"usermenu_links"` settings key, the format 
-of these links is the same as with top menu (above), though submenus via "app" are not currently supported and will not 
+
+You can add links to the user menu on the top right of the screen using the `"usermenu_links"` settings key, the format
+of these links is the same as with top menu (above), though submenus via "app" are not currently supported and will not
 be rendered.
 
 ![User Menu](./img/user_menu.png)
-    
+
 ## Side menu
 
 ![Side Menu](./img/side_menu.png)
 
 ### How its generated
 
-The side menu gets a list of all installed apps and their models that have admin classes, and creates a tree of apps and 
+The side menu gets a list of all installed apps and their models that have admin classes, and creates a tree of apps and
 links to model admin pages.
 
-You can omit apps, or models from this generated menu, using `hide_apps` or `hide_models` where app is like `auth` and 
+You can omit apps, or models from this generated menu, using `hide_apps` or `hide_models` where app is like `auth` and
 model is like `auth.user`
 
-Ordering of the menu can be done using `order_with_respect_to`, which is a list of apps/models/custom links you want to 
+Ordering of the menu can be done using `order_with_respect_to`, which is a list of apps/models/custom links you want to
 base  the ordering off of, it can be a full, or partial list, some examples:
 
-```
+```python
 # Order the auth app before the books app, other apps will be alphabetically placed after these
 "order_with_respect_to": ["auth", "books"],
 
@@ -208,9 +210,10 @@ Currently, custom links (See below) cannot be ordered
 
 ### Side menu custom links
 
-Custom links can be added using `custom_links`, this is a dictionary of links, keyed on the app they will live under. 
+Custom links can be added using `custom_links`, this is a dictionary of links, keyed on the app they will live under.
 Example:
 
+```python
     "custom_links": {
         "books": [{
             # Any Name you like
@@ -226,40 +229,48 @@ Example:
             "permissions": ["books.view_book"]     
         }]
     },
+```
 
 #### note
+
 The app list you generate for the side menu, is shared with the dashboard, so any changes you make to it, will be reflected there
 
 ## Change form templates
-We have a few different styles for a model admins change form controlled via the `changeform_format`, this can be applied 
-globally via `changeform_format`, and overriden on a per model basis using `changeform_format_overrides`, which accepts 
+
+We have a few different styles for a model admins change form controlled via the `changeform_format`, this can be applied
+globally via `changeform_format`, and overriden on a per model basis using `changeform_format_overrides`, which accepts
 a dictionary mapping of model names to changeform templates e.g:
 
+```python
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+```
 
-Will use `horizontal_tabs` throughout the admin, but use the `collapsible` template on the user model admin, and 
+Will use `horizontal_tabs` throughout the admin, but use the `collapsible` template on the user model admin, and
 `vertical_tabs` on the group model admin.
 
-The default style is vertical tabs, *unless* you have no fieldsets and no inlines, in which case you will get the basic single form 
-rendered out, See [Django docs on fieldset](https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets) 
+The default style is vertical tabs, *unless* you have no fieldsets and no inlines, in which case you will get the basic single form
+rendered out, See [Django docs on fieldset](https://docs.djangoproject.com/en/dev/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets)
 on how to add fieldsets to your admin classes.
 
 See below for the different styles:
 
 ### Single page (`single`)
+
 Render the form out in one page, including inlines, plain and simple, closest to the original Django admin change form
 
 ![Single](./img/changeform_single.png)
 
 ### Horizontal tabs (`horizontal_tabs`)
-Puts all fieldsets and inlines into tab panes with horizontal nav tab controls, this is the default view for change 
+
+Puts all fieldsets and inlines into tab panes with horizontal nav tab controls, this is the default view for change
 forms that have fieldsets. or an inline
 
 ![Horizontal tabs](./img/changeform_horizontal_tabs.png)
 
 ### Vertical tabs (`vertical_tabs`)
+
 Puts each fieldset or inline in a separate pane, controlled by vertical tabs on the left hand side.
 
 Future enhancement: Allow tabs to be on the left or right
@@ -267,17 +278,20 @@ Future enhancement: Allow tabs to be on the left or right
 ![Vertical tabs](./img/changeform_vertical_tabs.png)
 
 ### Collapsible (`collapsible`)
-Puts all fieldsets and inlines in bootstrap collapsibles in an collapsible, allows many collapsibles to be open at the 
+
+Puts all fieldsets and inlines in bootstrap collapsibles in an collapsible, allows many collapsibles to be open at the
 same time, the first collapsible is opened
 
 ![Collapsible](./img/changeform_collapsible.png)
 
 ### Carousel (`carousel`)
+
 Puts fieldsets and inlines into a bootstrap carousel, and allows paginaton with previous/next buttons, as well as an indicators.
 
 ![Carousel](./img/changeform_carousel.png)
 
 ## Ordering of page content
+
 If you want to order the sections within your pages, you can specify `jazzmin_section_order` on your model admin class e.g:
 
 ```python
@@ -295,6 +309,7 @@ class BookAdmin(admin.ModelAdmin):
 ```
 
 ## Filter perfomance
+
 If your filter will contain a lot of options, like when you use M2M filter or it's a big filter itself, then rendering every option can hurt user perfomance. This is solved by providing `filter_input_length` dictionary with filter name as the key and the value will determine how much characters should be entered before rendering options.
 
 ```python
@@ -314,7 +329,8 @@ class BookAdmin(admin.ModelAdmin):
 ```
 
 ## Language Chooser
-You can enable a language chooser dropdown using `"language_chooser": True` in your `JAZZMIN_SETTINGS`, we mainly use this for 
+
+You can enable a language chooser dropdown using `"language_chooser": True` in your `JAZZMIN_SETTINGS`, we mainly use this for
 assisting with translations, but it could be of use to some people in their admin site.
 
 To make proper use of this, please ensure you have internationalisation setup properly, See [https://docs.djangoproject.com/en/3.1/topics/i18n/translation/](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/)
@@ -326,20 +342,21 @@ Namely:
 - `LOCALE_DIRS` is setup
 - `LANGUAGES` have been defined
 
-See our [test app settings](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/settings.py) 
+See our [test app settings](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/settings.py)
 for a practical example.
 
 ![Language chooser](./img/language_chooser.png)
 
 ## Related Modal
-Render django related popups inside a modal using `"related_modal_active": True` instead of the old popup window, 
+
+Render django related popups inside a modal using `"related_modal_active": True` instead of the old popup window,
 defaults to `False`
 
 ![Related Modal](./img/related_modal_bootstrap.png)
 
 ### Adding extra actions to model's form view
 
-Add a template for your model on your main template directory, 
+Add a template for your model on your main template directory,
 e.g [app/templates/admin/app_name/model_name/submit_line.html](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/books/templates/admin/loans/bookloan/submit_line.html)
 
 ```djangotemplate
@@ -370,6 +387,6 @@ def response_change(self, request, obj):
         pass
     return ret
 ```
-    
+
 The implementation might change slightly if your wanting to perform an action on add, or delete, for those, you can
 override the response_add of response_delete methods instead/as well.
