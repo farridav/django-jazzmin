@@ -23,7 +23,7 @@ them as quickly as I would like, but im trying to get through them all now, hope
 ![Django Versions](https://img.shields.io/badge/django-%3E=4.2-brightgreen)
 [![Coverage Status](https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=master)](https://coveralls.io/github/farridav/django-jazzmin?branch=master)
 
-Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 5 to make yo' admin look jazzy
+Drop-in theme for django admin, that utilises AdminLTE 3.2 & Bootstrap 5 to make yo' admin look jazzy
 
 ## Installation
 
