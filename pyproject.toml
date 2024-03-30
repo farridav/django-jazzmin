@@ -117,6 +117,7 @@ commands =
     {envpython} -m flake8 jazzmin --max-line-length 120
     {envpython} -m pytest
 deps =
+    django-jazzmin  # Installing self to allow automatic getting of `version` which needs `django-jazzmin` to be install to get information about the package.
     flake9
     pytest
     pytest-django
