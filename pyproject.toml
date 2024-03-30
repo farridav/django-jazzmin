@@ -40,14 +40,11 @@ exclude = ["tests", "docs"]
 python = ">=3.7"
 django = ">=3"
 
-[tool.poetry.group.dev.dependencies]
-pytest-cov = "^4.1.0"
-
 [tool.black]
 line-length = 120
 target-version = ['py310']
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^3.2.4" # unparallelled debugging in django
 Werkzeug = "^2.0.2"             # support for werkzeug debugger in runserver_plus
 django-extensions = "^3.1.5"    # Django Sugar for development
@@ -65,7 +62,7 @@ factory-boy = "^3.2.1"          # Factory generation
 mypy = "^0.931"                 # Type checking
 click = "^8.0.3"                # Framework for building cli's
 ipdb = "^0.13.9"                # ipython breakpoints
-black = "^21.12b0"              # Code formatting and linting (with pyproject.toml support)
+black = "^22.3.0"               # Code formatting and linting (with pyproject.toml support)
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
@@ -120,6 +117,7 @@ commands =
     {envpython} -m flake8 jazzmin --max-line-length 120
     {envpython} -m pytest
 deps =
+    django-jazzmin  # Installing self to allow automatic getting of `version` which needs `django-jazzmin` to be install to get information about the package.
     flake9
     pytest
     pytest-django
@@ -146,3 +144,10 @@ commands =
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+
+[[tool.mypy.overrides]]
+module = [
+    "pkg_resources.*",
+]
+ignore_missing_imports = true
