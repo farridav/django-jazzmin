@@ -56,8 +56,8 @@ def parse_usermenu(response):
     menu = []
     soup = BeautifulSoup(response.content, "html.parser")
 
-    for link in soup.find(id="jazzy-usermenu").find_all("a"):
-        item = {"name": link.text.strip(), "link": link["href"]}
+    for link in soup.find(id="jazzy-usermenu").find_all(["a", "form"]):
+        item = {"name": link.text.strip(), "link": link.get("href") or link.get("action")}
         menu.append(item)
 
     return menu

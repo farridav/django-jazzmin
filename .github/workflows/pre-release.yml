@@ -6,12 +6,12 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
           cache: pip
@@ -21,5 +21,22 @@ jobs:
 
       - name: Deploy to testpypi.org
         run: |
-          poetry config repositories.testpypi https://test.pypi.org/legacy/
-          poetry publish --build -r testpypi --username ${{ secrets.TESTPYPI_USERNAME }} --password ${{ secrets.TESTPYPI_PASSWORD }} || :
+          # Using `pypi` rather than our own tags as we don't create a "release" for test version of our package.
+          LATEST_RELEASE=$(curl -s https://test.pypi.org/rss/project/django-jazzmin/releases.xml | sed -n 's/\s*<title>\([{a,b}0-9.]*\).*/\1/p' | head -n 2 | xargs)
+          poetry version $LATEST_RELEASE
+          poetry version prerelease  # Using `prerelease` rather than `prepatch` due to a bug in Poetry (latest checked 1.8.1 - https://github.com/python-poetry/poetry/issues/879)
+          poetry config repositories.test_pypi https://test.pypi.org/legacy/
+          poetry publish --build -r test_pypi --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
+
+  update_release_draft:
+    permissions:
+      contents: write
+      pull-requests: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release-drafter.yml
+          disable-autolabeler: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

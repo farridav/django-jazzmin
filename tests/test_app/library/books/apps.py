@@ -1,9 +1,8 @@
 from django.apps import AppConfig
-from django.conf import settings
 
 
 class BooksConfig(AppConfig):
-    name = "{}library.books".format(settings.PREFIX)
+    name = "tests.test_app.library.books"
 
     def ready(self):
         from . import receivers  # NOQA
