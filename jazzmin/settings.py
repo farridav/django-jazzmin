@@ -177,6 +177,7 @@ THEMES = {
     "spacelab": "vendor/bootswatch/spacelab/bootstrap.min.css",
     "united": "vendor/bootswatch/united/bootstrap.min.css",
     "yeti": "vendor/bootswatch/yeti/bootstrap.min.css",
+    "zephyr": "vendor/bootswatch/zephyr/bootstrap.min.css",
     # dark themes
     "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
     "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
