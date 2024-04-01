@@ -36,7 +36,7 @@
                                 {% action_message_to_list action as action_message_list %}
                                 {% for action_message in action_message_list %}
                                   <div>
-                                    <i class="fas fa-{{ action_message.icon }} bg-{{ action_message.colour }}"></i>
+                                    <i class="timeline-icon fas fa-{{ action_message.icon }} text-bg-{{ action_message.colour }}"></i>
                                     <div class="timeline-item">
                                       <h3 class="timeline-header no-border">
                                           <a href="{% jazzy_admin_url action.user request.current_app|default:"admin" %}" target="_blank">
@@ -51,7 +51,7 @@
                             {% endfor %}
 
                           <div>
-                            <i class="fas fa-clock bg-gray"></i>
+                            <i class="timeline-icon fas fa-clock text-bg-gray"></i>
                               {% if not action_list %}
                                 <div class="timeline-item">
                                     <h3 class="timeline-header no-border">

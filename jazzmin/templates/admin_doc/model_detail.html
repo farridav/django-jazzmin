@@ -22,7 +22,7 @@
 {% block content_title %}{{ name }}{% endblock %}
 
 {% block docs_content %}
-    <div class="card card-info">
+    <div class="card card-info mb-3">
         <div class="card-header"><h4>{% blocktrans %}Description{% endblocktrans %}</h4></div>
         <div class="card-body">
             {{ summary }}
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="card card-success">
+    <div class="card card-success mb-3">
         <div class="card-header"><h4>{% trans 'Fields' %}</h4></div>
         <div class="card-body">
             <table class="table table-hover text-nowrap">

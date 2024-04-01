@@ -66,11 +66,11 @@
                                 {% endfor %}
                                 <input type="hidden" name="action" value="delete_selected">
                                 <input type="hidden" name="post" value="yes">
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <input type="submit" class="btn {{ jazzmin_ui.button_classes.danger }} form-control" value="{% trans 'Yes, I’m sure' %}">
                                 </div>
-                                <div class="form-group">
-                                    <a href="#" class="btn {{ jazzmin_ui.button_classes.danger }} cancel-link form-control">{% trans "No, take me back" %}</a>
+                                <div class="mb-3">
+                                    <a href="#" class="btn {{ jazzmin_ui.button_classes.secondary }} cancel-link form-control">{% trans "No, take me back" %}</a>
                                 </div>
                             </form>
                         </div>

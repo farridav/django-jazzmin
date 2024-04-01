@@ -1,9 +1,8 @@
 {% load i18n %}
-
-<div class="form-group">
-    <select class="form-control search-filter" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
+<div class="p-2">
+    <select class="search-filter" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
         <option value="">{{ title }}</option>
-        <option value="">---------</option>
+        <option value="" disabled>――――――</option>
         {% for choice in choices %}
             {% if choice.name %}
                 <option data-name="{{ choice.name }}" value="{{ choice.value }}" {% if choice.selected %}selected {% endif %}>

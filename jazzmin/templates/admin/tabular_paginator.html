@@ -1,0 +1,83 @@
+{% load i18n static %}
+{% load i18n jazzmin %}
+{% load paginated_inline %}
+
+{% with inline_admin_formset.formset.page as page_obj %}
+{% with inline_admin_formset.opts.verbose_name_plural|unicode_slugify|add:"-tab" as fragment %}
+<div class="row">
+  <div class="col-5">
+    <div class="dataTables_info" role="status" aria-live="polite">
+        {{ page_obj.paginator.count }}
+        {% if page_obj.paginator.count == 1 %}
+            {{ inline_admin_formset.opts.verbose_name }}
+        {% else %}
+            {{ inline_admin_formset.opts.verbose_name_plural }}
+        {% endif %}
+    </div>
+  </div>
+
+  <div class="col-7">
+    <ul class="pagination pagination-sm my-0 float-end">
+
+        {% if page_obj.has_previous %}
+          <li class="page-item previous">
+            <a class="page-link" href="?{% modify_pagination_path request.get_full_path inline_admin_formset.formset.pagination_key page_obj.previous_page_number %}#{{ fragment }}" data-dt-idx="0" tabindex="0">«</a>
+          </li>
+        {% else %}
+        <li class="page-item previous disable">
+          <a class="page-link" href="#" data-dt-idx="0" tabindex="0">«</a>
+        </li>
+        {% endif %}
+
+        {% if page_obj.number|add:"-5" > 0 %}
+          <li class="page-item">
+            <a href="?{% modify_pagination_path request.get_full_path inline_admin_formset.formset.pagination_key 0 %}#{{ fragment }}" class="page-link" data-dt-idx="3" tabindex="0">1</a>
+          </li>
+        {% endif %}
+
+        {% if page_obj.number|add:"-5" > 1 %}
+          <li class="page-item">
+            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>
+          </li>
+        {% endif %}
+
+        {% for page_num in page_obj.paginator.page_range %}
+          {% if page_obj.number == page_num %}
+            <li class="page-item active">
+              <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">{{ page_num }}</a>
+            </li>
+          {% else %}
+            {% if page_num > page_obj.number|add:"-5" and page_num < page_obj.number|add:"5" %}
+            <li class="page-item">
+              <a href="?{% modify_pagination_path request.get_full_path inline_admin_formset.formset.pagination_key page_num %}#{{ fragment }}" class="page-link" data-dt-idx="3" tabindex="0">{{ page_num }}</a>
+            </li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.number|add:"5" < page_obj.paginator.num_pages %}
+          <li class="page-item">
+            <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">… </a>
+          </li>
+        {% endif %}
+
+        {% if page_obj.number|add:"4" < page_obj.paginator.num_pages %}
+          <li class="page-item">
+            <a href="?{% modify_pagination_path request.get_full_path inline_admin_formset.formset.pagination_key page_obj.paginator.num_pages %}#{{ fragment }}" class="page-link" data-dt-idx="3" tabindex="0">{{ page_obj.paginator.num_pages }}</a>
+            </li>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item next">
+            <a class="page-link" href="?{% modify_pagination_path request.get_full_path inline_admin_formset.formset.pagination_key page_obj.next_page_number %}#{{ fragment }}" data-dt-idx="7" tabindex="0">»</a>
+          </li>
+        {% else %}
+          <li class="page-item next disabled">
+            <a class="page-link" href="#" data-dt-idx="8" tabindex="0">»</a>
+          </li>
+        {% endif %}
+  </ul>
+  </div>
+</div>
+{% endwith %}
+{% endwith %}
