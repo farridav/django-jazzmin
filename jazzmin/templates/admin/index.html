@@ -22,13 +22,19 @@
 
     <div class="col-lg-9 col-12">
         <div class="row">
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-6 col-12">
                 {% for app in dashboard_list %}
-                    <div class="card">
+                    <div class="card card-outline card-primary mb-4">
                         <div class="card-header">
-                            <h5 class="m-0">{{ app.name }}</h5>
+                            <h5 class="card-title float-start">{{ app.name }}</h5>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" style="">
+                                    <i data-lte-icon="expand" class="fas fa-window-maximize"></i>
+                                    <i data-lte-icon="collapse" class="fas fa-window-minimize"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             <table class="table table-sm">
                                 <tbody>
                                 {% for model in app.models %}
@@ -37,7 +43,7 @@
                                             {% if model.url %}<a href="{{ model.url }}">{{ model.name }}</a>{% else %}{{ model.name }}{% endif %}
                                         </td>
                                         <td>
-                                            <div class="btn-group float-right">
+                                            <div class="btn-group float-end">
                                                 {% if model.add_url %}
                                                     <a href="{{ model.add_url }}" class="btn btn-xs {{ jazzmin_ui.button_classes.success }} addlink">{% trans 'Add' %}</a>
                                                 {% endif %}
@@ -59,7 +65,7 @@
 
                     {% if forloop.counter == middle|add:"0" %}
                     </div>
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-6 col-12">
                     {% endif %}
 
                 {% endfor %}
@@ -80,11 +86,11 @@
                         {% for entry in admin_log %}
                             <div>
                                 {% if entry.is_change %}
-                                    <i class="fas fa-edit bg-gray text-xs"></i>
+                                    <i class="timeline-icon fas fa-edit text-bg-gray"></i>
                                 {% elif entry.is_deletion %}
-                                    <i class="fas fa-trash bg-danger text-xs"></i>
+                                    <i class="timeline-icon fas fa-trash text-bg-danger"></i>
                                 {% elif entry.is_addition %}
-                                    <i class="fas fa-plus-circle bg-success text-xs"></i>
+                                    <i class="timeline-icon fas fa-plus-circle text-bg-success"></i>
                                 {% endif %}
 
                                 <div class="timeline-item">
@@ -122,7 +128,7 @@
                             </div>
                         {% endfor %}
                         <div>
-                            <i class="fa fa-clock bg-gray"></i>
+                            <i class="timeline-icon fas fa-clock text-bg-secondary"></i>
                         </div>
                     </div>
                 {% endif %}

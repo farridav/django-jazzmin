@@ -59,8 +59,8 @@
                 </div>
                 {% for error in adminform.form.non_field_errors %}
                     <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <i class="icon fa fa-ban"></i>{{ error|capfirst }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"></button>
+                        <i class="me-2 fa fa-ban"></i>{{ error|capfirst }}
                     </div>
                 {% endfor %}
             {% endif %}

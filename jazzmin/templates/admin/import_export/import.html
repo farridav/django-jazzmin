@@ -68,10 +68,10 @@
                                     <div class="form-group field-name">
                                         <div class="row">
                                         {{ field.errors }}
-                                            <div class="col-sm-2 text-left">
+                                            <div class="col-sm-2 text-start">
                                                 {{ field.label_tag }}
                                             </div>
-                                            <div class="col-sm-10 text-left">
+                                            <div class="col-sm-10 text-start">
                                                 {{ field }}
                                             </div>
 
@@ -86,11 +86,19 @@
                                 <div class="col-12 col-lg-9">
                                     <p>
                                         <b>{% trans "This importer will import the following fields: " %}</b>
-                                        <ul>
-                                        {% for field in fields %}
-                                            <li>{{ field }}</li>
-                                        {% endfor %}
-                                        </ul>
+
+                                               <dl>
+                                                  {% for resource, fields in fields_list %}
+                                                      <dt>{{ resource }}</dt>
+                                                      <dd>
+                                                        <ul>
+                                                          {% for field in fields %}
+                                                            <li>{{ field }}</li>
+                                                          {% endfor %}
+                                                        </ul>
+                                                    </dd>
+                                                  {% endfor %}
+                                               </dl>
                                     </p>
                                 </div>
                             </div>

@@ -28,7 +28,6 @@
                         id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
                         <td class="original">
                             {% if inline_admin_form.original or inline_admin_form.show_url %}
-                            <p>
                                 {% if inline_admin_form.original %}
                                     {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
                                         <a
@@ -48,7 +47,6 @@
                                         </a>
                                     {% endif %}
                                 {% endif %}
-                            </p>
                             {% else %}
                             <i class="fas fa-plus fa-sm text-success"> </i>
                             {% endif %}
@@ -70,7 +68,7 @@
                                     {% if field.is_readonly or not field.field.is_hidden %}
                                         <td {% if field.field.name %} class="field-{{ field.field.name }}"{% endif %}>
                                             {% if field.is_readonly %}
-                                                <p>{{ field.contents }}</p>
+                                                {{ field.contents }}
                                             {% else %}
                                                 {{ field.field }}
                                                 <div class="help-block text-red">
