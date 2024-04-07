@@ -278,9 +278,9 @@
             </div>
             {% endif %}
 
-            <div class="content">
-                <div class="container-fluid">
-                    <section id="content" class="content">
+            <div class="content m-0 m-md-3 p-0 p-md-3">
+                <div class="container-fluid m-0 m-md-3 p-0 p-md-3">
+                    <section id="content" class="content m-0 m-md-3 p-0 p-md-3">
                         {% block messages %}
                             {% for message in messages %}
                                 {% if message.tags == 'success' %}
@@ -310,7 +310,7 @@
                                 {% endif %}
                             {% endfor %}
                         {% endblock messages %}
-                        <div class="row">
+                        <div class="row m-0 m-md-3 p-0 p-md-3">
                             {% block content %} {% endblock %}
                         </div>
                     </section>
