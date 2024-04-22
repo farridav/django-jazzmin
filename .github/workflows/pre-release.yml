@@ -27,7 +27,7 @@ jobs:
           # then reverse sort them to get highest version! Simples :D
           LATEST_RELEASE_TEST_PYPI=$(curl -s https://test.pypi.org/rss/project/django-jazzmin/releases.xml | sed -n 's/\s*<title>\([{a,b}0-9.]*\).*/\1/p' | head -n 2 | xargs)
           LATEST_RELEASE_GITHUB=$(curl -s "https://api.github.com/repos/farridav/django-jazzmin/tags" | jq -r '.[0].name[1:]')
-          LATEST_RELEASE=$(printf "${LATEST_RELEASE_GITHUB}\n${LATEST_RELEASE_TEST_PYPI}" | sort -V -r)
+          LATEST_RELEASE=$(printf "${LATEST_RELEASE_GITHUB}\n${LATEST_RELEASE_TEST_PYPI}" | sort -V -r | head -n 1)
 
           # Now we can bump the version correctly to release a new version nicely base on the
           # latest GH release.
