@@ -67,6 +67,7 @@ def templates():
         ),
     }
 
+    
     for jazzmin_dir, django_dir in templates.items():
         for template in [os.path.join(dp, f) for dp, dn, filenames in os.walk(jazzmin_dir) for f in filenames]:
             original = template.replace(jazzmin_dir, django_dir)
