@@ -7,7 +7,7 @@ customise, including a built-in UI customizer
 
 - Drop-in admin skin, all configuration optional
 - Select2 drop-downs
-- Bootstrap 4 & AdminLTE UI components
+- Bootstrap 5 & AdminLTE UI components
 - Search bar for any given model admin
 - Modal windows instead of popups
 - Customisable side menu
@@ -77,5 +77,5 @@ deserved its own package, big thanks to @wuyue92tree for all of his initial hard
 project were possible, but this project is taking a slightly different direction.
 
 - Based on AdminLTE 3: <https://adminlte.io/>
-- Using Bootstrap 4: <https://getbootstrap.com/>
+- Using Bootstrap 5: <https://getbootstrap.com/>
 - Using Font Awesome 5: <https://fontawesome.com/>

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "django-jazzmin"
 version = "0.0.0"
-description = "Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy"
+description = "Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 5 to make yo' admin look jazzy"
 license = "MIT"
 authors = ["Shipit <packages@shipit.ltd>"]
 maintainers = ["Shipit <packages@shipit.ltd>"]
