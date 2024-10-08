@@ -36,7 +36,7 @@ def parse_topmenu(response):
         anchor = li.find("a")
 
         # Skip brand link and menu button
-        if type(anchor.contents[0]) == Tag:
+        if isinstance(anchor.contents[0], Tag):
             continue
 
         item = {"name": anchor.text.strip(), "link": anchor["href"]}
