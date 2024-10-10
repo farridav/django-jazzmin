@@ -4,6 +4,11 @@ import os
 import subprocess
 from itertools import chain
 
+
+
+
+
+
 import click
 import django
 import polib
