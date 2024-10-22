@@ -117,6 +117,10 @@
                                                 </ul>
                                             {% endif %}
                                         </div>
+                                    {% else %}
+                                    <div class="timeline-body">
+                                        {{ entry }}
+                                    </div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -129,5 +133,6 @@
             </div>
         </div>
     </div>
+
 
 {% endblock %}
