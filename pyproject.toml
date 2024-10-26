@@ -38,6 +38,7 @@ exclude = ["tests", "docs"]
 [tool.poetry.dependencies]
 python = ">=3.8"
 django = ">=4.2"
+pydantic = "^2.9.2"
 
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^3.2.4" # unparallelled debugging in django
