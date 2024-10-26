@@ -8,7 +8,7 @@ fake = Faker()
 
 def parse_sidemenu(response):
     """
-    Convert the side menu to a dict keyed on app name, containing a list of links
+    Convert the side menu to a dict keyed on app label, containing a list of links
     """
     menu = defaultdict(list)
     current_app = "Global"

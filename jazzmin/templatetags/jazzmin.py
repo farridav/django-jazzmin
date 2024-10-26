@@ -31,6 +31,7 @@ from ..settings import CHANGEFORM_TEMPLATES, get_settings, get_ui_tweaks
 from ..utils import (
     get_admin_url,
     get_filter_id,
+    get_installed_apps,
     has_fieldsets_check,
     make_menu,
     order_with_respect_to,
@@ -56,8 +57,17 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     ordering = options.get("order_with_respect_to", [])
     ordering = [x.lower() for x in ordering]
 
+    installed_apps = get_installed_apps()
+    available_apps: list[dict[str, Any]] = copy.deepcopy(context.get(using, []))
+
     menu = []
-    available_apps = copy.deepcopy(context.get(using, []))
+
+    # Add any arbitrary groups that are not in available_apps
+    for app_label in options.get("custom_links", {}):
+        if app_label.lower() not in installed_apps:
+            available_apps.append(
+                {"name": app_label, "app_label": app_label, "app_url": "#", "has_module_perms": True, "models": []}
+            )
 
     custom_links = {
         app_name: make_menu(user, links, options, allow_appmenus=False)
@@ -65,7 +75,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     }
 
     for app in available_apps:
-        app_label = app["app_label"].lower()
+        app_label = app["app_label"]
         app_custom_links = custom_links.get(app_label, [])
         app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
         if app_label in options["hide_apps"]:

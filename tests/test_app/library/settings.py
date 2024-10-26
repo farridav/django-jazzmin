@@ -171,7 +171,8 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "hide_models": [],
     # List of apps to base side menu (app or model) ordering off of
     "order_with_respect_to": ["Make Messages", "auth", "books", "books.author", "books.book", "loans"],
-    # Custom links to append to app groups, keyed on app name
+    # Custom links to append to app groups, keyed on (lower case) app label
+    # or use a name not in installed apps for a new group
     "custom_links": {
         "loans": [
             {

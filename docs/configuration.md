@@ -38,7 +38,7 @@ JAZZMIN_SETTINGS = {
     "copyright": "Acme Library Ltd",
 
     # List of model admins to search from the search bar, search bar omitted if excluded
-    # If you want to use a single search field you dont need to use a list, you can use a simple string 
+    # If you want to use a single search field you dont need to use a list, you can use a simple string
     "search_model": ["auth.User", "auth.Group"],
 
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
@@ -93,11 +93,12 @@ JAZZMIN_SETTINGS = {
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
     "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
 
-    # Custom links to append to app groups, keyed on app name
+    # Custom links to append to app groups
+    # use the lower case app label to add links to that app, or use a new name to create a new group
     "custom_links": {
         "books": [{
-            "name": "Make Messages", 
-            "url": "make_messages", 
+            "name": "Make Messages",
+            "url": "make_messages",
             "icon": "fas fa-comments",
             "permissions": ["books.view_book"]
         }]
@@ -210,23 +211,32 @@ Currently, custom links (See below) cannot be ordered
 
 ### Side menu custom links
 
-Custom links can be added using `custom_links`, this is a dictionary of links, keyed on the app they will live under.
+Custom links can be added using `custom_links`, this is a dictionary of links, keyed on the (lower case) app they will
+live under, OR to make a new menu group, use an app label that is not one of your installed apps
+
 Example:
 
 ```python
     "custom_links": {
         "books": [{
             # Any Name you like
-            "name": "Make Messages",                
-            
+            "name": "Make Messages",
+
             # url name e.g `admin:index`, relative urls e.g `/admin/index` or absolute urls e.g `https://domain.com/admin/index`
-            "url": "make_messages",                 
-            
+            "url": "make_messages",
+
             # any font-awesome icon, see list here https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2 (optional)
-            "icon": "fas fa-comments",                  
-            
+            "icon": "fas fa-comments",
+
             # a list of permissions the user must have to see this link (optional)
-            "permissions": ["books.view_book"]     
+            "permissions": ["books.view_book"]
+        }],
+        # Add/Or a new group (name must not conflict with an installed app)
+        "custom_group": [{
+            "name": "Custom Link",
+            "url": "custom_link",
+            "icon": "fas fa-comments",
+            "permissions": ["books.view_book"]
         }]
     },
 ```

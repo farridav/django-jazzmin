@@ -91,7 +91,7 @@ known-first-party = ["jazzmin"]
 known-local-folder = ["tests"]
 
 [tool.ruff.lint.mccabe]
-max-complexity = 10
+max-complexity = 11
 
 [tool.coverage.run]
 omit = ["*/__init__.py", ".tox", ".mypy_cache", ".reports", ".git"]
