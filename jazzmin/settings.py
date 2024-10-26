@@ -57,7 +57,8 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "hide_models": [],
     # List of apps to base side menu ordering off of
     "order_with_respect_to": [],
-    # Custom links to append to side menu app groups, keyed on app name
+    # Custom links to append to side menu app groups, keyed on lower case app label
+    # or makes a new group if the given app label doesnt exist in installed apps
     "custom_links": {},
     # Custom icons for side menu apps/models See the link below
     # https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,

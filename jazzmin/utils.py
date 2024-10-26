@@ -237,3 +237,7 @@ def attr(**kwargs) -> Callable:
         return func
 
     return decorator
+
+
+def get_installed_apps() -> List[str]:
+    return [app_config.label for app_config in apps.get_app_configs()]
