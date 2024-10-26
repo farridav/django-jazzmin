@@ -27,7 +27,8 @@ from django.utils.text import get_text_list, slugify
 from django.utils.translation import gettext
 
 from .. import version
-from ..settings import CHANGEFORM_TEMPLATES, get_settings, get_ui_tweaks
+from ..settings import get_settings, get_ui_tweaks
+from ..types import ChangeFormTemplate
 from ..utils import (
     get_admin_url,
     get_filter_id,
@@ -399,17 +400,14 @@ def get_changeform_template(adminform: AdminForm) -> str:
     model = adminform.model_admin.model
     model_name = "{}.{}".format(model._meta.app_label, model._meta.model_name).lower()
 
-    changeform_format = options.get("changeform_format", "")
-    if model_name in options.get("changeform_format_overrides", {}):
-        changeform_format = options["changeform_format_overrides"][model_name]
+    changeform_format = options.changeform_format
+    if model_name in options.changeform_format_overrides:
+        changeform_format = options.changeform_format_overrides["model_name"]
 
     if not has_fieldsets and not has_inlines:
-        return CHANGEFORM_TEMPLATES["single"]
+        return ChangeFormTemplate.get_template(ChangeFormTemplate.SINGLE)
 
-    if not changeform_format or changeform_format not in CHANGEFORM_TEMPLATES.keys():
-        return CHANGEFORM_TEMPLATES["horizontal_tabs"]
-
-    return CHANGEFORM_TEMPLATES[changeform_format]
+    return ChangeFormTemplate.get_template(changeform_format)
 
 
 @register.simple_tag

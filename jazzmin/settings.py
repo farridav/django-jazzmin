@@ -5,6 +5,8 @@ from typing import Any, Dict
 from django.conf import settings
 from django.templatetags.static import static
 
+from jazzmin.types import DarkThemes
+
 from .utils import get_admin_url, get_model_meta
 
 logger = logging.getLogger(__name__)
@@ -159,44 +161,6 @@ DEFAULT_UI_TWEAKS: Dict[str, Any] = {
     },
 }
 
-THEMES = {
-    # light themes
-    "default": "vendor/bootswatch/default/bootstrap.min.css",
-    "cerulean": "vendor/bootswatch/cerulean/bootstrap.min.css",
-    "cosmo": "vendor/bootswatch/cosmo/bootstrap.min.css",
-    "flatly": "vendor/bootswatch/flatly/bootstrap.min.css",
-    "journal": "vendor/bootswatch/journal/bootstrap.min.css",
-    "litera": "vendor/bootswatch/litera/bootstrap.min.css",
-    "lumen": "vendor/bootswatch/lumen/bootstrap.min.css",
-    "lux": "vendor/bootswatch/lux/bootstrap.min.css",
-    "materia": "vendor/bootswatch/materia/bootstrap.min.css",
-    "minty": "vendor/bootswatch/minty/bootstrap.min.css",
-    "pulse": "vendor/bootswatch/pulse/bootstrap.min.css",
-    "sandstone": "vendor/bootswatch/sandstone/bootstrap.min.css",
-    "simplex": "vendor/bootswatch/simplex/bootstrap.min.css",
-    "sketchy": "vendor/bootswatch/sketchy/bootstrap.min.css",
-    "spacelab": "vendor/bootswatch/spacelab/bootstrap.min.css",
-    "united": "vendor/bootswatch/united/bootstrap.min.css",
-    "yeti": "vendor/bootswatch/yeti/bootstrap.min.css",
-    # dark themes
-    "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
-    "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
-    "slate": "vendor/bootswatch/slate/bootstrap.min.css",
-    "solar": "vendor/bootswatch/solar/bootstrap.min.css",
-    "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
-}
-
-DARK_THEMES = ("darkly", "cyborg", "slate", "solar", "superhero")
-
-CHANGEFORM_TEMPLATES = {
-    "single": "jazzmin/includes/single.html",
-    "carousel": "jazzmin/includes/carousel.html",
-    "collapsible": "jazzmin/includes/collapsible.html",
-    "horizontal_tabs": "jazzmin/includes/horizontal_tabs.html",
-    "vertical_tabs": "jazzmin/includes/vertical_tabs.html",
-}
-
-
 def get_search_model_string(search_model: str) -> str:
     """
     Get a search model string for reversing an admin url.
@@ -301,12 +265,8 @@ def get_ui_tweaks() -> Dict:
         theme = "default"
 
     dark_mode_theme = tweaks.get("dark_mode_theme", None)
-    if dark_mode_theme and dark_mode_theme not in DARK_THEMES:
-        logger.warning("{} is not a dark theme, using darkly".format(dark_mode_theme))
-        dark_mode_theme = "darkly"
-
     theme_body_classes = " theme-{}".format(theme)
-    if theme in DARK_THEMES:
+    if theme in DarkThemes.__members__:
         theme_body_classes += " dark-mode"
 
     ret = {

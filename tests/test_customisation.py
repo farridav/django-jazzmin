@@ -2,9 +2,9 @@ import pytest
 from bs4 import BeautifulSoup
 from django.urls import reverse
 
-from jazzmin.settings import CHANGEFORM_TEMPLATES
 from jazzmin.templatetags.jazzmin import get_sections
 
+from ..jazzmin.types import ChangeFormTemplate
 from .test_app.library.books.admin import BookAdmin
 from .test_app.library.factories import BookFactory, UserFactory
 
@@ -38,8 +38,8 @@ def test_update_login_logo(client, custom_jazzmin_settings):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("config_value,template", list(CHANGEFORM_TEMPLATES.items()))
-def test_changeform_templates(config_value, template, admin_client, custom_jazzmin_settings):
+@pytest.mark.parametrize("config_value", list(ChangeFormTemplate.__members__))
+def test_changeform_templates(config_value, admin_client, custom_jazzmin_settings):
     """
     All changeform config values use the correct templates
     """
@@ -50,7 +50,7 @@ def test_changeform_templates(config_value, template, admin_client, custom_jazzm
     response = admin_client.get(url)
     templates_used = [t.name for t in response.templates]
 
-    assert template in templates_used
+    assert ChangeFormTemplate.get_template(config_value) in templates_used
 
 
 @pytest.mark.django_db
@@ -71,12 +71,12 @@ def test_changeform_template_override(admin_client, custom_jazzmin_settings):
     response = admin_client.get(books_url)
     templates_used = [t.name for t in response.templates]
 
-    assert CHANGEFORM_TEMPLATES["carousel"] in templates_used
+    assert ChangeFormTemplate.CAROUSEL in templates_used
 
     response = admin_client.get(users_url)
     templates_used = [t.name for t in response.templates]
 
-    assert CHANGEFORM_TEMPLATES["vertical_tabs"] in templates_used
+    assert ChangeFormTemplate.VERTICAL_TABS in templates_used
 
 
 @pytest.mark.django_db
@@ -92,7 +92,7 @@ def test_changeform_template_default(admin_client, custom_jazzmin_settings):
     response = admin_client.get(books_url)
     templates_used = [t.name for t in response.templates]
 
-    assert CHANGEFORM_TEMPLATES["horizontal_tabs"] in templates_used
+    assert ChangeFormTemplate.HORIZONTAL_TABS in templates_used
 
 
 @pytest.mark.django_db
@@ -108,7 +108,7 @@ def test_changeform_single(admin_client, monkeypatch):
     response = admin_client.get(books_url)
 
     templates_used = [t.name for t in response.templates]
-    assert CHANGEFORM_TEMPLATES["single"] in templates_used
+    assert ChangeFormTemplate.SINGLE in templates_used
 
 
 @pytest.mark.django_db
