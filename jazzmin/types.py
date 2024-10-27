@@ -156,7 +156,7 @@ class JazzminSettings(BaseModel):
     hide_models: List[Model] = Field(
         default=[], description="Hide these models when generating side menu (e.g auth.user)", examples=["auth.user"]
     )
-    order_with_respect_to: List[App] = Field(default=[], description="List of apps to base side menu ordering off of")
+    order_with_respect_to: List[AppOrModel | str] = Field(default=[], description="List of apps to base side menu ordering off of")
     custom_links: Dict[App | str, list[Link]] = Field(
         default={},
         description="Custom links to append to side menu app groups, keyed on lower case app label or makes a new group if the given app label doesnt exist in installed apps",

@@ -11,6 +11,7 @@ def validate_app_or_model(value: str) -> str:
 
     return validate_model(value)
 
+
 def validate_app(value: str) -> str:
     """
     Validate app name

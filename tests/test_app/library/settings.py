@@ -122,8 +122,6 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "login_logo": "books/img/logo-login.png",
     # Logo to use for login form in dark themes (must be present in static files. Defaults to login_logo)
     "login_logo_dark": "books/img/logo-login-dark-mode.png",
-    # CSS classes that are applied to the logo
-    "site_logo_classes": None,
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
     "site_icon": "books/img/icon.png",
     # Welcome text on the login screen
@@ -133,8 +131,6 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
     "search_model": ["auth.User", "auth.Group"],
-    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
-    "user_avatar": None,
     ############
     # Top Menu #
     ############
@@ -145,7 +141,7 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
         # external url that opens in a new window (Permissions can be added)
         {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
         # model admin to link to (Permissions checked against model)
-        {"model": "auth.User"},
+        {"model": "auth.user"},
         # App with dropdown menu to all its models pages (Permissions checked against models)
         {"app": "books"},
         {"app": "loans"},
@@ -192,13 +188,13 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
-        "auth.Group": "fas fa-users",
-        "admin.LogEntry": "fas fa-file",
-        "books.Author": "fas fa-user",
-        "books.Book": "fas fa-book",
-        "books.Genre": "fas fa-photo-video",
-        "loans.BookLoan": "fas fa-book-open",
-        "loans.Library": "fas fa-book-reader",
+        "auth.group": "fas fa-users",
+        "admin.logentry": "fas fa-file",
+        "books.author": "fas fa-user",
+        "books.book": "fas fa-book",
+        "books.genre": "fas fa-photo-video",
+        "loans.bookloan": "fas fa-book-open",
+        "loans.library": "fas fa-book-reader",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
