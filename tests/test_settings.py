@@ -12,8 +12,14 @@
 
 from django.conf import settings
 
-from jazzmin.types import JazzminSettings
+from jazzmin.types import JazzminSettings, UITweaks
 
 
 def test_jazzmin_settings() -> None:
+    JazzminSettings()
     JazzminSettings(**settings.JAZZMIN_SETTINGS)
+
+
+def test_jazzmin_ui_tweaks() -> None:
+    UITweaks()
+    UITweaks(**settings.JAZZMIN_UI_TWEAKS)

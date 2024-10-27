@@ -31,9 +31,9 @@ def get_ui_tweaks() -> UITweaks:
         tweaks = UITweaks()
 
     # These options dont work well together
-    if tweaks.get("layout_boxed"):
-        tweaks.pop("navbar_fixed", None)
-        tweaks.pop("footer_fixed", None)
+    if tweaks.layout_boxed:
+        tweaks.navbar_fixed = False
+        tweaks.footer_fixed = False
 
     bool_map = {
         "navbar_small_text": "text-sm",
