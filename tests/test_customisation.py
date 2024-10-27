@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 from django.urls import reverse
 
 from jazzmin.templatetags.jazzmin import get_sections
+from jazzmin.types import ChangeFormTemplate
 
-from ..jazzmin.types import ChangeFormTemplate
 from .test_app.library.books.admin import BookAdmin
 from .test_app.library.factories import BookFactory, UserFactory
 

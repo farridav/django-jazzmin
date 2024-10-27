@@ -1,10 +1,25 @@
 from enum import StrEnum
 from functools import cached_property
-from typing import Any, Dict, List, Optional
+from typing import Annotated, Callable, Dict, List, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, BeforeValidator, Field, computed_field
 
 from .utils import get_admin_url, get_model_meta
+from .validators import validate_app, validate_app_or_model, validate_model, validate_static_file
+
+App = Annotated[str, BeforeValidator(validate_app)]
+Model = Annotated[str, BeforeValidator(validate_model)]
+AppOrModel = Annotated[App | Model, BeforeValidator(validate_app_or_model)]
+StaticFile = Annotated[str, BeforeValidator(validate_static_file)]
+
+class Link(BaseModel):
+    name: Optional[str] = None
+    url: str = "#"
+    permissions: List[str] = []
+    new_window: bool = False
+    model: Optional[Model] = None
+    app: Optional[App] = None
+    icon: Optional[str] = None
 
 
 class ChangeFormTemplate(StrEnum):
@@ -63,79 +78,110 @@ class SearchModel(BaseModel):
 
 class JazzminSettings(BaseModel):
     site_title: Optional[str] = Field(
-        default=None, description="Title of the window (Will default to current_admin_site.site_title)"
+        default=None,
+        description="Title of the window (Will default to current_admin_site.site_title)",
+        examples=["My Admin"],
     )
     site_header: Optional[str] = Field(
         default=None,
         description="Title on the login screen (19 chars max) (will default to current_admin_site.site_header)",
+        examples=["My Admin"],
     )
     site_brand: Optional[str] = Field(
-        default=None, description="Title on the brand (19 chars max) (will default to current_admin_site.site_header)"
+        default=None,
+        description="Title on the brand (19 chars max) (will default to current_admin_site.site_header)",
+        le=19,
+        examples=["My Admin"],
     )
     site_logo: str = Field(
         default="vendor/adminlte/img/AdminLTELogo.png",
         description="Relative path to logo for your site, used for brand on top left (must be present in static files)",
+        examples=["vendor/adminlte/img/AdminLTELogo.png"],
     )
-    login_logo: Optional[str] = Field(
+    login_logo: Optional[StaticFile] = Field(
         default=None,
-        description="Relative path to logo for your site, used for login logo (must be present in static files. Defaults to the same as site_logo",
+        description="""
+        Relative path to logo for your site, used for login logo (must be present in static files.
+        Defaults to the same as site_logo
+        """,
+        examples=["vendor/adminlte/img/AdminLTELogo.png"],
     )
-    login_logo_dark: Optional[str] = Field(
+    login_logo_dark: Optional[StaticFile] = Field(
         default=None,
-        description="Logo to use for login form in dark themes (must be present in static files. Defaults to login_logo)",
+        description="""
+        Logo to use for login form in dark themes (must be present in static files. Defaults to login_logo)
+        """,
+        examples=["vendor/adminlte/img/AdminLTELogo.png"],
     )
     site_logo_classes: str = Field(default="img-circle", description="CSS classes that are applied to the logo")
-    site_icon: Optional[str] = Field(
+    site_icon: Optional[StaticFile] = Field(
         default=None,
         description="Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)",
     )
     welcome_sign: str = Field(default="Welcome", description="Welcome text on the login screen")
     copyright: str = Field(default="", description="Copyright on the footer")
-    search_models: List[str] = Field(
+    search_models: List[Model] = Field(
         default=[],
         description="The models to search from the search bar, search bar omitted if excluded",
         examples=["auth.User", "auth.Group"],
     )
-    user_avatar: Optional[str] = Field(
+    user_avatar: Optional[Union[str, Callable[..., str]]] = Field(
         default=None,
-        description="Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user",
+        description="""
+        Field name on user model that contains avatar ImageField/URLField/Charfield
+        or a callable that receives the user and returns the avatar url
+        """,
+        examples=["avatar", "get_avatar_url"],
     )
-    topmenu_links: List[Any] = Field(default=[], description="Links to put along the nav bar")
-    usermenu_links: List[Any] = Field(
+    topmenu_links: List[Link] = Field(default=[], description="Links to put along the nav bar", examples=[[
+        Link(name="Home", url="admin:index", permissions=["auth.view_user"]),
+        Link(name="Support", url="https://github.com/farridav/django-jazzmin/issues", new_window=True),
+        Link(model="auth.user"),
+        Link(app="books"),
+        Link(app="loans"),
+    ]])
+    usermenu_links: List[Link] = Field(
         default=[],
         description="Additional links to include in the user menu on the top right ('app' url type is not allowed)",
+        examples=[[
+            Link(name="Support", url="https://github.com/farridav/django-jazzmin/issues", new_window=True),
+            Link(model="auth.user"),
+        ]]
     )
     show_sidebar: bool = Field(default=True, description="Whether to display the side menu")
     navigation_expanded: bool = Field(default=True, description="Whether to aut expand the menu")
-    hide_apps: List[str] = Field(
+    hide_apps: List[App] = Field(
         default=[], description="Hide these apps when generating side menu e.g (auth)", examples=["auth"]
     )
-    hide_models: List[str] = Field(
+    hide_models: List[Model] = Field(
         default=[], description="Hide these models when generating side menu (e.g auth.user)", examples=["auth.user"]
     )
-    order_with_respect_to: List[str] = Field(default=[], description="List of apps to base side menu ordering off of")
-    custom_links: Dict[str, Any] = Field(
+    order_with_respect_to: List[App] = Field(default=[], description="List of apps to base side menu ordering off of")
+    custom_links: Dict[App | str, list[Link]] = Field(
         default={},
         description="Custom links to append to side menu app groups, keyed on lower case app label or makes a new group if the given app label doesnt exist in installed apps",
     )
 
-    # TODO: ensure apps/models are the correct case too
-    # TODO: Ensure icon model names and classes are lower case
-    icons: Dict[str, str] = Field(
+    icons: Dict[AppOrModel, str] = Field(
         default={"auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users"},
         description="Custom icons for side menu apps/models",
     )
     default_icon_parents: str = Field(
-        default="fas fa-chevron-circle-right", description="Icons that are used when one is not manually specified"
+        default="fas fa-chevron-circle-right", description="""
+        Default icon that is used for app group when one is not manually specified
+        """,
+        examples=["fas fa-chevron-circle-right"],
     )
     default_icon_children: str = Field(
-        default="fas fa-circle", description="Icons that are used when one is not manually specified"
+        default="fas fa-circle", description="""
+        Default icon that is used for child items when one is not manually specified
+        """
     )
     related_modal_active: bool = Field(default=False, description="Activate Bootstrap modal")
-    custom_css: Optional[str] = Field(
+    custom_css: Optional[StaticFile] = Field(
         default=None, description="Relative paths to custom CSS/JS scripts (must be present in static files)"
     )
-    custom_js: Optional[str] = Field(
+    custom_js: Optional[StaticFile] = Field(
         default=None, description="Relative paths to custom CSS/JS scripts (must be present in static files)"
     )
     use_google_fonts_cdn: bool = Field(
@@ -143,14 +189,16 @@ class JazzminSettings(BaseModel):
         description="Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)",
     )
     show_ui_builder: bool = Field(default=False, description="Whether to show the UI customizer on the sidebar")
-    changeform_format: str = Field(
-        default="horizontal_tabs", description="Render out the change view as a single form, or in tabs"
+    changeform_format: ChangeFormTemplate = Field(
+        default=ChangeFormTemplate.horizontal_tabs, description="Render out the change view as a single form, or in tabs"
     )
-    changeform_format_overrides: Dict[str, str] = Field(
-        default={}, description="Override change forms on a per modeladmin basis"
+    changeform_format_overrides: Dict[Model, ChangeFormTemplate] = Field(
+        default={}, description="Override change forms on a per modeladmin basis",
+        examples=[{"auth.user": ChangeFormTemplate.collapsible}]
     )
     language_chooser: bool = Field(default=False, description="Add a language dropdown into the admin")
 
+    @computed_field
     @cached_property
     def search_models_parsed(self) -> List[SearchModel]:
         search_models: List[SearchModel] = []
@@ -168,17 +216,11 @@ class JazzminSettings(BaseModel):
 
         return search_models
 
-        # Default the login logo using the site logo
-
     def get_login_logo(self) -> str:
         return self.login_logo or self.site_logo
 
     def get_login_logo_dark(self) -> str:
         return self.login_logo_dark or self.login_logo or self.site_logo
-
-
-# DEFAULT_SETTINGS = JazzminSettings().dict()
-# DEFAULT_UI_TWEAKS = UITweaks().dict()
 
 
 class ButtonClasses(BaseModel):
