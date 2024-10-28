@@ -26,8 +26,7 @@ def get_ui_tweaks() -> UITweaks:
     tweaks: Union[UITweaks, dict[str, Any], None] = getattr(settings, "JAZZMIN_UI_TWEAKS")
     if isinstance(tweaks, dict):
         tweaks = UITweaks(**tweaks)
-
-    if not tweaks:
+    elif not tweaks:
         tweaks = UITweaks()
 
     # These options dont work well together
