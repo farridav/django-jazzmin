@@ -1,6 +1,6 @@
 from enum import StrEnum
 from functools import cached_property
-from typing import Annotated, Callable, Dict, List, Optional, Union
+from typing import Annotated, Any, Callable, Dict, List, Optional, Union
 
 from pydantic import BaseModel, BeforeValidator, Field, computed_field
 
@@ -13,7 +13,7 @@ AppOrModel = Annotated[App | Model, BeforeValidator(validate_app_or_model)]
 StaticFile = Annotated[str, BeforeValidator(validate_static_file)]
 
 
-class Link(BaseModel):
+class MenuLink(BaseModel):
     name: Optional[str] = None
     url: str = "#"
     permissions: List[str] = []
@@ -35,7 +35,7 @@ class ChangeFormTemplate(StrEnum):
         return f"jazzmin/includes/{choice.name}.html"
 
 
-class DarkThemes(StrEnum):
+class DarkTheme(StrEnum):
     darkly = "darkly"
     cyborg = "cyborg"
     slate = "slate"
@@ -43,7 +43,7 @@ class DarkThemes(StrEnum):
     superhero = "superhero"
 
 
-class Themes(StrEnum):
+class Theme(StrEnum):
     # light themes
     default = "default"
     cerulean = "cerulean"
@@ -73,7 +73,7 @@ class Themes(StrEnum):
         return f"vendor/bootswatch/{choice.name}/bootstrap.min.css"
 
     def is_dark(self) -> bool:
-        return self in DarkThemes.__members__.values()
+        return self in DarkTheme.__members__.values()
 
 
 class SearchModel(BaseModel):
@@ -138,26 +138,26 @@ class JazzminSettings(BaseModel):
         """,
         examples=["avatar", "get_avatar_url"],
     )
-    topmenu_links: List[Link] = Field(
+    topmenu_links: List[MenuLink] = Field(
         default=[],
         description="Links to put along the nav bar",
         examples=[
             [
-                Link(name="Home", url="admin:index", permissions=["auth.view_user"]),
-                Link(name="Support", url="https://github.com/farridav/django-jazzmin/issues", new_window=True),
-                Link(model="auth.user"),
-                Link(app="books"),
-                Link(app="loans"),
+                MenuLink(name="Home", url="admin:index", permissions=["auth.view_user"]),
+                MenuLink(name="Support", url="https://github.com/farridav/django-jazzmin/issues", new_window=True),
+                MenuLink(model="auth.user"),
+                MenuLink(app="books"),
+                MenuLink(app="loans"),
             ]
         ],
     )
-    usermenu_links: List[Link] = Field(
+    usermenu_links: List[MenuLink] = Field(
         default=[],
         description="Additional links to include in the user menu on the top right ('app' url type is not allowed)",
         examples=[
             [
-                Link(name="Support", url="https://github.com/farridav/django-jazzmin/issues", new_window=True),
-                Link(model="auth.user"),
+                MenuLink(name="Support", url="https://github.com/farridav/django-jazzmin/issues", new_window=True),
+                MenuLink(model="auth.user"),
             ]
         ],
     )
@@ -170,11 +170,14 @@ class JazzminSettings(BaseModel):
         default=[], description="Hide these models when generating side menu (e.g auth.user)", examples=["auth.user"]
     )
     order_with_respect_to: List[AppOrModel | str] = Field(
-        default=[], description="List of apps to base side menu ordering off of"
+        default_factory=list, description="List of apps to base side menu ordering off of"
     )
-    custom_links: Dict[App | str, list[Link]] = Field(
-        default={},
-        description="Custom links to append to side menu app groups, keyed on lower case app label or makes a new group if the given app label doesnt exist in installed apps",
+    custom_links: Dict[App | str, list[MenuLink]] = Field(
+        default_factory=dict,
+        description="""
+        Custom links to append to side menu app groups, keyed on lower case app label or makes a new group if
+        the given app label doesnt exist in installed apps
+        """,
     )
 
     icons: Dict[AppOrModel, str] = Field(
@@ -251,11 +254,24 @@ class ButtonClasses(BaseModel):
     success: str = "btn-success"
 
 
+class ElementClasses(BaseModel):
+    theme: Theme = Theme.default
+    dark_mode_theme: Optional[Theme] = None
+    raw: dict[str, Any] = {}
+    sidebar_classes: list[str] = []
+    navbar_classes: list[str] = []
+    body_classes: list[str] = []
+    actions_classes: list[str] = []
+    sidebar_list_classes: list[str] = []
+    brand_classes: list[str] = []
+    footer_classes: list[str] = []
+    button_classes: ButtonClasses = ButtonClasses()
+
+
 class UITweaks(BaseModel):
     """
     Currently available UI tweaks, Use the UI builder to generate this
     """
-
     navbar_small_text: bool = Field(default=False, description="Small text on the top navbar")
     footer_small_text: bool = Field(default=False, description="Small text on the footer")
     body_small_text: bool = Field(default=False, description="Small text everywhere")
@@ -270,8 +286,13 @@ class UITweaks(BaseModel):
     layout_boxed: bool = Field(
         default=False, description="Whether to constrain the page to a box (leaving big margins at the side)"
     )
+    actions_sticky_top: bool = Field(
+        default=False, description="Make the actions bar sticky, keeping it in view as you scroll"
+    )
+
     footer_fixed: bool = Field(default=False, description="Make the footer sticky, keeping it in view all the time")
     sidebar_fixed: bool = Field(default=False, description="Make the sidebar sticky, keeping it in view as you scroll")
+
     sidebar: str = Field(default="sidebar-dark-primary", description="Sidemenu colour")
     sidebar_nav_small_text: bool = Field(default=False, description="Sidemenu small text")
     sidebar_disable_expand: bool = Field(default=False, description="Disable expanding on hover of collapsed sidebar")
@@ -279,30 +300,62 @@ class UITweaks(BaseModel):
     sidebar_nav_compact_style: bool = Field(default=False, description="Use a compact sidebar")
     sidebar_nav_legacy_style: bool = Field(default=False, description="Use the AdminLTE2 style sidebar")
     sidebar_nav_flat_style: bool = Field(default=False, description="Use a flat style sidebar")
-    theme: str = Field(default="default", description="Bootstrap theme to use (default, or from bootswatch)")
-    dark_mode_theme: Optional[str] = Field(
+
+    theme: Theme = Field(default=Theme.default, description="Bootstrap theme to use (default, or from bootswatch)")
+    dark_mode_theme: Optional[Theme] = Field(
         default=None, description="Theme to use instead if the user has opted for dark mode"
     )
     button_classes: ButtonClasses = Field(
         default_factory=ButtonClasses, description="The classes/styles to use with buttons"
     )
 
+    def get_css_classes(self) -> ElementClasses:
+        """
+        Convert the UI tweaks into classes for the template
+        """
+        classes = ElementClasses(
+            theme=self.theme,
+            dark_mode_theme=self.dark_mode_theme,
+            raw=self.model_dump(mode="json"),
+            sidebar_classes=[
+                self.sidebar,
+                "sidebar-no-expand" if self.sidebar_disable_expand else "",
+                "text-sm" if self.sidebar_nav_small_text else "",
+            ],
+            navbar_classes=[
+                self.navbar,
+                "text-sm" if self.navbar_small_text else "",
+                "border-bottom-0" if self.no_navbar_border else "",
+            ],
+            body_classes=[
+                self.accent,
+                f"theme-{self.theme.value}",
+                "dark-mode" if self.theme.is_dark() else "",
+                "text-sm" if self.body_small_text else "",
+                "layout-navbar-fixed" if self.navbar_fixed and not self.layout_boxed else "",
+                "layout-footer-fixed" if self.footer_fixed and not self.layout_boxed else "",
+                "layout-boxed" if self.layout_boxed else "",
+            ],
+            actions_classes=["sticky-top" if self.actions_sticky_top else ""],
+            sidebar_list_classes=[
+                "nav-child-indent" if self.sidebar_nav_child_indent else "",
+                "nav-compact" if self.sidebar_nav_compact_style else "",
+                "nav-legacy" if self.sidebar_nav_legacy_style else "",
+                "nav-flat" if self.sidebar_nav_flat_style else "",
+            ],
+            brand_classes=[
+                "text-sm" if self.brand_small_text else "",
+                self.brand_colour or "",
+            ],
+            button_classes=self.button_classes,
+            footer_classes=[
+                "text-sm" if self.footer_small_text else ""
+            ],
+        )
 
-class Theme(BaseModel):
-    name: Themes
+        # Remove empty strings
+        for key, value in classes.model_dump().items():
+            if isinstance(value, list):
+                setattr(classes, key, [x for x in value if x])
 
-    @computed_field
-    def src(self) -> str:
-        return self.name.value
-
-
-class ElementClasses(BaseModel):
-    theme: Theme
-    sidebar_classes: list[str]
-    navbar_classes: list[str]
-    body_classes: list[str]
-    actions_classes: list[str]
-    sidebar_list_classes: list[str]
-    brand_classes: list[str]
-    footer_classes: list[str]
-    button_classes: ButtonClasses
+        return classes
