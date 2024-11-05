@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Callable, Dict, List, Set, Union
+from typing import TYPE_CHECKING, Any, Callable, List, Set, Union
 from urllib.parse import urlencode
 
 from django.apps import apps
@@ -11,6 +11,9 @@ from django.db.models.options import Options
 from django.utils.translation import gettext
 
 from jazzmin.compat import NoReverseMatch, reverse
+
+if TYPE_CHECKING:
+    from .types import JazzminSettings, MenuLink
 
 logger = logging.getLogger(__name__)
 
@@ -90,6 +93,7 @@ def get_custom_url(url: str, admin_site: str = "admin") -> str:
 
     if "/" in url:
         return url
+
     try:
         url = reverse(url.lower(), current_app=admin_site)
     except NoReverseMatch:
@@ -111,7 +115,7 @@ def get_model_meta(model_str: str) -> Union[None, Options]:
         return None
 
 
-def get_app_admin_urls(app: str, admin_site: str = "admin") -> List[Dict]:
+def get_app_admin_urls(app: str, admin_site: str = "admin") -> list["MenuLink"]:
     """
     For the given app string, get links to all the app models admin views
     """
@@ -128,11 +132,11 @@ def get_app_admin_urls(app: str, admin_site: str = "admin") -> List[Dict]:
             continue
 
         models.append(
-            {
-                "url": url,
-                "model": "{app}.{model}".format(app=model._meta.app_label, model=model._meta.model_name),
-                "name": model._meta.verbose_name_plural.title(),
-            }
+            MenuLink(
+                url=url,
+                model="{app}.{model}".format(app=model._meta.app_label, model=model._meta.model_name),
+                name=model._meta.verbose_name_plural.title(),
+            )
         )
 
     return models
@@ -152,8 +156,12 @@ def get_view_permissions(user: AbstractUser) -> Set[str]:
 
 
 def make_menu(
-    user: AbstractUser, links: List[Dict], options: Dict, allow_appmenus: bool = True, admin_site: str = "admin"
-) -> List[Dict]:
+    user: AbstractUser,
+    links: list["MenuLink"],
+    jazzmin_settings: "JazzminSettings",
+    allow_appmenus: bool = True,
+    admin_site: str = "admin",
+) -> list["MenuLink"]:
     """
     Make a menu from a list of user supplied links
     """
@@ -165,47 +173,47 @@ def make_menu(
     menu = []
     for link in links:
         perm_matches = []
-        for perm in link.get("permissions", []):
+        for perm in link.permissions:
             perm_matches.append(user.has_perm(perm))
 
         if not all(perm_matches):
             continue
 
         # Url links
-        if "url" in link:
+        if link.url:
             menu.append(
                 {
-                    "name": link.get("name", "unspecified"),
-                    "url": get_custom_url(link["url"], admin_site=admin_site),
+                    "name": link.name,
+                    "url": get_custom_url(link.url, admin_site=admin_site),
                     "children": None,
-                    "new_window": link.get("new_window", False),
-                    "icon": link.get("icon", options["default_icon_children"]),
+                    "new_window": link.new_window,
+                    "icon": link.icon or jazzmin_settings.default_icon_children,
                 }
             )
 
         # Model links
-        elif "model" in link:
-            if link["model"].lower() not in model_permissions:
+        elif link.model:
+            if link.model.lower() not in model_permissions:
                 continue
 
-            _meta = get_model_meta(link["model"])
+            _meta = get_model_meta(link.model)
 
-            name = _meta.verbose_name_plural.title() if _meta else link["model"]
+            name = _meta.verbose_name_plural.title() if _meta else link.model
             menu.append(
                 {
                     "name": name,
-                    "url": get_admin_url(link["model"], admin_site=admin_site),
+                    "url": get_admin_url(link.model, admin_site=admin_site),
                     "children": [],
-                    "new_window": link.get("new_window", False),
-                    "icon": options["icons"].get(link["model"], options["default_icon_children"]),
+                    "new_window": link.new_window,
+                    "icon": jazzmin_settings.icons.get(link.model, jazzmin_settings.default_icon_children),
                 }
             )
 
         # App links
-        elif "app" in link and allow_appmenus:
+        elif link.app and allow_appmenus:
             children = [
                 {"name": child.get("verbose_name", child["name"]), "url": child["url"], "children": None}
-                for child in get_app_admin_urls(link["app"], admin_site=admin_site)
+                for child in get_app_admin_urls(link.app, admin_site=admin_site)
                 if child["model"] in model_permissions
             ]
             if len(children) == 0:
@@ -213,10 +221,10 @@ def make_menu(
 
             menu.append(
                 {
-                    "name": getattr(apps.app_configs[link["app"]], "verbose_name", link["app"]).title(),
+                    "name": getattr(apps.app_configs[link.app], "verbose_name", link.app).title(),
                     "url": "#",
                     "children": children,
-                    "icon": options["icons"].get(link["app"], options["default_icon_children"]),
+                    "icon": jazzmin_settings["icons"].get(link.app, jazzmin_settings["default_icon_children"]),
                 }
             )
 

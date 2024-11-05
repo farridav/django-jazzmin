@@ -12,7 +12,7 @@
 
 from django.conf import settings
 
-from jazzmin.types import JazzminSettings, UITweaks
+from jazzmin.types import JazzminSettings, MenuLink, UITweaks
 
 
 def test_jazzmin_settings() -> None:
@@ -23,3 +23,7 @@ def test_jazzmin_settings() -> None:
 def test_jazzmin_ui_tweaks() -> None:
     UITweaks()
     UITweaks(**settings.JAZZMIN_UI_TWEAKS)
+
+
+def test_make_menu_link() -> None:
+    MenuLink()

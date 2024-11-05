@@ -1,26 +1,86 @@
+from copy import copy
 from enum import StrEnum
 from functools import cached_property
-from typing import Annotated, Any, Callable, Dict, List, Optional, Union
+from typing import (Annotated, Any, Callable, Dict, List, Literal, Optional,
+                    Union)
 
-from pydantic import BaseModel, BeforeValidator, Field, computed_field
+from django.contrib.auth.models import AbstractUser
+from pydantic import (BaseModel, BeforeValidator, Field, HttpUrl,
+                      computed_field, field_validator)
 
-from .utils import get_admin_url, get_model_meta
-from .validators import validate_app, validate_app_or_model, validate_model, validate_static_file
+from .utils import (get_admin_url, get_app_admin_urls, get_custom_url,
+                    get_installed_apps, get_model_meta, make_menu,
+                    order_with_respect_to)
+from .validators import (validate_app, validate_app_or_model, validate_link,
+                         validate_model, validate_static_file)
 
 App = Annotated[str, BeforeValidator(validate_app)]
 Model = Annotated[str, BeforeValidator(validate_model)]
 AppOrModel = Annotated[App | Model, BeforeValidator(validate_app_or_model)]
 StaticFile = Annotated[str, BeforeValidator(validate_static_file)]
+Link = Annotated[HttpUrl | Literal["#"] | App | Model, BeforeValidator(validate_link)]
+
+
+class MenuItem(BaseModel):
+    name: str
+    link: Link = "#"
+    permissions: list[str] = []
+    new_window: bool = False
+    icon: str | None = None
+    children: list["MenuItem"] = []
 
 
 class MenuLink(BaseModel):
-    name: Optional[str] = None
-    url: str = "#"
+    name: str = "Unspecified"
+    url: HttpUrl | Literal["#"] = "#"
     permissions: List[str] = []
+    children: list["MenuLink"] = []
     new_window: bool = False
     model: Optional[Model] = None
     app: Optional[App] = None
     icon: Optional[str] = None
+
+    @field_validator("*")
+    @classmethod
+    def validate(cls, data: dict[str, Any]) -> "MenuLink":
+        model, app, url = data["model"], data["app"], data["url"]
+
+        if [bool(url), bool(model), bool(app)].count(True) > 1:
+            raise ValueError("only one of url, model or app is allowed")
+
+        if url:
+            data.update(
+                {
+                    "url": get_custom_url(url, admin_site=admin_site),
+                    "children": None,
+                    "icon": data["icon"] or jazzmin_settings.default_icon_children,
+                }
+            )
+
+        elif model:
+            _meta = get_model_meta(data["model"])
+            name = _meta.verbose_name_plural.title() if _meta else model
+            url = get_admin_url(model, admin_site=admin_site)
+            data.update(
+                {
+                    "name": name,
+                    "url": url,
+                    "children": [],
+                    "icon": jazzmin_settings.icons.get(model, jazzmin_settings.default_icon_children),
+                }
+            )
+
+        elif app:
+            data.update(
+                {
+                    "name": getattr(apps.app_configs[app], "verbose_name", app).title(),
+                    "url": "#",
+                    "children": get_app_admin_urls(app, admin_site=admin_site),
+                    "icon": jazzmin_settings.icons.get(app, jazzmin_settings.default_icon_children),
+                }
+            )
+
+        return url
 
 
 class ChangeFormTemplate(StrEnum):
@@ -220,8 +280,8 @@ class JazzminSettings(BaseModel):
     )
     language_chooser: bool = Field(default=False, description="Add a language dropdown into the admin")
 
-    @computed_field
     @cached_property
+    @computed_field
     def search_models_parsed(self) -> List[SearchModel]:
         search_models: List[SearchModel] = []
 
@@ -243,6 +303,86 @@ class JazzminSettings(BaseModel):
 
     def get_login_logo_dark(self) -> str:
         return self.login_logo_dark or self.login_logo or self.site_logo
+
+    def get_top_menu(self, user: AbstractUser, admin_site: str = "admin") -> list[MenuLink]:
+        return []
+
+    def get_user_menu(self, user: AbstractUser, admin_site: str = "admin") -> list[MenuLink]:
+        return []
+
+    def get_dashboard_menu(self, user: AbstractUser, admin_site: str = "admin") -> list[MenuLink]:
+        """
+        using context.app_list. available_apps
+        """
+        return []
+
+    def get_side_menu(self, user: AbstractUser, admin_site: str = "admin") -> list[MenuLink]:
+        """
+        Uses context.available_apps
+        """
+        ordering = self.order_with_respect_to
+        ordering = [x.lower() for x in ordering]
+
+        installed_apps = get_installed_apps()
+        available_apps: list[dict[str, Any]] = copy.deepcopy(context.get(using, []))
+
+        menu = []
+
+        # Add any arbitrary groups that are not in available_apps
+        for app_label in self.custom_links:
+            if app_label.lower() not in installed_apps:
+                available_apps.append(
+                    {"name": app_label, "app_label": app_label, "app_url": "#", "has_module_perms": True, "models": []}
+                )
+
+        custom_links = {
+            app_name: make_menu(user, links, self, allow_appmenus=False)
+            for app_name, links in self.custom_links.items()
+        }
+
+        for app in available_apps:
+            app_label = app["app_label"]
+            app_custom_links = custom_links.get(app_label, [])
+            app["icon"] = self.icons.get(app_label, self.default_icon_parents)
+            if app_label in self.hide_apps:
+                continue
+
+            menu_items = []
+            for model in app.get("models", []):
+                model_str = f"{app_label}.{model['object_name']}".lower()
+                if model_str in self.hide_models:
+                    continue
+
+                model["url"] = model["admin_url"]
+                model["model_str"] = model_str
+                model["icon"] = self.icons.get(model_str, self.default_icon_children)
+                menu_items.append(model)
+
+            menu_items.extend(app_custom_links)
+
+            custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
+            model_ordering = list(
+                filter(
+                    lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names,
+                    ordering,
+                )
+            )
+
+            if len(menu_items):
+                if model_ordering:
+                    menu_items = order_with_respect_to(
+                        menu_items,
+                        model_ordering,
+                        getter=lambda x: x.get("model_str", x.get("name", "").lower()),
+                    )
+                app["models"] = menu_items
+                menu.append(app)
+
+        if ordering:
+            apps_order = list(filter(lambda x: "." not in x, ordering))
+            menu = order_with_respect_to(menu, apps_order, getter=lambda x: x["app_label"].lower())
+
+        return menu
 
 
 class ButtonClasses(BaseModel):
@@ -272,6 +412,7 @@ class UITweaks(BaseModel):
     """
     Currently available UI tweaks, Use the UI builder to generate this
     """
+
     navbar_small_text: bool = Field(default=False, description="Small text on the top navbar")
     footer_small_text: bool = Field(default=False, description="Small text on the footer")
     body_small_text: bool = Field(default=False, description="Small text everywhere")
@@ -348,9 +489,7 @@ class UITweaks(BaseModel):
                 self.brand_colour or "",
             ],
             button_classes=self.button_classes,
-            footer_classes=[
-                "text-sm" if self.footer_small_text else ""
-            ],
+            footer_classes=["text-sm" if self.footer_small_text else ""],
         )
 
         # Remove empty strings

@@ -21,7 +21,6 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -36,7 +35,7 @@ include = ["jazzmin"]
 exclude = ["tests", "docs"]
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = ">=3.9"
 django = ">=4.2"
 pydantic = "^2.9.2"
 
@@ -54,7 +53,7 @@ beautifulsoup4 = "^4.10.0"      # Structure HTML documents into navigable things
 mkdocs = "^1.2.3"               # Tool for serving rendered markdown docs
 polib = "^1.1.1"                # Tool for dealing with translation files
 factory-boy = "^3.2.1"          # Factory generation
-mypy = "^0.931"                 # Type checking
+mypy = "^1.13.0"                 # Type checking
 click = "^8.0.3"                # Framework for building cli's
 ipdb = "^0.13.9"                # ipython breakpoints
 ruff = "*"                      # linter and code formatter
@@ -73,7 +72,7 @@ DJANGO_SETTINGS_MODULE = "tests.test_app.library.settings"
 FAIL_INVALID_TEMPLATE_VARS = 1
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 120
 extend-exclude = ["migrations"]
 
@@ -105,7 +104,7 @@ show_missing = true
 legacy_tox_ini = """
 [tox]
 envlist =
-    django4-{python3.8,python3.9,python3.10,python3.11,python3.12},
+    django4-{python3.9,python3.10,python3.11,python3.12},
     django5-{python3.10,python3.11,python3.12},
     # run one of the tests again but with coverage
     coveralls-django4-python3.12,
@@ -113,7 +112,6 @@ skipsdist = True
 
 [gh-actions]
 python =
-    3.8: python3.8
     3.9: python3.9
     3.10: python3.10
     3.11: python3.11

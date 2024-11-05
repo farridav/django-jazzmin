@@ -28,7 +28,7 @@ from django.utils.translation import gettext
 
 from .. import version
 from ..settings import get_settings, get_ui_tweaks
-from ..types import ChangeFormTemplate
+from ..types import ChangeFormTemplate, JazzminSettings, UITweaks
 from ..utils import (
     get_admin_url,
     get_filter_id,
@@ -54,8 +54,8 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     if not user:
         return []
 
-    options = get_settings()
-    ordering = options.get("order_with_respect_to", [])
+    jazzmin_settings = get_settings()
+    ordering = jazzmin_settings.order_with_respect_to
     ordering = [x.lower() for x in ordering]
 
     installed_apps = get_installed_apps()
@@ -64,33 +64,33 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     menu = []
 
     # Add any arbitrary groups that are not in available_apps
-    for app_label in options.get("custom_links", {}):
+    for app_label in jazzmin_settings.custom_links:
         if app_label.lower() not in installed_apps:
             available_apps.append(
                 {"name": app_label, "app_label": app_label, "app_url": "#", "has_module_perms": True, "models": []}
             )
 
     custom_links = {
-        app_name: make_menu(user, links, options, allow_appmenus=False)
-        for app_name, links in options.get("custom_links", {}).items()
+        app_name: make_menu(user, links, jazzmin_settings, allow_appmenus=False)
+        for app_name, links in jazzmin_settings.custom_links.items()
     }
 
     for app in available_apps:
         app_label = app["app_label"]
         app_custom_links = custom_links.get(app_label, [])
-        app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
-        if app_label in options["hide_apps"]:
+        app["icon"] = jazzmin_settings.icons.get(app_label, jazzmin_settings.default_icon_parents)
+        if app_label in jazzmin_settings.hide_apps:
             continue
 
         menu_items = []
         for model in app.get("models", []):
-            model_str = "{app_label}.{model}".format(app_label=app_label, model=model["object_name"]).lower()
-            if model_str in options.get("hide_models", []):
+            model_str = f"{app_label}.{model['object_name']}".lower()
+            if model_str in jazzmin_settings.hide_models:
                 continue
 
             model["url"] = model["admin_url"]
             model["model_str"] = model_str
-            model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
+            model["icon"] = jazzmin_settings.icons.get(model_str, jazzmin_settings.default_icon_children)
             menu_items.append(model)
 
         menu_items.extend(app_custom_links)
@@ -145,27 +145,27 @@ def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
 
 
 @register.simple_tag
-def get_jazzmin_settings(request: WSGIRequest) -> Dict:
+def get_jazzmin_settings(request: WSGIRequest) -> JazzminSettings:
     """
     Get Jazzmin settings, update any defaults from the request, and return
     """
     settings = get_settings()
 
     admin_site = {x.name: x for x in all_sites}.get("admin", {})
-    if not settings["site_title"]:
-        settings["site_title"] = getattr(admin_site, "site_title", None)
+    if not settings.site_title:
+        settings.site_title = getattr(admin_site, "site_title", None)
 
-    if not settings["site_header"]:
-        settings["site_header"] = getattr(admin_site, "site_header", None)
+    if not settings.site_header:
+        settings.site_header = getattr(admin_site, "site_header", None)
 
-    if not settings["site_brand"]:
-        settings["site_brand"] = getattr(admin_site, "site_header", None)
+    if not settings.site_brand:
+        settings.site_brand = getattr(admin_site, "site_header", None)
 
     return settings
 
 
 @register.simple_tag
-def get_jazzmin_ui_tweaks() -> Dict:
+def get_jazzmin_ui_tweaks() -> UITweaks:
     """
     Return Jazzmin ui tweaks
     """

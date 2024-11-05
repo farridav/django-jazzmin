@@ -3,9 +3,7 @@ from typing import Any, Union
 
 from django.conf import settings
 
-from jazzmin.types import JazzminSettings
-
-from .types import UITweaks
+from .types import JazzminSettings, UITweaks
 
 logger = logging.getLogger(__name__)
 
@@ -14,8 +12,7 @@ def get_settings() -> JazzminSettings:
     jazzmin_settings: Union[JazzminSettings, dict[str, Any], None] = getattr(settings, "JAZZMIN_SETTINGS")
     if isinstance(jazzmin_settings, dict):
         jazzmin_settings = JazzminSettings(**jazzmin_settings)
-
-    if not jazzmin_settings:
+    elif not jazzmin_settings:
         jazzmin_settings = JazzminSettings()
 
     return jazzmin_settings

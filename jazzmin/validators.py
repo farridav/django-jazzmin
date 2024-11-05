@@ -1,5 +1,6 @@
 from django.apps import apps
 from django.contrib.staticfiles import finders
+from django.urls import NoReverseMatch, reverse
 
 
 def validate_app_or_model(value: str) -> str:
@@ -46,4 +47,23 @@ def validate_static_file(value: str) -> str:
     """
     if not finders.find(value):
         raise ValueError(f"Static file '{value}' not found")
+    return value
+
+
+def validate_link(value: str) -> str:
+    """
+    Validate a link
+    """
+    value = value.lower().strip()
+
+    if ":" in value:
+        try:
+            value = reverse(value, current_app=admin_site)
+        except NoReverseMatch:
+            logger.warning(f"Couldnt reverse {value}")
+            value = "#" + value
+
+    if not value:
+        raise ValueError("Link is empty")
+
     return value
