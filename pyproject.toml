@@ -18,6 +18,7 @@ classifiers = [
     "Framework :: Django",
     "Framework :: Django :: 4.2",
     "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
@@ -26,6 +27,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     "Topic :: Internet :: WWW/HTTP :: WSGI",
@@ -104,10 +106,11 @@ show_missing = true
 legacy_tox_ini = """
 [tox]
 envlist =
-    django4-{python3.8,python3.9,python3.10,python3.11,python3.12},
-    django5-{python3.10,python3.11,python3.12},
+    django4.2-{python3.8,python3.9,python3.10,python3.11,python3.12},
+    django5.0-{python3.10,python3.11,python3.12},
+    django5.1-{python3.10,python3.11,python3.12,python3.13},
     # run one of the tests again but with coverage
-    coveralls-django4-python3.12,
+    coveralls-django4.2-python3.12,
 skipsdist = True
 
 [gh-actions]
@@ -117,8 +120,16 @@ python =
     3.10: python3.10
     3.11: python3.11
     3.12: python3.12
+    3.13: python3.13
 
 [testenv]
+basepython =
+    python3.8: python3.8
+    python3.9: python3.9
+    python3.10: python3.10
+    python3.11: python3.11
+    python3.12: python3.12
+    python3.13: python3.13
 setenv =
     PYTHONPATH = {toxinidir}
 commands =
@@ -135,10 +146,11 @@ deps =
     ruff
     beautifulsoup4
     factory-boy
-    django4: Django<5
-    django5: Django<6
+    django4.2: Django>=4.2,<5.0
+    django5.0: Django>=5.0,<5.1
+    django5.1: Django>=5.1,<5.2
 
-[testenv:coveralls-django4-python3.12]
+[testenv:coveralls-django4.2-python3.12]
 passenv = COVERALLS_REPO_TOKEN
 commands =
     mypy jazzmin --ignore-missing-imports
