@@ -1,6 +1,7 @@
 import pytest
 from bs4 import BeautifulSoup
 from django.urls import reverse
+
 from jazzmin.settings import CHANGEFORM_TEMPLATES
 from jazzmin.templatetags.jazzmin import get_sections
 
@@ -23,7 +24,21 @@ def test_update_site_logo(admin_client, custom_jazzmin_settings):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("config_value,template", [(k, v) for k, v in CHANGEFORM_TEMPLATES.items()])
+def test_update_login_logo(client, custom_jazzmin_settings):
+    """
+    We can add a login logo, and it renders out
+    """
+    url = reverse("admin:login")
+
+    custom_jazzmin_settings["login_logo"] = "books/img/logo-login.png"
+    response = client.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    assert soup.find("div", class_="login-logo").find("img")["src"] == "/static/books/img/logo-login.png"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("config_value,template", list(CHANGEFORM_TEMPLATES.items()))
 def test_changeform_templates(config_value, template, admin_client, custom_jazzmin_settings):
     """
     All changeform config values use the correct templates

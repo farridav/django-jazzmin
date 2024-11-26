@@ -1,6 +1,8 @@
 import re
+
 import django
 import pytest
+
 from jazzmin.compat import reverse
 
 from .test_app.library.books.models import Book
@@ -40,11 +42,14 @@ def test_logout(admin_client):
     """
     url = reverse("admin:logout")
 
-    response = admin_client.get(url)
+    response = admin_client.post(url)
     templates_used = [t.name for t in response.templates]
 
     assert response.status_code == 200
-    assert templates_used == ["registration/logged_out.html"]
+    assert templates_used == [
+        "registration/logged_out.html",
+        "registration/base.html",
+    ]
 
 
 @pytest.mark.django_db
@@ -135,10 +140,9 @@ def test_password_change(admin_client):
         "django/forms/widgets/input.html",
         "django/forms/widgets/attrs.html",
         "jazzmin/includes/ui_builder_panel.html",
+        "django/forms/errors/list/default.html",
+        "django/forms/errors/list/ul.html",
     }
-
-    if django.VERSION[0] == 4:
-        expected_templates_used.update({"django/forms/errors/list/default.html", "django/forms/errors/list/ul.html"})
 
     assert response.status_code == 200
     assert set(templates_used) == expected_templates_used
@@ -204,10 +208,10 @@ def test_detail(admin_client):
         "admin/widgets/foreign_key_raw_id.html": 1,
         "admin/widgets/related_widget_wrapper.html": 4,
         "admin/widgets/split_datetime.html": 2,
-        "django/forms/widgets/attrs.html": 47,
+        "django/forms/widgets/attrs.html": 47 if django.VERSION < (5, 0, 0) else 49,
         "django/forms/widgets/date.html": 5,
-        "django/forms/widgets/hidden.html": 6,
-        "django/forms/widgets/input.html": 19,
+        "django/forms/widgets/hidden.html": 6 if django.VERSION < (5, 0, 0) else 8,
+        "django/forms/widgets/input.html": 19 if django.VERSION < (5, 0, 0) else 21,
         "django/forms/widgets/number.html": 1,
         "django/forms/widgets/select.html": 6,
         "django/forms/widgets/select_option.html": 21,
@@ -216,17 +220,11 @@ def test_detail(admin_client):
         "django/forms/widgets/time.html": 2,
         "jazzmin/includes/horizontal_tabs.html": 1,
         "jazzmin/includes/ui_builder_panel.html": 1,
+        "django/forms/div.html": 1,
+        "django/forms/errors/list/default.html": 2,
+        "admin/widgets/date.html": 3,
+        "django/forms/errors/list/ul.html": 56,
     }
-
-    if django.VERSION[0] == 4:
-        expected_render_counts.update(
-            {
-                "django/forms/default.html": 1,
-                "django/forms/errors/list/default.html": 1,
-                "django/forms/errors/list/ul.html": 55,
-                "django/forms/table.html": 1,
-            }
-        )
 
     # The number of times each template was rendered
     assert render_counts == expected_render_counts
@@ -255,17 +253,11 @@ def test_detail(admin_client):
         "django/forms/widgets/time.html",
         "jazzmin/includes/horizontal_tabs.html",
         "jazzmin/includes/ui_builder_panel.html",
+        "django/forms/div.html",
+        "django/forms/errors/list/default.html",
+        "admin/widgets/date.html",
+        "django/forms/errors/list/ul.html",
     }
-
-    if django.VERSION[0] == 4:
-        expected_templates_used.update(
-            {
-                "django/forms/default.html",
-                "django/forms/errors/list/default.html",
-                "django/forms/errors/list/ul.html",
-                "django/forms/table.html",
-            }
-        )
 
     # The templates that were used
     assert set(templates_used) == expected_templates_used
@@ -306,17 +298,10 @@ def test_list(admin_client):
         "django/forms/widgets/select_option.html": 4,
         "django/forms/widgets/text.html": 5,
         "jazzmin/includes/ui_builder_panel.html": 1,
+        "django/forms/div.html": 1,
+        "django/forms/errors/list/default.html": 6,
+        "django/forms/errors/list/ul.html": 6,
     }
-
-    if django.VERSION[0] == 4:
-        expected_render_counts.update(
-            {
-                "django/forms/default.html": 1,
-                "django/forms/errors/list/default.html": 5,
-                "django/forms/errors/list/ul.html": 5,
-                "django/forms/table.html": 1,
-            }
-        )
 
     # The number of times each template was rendered
     assert render_counts == expected_render_counts
@@ -339,17 +324,10 @@ def test_list(admin_client):
         "django/forms/widgets/select_option.html",
         "django/forms/widgets/text.html",
         "jazzmin/includes/ui_builder_panel.html",
+        "django/forms/div.html",
+        "django/forms/errors/list/default.html",
+        "django/forms/errors/list/ul.html",
     }
-
-    if django.VERSION[0] == 4:
-        expected_templates.update(
-            {
-                "django/forms/default.html",
-                "django/forms/errors/list/default.html",
-                "django/forms/errors/list/ul.html",
-                "django/forms/table.html",
-            }
-        )
 
     # The templates that were used
     assert set(templates_used) == expected_templates

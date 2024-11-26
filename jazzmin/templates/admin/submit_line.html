@@ -2,48 +2,41 @@
 {% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 {% block submit-row %}
-<div class="card card-primary card-outline">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="fas fa-edit"></i>
-            {% trans 'Actions' %}
-        </h3>
-    </div>
-    <div class="card-body">
-        {% if show_save %}
-            <div class="form-group">
-                <input type="submit" value="{% trans 'Save' %}" class="btn {{ jazzmin_ui.button_classes.success }} form-control" name="_save">
-            </div>
-        {% endif %}
-        {% if show_delete_link and original %}
-            <div class="form-group">
-                {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
-                <a href="{% add_preserved_filters delete_url %}" class="btn {{ jazzmin_ui.button_classes.danger }} form-control">{% trans "Delete" %}</a>
-            </div>
-        {% endif %}
-        {% if show_save_as_new %}
-            <div class="form-group">
-                <input type="submit" class="btn {{ jazzmin_ui.button_classes.info }} form-control" value="{% trans 'Save as new' %}" name="_saveasnew">
-            </div>
-        {% endif %}
-        {% if show_save_and_add_another %}
-            <div class="form-group">
-                <input type="submit" class="btn {{ jazzmin_ui.button_classes.info }} form-control" value="{% trans 'Save and add another' %}" name="_addanother">
-            </div>
-        {% endif %}
-        {% if show_save_and_continue %}
-            <div class="form-group">
-                <input type="submit" class="btn {{ jazzmin_ui.button_classes.info }} form-control" value="{% if can_change %}{% trans 'Save and continue editing' %}{% else %}{% trans 'Save and view' %}{% endif %}" name="_continue">
-            </div>
-        {% endif %}
-        {% if show_close %}
-            <div class="form-group">
-                <a href="{% url opts|admin_urlname:'changelist' %}" class="btn {{ jazzmin_ui.button_classes.danger }} form-control">{% trans 'Close' %}</a>
-            </div>
-        {% endif %}
+<div>
+    {% if show_save %}
+        <div class="form-group">
+            <input type="submit" value="{% trans 'Save' %}" class="btn {{ jazzmin_ui.button_classes.success }} form-control" name="_save">
+        </div>
+    {% endif %}
+    {% if show_delete_link and original %}
+        <div class="form-group">
+            {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+            <a href="{% add_preserved_filters delete_url %}" class="btn {{ jazzmin_ui.button_classes.danger }} form-control">{% trans "Delete" %}</a>
+        </div>
+    {% endif %}
+    {% if show_save_as_new %}
+        <div class="form-group">
+            <input type="submit" class="btn {{ jazzmin_ui.button_classes.info }} form-control" value="{% trans 'Save as new' %}" name="_saveasnew">
+        </div>
+    {% endif %}
+    {% if show_save_and_add_another %}
+        <div class="form-group">
+            <input type="submit" class="btn {{ jazzmin_ui.button_classes.info }} form-control" value="{% trans 'Save and add another' %}" name="_addanother">
+        </div>
+    {% endif %}
+    {% if show_save_and_continue %}
+        <div class="form-group">
+            <input type="submit" class="btn {{ jazzmin_ui.button_classes.info }} form-control" value="{% if can_change %}{% trans 'Save and continue editing' %}{% else %}{% trans 'Save and view' %}{% endif %}" name="_continue">
+        </div>
+    {% endif %}
+    {% if show_close %}
+        <div class="form-group">
+            <a href="{% url opts|admin_urlname:'changelist' %}" class="btn {{ jazzmin_ui.button_classes.danger }} form-control">{% trans 'Close' %}</a>
+        </div>
+    {% endif %}
 
-        {% block extra-actions %}{% endblock %}
-    </div>
+    {% block extra-actions %}{% endblock %}
+
 </div>
 {% endblock %}
 

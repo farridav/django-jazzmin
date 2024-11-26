@@ -48,8 +48,6 @@
         $main_li_parent.addClass('menu-is-opening menu-open');
     };
 
-
-
     $(document).ready(function () {
         // Set active status on links
         setActiveLinks()

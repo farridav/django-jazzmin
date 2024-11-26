@@ -1,19 +1,20 @@
-from unittest.mock import patch, MagicMock, Mock
+from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 from django.db.models.functions import Upper
 from django.urls import reverse
 
 from jazzmin.utils import (
-    order_with_respect_to,
     get_admin_url,
+    get_app_admin_urls,
     get_custom_url,
     get_model_meta,
-    get_app_admin_urls,
     get_view_permissions,
+    order_with_respect_to,
 )
-from .test_app.library.factories import BookFactory, UserFactory
+
 from .test_app.library.books.models import Book
+from .test_app.library.factories import BookFactory, UserFactory
 
 
 def test_order_with_respect_to():

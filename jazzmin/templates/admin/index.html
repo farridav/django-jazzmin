@@ -7,8 +7,8 @@
 {% block content_title %} {% trans 'Dashboard' %} {% endblock %}
 
 {% block breadcrumbs %}
-    <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}"><i class="fa fa-tachometer-alt"></i> {% trans 'Home' %}</a></li>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
         <li class="breadcrumb-item">{% trans 'Dashboard' %}</li>
     </ol>
 {% endblock %}
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 {% for app in dashboard_list %}
-                    <div class="card card-primary card-outline">
+                    <div class="card">
                         <div class="card-header">
                             <h5 class="m-0">{{ app.name }}</h5>
                         </div>
@@ -39,13 +39,13 @@
                                         <td>
                                             <div class="btn-group float-right">
                                                 {% if model.add_url %}
-                                                    <a href="{{ model.add_url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.success }} btn-flat addlink">{% trans 'Add' %}</a>
+                                                    <a href="{{ model.add_url }}" class="btn btn-xs {{ jazzmin_ui.button_classes.success }} addlink">{% trans 'Add' %}</a>
                                                 {% endif %}
                                                 {% if model.url %}
                                                     {% if model.view_only %}
-                                                        <a href="{{ model.url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.info }} btn-flat viewlink">{% trans 'View' %}</a>
+                                                        <a href="{{ model.url }}" class="btn btn-xs {{ jazzmin_ui.button_classes.info }} viewlink">{% trans 'View' %}</a>
                                                     {% else %}
-                                                        <a href="{{ model.url }}" class="btn btn-sm {{ jazzmin_ui.button_classes.info }} btn-flat changelink">{% if model.custom %}{% trans 'Go' %}{% else %}{% trans 'Change' %}{% endif %}</a>
+                                                        <a href="{{ model.url }}" class="btn btn-xs {{ jazzmin_ui.button_classes.info }} changelink">{% if model.custom %}{% trans 'Go' %}{% else %}{% trans 'Change' %}{% endif %}</a>
                                                     {% endif %}
                                                 {% endif %}
                                             </div>
@@ -70,7 +70,7 @@
     <div class="col-lg-3 col-12">
         <div id="content-related">
             <div class="module" id="recent-actions-module">
-                <h3>{% trans 'Recent actions' %}</h3>
+                <h4 class="mb-3">{% trans 'Recent actions' %}</h4>
                 {% load log %}
                 {% get_admin_log 6 as admin_log for_user user %}
                 {% if not admin_log %}
@@ -80,11 +80,11 @@
                         {% for entry in admin_log %}
                             <div>
                                 {% if entry.is_change %}
-                                    <i class="fas fa-edit bg-blue"></i>
+                                    <i class="fas fa-edit bg-gray text-xs"></i>
                                 {% elif entry.is_deletion %}
-                                    <i class="fas fa-trash bg-danger"></i>
+                                    <i class="fas fa-trash bg-danger text-xs"></i>
                                 {% elif entry.is_addition %}
-                                    <i class="fas fa-plus-circle bg-success"></i>
+                                    <i class="fas fa-plus-circle bg-success text-xs"></i>
                                 {% endif %}
 
                                 <div class="timeline-item">

@@ -40,7 +40,7 @@ def get_admin_url(instance: Any, admin_site: str = "admin", from_app: bool = Fal
     url = "#"
 
     try:
-        if type(instance) == str:
+        if isinstance(instance, str):
             app_label, model_name = instance.split(".")
             model_name = model_name.lower()
             url = reverse(
@@ -164,7 +164,11 @@ def make_menu(
 
     menu = []
     for link in links:
-        if not all([user.has_perm(perm) for perm in link.get("permissions", [])]):
+        perm_matches = []
+        for perm in link.get("permissions", []):
+            perm_matches.append(user.has_perm(perm))
+
+        if not all(perm_matches):
             continue
 
         # Url links
@@ -234,7 +238,6 @@ def attr(**kwargs) -> Callable:
 
     return decorator
 
-
 def regroup_apps(available_apps: List[Dict], grouping: Dict[str, List[str]]) -> List[Dict]:
     # Make a list of all apps, and all models, keyed on app name or model name
     all_models, all_apps = {}, {}
@@ -262,3 +265,7 @@ def regroup_apps(available_apps: List[Dict], grouping: Dict[str, List[str]]) -> 
         new_available_apps.append(app)
 
     return new_available_apps
+
+def get_installed_apps() -> List[str]:
+    return [app_config.label for app_config in apps.get_app_configs()]
+

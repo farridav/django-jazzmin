@@ -1,6 +1,6 @@
 {% load filer_admin_tags i18n static jazzmin %}
 
-<div class="card card-primary card-outline">
+<div class="card">
     <div class="card-header">
         <h3 class="card-title">
             <span class="icon fa fa-file{% if original.file_type == 'Image' %}-image-o{% endif %}"></span>
@@ -41,7 +41,7 @@
                    <li><b>{% trans "Owner" %}</b>: <span class="icon fa fa-user"></span> {{ original.owner }}</li>
                 {% endif %}
             </ul>
-        {% endif %}        
+        {% endif %}
         <div class="text-center">
             <a href="{{ original.url }}" target="_blank" class="btn {{ jazzmin_ui.button_classes.info }} form-control" download="{{ original.original_filename }}">
                 {% if file %}

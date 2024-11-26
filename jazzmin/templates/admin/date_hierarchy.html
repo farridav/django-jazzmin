@@ -2,7 +2,8 @@
 {% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 {% if show %}
-    <div class="btn-group date-hierarchy text-sm mt-2">
+<div class="col-12 pb-4" id="change-list-date-hierarchy">
+    <div class="btn-group date-hierarchy text-sm">
         {% block date-hierarchy-toplinks %}
             {% block date-hierarchy-back %}
                 {% if back %}
@@ -18,5 +19,5 @@
             {% endblock %}
         {% endblock %}
     </div>
-    <hr class="clear"/>
+</div>
 {% endif %}

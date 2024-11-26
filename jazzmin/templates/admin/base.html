@@ -50,7 +50,7 @@
     {% block extrastyle %} {% endblock %}
     {% block extrahead %} {% endblock %}
 </head>
-<body class="hold-transition{% if not jazzmin_settings.show_sidebar %} no-sidebar{% else %} sidebar-mini{% endif %} {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }}" data-admin-utc-offset="{% now "Z" %}">
+<body class="hold-transition{% if not jazzmin_settings.show_sidebar %} no-sidebar{% else %} sidebar-mini{% endif %} {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }} {% if jazzmin_ui.dark_mode_theme %}theme-dark{% endif %}" data-admin-utc-offset="{% now "Z" %}">
 
 <div class="wrapper">
 
@@ -94,16 +94,18 @@
             </ul>
 
             {% if jazzmin_settings.search_model %}
-                <form action="{{ jazzmin_settings.search_url }}" method="GET" class="form-inline ml-3">
-                    <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" name="q" type="search" placeholder="{% trans 'Search' %} {{ jazzmin_settings.search_name }}..." aria-label="{% trans 'Search' %} {{ jazzmin_settings.search_name }}...">
-                        <div class="input-group-append">
-                            <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
+                {% for search_model in jazzmin_settings.search_models_parsed %}
+                    <form action="{{ search_model.search_url }}" method="GET" class="form-inline ml-3">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control form-control-navbar" name="q" type="search" placeholder="{% trans 'Search' %} {{ search_model.search_name }}..." aria-label="{% trans 'Search' %} {{ search_model.search_name }}...">
+                            <div class="input-group-append">
+                                <button class="btn btn-navbar" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                {% endfor %}
             {% endif %}
 
             <ul class="navbar-nav ml-auto">
@@ -162,9 +164,10 @@
                             <i class="fas fa-key mr-2"></i> {% trans 'Change password' %}
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="{% url 'admin:logout' %}" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> {% trans 'Log out' %}
-                        </a>
+                        <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item"><i class="fas fa-users mr-2"></i> {% translate 'Log out' %}</button>
+                        </form>
                         {% get_user_menu user request.current_app|default:"admin" as user_menu %}
                         {% for link in user_menu %}
                             <div class="dropdown-divider"></div>
@@ -213,7 +216,7 @@
 
                             <li class="nav-item">
                                 <a href="{% url 'admin:index' %}" class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <i class="nav-icon fas fa-th-large"></i>
                                     <p>{% trans 'Dashboard' %}</p>
                                 </a>
                             </li>
@@ -266,15 +269,14 @@
     <div class="content-wrapper" {% if is_popup %}style="margin-left:0px; padding-top: 20px;"{% endif %}>
         {% block page_content %}
             {% if not is_popup %}
-            <div class="content-header">
+            <div class="content border-bottom mb-2">
                 <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-auto col-sm-3">
-                            <h1 class="m-0">{% block content_title %}{% endblock %}</h1>
-                        </div>
-                        <div class="col-auto col-sm-9">
+                    <div class="row">
+                        <div class="col-12 col-md-auto d-flex flex-grow-1 align-items-center">
+                            <h1 class="h4 m-0 pr-3 mr-3 border-right">{% block content_title %}{% endblock %}</h1>
                             {% block breadcrumbs %}{% endblock %}
                         </div>
+                        {% block page_actions %}{% endblock %}
                     </div>
                 </div>
             </div>
@@ -364,7 +366,7 @@
 
 <!-- jQuery -->
 <script src="{% static "admin/js/vendor/jquery/jquery.js" %}"></script>
-<!-- Bootstrap 4 -->
+<!-- Bootstrap 5 -->
 <script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static "vendor/adminlte/js/adminlte.min.js" %}"></script>

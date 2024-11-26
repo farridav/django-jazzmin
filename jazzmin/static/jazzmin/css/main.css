@@ -51,13 +51,23 @@ div.inline-related {
   padding-right: 1.5rem;
 }
 
+[class*=sidebar-dark-] .nav-header {
+    color: rgb(255,255,255,0.3);
+    margin-top: 1rem;
+}
 
+/* Table styles */
 .table tr.form-row {
     display: table-row;
 }
 
 .table td.action-checkbox {
     width: 45px;
+}
+
+.table thead th {
+    color: #64748b;
+    border-bottom: 0;
 }
 
 .empty-form {
@@ -153,8 +163,20 @@ table.dataTable thead .sorting_desc_disabled::after {
 }
 
 .select2-container .select2-selection--single {
-    min-height: 40px;
-    padding-top: 5px;
+    border: 1px solid #ced4da !important;
+    min-height: 38px;
+    /* Center text inside */
+    display: flex !important;
+    align-items: center;
+}
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 5px !important;
+    top: unset !important;
 }
 
 .select2-results__option {
@@ -162,6 +184,7 @@ table.dataTable thead .sorting_desc_disabled::after {
 }
 
 #changelist-search .form-group {
+    margin-bottom: .5em;
     margin-right: .5em;
 }
 
@@ -184,11 +207,8 @@ table.dataTable thead .sorting_desc_disabled::after {
 .form-group div .vLargeTextField,
 .form-group div .vURLField,
 .form-group div .vBigIntegerField,
-.form-group div.field-duration input[type="text"],
-.form-group div.field-identifier input[type="text"],
-.form-group div.field-generic_ip_address input[type="text"],
-.form-group .field-null_boolean select,
-.form-group .field-file_path select {
+.form-group div input[type="text"]
+{
     display: block;
     width: 100%;
 }
@@ -201,14 +221,9 @@ table.dataTable thead .sorting_desc_disabled::after {
 .vForeignKeyRawIdAdminField,
 .vDateField,
 .vTimeField,
-.field-float input[type="number"],
-.field-decimal input[type="number"],
-.field-time input[type="text"],
-.field-duration input[type="text"],
-.field-identifier input[type="text"],
-.field-generic_ip_address input[type="text"],
-.field-null_boolean select,
-.field-file_path select {
+input[type="number"],
+input[type="text"]
+{
     height: calc(2.25rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -452,10 +467,6 @@ table.dataTable thead .sorting_desc_disabled::after {
     margin-bottom: 5px;
 }
 
-.selector-chosen select {
-    border-top: none;
-}
-
 .selector-available h2,
 .selector-chosen h2 {
     border: 1px solid #ccc;
@@ -464,7 +475,7 @@ table.dataTable thead .sorting_desc_disabled::after {
 }
 
 .selector-chosen h2 {
-    background: #3C8DBC;
+    background: #007bff;
     color: #fff;
 }
 
@@ -730,13 +741,18 @@ body.no-sidebar .main-header {
 }
 
 .breadcrumb {
-    margin-top: 5px;
+    background: transparent;
+    margin: 0;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: "\203A";
 }
 
 .login-box,
 .register-box {
-    width: auto;
-    max-width: 700px;
+    width: 500px;
+    max-width: 100%;
 }
 
 #jazzy-collapsible .collapsible-header:hover {
@@ -780,12 +796,23 @@ form ul.inline li {
     padding-right: 7px;
 }
 
-.content-wrapper {
-    background: inherit;
+.content-wrapper>.content {
+    padding: 1rem 2rem;
+}
+
+.navbar {
+    padding: .5rem 2rem;
 }
 
 .main-footer {
-    background: inherit;
+    color: #869099;
+    padding: 1rem 2rem;
+    font-size: 14px;
+}
+
+.page-actions > a {
+    margin-right:0.25rem;
+    margin-left: 0.25rem;
 }
 
 #jazzy-actions.sticky-top {
