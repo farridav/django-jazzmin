@@ -170,6 +170,7 @@ THEMES = {
     "lumen": "vendor/bootswatch/lumen/bootstrap.min.css",
     "lux": "vendor/bootswatch/lux/bootstrap.min.css",
     "materia": "vendor/bootswatch/materia/bootstrap.min.css",
+    "morph": "vendor/bootswatch/morph/bootstrap.min.css",
     "minty": "vendor/bootswatch/minty/bootstrap.min.css",
     "pulse": "vendor/bootswatch/pulse/bootstrap.min.css",
     "sandstone": "vendor/bootswatch/sandstone/bootstrap.min.css",
@@ -178,12 +179,15 @@ THEMES = {
     "spacelab": "vendor/bootswatch/spacelab/bootstrap.min.css",
     "united": "vendor/bootswatch/united/bootstrap.min.css",
     "yeti": "vendor/bootswatch/yeti/bootstrap.min.css",
+    "quartz": "vendor/bootswatch/quartz/bootstrap.min.css",
+    "zephyr": "vendor/bootswatch/zephyr/bootstrap.min.css",
     # dark themes
     "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
     "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
     "slate": "vendor/bootswatch/slate/bootstrap.min.css",
     "solar": "vendor/bootswatch/solar/bootstrap.min.css",
     "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
+    "vapor": "vendor/bootswatch/vapor/bootstrap.min.css",
 }
 
 DARK_THEMES = ("darkly", "cyborg", "slate", "solar", "superhero")
