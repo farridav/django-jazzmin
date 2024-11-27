@@ -27,7 +27,7 @@ Run development server (with werkzeug debugger)
 
 ## Running the tests
 
-Tests are run via github actions on any pull request into `master`, and are written for use with the [pytest](https://docs.pytest.org/en/latest/)
+Tests are run via github actions on any pull request into `main`, and are written for use with the [pytest](https://docs.pytest.org/en/latest/)
 framework, we should have good enough tests for you to base your own off of, though where we are lacking, feel free to contribute,
 but keep it clean, concise and simple, leave the magic to the wizards.
 
@@ -39,7 +39,7 @@ Run against all supported Python and Django Versions using `tox`
 ## Contribution guidelines
 
 - Fork the project
-- Make a pull request against this repositories `master` branch,
+- Make a pull request against this repositories `main` branch,
 - Include tests unless its a trivial change
 - Add a screenshot if your proposing UI changes
 - Demonstrate the change within the `test_app` if possible
@@ -71,7 +71,7 @@ or use a string that is already translated upstream in Django.
 4. cd ../
 5. Run ./cli.py locales --prune de to remove the django provided strings
 6. Go through the strings in the locale file, any that are not genuinely new strings introduced by jazzmin, find them in the codebase, and try making them match the ones provided in djangos admin/admin docs translation files
-    - [Django admin translations](https://raw.githubusercontent.com/django/django/master/django/contrib/admindocs/locale/)
-    - [Django admin docs translations](https://raw.githubusercontent.com/django/django/master/django/contrib/admin/locale/de/LC_MESSAGES/django.po)
+    - [Django admin translations](https://raw.githubusercontent.com/django/django/main/django/contrib/admindocs/locale/)
+    - [Django admin docs translations](https://raw.githubusercontent.com/django/django/main/django/contrib/admin/locale/de/LC_MESSAGES/django.po)
 
 Once you have finished, run `makemessages` again, until the file contains ONLY unique strings to jazzmin, there should only be a handful
