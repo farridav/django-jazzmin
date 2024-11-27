@@ -5,6 +5,8 @@ from jazzmin.templatetags.jazzmin import get_side_menu
 
 from .test_app.library.factories import UserFactory
 from .utils import parse_sidemenu, parse_topmenu, parse_usermenu
+from django.contrib.auth.models import User, Group
+from tests.test_app.library.books.models import Book
 
 
 @pytest.mark.django_db
@@ -168,60 +170,81 @@ def test_custom_menu_grouping(admin_user, custom_jazzmin_settings, rf):
     context = site.each_context(request)
     context.update({"user": admin_user})
 
-    custom_jazzmin_settings["custom_menu"] = {"auth": ["books.book"], "arbitrary name": ["auth.user", "auth.group"]}
+    custom_jazzmin_settings["custom_menu"] = {
+        "auth": ["books.book"],
+        "arbitrary name": ["auth.user", "auth.group"]
+    }
 
     menu = get_side_menu(context)
-
+    
     assert menu == [
         {
+            "name": "Authentication and Authorization",
             "app_label": "auth",
             "app_url": "/en/admin/auth/",
             "has_module_perms": True,
             "icon": "fas fa-users-cog",
             "models": [
                 {
-                    "add_url": "/en/admin/books/book/add/",
-                    "admin_url": "/en/admin/books/book/",
-                    "icon": "fas fa-circle",
-                    "model_str": "auth.book",
+                    "model": Book,
                     "name": "Books",
                     "object_name": "Book",
-                    "perms": {"add": True, "change": True, "delete": True, "view": True},
-                    "url": "/en/admin/books/book/",
+                    "perms": {
+                        "add": True,
+                        "change": True,
+                        "delete": True,
+                        "view": True
+                    },
+                    "admin_url": "/en/admin/books/book/",
+                    "add_url": "/en/admin/books/book/add/",
                     "view_only": False,
+                    "url": "/en/admin/books/book/",
+                    "model_str": "auth.book",
+                    "icon": "fas fa-circle"
                 }
-            ],
-            "name": "Authentication and Authorization",
+            ]
         },
         {
+            "name": "Arbitrary Name",
             "app_label": "arbitrary name",
             "app_url": None,
             "has_module_perms": True,
             "icon": "fas fa-chevron-circle-right",
             "models": [
                 {
-                    "add_url": "/en/admin/auth/user/add/",
-                    "admin_url": "/en/admin/auth/user/",
-                    "icon": "fas fa-circle",
-                    "model_str": "arbitrary name.user",
+                    "model": User,
                     "name": "Users",
                     "object_name": "User",
-                    "perms": {"add": True, "change": True, "delete": True, "view": True},
-                    "url": "/en/admin/auth/user/",
+                    "perms": {
+                        "add": True,
+                        "change": True,
+                        "delete": True,
+                        "view": True
+                    },
+                    "admin_url": "/en/admin/auth/user/",
+                    "add_url": "/en/admin/auth/user/add/",
                     "view_only": False,
+                    "url": "/en/admin/auth/user/",
+                    "model_str": "arbitrary name.user",
+                    "icon": "fas fa-circle"
                 },
                 {
-                    "add_url": "/en/admin/auth/group/add/",
-                    "admin_url": "/en/admin/auth/group/",
-                    "icon": "fas fa-circle",
-                    "model_str": "arbitrary name.group",
+                    "model": Group,
                     "name": "Groups",
                     "object_name": "Group",
-                    "perms": {"add": True, "change": True, "delete": True, "view": True},
-                    "url": "/en/admin/auth/group/",
+                    "perms": {
+                        "add": True,
+                        "change": True,
+                        "delete": True,
+                        "view": True
+                    },
+                    "admin_url": "/en/admin/auth/group/",
+                    "add_url": "/en/admin/auth/group/add/",
                     "view_only": False,
-                },
-            ],
-            "name": "Arbitrary Name",
-        },
+                    "url": "/en/admin/auth/group/",
+                    "model_str": "arbitrary name.group",
+                    "icon": "fas fa-circle"
+                }
+            ]
+        }
     ]
