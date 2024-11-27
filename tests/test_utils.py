@@ -11,6 +11,7 @@ from jazzmin.utils import (
     get_model_meta,
     get_view_permissions,
     order_with_respect_to,
+    regroup_apps,
 )
 
 from .test_app.library.books.models import Book
@@ -117,3 +118,196 @@ def test_get_model_permissions_lowercased():
     user.user_permissions.update(codename=Upper("codename"))
 
     assert get_view_permissions(user) == {"books.book", "books.author"}
+
+
+@pytest.mark.parametrize(
+    "available_apps,grouping,expected",
+    [
+        # Test ID 1: Basic regrouping
+        (
+            [
+                {
+                    "name": "Auth",
+                    "app_label": "auth",
+                    "app_url": "/admin/auth/",
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Users",
+                            "object_name": "User",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/auth/user/",
+                            "view_only": False,
+                        },
+                        {
+                            "name": "Groups",
+                            "object_name": "Group",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/auth/group/",
+                            "view_only": False,
+                        },
+                    ],
+                },
+                {
+                    "name": "Blog",
+                    "app_label": "blog",
+                    "app_url": "/admin/blog/",
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Posts",
+                            "object_name": "Post",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/blog/post/",
+                            "view_only": False,
+                        }
+                    ],
+                },
+            ],
+            {"User Management": ["auth.user", "auth.group"], "Content": ["blog.post"]},
+            [
+                {
+                    "name": "User Management",
+                    "app_label": "User Management",
+                    "app_url": None,
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Users",
+                            "object_name": "User",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/auth/user/",
+                            "view_only": False,
+                        },
+                        {
+                            "name": "Groups",
+                            "object_name": "Group",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/auth/group/",
+                            "view_only": False,
+                        },
+                    ],
+                },
+                {
+                    "name": "Content",
+                    "app_label": "Content",
+                    "app_url": None,
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Posts",
+                            "object_name": "Post",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/blog/post/",
+                            "view_only": False,
+                        }
+                    ],
+                },
+            ],
+        ),
+        # Test ID 2: Partial grouping (some models not in groups)
+        (
+            [
+                {
+                    "name": "Auth",
+                    "app_label": "auth",
+                    "app_url": "/admin/auth/",
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Users",
+                            "object_name": "User",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/auth/user/",
+                            "view_only": False,
+                        }
+                    ],
+                }
+            ],
+            {"User Management": ["auth.user"]},
+            [
+                {
+                    "name": "User Management",
+                    "app_label": "User Management",
+                    "app_url": None,
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Users",
+                            "object_name": "User",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/auth/user/",
+                            "view_only": False,
+                        }
+                    ],
+                }
+            ],
+        ),
+        # Test ID 3: Empty input
+        ([], {}, []),
+        # Test ID 4: No grouping
+        (
+            [
+                {
+                    "name": "Auth",
+                    "app_label": "auth",
+                    "app_url": "/admin/auth/",
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Users",
+                            "object_name": "User",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/auth/user/",
+                            "view_only": False,
+                        }
+                    ],
+                }
+            ],
+            {},
+            [],
+        ),
+        # Test ID 5: Invalid model references
+        (
+            [
+                {
+                    "name": "Auth",
+                    "app_label": "auth",
+                    "app_url": "/admin/auth/",
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Users",
+                            "object_name": "User",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/auth/user/",
+                            "view_only": False,
+                        }
+                    ],
+                }
+            ],
+            {"User Management": ["auth.user", "auth.nonexistent"]},
+            [
+                {
+                    "name": "User Management",
+                    "app_label": "User Management",
+                    "app_url": None,
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Users",
+                            "object_name": "User",
+                            "perms": {"add": True, "change": True},
+                            "admin_url": "/admin/auth/user/",
+                            "view_only": False,
+                        }
+                    ],
+                }
+            ],
+        ),
+    ],
+    ids=["basic_regrouping", "partial_grouping", "empty_input", "no_grouping", "invalid_models"],
+)
+def test_regroup_apps(available_apps, grouping, expected):
+    result = regroup_apps(available_apps, grouping)
+    assert result == expected

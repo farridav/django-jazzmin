@@ -1,6 +1,5 @@
 import json
 from unittest.mock import MagicMock, NonCallableMock
-import copy
 
 import pytest
 from django.contrib.admin.models import CHANGE, LogEntry
