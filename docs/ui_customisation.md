@@ -149,3 +149,48 @@ Or to target your `dark_mode_theme` wrap it like this:
     }
 }
 ```
+
+## Custom Menu
+
+The custom menu feature allows you to manually craft the side menu using an app-to-model mapping instead of generating a menu based on installed apps. This provides more control over the structure and organization of the admin interface.
+
+### Configuration
+
+To enable and configure the custom menu, follow these steps:
+
+1. **Enable Custom Menu in Settings**
+   Add the `custom_menu` setting in your `jazzmin/settings.py` file. This setting should be a dictionary where the keys are app labels or arbitrary group names, and the values are lists of model names.
+
+    Example configuration:
+    ```python
+    JAZZMIN_SETTINGS = {
+        # other settings...
+        
+        # Do not generate a menu based off of installed apps, instead manually craft one using this app -> model mapping
+        "custom_menu": {
+            "auth": ["books.book"],  # Group 'auth' with model 'books.book'
+            "arbitrary name": ["auth.user", "auth.group"]  # Custom group with 'auth.user' and 'auth.group'
+        },
+
+        # other settings...
+    }
+    ```
+
+2. **Customize Menu Appearance**
+   You can also customize the icons for your apps and models using the `icons` setting. This allows for a visually distinct menu.
+
+    Example configuration:
+    ```python
+    JAZZMIN_SETTINGS = {
+        # other settings...
+        
+        # Custom icons for side menu apps/models
+        "icons": {
+            # other settings...
+            "arbitrary name.user": "fas fa-user",
+            "arbitrary name.group": "fas fa-users"
+        },
+
+        # other settings...
+    }
+    ```

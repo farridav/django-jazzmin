@@ -10,6 +10,7 @@ Then get setup with `poetry install`
 
     git clone git@github.com:farridav/django-jazzmin.git
     poetry install
+    poetry shell
 
 ## Running the test project
 
