@@ -1,5 +1,6 @@
 import json
 from unittest.mock import MagicMock, NonCallableMock
+import copy
 
 import pytest
 from django.contrib.admin.models import CHANGE, LogEntry
@@ -111,63 +112,71 @@ def test_get_side_menu_without_user():
 def test_get_side_menu_with_user(admin_user, custom_jazzmin_settings):
     """Test that side menu returns apps when user is in context"""
 
-    context = Context({
-        "user": admin_user,
-        "available_apps": [
-            {
-                "name": "Test App",
-                "app_label": "test_app",
-                "app_url": "/admin/test_app",
-                "has_module_perms": True,
-                "models": [
-                    {
-                        "name": "Test Model",
-                        "object_name": "TestModel",
-                        "admin_url": "/admin/test_app/testmodel",
-                        "view_only": False,
-                    }
-                ],
-            }
-        ]
-    })
+    context = Context(
+        {
+            "user": admin_user,
+            "available_apps": [
+                {
+                    "name": "Test App",
+                    "app_label": "test_app",
+                    "app_url": "/admin/test_app",
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Test Model",
+                            "object_name": "TestModel",
+                            "admin_url": "/admin/test_app/testmodel",
+                            "view_only": False,
+                        }
+                    ],
+                }
+            ],
+        }
+    )
 
     menu = jazzmin.get_side_menu(context)
-    
-    assert menu == [{
-        "name": "Test App",
-        "app_label": "test_app",
-        "app_url": "/admin/test_app",
-        "has_module_perms": True,
-        "icon": "fas fa-chevron-circle-right",
-        "models": [{
-            "name": "Test Model",
-            "object_name": "TestModel",
-            "admin_url": "/admin/test_app/testmodel",
-            "view_only": False,
-            "url": "/admin/test_app/testmodel",
-            "model_str": "test_app.testmodel",
-            "icon": "fas fa-circle"
-        }]
-    }]
+
+    assert menu == [
+        {
+            "name": "Test App",
+            "app_label": "test_app",
+            "app_url": "/admin/test_app",
+            "has_module_perms": True,
+            "icon": "fas fa-chevron-circle-right",
+            "models": [
+                {
+                    "name": "Test Model",
+                    "object_name": "TestModel",
+                    "admin_url": "/admin/test_app/testmodel",
+                    "view_only": False,
+                    "url": "/admin/test_app/testmodel",
+                    "model_str": "test_app.testmodel",
+                    "icon": "fas fa-circle",
+                }
+            ],
+        }
+    ]
 
 
 @pytest.mark.django_db
 def test_get_side_menu_with_hidden_app(admin_user, custom_jazzmin_settings):
     """Test that hidden apps are not included in the menu"""
     custom_jazzmin_settings["hide_apps"] = ["hidden_app"]
-    
-    context = Context({
-        "user": admin_user,
-        "available_apps": [
-            {
-                "name": "Hidden App",
-                "app_label": "hidden_app",
-                "app_url": "/admin/hidden_app",
-                "has_module_perms": True,
-                "models": [],
-            }
-        ]
-    })
+
+    context = Context(
+        {
+            "user": admin_user,
+            "available_apps": [
+                {
+                    "name": "Hidden App",
+                    "app_label": "hidden_app",
+                    "app_url": "/admin/hidden_app",
+                    "has_module_perms": True,
+                    "models": [],
+                }
+            ],
+        }
+    )
 
     menu = jazzmin.get_side_menu(context)
     assert len(menu) == 0
@@ -176,33 +185,30 @@ def test_get_side_menu_with_hidden_app(admin_user, custom_jazzmin_settings):
 @pytest.mark.django_db
 def test_get_side_menu_with_custom_links(admin_user, custom_jazzmin_settings):
     """Test that custom links are added to the menu"""
-    custom_jazzmin_settings["custom_links"] = {
-        "custom_app": [
-            {"name": "Custom Link", "url": "http://example.com"}
-        ]
-    }
+    custom_jazzmin_settings["custom_links"] = {"custom_app": [{"name": "Custom Link", "url": "http://example.com"}]}
 
-    context = Context({
-        "user": admin_user,
-        "available_apps": []
-    })
+    context = Context({"user": admin_user, "available_apps": []})
 
     menu = jazzmin.get_side_menu(context)
-    
-    assert menu == [{
-        "name": "custom_app",
-        "app_label": "custom_app",
-        "app_url": "#",
-        "has_module_perms": True,
-        "icon": "fas fa-chevron-circle-right",
-        "models": [{
-            "name": "Custom Link",
-            "url": "http://example.com",
-            "children": None,
-            "new_window": False,
-            "icon": None
-        }]
-    }]
+
+    assert menu == [
+        {
+            "name": "custom_app",
+            "app_label": "custom_app",
+            "app_url": "#",
+            "has_module_perms": True,
+            "icon": "fas fa-chevron-circle-right",
+            "models": [
+                {
+                    "name": "Custom Link",
+                    "url": "http://example.com",
+                    "children": None,
+                    "new_window": False,
+                    "icon": None,
+                }
+            ],
+        }
+    ]
 
 
 @pytest.mark.django_db
@@ -210,44 +216,128 @@ def test_get_side_menu_ordering(admin_user, custom_jazzmin_settings):
     """Test that menu items are ordered correctly"""
     custom_jazzmin_settings["order_with_respect_to"] = ["first_app", "second_app"]
 
-    context = Context({
-        "user": admin_user,
-        "available_apps": [
-            {
-                "name": "Second App",
-                "app_label": "second_app",
-                "app_url": "/admin/second_app",
-                "has_module_perms": True,
-                
-                "models": [
-                    {
-                        "name": "Test Model 2",
-                        "object_name": "TestModel 2",
-                        "admin_url": "/admin/test_app/testmodel2",
-                        "view_only": False,
-                    }
-                ],
-            },
-            {
-                "name": "First App",
-                "app_label": "first_app",
-                "app_url": "/admin/first_app",
-                "has_module_perms": True,
-                
-                "models": [
-                    {
-                        "name": "Test Model 1",
-                        "object_name": "TestModel 1",
-                        "admin_url": "/admin/test_app/testmodel1",
-                        "view_only": False,
-                    }
-                ],
-            }
-        ]
-    })
+    context = Context(
+        {
+            "user": admin_user,
+            "available_apps": [
+                {
+                    "name": "Second App",
+                    "app_label": "second_app",
+                    "app_url": "/admin/second_app",
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Test Model 2",
+                            "object_name": "TestModel 2",
+                            "admin_url": "/admin/test_app/testmodel2",
+                            "view_only": False,
+                        }
+                    ],
+                },
+                {
+                    "name": "First App",
+                    "app_label": "first_app",
+                    "app_url": "/admin/first_app",
+                    "has_module_perms": True,
+                    "models": [
+                        {
+                            "name": "Test Model 1",
+                            "object_name": "TestModel 1",
+                            "admin_url": "/admin/test_app/testmodel1",
+                            "view_only": False,
+                        }
+                    ],
+                },
+            ],
+        }
+    )
 
     menu = jazzmin.get_side_menu(context)
-    
+
     assert len(menu) == 2
     assert menu[0]["app_label"] == "first_app"
     assert menu[1]["app_label"] == "second_app"
+
+
+@pytest.mark.parametrize(
+    "test_id,app_label,models,options,expected",
+    [
+        # Test ID 1: Basic model processing
+        (
+            "basic_processing",
+            "test_app",
+            [{"object_name": "TestModel", "admin_url": "/admin/test/model"}],
+            {"icons": {}, "default_icon_children": "default-icon"},
+            [
+                {
+                    "object_name": "TestModel",
+                    "admin_url": "/admin/test/model",
+                    "url": "/admin/test/model",
+                    "model_str": "test_app.testmodel",
+                    "icon": "default-icon",
+                }
+            ],
+        ),
+        # Test ID 2: Hidden model
+        (
+            "hidden_model",
+            "test_app",
+            [{"object_name": "TestModel", "admin_url": "/admin/test/model"}],
+            {"hide_models": ["test_app.testmodel"], "icons": {}, "default_icon_children": "default-icon"},
+            [],
+        ),
+        # Test ID 3: Custom icon
+        (
+            "custom_icon",
+            "test_app",
+            [{"object_name": "TestModel", "admin_url": "/admin/test/model"}],
+            {"icons": {"test_app.testmodel": "custom-icon"}, "default_icon_children": "default-icon"},
+            [
+                {
+                    "object_name": "TestModel",
+                    "admin_url": "/admin/test/model",
+                    "url": "/admin/test/model",
+                    "model_str": "test_app.testmodel",
+                    "icon": "custom-icon",
+                }
+            ],
+        ),
+        # Test ID 4: Multiple models
+        (
+            "multiple_models",
+            "test_app",
+            [
+                {"object_name": "TestModel1", "admin_url": "/admin/test/model1"},
+                {"object_name": "TestModel2", "admin_url": "/admin/test/model2"},
+            ],
+            {"icons": {}, "default_icon_children": "default-icon"},
+            [
+                {
+                    "object_name": "TestModel1",
+                    "admin_url": "/admin/test/model1",
+                    "url": "/admin/test/model1",
+                    "model_str": "test_app.testmodel1",
+                    "icon": "default-icon",
+                },
+                {
+                    "object_name": "TestModel2",
+                    "admin_url": "/admin/test/model2",
+                    "url": "/admin/test/model2",
+                    "model_str": "test_app.testmodel2",
+                    "icon": "default-icon",
+                },
+            ],
+        ),
+    ],
+    ids=lambda x: x if isinstance(x, str) else "",
+)
+def test_process_models(test_id, app_label, models, options, expected):
+    """
+    Test the _process_models helper function with various scenarios:
+    - Basic model processing
+    - Hidden model filtering
+    - Custom icon assignment
+    - Multiple models processing
+    """
+    result = jazzmin._process_models(app_label, models, options)
+    assert result == expected

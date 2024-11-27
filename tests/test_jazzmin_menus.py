@@ -170,13 +170,10 @@ def test_custom_menu_grouping(admin_user, custom_jazzmin_settings, rf):
     context = site.each_context(request)
     context.update({"user": admin_user})
 
-    custom_jazzmin_settings["custom_menu"] = {
-        "auth": ["books.book"],
-        "arbitrary name": ["auth.user", "auth.group"]
-    }
+    custom_jazzmin_settings["custom_menu"] = {"auth": ["books.book"], "arbitrary name": ["auth.user", "auth.group"]}
 
     menu = get_side_menu(context)
-    
+
     assert menu == [
         {
             "name": "Authentication and Authorization",
@@ -189,20 +186,15 @@ def test_custom_menu_grouping(admin_user, custom_jazzmin_settings, rf):
                     "model": Book,
                     "name": "Books",
                     "object_name": "Book",
-                    "perms": {
-                        "add": True,
-                        "change": True,
-                        "delete": True,
-                        "view": True
-                    },
+                    "perms": {"add": True, "change": True, "delete": True, "view": True},
                     "admin_url": "/en/admin/books/book/",
                     "add_url": "/en/admin/books/book/add/",
                     "view_only": False,
                     "url": "/en/admin/books/book/",
                     "model_str": "auth.book",
-                    "icon": "fas fa-circle"
+                    "icon": "fas fa-circle",
                 }
-            ]
+            ],
         },
         {
             "name": "Arbitrary Name",
@@ -215,36 +207,26 @@ def test_custom_menu_grouping(admin_user, custom_jazzmin_settings, rf):
                     "model": User,
                     "name": "Users",
                     "object_name": "User",
-                    "perms": {
-                        "add": True,
-                        "change": True,
-                        "delete": True,
-                        "view": True
-                    },
+                    "perms": {"add": True, "change": True, "delete": True, "view": True},
                     "admin_url": "/en/admin/auth/user/",
                     "add_url": "/en/admin/auth/user/add/",
                     "view_only": False,
                     "url": "/en/admin/auth/user/",
                     "model_str": "arbitrary name.user",
-                    "icon": "fas fa-circle"
+                    "icon": "fas fa-circle",
                 },
                 {
                     "model": Group,
                     "name": "Groups",
                     "object_name": "Group",
-                    "perms": {
-                        "add": True,
-                        "change": True,
-                        "delete": True,
-                        "view": True
-                    },
+                    "perms": {"add": True, "change": True, "delete": True, "view": True},
                     "admin_url": "/en/admin/auth/group/",
                     "add_url": "/en/admin/auth/group/add/",
                     "view_only": False,
                     "url": "/en/admin/auth/group/",
                     "model_str": "arbitrary name.group",
-                    "icon": "fas fa-circle"
-                }
-            ]
-        }
+                    "icon": "fas fa-circle",
+                },
+            ],
+        },
     ]

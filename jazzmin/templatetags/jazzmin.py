@@ -51,10 +51,15 @@ def _process_models(app_label: str, models: List[Dict], options: Dict) -> List[D
         if model_str in options.get("hide_models", []):
             continue
 
-        model["url"] = model["admin_url"]
-        model["model_str"] = model_str
-        model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
-        processed_models.append(model)
+        processed_model = model.copy()
+        processed_model.update(
+            {
+                "url": model["admin_url"],
+                "model_str": model_str,
+                "icon": options["icons"].get(model_str, options["default_icon_children"]),
+            }
+        )
+        processed_models.append(processed_model)
     return processed_models
 
 
