@@ -43,6 +43,21 @@ register = Library()
 logger = logging.getLogger(__name__)
 
 
+def _process_models(app_label: str, models: List[Dict], options: Dict) -> List[Dict]:
+    """Process and filter out hidden models for a given app label."""
+    processed_models = []
+    for model in models:
+        model_str = f"{app_label}.{model['object_name']}".lower()
+        if model_str in options.get("hide_models", []):
+            continue
+
+        model["url"] = model["admin_url"]
+        model["model_str"] = model_str
+        model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
+        processed_models.append(model)
+    return processed_models
+
+
 @register.simple_tag(takes_context=True)
 def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]:
     """
@@ -56,8 +71,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
 
     menu = []
     options = get_settings()
-    ordering = options.get("order_with_respect_to", [])
-    ordering = [x.lower() for x in ordering]
+    ordering = [x.lower() for x in options.get("order_with_respect_to", [])]
     installed_apps = get_installed_apps()
     available_apps: list[dict[str, Any]] = copy.deepcopy(context.get(using, []))
 
@@ -73,28 +87,20 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
         for app_name, links in options.get("custom_links", {}).items()
     }
 
-    # If we are using custom grouping, overwrite available_apps based on our grouping
-    if options.get("custom_menu") and options["custom_menu"]:
+    # Handle custom grouping
+    if options.get("custom_menu"):
         available_apps = regroup_apps(available_apps, options["custom_menu"])
 
     for app in available_apps:
         app_label = app["app_label"]
-        app_custom_links = custom_links.get(app_label, [])
-        app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
         if app_label in options["hide_apps"]:
             continue
 
-        menu_items = []
-        for model in app.get("models", []):
-            model_str = "{app_label}.{model}".format(app_label=app_label, model=model["object_name"]).lower()
-            if model_str in options.get("hide_models", []):
-                continue
+        app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
+        app_custom_links = custom_links.get(app_label, [])
 
-            model["url"] = model["admin_url"]
-            model["model_str"] = model_str
-            model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
-            menu_items.append(model)
-
+        # Use the helper function to process models
+        menu_items = _process_models(app_label, app.get("models", []), options)
         menu_items.extend(app_custom_links)
 
         custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
