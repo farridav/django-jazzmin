@@ -66,7 +66,7 @@ def _prepare_menu_items(app: dict, app_label: str, options: dict) -> list:
             "url": link["url"],
             "children": None,
             "new_window": False,
-            "icon": None
+            "icon": None,
         }
         menu_items.append(link_with_defaults)
 
@@ -92,13 +92,9 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     # Add custom apps not in available_apps
     for app_label in options.get("custom_links", {}):
         if app_label.lower() not in installed_apps:
-            available_apps.append({
-                "name": app_label,
-                "app_label": app_label,
-                "app_url": "#",
-                "has_module_perms": True,
-                "models": []
-            })
+            available_apps.append(
+                {"name": app_label, "app_label": app_label, "app_url": "#", "has_module_perms": True, "models": []}
+            )
 
     # Handle custom menu grouping
     if options.get("custom_menu"):
@@ -114,8 +110,9 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
         menu_items, custom_link_names = _prepare_menu_items(app, app_label, options)
 
         # Handle model ordering
-        model_ordering = [x for x in ordering if x.lower().startswith(f"{app_label}.")
-                         or x.lower() in custom_link_names]
+        model_ordering = [
+            x for x in ordering if x.lower().startswith(f"{app_label}.") or x.lower() in custom_link_names
+        ]
 
         if menu_items:
             if model_ordering:
