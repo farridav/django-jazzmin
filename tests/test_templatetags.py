@@ -3,8 +3,8 @@ from unittest.mock import MagicMock, NonCallableMock
 
 import pytest
 from django.contrib.admin.models import CHANGE, LogEntry
-from django.template import Context
 from django.contrib.auth import get_user_model
+from django.template import Context
 
 from jazzmin.templatetags import jazzmin
 

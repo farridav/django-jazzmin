@@ -1,11 +1,12 @@
 import pytest
 from django.contrib.admin import site
+from django.contrib.auth.models import Group, User
 from django.urls import reverse
+
 from jazzmin.templatetags.jazzmin import get_side_menu
 
 from .test_app.library.factories import UserFactory
 from .utils import parse_sidemenu, parse_topmenu, parse_usermenu
-from django.contrib.auth.models import User, Group
 from tests.test_app.library.books.models import Book
 
 
