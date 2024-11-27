@@ -238,6 +238,7 @@ def attr(**kwargs) -> Callable:
 
     return decorator
 
+
 def regroup_apps(available_apps: List[Dict], grouping: Dict[str, List[str]]) -> List[Dict]:
     # Make a list of all apps, and all models, keyed on app name or model name
     all_models, all_apps = {}, {}
@@ -266,6 +267,6 @@ def regroup_apps(available_apps: List[Dict], grouping: Dict[str, List[str]]) -> 
 
     return new_available_apps
 
+
 def get_installed_apps() -> List[str]:
     return [app_config.label for app_config in apps.get_app_configs()]
-
