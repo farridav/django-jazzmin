@@ -3,8 +3,12 @@ from unittest.mock import MagicMock, NonCallableMock
 
 import pytest
 from django.contrib.admin.models import CHANGE, LogEntry
+from django.template import Context
+from django.contrib.auth import get_user_model
 
 from jazzmin.templatetags import jazzmin
+
+User = get_user_model()
 
 
 @pytest.mark.django_db
@@ -93,3 +97,157 @@ def test_get_user_avatar(case, test_input, field, expected, log, custom_jazzmin_
         assert log in caplog.text
     else:
         assert not caplog.text
+
+
+@pytest.mark.django_db
+def test_get_side_menu_without_user():
+    """Test that side menu returns empty list when no user in context"""
+    context = Context({})
+    menu = jazzmin.get_side_menu(context)
+    assert menu == []
+
+
+@pytest.mark.django_db
+def test_get_side_menu_with_user(admin_user, custom_jazzmin_settings):
+    """Test that side menu returns apps when user is in context"""
+
+    context = Context({
+        "user": admin_user,
+        "available_apps": [
+            {
+                "name": "Test App",
+                "app_label": "test_app",
+                "app_url": "/admin/test_app",
+                "has_module_perms": True,
+                "models": [
+                    {
+                        "name": "Test Model",
+                        "object_name": "TestModel",
+                        "admin_url": "/admin/test_app/testmodel",
+                        "view_only": False,
+                    }
+                ],
+            }
+        ]
+    })
+
+    menu = jazzmin.get_side_menu(context)
+    
+    assert menu == [{
+        "name": "Test App",
+        "app_label": "test_app",
+        "app_url": "/admin/test_app",
+        "has_module_perms": True,
+        "icon": "fas fa-chevron-circle-right",
+        "models": [{
+            "name": "Test Model",
+            "object_name": "TestModel",
+            "admin_url": "/admin/test_app/testmodel",
+            "view_only": False,
+            "url": "/admin/test_app/testmodel",
+            "model_str": "test_app.testmodel",
+            "icon": "fas fa-circle"
+        }]
+    }]
+
+
+@pytest.mark.django_db
+def test_get_side_menu_with_hidden_app(admin_user, custom_jazzmin_settings):
+    """Test that hidden apps are not included in the menu"""
+    custom_jazzmin_settings["hide_apps"] = ["hidden_app"]
+    
+    context = Context({
+        "user": admin_user,
+        "available_apps": [
+            {
+                "name": "Hidden App",
+                "app_label": "hidden_app",
+                "app_url": "/admin/hidden_app",
+                "has_module_perms": True,
+                "models": [],
+            }
+        ]
+    })
+
+    menu = jazzmin.get_side_menu(context)
+    assert len(menu) == 0
+
+
+@pytest.mark.django_db
+def test_get_side_menu_with_custom_links(admin_user, custom_jazzmin_settings):
+    """Test that custom links are added to the menu"""
+    custom_jazzmin_settings["custom_links"] = {
+        "custom_app": [
+            {"name": "Custom Link", "url": "http://example.com"}
+        ]
+    }
+
+    context = Context({
+        "user": admin_user,
+        "available_apps": []
+    })
+
+    menu = jazzmin.get_side_menu(context)
+    
+    assert menu == [{
+        "name": "custom_app",
+        "app_label": "custom_app",
+        "app_url": "#",
+        "has_module_perms": True,
+        "icon": "fas fa-chevron-circle-right",
+        "models": [{
+            "name": "Custom Link",
+            "url": "http://example.com",
+            "children": None,
+            "new_window": False,
+            "icon": None
+        }]
+    }]
+
+
+@pytest.mark.django_db
+def test_get_side_menu_ordering(admin_user, custom_jazzmin_settings):
+    """Test that menu items are ordered correctly"""
+    custom_jazzmin_settings["order_with_respect_to"] = ["first_app", "second_app"]
+
+    context = Context({
+        "user": admin_user,
+        "available_apps": [
+            {
+                "name": "Second App",
+                "app_label": "second_app",
+                "app_url": "/admin/second_app",
+                "has_module_perms": True,
+                
+                "models": [
+                    {
+                        "name": "Test Model 2",
+                        "object_name": "TestModel 2",
+                        "admin_url": "/admin/test_app/testmodel2",
+                        "view_only": False,
+                    }
+                ],
+            },
+            {
+                "name": "First App",
+                "app_label": "first_app",
+                "app_url": "/admin/first_app",
+                "has_module_perms": True,
+                
+                "models": [
+                    {
+                        "name": "Test Model 1",
+                        "object_name": "TestModel 1",
+                        "admin_url": "/admin/test_app/testmodel1",
+                        "view_only": False,
+                    }
+                ],
+            }
+        ]
+    })
+
+    menu = jazzmin.get_side_menu(context)
+    
+    assert len(menu) == 2
+    assert menu[0]["app_label"] == "first_app"
+    assert menu[1]["app_label"] == "second_app"
