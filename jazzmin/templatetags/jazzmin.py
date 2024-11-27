@@ -43,36 +43,6 @@ register = Library()
 logger = logging.getLogger(__name__)
 
 
-def _prepare_menu_items(app: dict, app_label: str, options: dict) -> list:
-    """Helper function to prepare menu items for an app"""
-    menu_items = []
-    custom_links = options.get("custom_links", {}).get(app_label, [])
-
-    # Process models
-    for model in app.get("models", []):
-        model_str = f"{app_label}.{model['object_name']}".lower()
-        if model_str in options.get("hide_models", []):
-            continue
-
-        model["url"] = model["admin_url"]
-        model["model_str"] = model_str
-        model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
-        menu_items.append(model)
-
-    # Add custom links with defaults
-    for link in custom_links:
-        link_with_defaults = {
-            "name": link["name"],
-            "url": link["url"],
-            "children": None,
-            "new_window": False,
-            "icon": None,
-        }
-        menu_items.append(link_with_defaults)
-
-    return menu_items, [x.get("name", "").lower() for x in custom_links]
-
-
 @register.simple_tag(takes_context=True)
 def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]:
     """
@@ -84,37 +54,58 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     if not user:
         return []
 
+    menu = []
     options = get_settings()
-    ordering = [x.lower() for x in options.get("order_with_respect_to", [])]
+    ordering = options.get("order_with_respect_to", [])
+    ordering = [x.lower() for x in ordering]
     installed_apps = get_installed_apps()
     available_apps: list[dict[str, Any]] = copy.deepcopy(context.get(using, []))
 
-    # Add custom apps not in available_apps
+    # Add any arbitrary groups that are not in available_apps
     for app_label in options.get("custom_links", {}):
         if app_label.lower() not in installed_apps:
             available_apps.append(
                 {"name": app_label, "app_label": app_label, "app_url": "#", "has_module_perms": True, "models": []}
             )
 
-    # Handle custom menu grouping
-    if options.get("custom_menu"):
+    custom_links = {
+        app_name: make_menu(user, links, options, allow_appmenus=False)
+        for app_name, links in options.get("custom_links", {}).items()
+    }
+
+    # If we are using custom grouping, overwrite available_apps based on our grouping
+    if options.get("custom_menu") and options["custom_menu"]:
         available_apps = regroup_apps(available_apps, options["custom_menu"])
 
-    menu = []
     for app in available_apps:
         app_label = app["app_label"]
+        app_custom_links = custom_links.get(app_label, [])
+        app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
         if app_label in options["hide_apps"]:
             continue
 
-        app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
-        menu_items, custom_link_names = _prepare_menu_items(app, app_label, options)
+        menu_items = []
+        for model in app.get("models", []):
+            model_str = "{app_label}.{model}".format(app_label=app_label, model=model["object_name"]).lower()
+            if model_str in options.get("hide_models", []):
+                continue
 
-        # Handle model ordering
-        model_ordering = [
-            x for x in ordering if x.lower().startswith(f"{app_label}.") or x.lower() in custom_link_names
-        ]
+            model["url"] = model["admin_url"]
+            model["model_str"] = model_str
+            model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
+            menu_items.append(model)
 
-        if menu_items:
+        menu_items.extend(app_custom_links)
+
+        custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
+        model_ordering = list(
+            filter(
+                lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names,
+                ordering,
+            )
+        )
+
+        if len(menu_items):
             if model_ordering:
                 menu_items = order_with_respect_to(
                     menu_items,
@@ -124,9 +115,8 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
             app["models"] = menu_items
             menu.append(app)
 
-    # Handle app ordering
     if ordering:
-        apps_order = [x for x in ordering if "." not in x]
+        apps_order = list(filter(lambda x: "." not in x, ordering))
         menu = order_with_respect_to(menu, apps_order, getter=lambda x: x["app_label"].lower())
 
     return menu
