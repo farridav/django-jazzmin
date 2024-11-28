@@ -19,3 +19,5 @@ admindocs_templates
 *.sqlite3
 tests/test_app/static/
 .python-version
+.mypy_cache
+.ruff_cache

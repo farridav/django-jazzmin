@@ -1,5 +1,5 @@
-from django.views.generic import TemplateView
 from django.contrib.admin.sites import site
+from django.views.generic import TemplateView
 
 
 class CustomView(TemplateView):
