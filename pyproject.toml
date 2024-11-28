@@ -42,7 +42,7 @@ django = ">=4.2"
 
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^3.2.4" # unparallelled debugging in django
-Werkzeug = "^2.0.2"             # support for werkzeug debugger in runserver_plus
+Werkzeug = "^3.0.6"             # support for werkzeug debugger in runserver_plus
 django-extensions = "^3.1.5"    # Django Sugar for development
 pytest = "^6.2.5"               # Test runner
 pytest-django = "^4.5.2"        # Django integration for pytest
