@@ -1,6 +1,6 @@
 import copy
 import logging
-from typing import Dict, Any
+from typing import Any, Dict
 
 from django.conf import settings
 from django.templatetags.static import static
@@ -57,11 +57,13 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "hide_models": [],
     # List of apps to base side menu ordering off of
     "order_with_respect_to": [],
-    # Custom links to append to side menu app groups, keyed on app name
+    # Custom links to append to side menu app groups, keyed on lower case app label
+    # or makes a new group if the given app label doesnt exist in installed apps
     "custom_links": {},
     # Custom icons for side menu apps/models See the link below
     # https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,
-    # 5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
+    # 5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,
+    # 5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
     # for the full list of 5.13.0 free icon classes
     "icons": {"auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users"},
     # Icons that are used when one is not manually specified
@@ -168,6 +170,7 @@ THEMES = {
     "lumen": "vendor/bootswatch/lumen/bootstrap.min.css",
     "lux": "vendor/bootswatch/lux/bootstrap.min.css",
     "materia": "vendor/bootswatch/materia/bootstrap.min.css",
+    "morph": "vendor/bootswatch/morph/bootstrap.min.css",
     "minty": "vendor/bootswatch/minty/bootstrap.min.css",
     "pulse": "vendor/bootswatch/pulse/bootstrap.min.css",
     "sandstone": "vendor/bootswatch/sandstone/bootstrap.min.css",
@@ -176,12 +179,15 @@ THEMES = {
     "spacelab": "vendor/bootswatch/spacelab/bootstrap.min.css",
     "united": "vendor/bootswatch/united/bootstrap.min.css",
     "yeti": "vendor/bootswatch/yeti/bootstrap.min.css",
+    "quartz": "vendor/bootswatch/quartz/bootstrap.min.css",
+    "zephyr": "vendor/bootswatch/zephyr/bootstrap.min.css",
     # dark themes
     "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
     "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
     "slate": "vendor/bootswatch/slate/bootstrap.min.css",
     "solar": "vendor/bootswatch/solar/bootstrap.min.css",
     "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
+    "vapor": "vendor/bootswatch/vapor/bootstrap.min.css",
 }
 
 DARK_THEMES = ("darkly", "cyborg", "slate", "solar", "superhero")
@@ -229,11 +235,11 @@ def get_settings() -> Dict:
             jazzmin_settings["search_models_parsed"].append(jazzmin_search_model)
 
     # Deal with single strings in hide_apps/hide_models and make sure we lower case 'em
-    if type(jazzmin_settings["hide_apps"]) == str:
+    if isinstance(jazzmin_settings["hide_apps"], str):
         jazzmin_settings["hide_apps"] = [jazzmin_settings["hide_apps"]]
     jazzmin_settings["hide_apps"] = [x.lower() for x in jazzmin_settings["hide_apps"]]
 
-    if type(jazzmin_settings["hide_models"]) == str:
+    if isinstance(jazzmin_settings["hide_models"], str):
         jazzmin_settings["hide_models"] = [jazzmin_settings["hide_models"]]
     jazzmin_settings["hide_models"] = [x.lower() for x in jazzmin_settings["hide_models"]]
 
