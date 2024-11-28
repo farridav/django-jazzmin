@@ -21,9 +21,9 @@ them as quickly as I would like, but im trying to get through them all now, hope
 [![PyPI version](https://badge.fury.io/py/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
 ![Python versions](https://img.shields.io/badge/python-%3E=3.8-brightgreen)
 ![Django Versions](https://img.shields.io/badge/django-%3E=4.2-brightgreen)
-[![Coverage Status](https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=master)](https://coveralls.io/github/farridav/django-jazzmin?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=main)](https://coveralls.io/github/farridav/django-jazzmin?branch=main)
 
-Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy
+Drop-in theme for django admin, that utilises AdminLTE 3.2 & Bootstrap 5 to make yo' admin look jazzy
 
 ## Installation
 
@@ -33,7 +33,7 @@ pip install django-jazzmin
 
 ## Documentation
 
-See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https://github.com/farridav/django-jazzmin/tree/master/tests/test_app/library/settings.py)
+See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https://github.com/farridav/django-jazzmin/tree/main/tests/test_app/library/settings.py)
 
 ## Features
 
@@ -42,12 +42,12 @@ See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https:/
 - Customisable top menu
 - Customisable user menu
 - 4 different Change form templates (horizontal tabs, vertical tabs, carousel, collapsible)
-- Bootstrap 4 modal (instead of the old popup window, optional)
+- Bootstrap 5 modal (instead of the old popup window, optional)
 - Search bar for any given model admin
 - Customisable UI (via Live UI changes, or custom CSS/JS)
 - Responsive
 - Select2 drop-downs
-- Bootstrap 4 & AdminLTE UI components
+- Bootstrap 5 & AdminLTE UI components
 - Using the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 
 ## Screenshots
@@ -120,8 +120,8 @@ This was initially a Fork of <https://github.com/wuyue92tree/django-adminlte-ui>
 deserved its own package, big thanks to @wuyue92tree for all of his initial hard work, we are still patching into that
 project were possible, but this project has taken a different direction.
 
-The javascript modal implementation uses some code from [django-admin-interface](https://github.com/fabiocaccamo/django-admin-interface/blob/master/admin_interface/static/admin/js/popup_response.js), so thanks to @fabiocaccamo for original work
+The javascript modal implementation uses some code from [django-admin-interface](https://github.com/fabiocaccamo/django-admin-interface/blob/main/admin_interface/static/admin/js/popup_response.js), so thanks to @fabiocaccamo for original work
 
 - Based on AdminLTE 3: <https://adminlte.io/>
-- Using Bootstrap 4: <https://getbootstrap.com/>
+- Using Bootstrap 5: <https://getbootstrap.com/>
 - Using Font Awesome 5: <https://fontawesome.com/>
