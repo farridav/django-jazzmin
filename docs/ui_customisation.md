@@ -169,7 +169,7 @@ To enable and configure the custom menu, follow these steps:
         # Do not generate a menu based off of installed apps, instead manually craft one using this app -> model mapping
         "custom_menu": {
             "auth": ["books.book"],  # Group 'auth' with model 'books.book'
-            "arbitrary name": ["auth.user", "auth.group"]  # Custom group with 'auth.user' and 'auth.group'
+            "arbitrary_name": ["auth.user", "auth.group"]  # Custom group with 'auth.user' and 'auth.group'
         },
 
         # other settings...
@@ -187,8 +187,8 @@ To enable and configure the custom menu, follow these steps:
         # Custom icons for side menu apps/models
         "icons": {
             # other settings...
-            "arbitrary name.user": "fas fa-user",
-            "arbitrary name.group": "fas fa-users"
+            "arbitrary_name.user": "fas fa-user",
+            "arbitrary_name.group": "fas fa-users"
         },
 
         # other settings...
