@@ -1,6 +1,6 @@
 import copy
 import logging
-from typing import Dict, Any
+from typing import Any, Dict
 
 from django.conf import settings
 from django.templatetags.static import static
@@ -57,7 +57,8 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "hide_models": [],
     # List of apps to base side menu ordering off of
     "order_with_respect_to": [],
-    # Custom links to append to side menu app groups, keyed on app name
+    # Custom links to append to side menu app groups, keyed on lower case app label
+    # or makes a new group if the given app label doesnt exist in installed apps
     "custom_links": {},
     # Custom icons for side menu apps/models See the link below
     # https://fontawesome.com/v5/search?o=r&m=free
@@ -167,6 +168,7 @@ THEMES = {
     "lumen": "vendor/bootswatch/lumen/bootstrap.min.css",
     "lux": "vendor/bootswatch/lux/bootstrap.min.css",
     "materia": "vendor/bootswatch/materia/bootstrap.min.css",
+    "morph": "vendor/bootswatch/morph/bootstrap.min.css",
     "minty": "vendor/bootswatch/minty/bootstrap.min.css",
     "pulse": "vendor/bootswatch/pulse/bootstrap.min.css",
     "sandstone": "vendor/bootswatch/sandstone/bootstrap.min.css",
@@ -175,12 +177,15 @@ THEMES = {
     "spacelab": "vendor/bootswatch/spacelab/bootstrap.min.css",
     "united": "vendor/bootswatch/united/bootstrap.min.css",
     "yeti": "vendor/bootswatch/yeti/bootstrap.min.css",
+    "quartz": "vendor/bootswatch/quartz/bootstrap.min.css",
+    "zephyr": "vendor/bootswatch/zephyr/bootstrap.min.css",
     # dark themes
     "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
     "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
     "slate": "vendor/bootswatch/slate/bootstrap.min.css",
     "solar": "vendor/bootswatch/solar/bootstrap.min.css",
     "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
+    "vapor": "vendor/bootswatch/vapor/bootstrap.min.css",
 }
 
 DARK_THEMES = ("darkly", "cyborg", "slate", "solar", "superhero")
@@ -228,11 +233,11 @@ def get_settings() -> Dict:
             jazzmin_settings["search_models_parsed"].append(jazzmin_search_model)
 
     # Deal with single strings in hide_apps/hide_models and make sure we lower case 'em
-    if type(jazzmin_settings["hide_apps"]) == str:
+    if isinstance(jazzmin_settings["hide_apps"], str):
         jazzmin_settings["hide_apps"] = [jazzmin_settings["hide_apps"]]
     jazzmin_settings["hide_apps"] = [x.lower() for x in jazzmin_settings["hide_apps"]]
 
-    if type(jazzmin_settings["hide_models"]) == str:
+    if isinstance(jazzmin_settings["hide_models"], str):
         jazzmin_settings["hide_models"] = [jazzmin_settings["hide_models"]]
     jazzmin_settings["hide_models"] = [x.lower() for x in jazzmin_settings["hide_models"]]
 
