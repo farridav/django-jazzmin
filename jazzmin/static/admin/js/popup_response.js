@@ -11,10 +11,6 @@
         openerRef = windowRef.parent;
         windowName = windowRef.name;
         widgetName = windowName.replace(/^(change|add|delete|lookup)_/, '');
-        if (typeof(openerRef.id_to_windowname) === 'function') {
-            // django < 3.1 compatibility
-            widgetName = openerRef.id_to_windowname(widgetName);
-        }
         windowRefProxy = {
             name: widgetName,
             location: windowRef.location,
@@ -41,10 +37,6 @@
         default:
             if (typeof(openerRef.dismissAddRelatedObjectPopup) === 'function') {
                 openerRef.dismissAddRelatedObjectPopup(windowRef, initData.value, initData.obj);
-            }
-            else if (typeof(openerRef.dismissAddAnotherPopup) === 'function') {
-                // django 1.7 compatibility
-                openerRef.dismissAddAnotherPopup(windowRef, initData.value, initData.obj);
             }
             break;
     }
