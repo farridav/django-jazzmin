@@ -1,18 +1,15 @@
 import os
 from typing import Any, Dict
 
-import dj_database_url
 from django.conf.global_settings import LANGUAGES as DJANGO_LANGUAGES
 
 ###################
 # Django Settings #
 ###################
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "not-secret-at-all")
-DEBUG = bool(int(os.getenv("DEBUG", 1)))
-TEST = os.getenv("FAIL_INVALID_TEMPLATE_VARS")
-
-PREFIX = "" if os.getenv("STANDALONE") else "tests.test_app."
+SECRET_KEY = "not-secret-at-all"
+DEBUG = True
+TEST = bool(os.getenv("FAIL_INVALID_TEMPLATE_VARS", 0))
 
 ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
@@ -27,8 +24,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Our apps
-    "{}library.books.apps.BooksConfig".format(PREFIX),
-    "{}library.loans.apps.LoansConfig".format(PREFIX),
+    "tests.test_app.library.books.apps.BooksConfig",
+    "tests.test_app.library.loans.apps.LoansConfig",
 ]
 
 MIDDLEWARE = [
@@ -43,9 +40,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "{}library.urls".format(PREFIX)
+ROOT_URLCONF = "tests.test_app.library.urls"
 
-WSGI_APPLICATION = "{}library.wsgi.application".format(PREFIX)
+WSGI_APPLICATION = "tests.test_app.library.wsgi.application"
 
 LOGGING = {
     "version": 1,
@@ -71,11 +68,11 @@ TEMPLATES = [
 ]
 
 DATABASES = {
-    "default": dj_database_url.config(
-        env="DATABASE_URL",
-        conn_max_age=500,
-        default="sqlite:///{}".format(os.path.join(BASE_DIR, "db.sqlite3")),
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "TEST": {"NAME": ":memory:"},
+    },
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -110,10 +107,6 @@ if DEBUG and not TEST:
     INSTALLED_APPS.extend(["debug_toolbar", "django_extensions"])
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: False}
-
-if not DEBUG and not TEST:
-    MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ########################
 # Third party settings #
@@ -178,7 +171,8 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "hide_models": [],
     # List of apps to base side menu (app or model) ordering off of
     "order_with_respect_to": ["Make Messages", "auth", "books", "books.author", "books.book", "loans"],
-    # Custom links to append to app groups, keyed on app name
+    # Custom links to append to app groups, keyed on (lower case) app label
+    # or use a name not in installed apps for a new group
     "custom_links": {
         "loans": [
             {
@@ -192,7 +186,8 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     },
     # Custom icons for side menu apps/models See the link below
     # https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,
-    # 5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
+    # 5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,
+    # 5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
     # for the full list of 5.13.0 free icon classes
     "icons": {
         "auth": "fas fa-users-cog",

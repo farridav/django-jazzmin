@@ -28,7 +28,14 @@ from django.utils.translation import gettext
 
 from .. import version
 from ..settings import CHANGEFORM_TEMPLATES, get_settings, get_ui_tweaks
-from ..utils import get_admin_url, get_filter_id, has_fieldsets_check, make_menu, order_with_respect_to
+from ..utils import (
+    get_admin_url,
+    get_filter_id,
+    get_installed_apps,
+    has_fieldsets_check,
+    make_menu,
+    order_with_respect_to,
+)
 
 User = get_user_model()
 register = Library()
@@ -50,8 +57,17 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     ordering = options.get("order_with_respect_to", [])
     ordering = [x.lower() for x in ordering]
 
+    installed_apps = get_installed_apps()
+    available_apps: list[dict[str, Any]] = copy.deepcopy(context.get(using, []))
+
     menu = []
-    available_apps = copy.deepcopy(context.get(using, []))
+
+    # Add any arbitrary groups that are not in available_apps
+    for app_label in options.get("custom_links", {}):
+        if app_label.lower() not in installed_apps:
+            available_apps.append(
+                {"name": app_label, "app_label": app_label, "app_url": "#", "has_module_perms": True, "models": []}
+            )
 
     custom_links = {
         app_name: make_menu(user, links, options, allow_appmenus=False)
@@ -59,7 +75,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     }
 
     for app in available_apps:
-        app_label = app["app_label"].lower()
+        app_label = app["app_label"]
         app_custom_links = custom_links.get(app_label, [])
         app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
         if app_label in options["hide_apps"]:
@@ -118,7 +134,13 @@ def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     Produce the menu for the user dropdown
     """
     options = get_settings()
-    return make_menu(user, options.get("usermenu_links", []), options, allow_appmenus=False, admin_site=admin_site)
+    return make_menu(
+        user,
+        options.get("usermenu_links", []),
+        options,
+        allow_appmenus=False,
+        admin_site=admin_site,
+    )
 
 
 @register.simple_tag
@@ -178,15 +200,17 @@ def get_user_avatar(user: AbstractUser) -> str:
 
     # If we find the property directly on the user model (imagefield or URLfield)
     avatar_field = getattr(user, avatar_field_name, None)
-    if avatar_field:
-        if type(avatar_field) == str:
+    if avatar_field is not None:
+        if not avatar_field:
+            return no_avatar
+        if isinstance(avatar_field, str):
             return avatar_field
         elif hasattr(avatar_field, "url"):
             return avatar_field.url
         elif callable(avatar_field):
             return avatar_field()
 
-    logger.warning("avatar field must be an ImageField/URLField on the user model, or a callable")
+    logger.warning("Avatar field must be an ImageField/URLField on the user model, or a callable")
 
     return no_avatar
 
@@ -208,18 +232,14 @@ def jazzmin_paginator_number(change_list: ChangeList, i: int) -> SafeText:
         <li class="page-item previous {disabled}">
             <a class="page-link" href="{link}" data-dt-idx="0" tabindex="0">«</a>
         </li>
-        """.format(
-            link=link, disabled="disabled" if link == "#" else ""
-        )
+        """.format(link=link, disabled="disabled" if link == "#" else "")
 
     if current_page:
         html_str += """
         <li class="page-item active">
             <a class="page-link" href="javascript:void(0);" data-dt-idx="3" tabindex="0">{num}</a>
         </li>
-        """.format(
-            num=i
-        )
+        """.format(num=i)
     elif spacer:
         html_str += """
         <li class="page-item">
@@ -233,9 +253,7 @@ def jazzmin_paginator_number(change_list: ChangeList, i: int) -> SafeText:
             <li class="page-item">
             <a href="{query_string}" class="page-link {end}" data-dt-idx="3" tabindex="0">{num}</a>
             </li>
-        """.format(
-            num=i, query_string=query_string, end=end
-        )
+        """.format(num=i, query_string=query_string, end=end)
 
     if end:
         link = change_list.get_query_string({PAGE_VAR: change_list.page_num + 1}) if change_list.page_num < i else "#"
@@ -243,9 +261,7 @@ def jazzmin_paginator_number(change_list: ChangeList, i: int) -> SafeText:
         <li class="page-item next {disabled}">
             <a class="page-link" href="{link}" data-dt-idx="7" tabindex="0">»</a>
         </li>
-        """.format(
-            link=link, disabled="disabled" if link == "#" else ""
-        )
+        """.format(link=link, disabled="disabled" if link == "#" else "")
 
     return format_html(html_str)
 
@@ -256,7 +272,7 @@ def admin_extra_filters(cl: ChangeList) -> Dict:
     Return the dict of used filters which is not included in list_filters form
     """
     used_parameters = list(itertools.chain(*(s.used_parameters.keys() for s in cl.filter_specs)))
-    return dict((k, v) for k, v in cl.params.items() if k not in used_parameters)
+    return {k: v for k, v in cl.params.items() if k not in used_parameters}
 
 
 @register.simple_tag
@@ -330,7 +346,7 @@ def get_sections(
     """
     Get and sort all of the sections that need rendering out in a change form
     """
-    fieldsets = [x for x in admin_form]
+    fieldsets = list(admin_form)
 
     # Make inlines behave like formsets
     for fieldset in inline_admin_formsets:
@@ -457,7 +473,7 @@ def app_is_installed(app: str) -> bool:
 
 
 @register.simple_tag
-def action_message_to_list(action: LogEntry) -> List[Dict]:
+def action_message_to_list(action: LogEntry) -> List[Dict]:  # noqa: C901
     """
     Retrieves a formatted list with all actions taken by a user given a log entry object
     """
@@ -528,7 +544,7 @@ def style_bold_first_word(message: str) -> SafeText:
 
     message_words[0] = "<strong>{}</strong>".format(message_words[0])
 
-    message = " ".join([word for word in message_words])
+    message = " ".join(list(message_words))
 
     return mark_safe(message)
 

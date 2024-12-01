@@ -8,7 +8,7 @@ fake = Faker()
 
 def parse_sidemenu(response):
     """
-    Convert the side menu to a dict keyed on app name, containing a list of links
+    Convert the side menu to a dict keyed on app label, containing a list of links
     """
     menu = defaultdict(list)
     current_app = "Global"
@@ -36,7 +36,7 @@ def parse_topmenu(response):
         anchor = li.find("a")
 
         # Skip brand link and menu button
-        if type(anchor.contents[0]) == Tag:
+        if isinstance(anchor.contents[0], Tag):
             continue
 
         item = {"name": anchor.text.strip(), "link": anchor["href"]}
@@ -56,8 +56,8 @@ def parse_usermenu(response):
     menu = []
     soup = BeautifulSoup(response.content, "html.parser")
 
-    for link in soup.find(id="jazzy-usermenu").find_all("a"):
-        item = {"name": link.text.strip(), "link": link["href"]}
+    for link in soup.find(id="jazzy-usermenu").find_all(["a", "form"]):
+        item = {"name": link.text.strip(), "link": link.get("href") or link.get("action")}
         menu.append(item)
 
     return menu

@@ -1,18 +1,18 @@
 from random import choice
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
 from django.core.management import BaseCommand
 
-from ...models import Book, Author, Genre
 from ....factories import (
-    BookLoanFactory,
-    UserFactory,
     AuthorFactory,
     BookFactory,
+    BookLoanFactory,
     GroupFactory,
     LibraryFactory,
+    UserFactory,
 )
-from ....loans.models import Library, BookLoan
+from ....loans.models import BookLoan, Library
+from ...models import Author, Book, Genre
 
 
 class Command(BaseCommand):

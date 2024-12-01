@@ -2,16 +2,25 @@
 name: Deploy to test.pypi.org
 on:
   push:
-    branches: [master]
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Only allow the latest workflow to run and cancel all others. There is also job-level concurrency
+# enabled (see below), which is specified slightly differently.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  # Build the python package even on PRs to ensure we're able to build the package properly.
+  build:
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
           cache: pip
@@ -19,7 +28,74 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --upgrade pip poetry
 
-      - name: Deploy to testpypi.org
+      - name: Building the wheels
         run: |
-          poetry config repositories.testpypi https://test.pypi.org/legacy/
-          poetry publish --build -r testpypi --username ${{ secrets.TESTPYPI_USERNAME }} --password ${{ secrets.TESTPYPI_PASSWORD }} || :
+          # Need to check both Test PyPi and GH releases as we need to version bump the patch
+          # version everytime we merge in a PR, but once we release a new production release, we
+          # need to bump from the new release. So we grab the latest releases from both sources,
+          # then reverse sort them to get highest version! Simples :D
+          LATEST_RELEASE_TEST_PYPI=$(curl -s https://test.pypi.org/rss/project/django-jazzmin/releases.xml | sed -n 's/\s*<title>\([{a,b}0-9.]*\).*/\1/p' | head -n 2 | xargs)
+          LATEST_RELEASE_GITHUB=$(curl -s "https://api.github.com/repos/farridav/django-jazzmin/tags" | jq -r '.[0].name[1:]')
+          LATEST_RELEASE=$(printf "${LATEST_RELEASE_GITHUB}\n${LATEST_RELEASE_TEST_PYPI}" | sort -V -r | head -n 1)
+
+          # Now we can bump the version correctly to release a new version nicely base on the
+          # latest GH release.
+          poetry version $LATEST_RELEASE
+          poetry version prerelease  # Using `prerelease` rather than `prepatch` due to a bug in Poetry (latest checked 1.8.1 - https://github.com/python-poetry/poetry/issues/879)
+          poetry build
+
+      - name: Save build
+        uses: actions/cache/save@v4
+        id: build-cache
+        with:
+          path: |
+            dist/
+          key: cache-${{ github.run_id }}-${{ github.run_attempt }}
+
+  deploy:
+    runs-on: ubuntu-20.04
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip poetry
+
+      - name: Get build
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            dist/
+          key: cache-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Configure Poetry test repo
+        run: poetry config repositories.test_pypi https://test.pypi.org/legacy/
+
+      - name: Deploy to testpypi.org
+        if: github.ref == 'refs/heads/main'
+        run: poetry publish -r test_pypi --dist-dir dist/ --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
+
+      - name: Deploy to testpypi.org (Dry Run)
+        if: github.ref != 'refs/heads/main'
+        run: poetry publish -r test_pypi --dist-dir dist/ --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
+
+  update_release_draft:
+    permissions:
+      contents: write
+      pull-requests: read
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release-drafter.yml
+          disable-autolabeler: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
