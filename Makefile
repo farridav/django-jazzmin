@@ -1,7 +1,7 @@
 CYAN ?= \033[0;36m
 COFF ?= \033[0m
 
-.PHONY: deps lint check test help test_app
+.PHONY: deps lint check test help test_app test_user
 .EXPORT_ALL_VARIABLES:
 
 .DEFAULT: help
