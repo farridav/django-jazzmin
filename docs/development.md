@@ -71,7 +71,6 @@ or use a string that is already translated upstream in Django.
 4. cd ../
 5. Run ./cli.py locales --prune de to remove the django provided strings
 6. Go through the strings in the locale file, any that are not genuinely new strings introduced by jazzmin, find them in the codebase, and try making them match the ones provided in djangos admin/admin docs translation files
-    - [Django admin translations](https://raw.githubusercontent.com/django/django/main/django/contrib/admindocs/locale/)
-    - [Django admin docs translations](https://raw.githubusercontent.com/django/django/main/django/contrib/admin/locale/de/LC_MESSAGES/django.po)
+    - [Django admin docs translations example for German language](https://raw.githubusercontent.com/django/django/main/django/contrib/admin/locale/de/LC_MESSAGES/django.po)
 
 Once you have finished, run `makemessages` again, until the file contains ONLY unique strings to jazzmin, there should only be a handful
