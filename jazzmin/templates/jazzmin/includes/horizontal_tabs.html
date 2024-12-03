@@ -6,7 +6,7 @@
 <ul class="nav nav-tabs mb-3" role="tablist" id="jazzy-tabs">
     {% for fieldset in forms %}
         <li class="nav-item">
-            <a class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
+            <a class="nav-link{% if forloop.first %} active{% endif %}" data-toggle="pill" role="tab" aria-controls="{{ fieldset.name|default:general_tab|slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" href="#{{ fieldset.name|default:general_tab|slugify }}-tab">
                 {{ fieldset.name|default:general_tab }}
             </a>
         </li>
@@ -16,7 +16,7 @@
 
 <div class="tab-content">
     {% for fieldset in forms %}
-        <div id="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" class="tab-pane fade{% if forloop.first %} active show{% endif %} {{ fieldset.classes }}" role="tabpanel" aria-labelledby="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
+        <div id="{{ fieldset.name|default:general_tab|slugify }}-tab" class="tab-pane fade{% if forloop.first %} active show{% endif %} {{ fieldset.classes }}" role="tabpanel" aria-labelledby="{{ fieldset.name|default:general_tab|slugify }}-tab">
             {% if fieldset.is_inline %}
                 {% include fieldset.opts.template with inline_admin_formset=fieldset %}
             {% else %}
