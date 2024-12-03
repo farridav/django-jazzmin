@@ -1,7 +1,7 @@
 CYAN ?= \033[0;36m
 COFF ?= \033[0m
 
-.PHONY: deps lint check test help test_app
+.PHONY: deps lint check test help test_app test_user
 .EXPORT_ALL_VARIABLES:
 
 .DEFAULT: help
@@ -20,13 +20,14 @@ deps: ## Install dependencies
 	poetry install
 
 lint: check-venv ## Lint the code
-	@printf "$(CYAN)Auto-formatting with black$(COFF)\n"
-	$(environment) black jazzmin tests
+	@printf "$(CYAN)Auto-formatting with ruff$(COFF)\n"
+	$(environment) ruff format jazzmin tests
+	$(environment) ruff check jazzmin tests --fix
 
 check: check-venv ## Check code quality
 	@printf "$(CYAN)Running static code analysis$(COFF)\n"
-	$(environment) flake8
-	$(environment) black --check jazzmin tests
+	$(environment) ruff format --check jazzmin tests
+	$(environment) ruff check jazzmin tests
 	$(environment) mypy jazzmin tests --ignore-missing-imports
 
 test: check-venv ## Run the test suite
