@@ -1,6 +1,7 @@
 import pytest
 from bs4 import BeautifulSoup
 from django.urls import reverse
+
 from jazzmin.settings import CHANGEFORM_TEMPLATES
 from jazzmin.templatetags.jazzmin import get_sections
 
@@ -37,7 +38,7 @@ def test_update_login_logo(client, custom_jazzmin_settings):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("config_value,template", [(k, v) for k, v in CHANGEFORM_TEMPLATES.items()])
+@pytest.mark.parametrize("config_value,template", list(CHANGEFORM_TEMPLATES.items()))
 def test_changeform_templates(config_value, template, admin_client, custom_jazzmin_settings):
     """
     All changeform config values use the correct templates
