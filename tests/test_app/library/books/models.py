@@ -5,7 +5,7 @@ from django.urls import reverse
 class Genre(models.Model):
     name = models.CharField(max_length=200, help_text="Enter a book genre (e.g. Science Fiction)")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
@@ -26,10 +26,10 @@ class Book(models.Model):
     last_print = models.DateField(auto_now_add=True)
     pages = models.IntegerField(null=True)
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("admin:books_book_change", args=(self.id,))
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -42,8 +42,8 @@ class Author(models.Model):
     class Meta:
         ordering = ("last_name", "first_name")
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("admin:books_author_change", args=(self.id,))
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "{}, {}".format(self.first_name, self.last_name)

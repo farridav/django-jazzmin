@@ -72,6 +72,26 @@ norecursedirs = ".git .tox _resource .mypy_cache build dist docs"
 DJANGO_SETTINGS_MODULE = "tests.test_app.library.settings"
 FAIL_INVALID_TEMPLATE_VARS = 1
 
+[tool.mypy]
+python_version = "3.11"
+disallow_any_generics = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_untyped_decorators = false
+ignore_errors = false
+ignore_missing_imports = true
+implicit_reexport = false
+strict_optional = true
+strict_equality = true
+no_implicit_optional = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unreachable = true
+warn_no_return = true
+warn_return_any = false
+plugins = []
+
 [tool.ruff]
 target-version = "py38"
 line-length = 120
@@ -132,6 +152,7 @@ setenv =
 commands =
     {envpython} -m ruff format --check jazzmin
     {envpython} -m ruff check jazzmin
+	  {envpython} -m mypy jazzmin tests --ignore-missing-imports
     {envpython} -m pytest
 deps =
     django-jazzmin  # Installing self to allow automatic getting of `version` which needs `django-jazzmin` to be install to get information about the package.

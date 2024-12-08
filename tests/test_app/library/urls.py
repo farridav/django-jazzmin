@@ -2,13 +2,13 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin, messages
 from django.contrib.auth import views as auth_views
-from django.http import HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import include, path, re_path, reverse
 from django.views.generic import RedirectView
 from django.views.static import serve
 
 
-def make_messages(request):
+def make_messages(request: HttpRequest) -> HttpResponseRedirect:
     messages.add_message(request, messages.INFO, "Info message")
     messages.add_message(request, messages.ERROR, "Error message")
     messages.add_message(request, messages.WARNING, "Warning message")

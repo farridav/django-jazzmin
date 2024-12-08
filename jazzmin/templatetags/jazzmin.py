@@ -43,7 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 @register.simple_tag(takes_context=True)
-def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]:
+def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict[str, Any]]:
     """
     Get the list of apps and models to render out in the side menu and on the dashboard page
 
@@ -120,7 +120,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
 
 
 @register.simple_tag
-def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
+def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict[str, Any]]:
     """
     Produce the menu for the top nav bar
     """
@@ -129,7 +129,7 @@ def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
 
 
 @register.simple_tag
-def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
+def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict[str, Any]]:
     """
     Produce the menu for the user dropdown
     """
@@ -144,7 +144,7 @@ def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
 
 
 @register.simple_tag
-def get_jazzmin_settings(request: WSGIRequest) -> Dict:
+def get_jazzmin_settings(request: WSGIRequest) -> Dict[str, Any]:
     """
     Get Jazzmin settings, update any defaults from the request, and return
     """
@@ -164,7 +164,7 @@ def get_jazzmin_settings(request: WSGIRequest) -> Dict:
 
 
 @register.simple_tag
-def get_jazzmin_ui_tweaks() -> Dict:
+def get_jazzmin_ui_tweaks() -> Dict[str, Any]:
     """
     Return Jazzmin ui tweaks
     """
@@ -190,13 +190,13 @@ def get_user_avatar(user: AbstractUser) -> str:
     """
     no_avatar = static("vendor/adminlte/img/user2-160x160.jpg")
     options = get_settings()
-    avatar_field_name: Optional[Union[str, Callable]] = options.get("user_avatar")
+    avatar_field_name: Optional[Union[str, Callable[[AbstractUser], str]]] = options.get("user_avatar")
 
     if not avatar_field_name:
         return no_avatar
 
     if callable(avatar_field_name):
-        return avatar_field_name(user)
+        return str, avatar_field_name(user)
 
     # If we find the property directly on the user model (imagefield or URLfield)
     avatar_field = getattr(user, avatar_field_name, None)
@@ -206,9 +206,9 @@ def get_user_avatar(user: AbstractUser) -> str:
         if isinstance(avatar_field, str):
             return avatar_field
         elif hasattr(avatar_field, "url"):
-            return avatar_field.url
+            return str, avatar_field.url
         elif callable(avatar_field):
-            return avatar_field()
+            return str, avatar_field()
 
     logger.warning("Avatar field must be an ImageField/URLField on the user model, or a callable")
 
@@ -216,7 +216,7 @@ def get_user_avatar(user: AbstractUser) -> str:
 
 
 @register.simple_tag
-def jazzmin_paginator_number(change_list: ChangeList, i: int) -> SafeText:
+def jazzmin_paginator_number(change_list: ChangeList, i: Union[int, str]) -> SafeText:
     """
     Generate an individual page index link in a paginated list.
     """
@@ -267,7 +267,7 @@ def jazzmin_paginator_number(change_list: ChangeList, i: int) -> SafeText:
 
 
 @register.simple_tag
-def admin_extra_filters(cl: ChangeList) -> Dict:
+def admin_extra_filters(cl: ChangeList) -> Dict[str, Any]:
     """
     Return the dict of used filters which is not included in list_filters form
     """
@@ -433,11 +433,11 @@ def can_view_self(perms: PermWrapper) -> bool:
 
 
 @register.simple_tag
-def header_class(header: Dict, forloop: Dict) -> str:
+def header_class(header: Dict[str, Any], forloop: Dict[str, Any]) -> str:
     """
     Adds CSS classes to header HTML element depending on its attributes
     """
-    classes = []
+    classes: List[str] = []
     sorted, asc, desc = (
         header.get("sorted"),
         header.get("ascending"),
@@ -473,27 +473,27 @@ def app_is_installed(app: str) -> bool:
 
 
 @register.simple_tag
-def action_message_to_list(action: LogEntry) -> List[Dict]:  # noqa: C901
+def action_message_to_list(action: LogEntry) -> List[Dict[str, Any]]:  # noqa: C901
     """
     Retrieves a formatted list with all actions taken by a user given a log entry object
     """
-    messages = []
+    messages: List[Dict[str, Any]] = []
 
-    def added(x: str) -> Dict:
+    def added(x: str) -> Dict[str, Any]:
         return {
             "msg": x,
             "icon": "plus-circle",
             "colour": "success",
         }
 
-    def changed(x: str) -> Dict:
+    def changed(x: str) -> Dict[str, Any]:
         return {
             "msg": x,
             "icon": "edit",
             "colour": "blue",
         }
 
-    def deleted(x: str) -> Dict:
+    def deleted(x: str) -> Dict[str, Any]:
         return {
             "msg": x,
             "icon": "trash",
@@ -540,7 +540,7 @@ def style_bold_first_word(message: str) -> SafeText:
     message_words = escape(message).split()
 
     if not len(message_words):
-        return ""
+        return mark_safe("")
 
     message_words[0] = "<strong>{}</strong>".format(message_words[0])
 
@@ -551,4 +551,4 @@ def style_bold_first_word(message: str) -> SafeText:
 
 @register.filter
 def unicode_slugify(message: str) -> str:
-    return slugify(message, allow_unicode=True)
+    return str, slugify(message, allow_unicode=True)
