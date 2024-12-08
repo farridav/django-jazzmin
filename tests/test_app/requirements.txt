@@ -8,6 +8,3 @@ docutils
 importlib-metadata==4.13.0
 django-debug-toolbar
 django_extensions
-
-# Latest jazzmin
-https://github.com/farridav/django-jazzmin/archive/master.zip
