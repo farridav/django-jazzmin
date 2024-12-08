@@ -40,6 +40,7 @@ Live demo https://django-jazzmin-test.onrender.com
 **Username**: test@test.com
 **Password**: test
 *Note: Data resets nightly*
+*Note: ☕ If the app seems sleepy, give it a minute - it's just having its power nap on the free tier.*
 
 ## Features
 
