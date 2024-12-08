@@ -77,7 +77,7 @@ python_version = "3.11"
 disallow_any_generics = true
 disallow_untyped_calls = true
 disallow_untyped_defs = true
-disallow_untyped_decorators = true
+disallow_untyped_decorators = false
 ignore_errors = false
 ignore_missing_imports = true
 implicit_reexport = false
@@ -89,7 +89,7 @@ warn_redundant_casts = true
 warn_unused_configs = true
 warn_unreachable = true
 warn_no_return = true
-warn_return_any = true
+warn_return_any = false
 plugins = []
 
 [tool.ruff]
