@@ -18,8 +18,12 @@ customise, including a built-in UI customizer
 - Based on the latest [adminlte](https://adminlte.io/) + [bootstrap](https://getbootstrap.com/)
 
 ## Demo
+Live demo https://django-jazzmin-test.onrender.com
+**Username**: test@test.com
+**Password**: test
+*Note: Data resets nightly*
 
-You can view the demo app by cloning the repository, and running the following commands:
+You can also view the demo app by cloning the repository, and running the following commands:
 
 ```bash
     poetry install
