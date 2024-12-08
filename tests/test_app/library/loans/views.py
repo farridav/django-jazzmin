@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from django.contrib.admin.sites import site
 from django.views.generic import TemplateView
 
@@ -5,7 +7,7 @@ from django.views.generic import TemplateView
 class CustomView(TemplateView):
     template_name = "loans/custom.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         ctx = super().get_context_data(**kwargs)
         ctx.update(site.each_context(self.request))
         return ctx
