@@ -8,3 +8,4 @@ docutils
 importlib-metadata==4.13.0
 django-debug-toolbar
 django_extensions
+django-jazzmin
