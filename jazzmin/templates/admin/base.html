@@ -283,25 +283,25 @@
                     <section id="content" class="content">
                         {% block messages %}
                             {% for message in messages %}
-                                {% if message.tags == 'success' %}
+                                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
                                     <div class="alert alert-success alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
                                         </button>
                                         <i class="icon fa fa-check"></i>{{ message|capfirst }}
                                     </div>
-                                {% elif message.tags == 'error' %}
+                                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
                                     <div class="alert alert-danger alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
                                         </button>
                                         <i class="icon fa fa-ban"></i>{{ message|capfirst }}
                                     </div>
-                                {% elif message.tags == 'warning' %}
+                                {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
                                     <div class="alert alert-warning alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
                                         </button>
                                         <i class="icon fa fa-exclamation-triangle"></i>{{ message|capfirst }}
                                     </div>
-                                {% elif message.tags == 'info' %}
+                                {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
                                     <div class="alert alert-info alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
                                         </button>
