@@ -140,8 +140,8 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     ############
     # Links to put along the top menu
     "topmenu_links": [
-        # Url that gets reversed (Permissions can be added)
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        # Url that gets reversed (Permissions and Groups can be added)
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"], "groups": []},
         # external url that opens in a new window (Permissions can be added)
         {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
         # model admin to link to (Permissions checked against model)
