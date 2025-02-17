@@ -312,6 +312,8 @@ def get_ui_tweaks() -> Dict:
     theme_body_classes = " theme-{}".format(theme)
     if theme in DARK_THEMES:
         theme_body_classes += " dark-mode"
+    
+    has_sm_config = "sm_config" in tweaks
 
     ret = {
         "raw": raw_tweaks,
@@ -333,10 +335,12 @@ def get_ui_tweaks() -> Dict:
         "brand_classes": classes("brand_small_text", "brand_colour"),
         "footer_classes": classes("footer_small_text"),
         "button_classes": tweaks["button_classes"],
-        "sm_config" : tweaks['sm_config'],
     }
 
     if dark_mode_theme:
         ret["dark_mode_theme"] = {"name": dark_mode_theme, "src": static(THEMES[dark_mode_theme])}
+
+    if has_sm_config:
+        ret["sm_config"] = tweaks["sm_config"]
 
     return ret

@@ -549,10 +549,8 @@ def unicode_slugify(message: str) -> str:
 
 @register.simple_tag
 def get_simple_metrics_data(app_name, model_name):
-    
     simple_metrics_data = get_jazzmin_ui_tweaks()['sm_config'][model_name]
     if simple_metrics_data != None:
         metrics_manager = MetricsManager()
         return build_simple_metrics_for_model(app_name, model_name, simple_metrics_data, metrics_manager)
-    
     return None

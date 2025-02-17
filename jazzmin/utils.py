@@ -324,31 +324,3 @@ def build_simple_metrics_for_model(app_name, model_name, simple_metrics, metrics
                             })
 
     return simple_metrics_data
-
-
-
-        # {"order": [
-        # {   "metric":"avg",
-        #     "label":"Average Order Total",
-        #     "date_range":["-2M","today"],
-        #     "column":"total",
-        # },
-        # {
-        #     "metric":"total",
-        #     "label":"",
-        #     "date_range" : ["1st of year","today"],
-        # },
-        # {
-        #     "metric":"count",
-        #     "label":"New Order in last fortnight",
-        #     "date_range":["-2W","today"],
-        #     "column":"status",
-        #     "column_val": "new"
-        # },
-        # {
-        #     "metric":"count",
-        #     "label":"New orders",
-        #     "column":"status",
-        #     "column_val": "new"
-        # },
-
