@@ -238,14 +238,14 @@ def attr(**kwargs) -> Callable:
 
     return decorator
 
-def build_auto_dashboard_for_model(app_name, model_name, auto_dashboard_metrics, metrics_manager):
-    auto_dash_data = []
+def build_simple_metrics_for_model(app_name, model_name, simple_metrics, metrics_manager):
+    simple_metrics_data = []
     try:
         model = apps.get_app_config(app_name.lower()).get_model(model_name)
     except LookupError:
         return
     
-    for dash_dict in auto_dashboard_metrics:
+    for dash_dict in simple_metrics:
 
         format_pre = ""
         try:
@@ -315,7 +315,7 @@ def build_auto_dashboard_for_model(app_name, model_name, auto_dashboard_metrics,
         elif dash_dict['metric'] == 'min':
             data = metrics_manager.min_value(model,column,start_date,end_date,method)
         
-        auto_dash_data.append({
+        simple_metrics_data.append({
                             'label' : dash_dict['label'],
                              'data' : data ,
                              'icon' : icon,
@@ -323,7 +323,7 @@ def build_auto_dashboard_for_model(app_name, model_name, auto_dashboard_metrics,
                              "format": (format_pre, format_post)
                             })
 
-    return auto_dash_data
+    return simple_metrics_data
 
 
 

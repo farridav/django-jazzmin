@@ -29,11 +29,11 @@
                             <h5 class="m-0">{{ app.name }}</h5>
                         </div>
                         <div class="card-body">
-                            {% if jazzmin_ui.auto_dashboard != None %}
+                            {% if jazzmin_ui.sm_config != None %}
                             <div class="container">
-                                {% for key,val in jazzmin_ui.auto_dashboard.items %}
+                                {% for key,val in jazzmin_ui.sm_config.items %}
                                 <div class="row justify-content-around">
-                                {% get_auto_dashboard_data app_name=app.name model_name=key as dashboard_data %}
+                                {% get_simple_metrics_data app_name=app.name model_name=key as dashboard_data %}
                                     {% for data_dict in dashboard_data %}      
                                         <div class="card bg-{{data_dict.colour}} p-2 col-5-auto border border-info">
                                             <div class="d-flex justify-content-between align-items-center ">

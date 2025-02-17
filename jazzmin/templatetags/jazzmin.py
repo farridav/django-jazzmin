@@ -36,7 +36,7 @@ from ..utils import (
     has_fieldsets_check,
     make_menu,
     order_with_respect_to,
-    build_auto_dashboard_for_model
+    build_simple_metrics_for_model
 )
 from ..metrics import MetricsManager
 
@@ -548,11 +548,11 @@ def unicode_slugify(message: str) -> str:
     return slugify(message, allow_unicode=True)
 
 @register.simple_tag
-def get_auto_dashboard_data(app_name, model_name):
+def get_simple_metrics_data(app_name, model_name):
     
-    auto_dashboard_metrics = get_jazzmin_ui_tweaks()['auto_dashboard'][model_name]
-    if auto_dashboard_metrics != None:
+    simple_metrics_data = get_jazzmin_ui_tweaks()['sm_config'][model_name]
+    if simple_metrics_data != None:
         metrics_manager = MetricsManager()
-        return build_auto_dashboard_for_model(app_name, model_name, auto_dashboard_metrics, metrics_manager)
+        return build_simple_metrics_for_model(app_name, model_name, simple_metrics_data, metrics_manager)
     
     return None

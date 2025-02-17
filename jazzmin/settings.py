@@ -157,10 +157,10 @@ DEFAULT_UI_TWEAKS: Dict[str, Any] = {
         "success": "btn-success",
     },
     ##################
-    # Auto Dashboard #
+    # Simple Metrics #
     ##################
-    # Create a more detailed dashboard homepage
-    "auto_dashboard": None,
+    # Create a more detailed dashboard homepage by adding simple custom metrics to the top of each/any model card  
+    "sm_config": None,
 }
 
 THEMES = {
@@ -333,7 +333,7 @@ def get_ui_tweaks() -> Dict:
         "brand_classes": classes("brand_small_text", "brand_colour"),
         "footer_classes": classes("footer_small_text"),
         "button_classes": tweaks["button_classes"],
-        "auto_dashboard" : tweaks['auto_dashboard'],
+        "sm_config" : tweaks['sm_config'],
     }
 
     if dark_mode_theme:
