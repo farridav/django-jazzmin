@@ -12,8 +12,7 @@
 
         {% if cl.search_fields %}
             <div class="form-group">
-                <input class="form-control" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar"
-                    {% if cl.search_help_text %} placeholder="{{ cl.search_help_text }}{% endif %}">
+                <input class="form-control" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar">
             </div>
         {% endif %}
 

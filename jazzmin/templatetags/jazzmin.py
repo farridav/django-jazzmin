@@ -26,16 +26,19 @@ from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import get_text_list, slugify
 from django.utils.translation import gettext
 
+from django.apps import apps
+
 from .. import version
 from ..settings import CHANGEFORM_TEMPLATES, get_settings, get_ui_tweaks
 from ..utils import (
     get_admin_url,
     get_filter_id,
-    get_installed_apps,
     has_fieldsets_check,
     make_menu,
     order_with_respect_to,
+    build_auto_dashboard_for_model
 )
+from ..metrics import MetricsManager
 
 User = get_user_model()
 register = Library()
@@ -57,17 +60,8 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     ordering = options.get("order_with_respect_to", [])
     ordering = [x.lower() for x in ordering]
 
-    installed_apps = get_installed_apps()
-    available_apps: list[dict[str, Any]] = copy.deepcopy(context.get(using, []))
-
     menu = []
-
-    # Add any arbitrary groups that are not in available_apps
-    for app_label in options.get("custom_links", {}):
-        if app_label.lower() not in installed_apps:
-            available_apps.append(
-                {"name": app_label, "app_label": app_label, "app_url": "#", "has_module_perms": True, "models": []}
-            )
+    available_apps = copy.deepcopy(context.get(using, []))
 
     custom_links = {
         app_name: make_menu(user, links, options, allow_appmenus=False)
@@ -75,7 +69,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     }
 
     for app in available_apps:
-        app_label = app["app_label"]
+        app_label = app["app_label"].lower()
         app_custom_links = custom_links.get(app_label, [])
         app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
         if app_label in options["hide_apps"]:
@@ -552,3 +546,13 @@ def style_bold_first_word(message: str) -> SafeText:
 @register.filter
 def unicode_slugify(message: str) -> str:
     return slugify(message, allow_unicode=True)
+
+@register.simple_tag
+def get_auto_dashboard_data(app_name, model_name):
+    
+    auto_dashboard_metrics = get_jazzmin_ui_tweaks()['auto_dashboard'][model_name]
+    if auto_dashboard_metrics != None:
+        metrics_manager = MetricsManager()
+        return build_auto_dashboard_for_model(app_name, model_name, auto_dashboard_metrics, metrics_manager)
+    
+    return None
