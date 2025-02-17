@@ -57,8 +57,7 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "hide_models": [],
     # List of apps to base side menu ordering off of
     "order_with_respect_to": [],
-    # Custom links to append to side menu app groups, keyed on lower case app label
-    # or makes a new group if the given app label doesnt exist in installed apps
+    # Custom links to append to side menu app groups, keyed on app name
     "custom_links": {},
     # Custom icons for side menu apps/models See the link below
     # https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,
@@ -157,6 +156,11 @@ DEFAULT_UI_TWEAKS: Dict[str, Any] = {
         "danger": "btn-danger",
         "success": "btn-success",
     },
+    ##################
+    # Simple Metrics #
+    ##################
+    # Create a more detailed dashboard homepage by adding simple custom metrics to the top of each/any model card  
+    "sm_config": None,
 }
 
 THEMES = {
@@ -170,7 +174,6 @@ THEMES = {
     "lumen": "vendor/bootswatch/lumen/bootstrap.min.css",
     "lux": "vendor/bootswatch/lux/bootstrap.min.css",
     "materia": "vendor/bootswatch/materia/bootstrap.min.css",
-    "morph": "vendor/bootswatch/morph/bootstrap.min.css",
     "minty": "vendor/bootswatch/minty/bootstrap.min.css",
     "pulse": "vendor/bootswatch/pulse/bootstrap.min.css",
     "sandstone": "vendor/bootswatch/sandstone/bootstrap.min.css",
@@ -179,15 +182,12 @@ THEMES = {
     "spacelab": "vendor/bootswatch/spacelab/bootstrap.min.css",
     "united": "vendor/bootswatch/united/bootstrap.min.css",
     "yeti": "vendor/bootswatch/yeti/bootstrap.min.css",
-    "quartz": "vendor/bootswatch/quartz/bootstrap.min.css",
-    "zephyr": "vendor/bootswatch/zephyr/bootstrap.min.css",
     # dark themes
     "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
     "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
     "slate": "vendor/bootswatch/slate/bootstrap.min.css",
     "solar": "vendor/bootswatch/solar/bootstrap.min.css",
     "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
-    "vapor": "vendor/bootswatch/vapor/bootstrap.min.css",
 }
 
 DARK_THEMES = ("darkly", "cyborg", "slate", "solar", "superhero")
@@ -312,6 +312,8 @@ def get_ui_tweaks() -> Dict:
     theme_body_classes = " theme-{}".format(theme)
     if theme in DARK_THEMES:
         theme_body_classes += " dark-mode"
+    
+    has_sm_config = "sm_config" in tweaks
 
     ret = {
         "raw": raw_tweaks,
@@ -337,5 +339,8 @@ def get_ui_tweaks() -> Dict:
 
     if dark_mode_theme:
         ret["dark_mode_theme"] = {"name": dark_mode_theme, "src": static(THEMES[dark_mode_theme])}
+
+    if has_sm_config:
+        ret["sm_config"] = tweaks["sm_config"]
 
     return ret

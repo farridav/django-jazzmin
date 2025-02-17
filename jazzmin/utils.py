@@ -238,6 +238,89 @@ def attr(**kwargs) -> Callable:
 
     return decorator
 
+def build_simple_metrics_for_model(app_name, model_name, simple_metrics, metrics_manager):
+    simple_metrics_data = []
+    try:
+        model = apps.get_app_config(app_name.lower()).get_model(model_name)
+    except LookupError:
+        return
+    
+    for dash_dict in simple_metrics:
 
-def get_installed_apps() -> List[str]:
-    return [app_config.label for app_config in apps.get_app_configs()]
+        format_pre = ""
+        try:
+            if dash_dict['format-pre']:
+                format_pre = dash_dict['format-pre']
+        except KeyError:
+                    pass
+
+        format_post = ""
+        try:
+            if dash_dict['format-post']:
+                format_post = dash_dict['format-post']
+        except KeyError:
+                    pass
+
+        colour = "transparent"
+        try:
+            if dash_dict['colour']:
+                colour = dash_dict['colour']
+        except KeyError:
+                    pass
+        
+        icon = "info"
+        try:
+            if dash_dict['icon']:
+                icon = dash_dict['icon']
+        except KeyError:
+                    pass
+
+        start_date = None
+        end_date = None
+        try:
+            if dash_dict['date_range']:
+                start_date = dash_dict['date_range'][0]
+                end_date = dash_dict['date_range'][1]
+        except KeyError:
+                    pass
+        
+        column = None
+        column_val = None
+        try:
+            if dash_dict['column']:
+                column = dash_dict['column']
+                try:
+                    if dash_dict['column_val']:
+                        column_val = dash_dict['column_val']
+                except KeyError:
+                    pass
+        except KeyError:
+                    pass
+        method = None
+        try:
+            if dash_dict['method']:
+                method = dash_dict['method']
+        except KeyError:
+            pass
+
+        data = None
+        if dash_dict['metric'] == 'avg':
+            data = metrics_manager.average(model,column,start_date,end_date,method)
+        elif dash_dict['metric'] == 'sum':
+            data = metrics_manager.sum(model,column,start_date,end_date,method)
+        elif dash_dict['metric'] == 'count':
+            data = metrics_manager.count(model,column,column_val,start_date,end_date,method)
+        elif dash_dict['metric'] == 'max':
+            data = metrics_manager.max_value(model,column,start_date,end_date,method)
+        elif dash_dict['metric'] == 'min':
+            data = metrics_manager.min_value(model,column,start_date,end_date,method)
+        
+        simple_metrics_data.append({
+                            'label' : dash_dict['label'],
+                             'data' : data ,
+                             'icon' : icon,
+                             'colour' : colour,
+                             "format": (format_pre, format_post)
+                            })
+
+    return simple_metrics_data
