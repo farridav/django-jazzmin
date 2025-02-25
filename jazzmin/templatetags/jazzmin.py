@@ -78,7 +78,7 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
         app_label = app["app_label"]
         app_custom_links = custom_links.get(app_label, [])
         app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
-        if app_label in options["hide_apps"]:
+        if app_label.lower() in options["hide_apps"]:
             continue
 
         menu_items = []
