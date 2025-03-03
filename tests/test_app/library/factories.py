@@ -17,12 +17,25 @@ class GroupFactory(DjangoModelFactory):
 
     @factory.post_generation
     def permissions(self, create, extracted, **kwargs):
+        """
+        Create a user with the given permissions, e.g UserFactory(permissions=('books.view_book', 'auth.change_user'))
+        """
         if not create:
             return
 
         if extracted:
-            for group in extracted:
-                self.permissions.add(group)
+            available_permissions = [
+                "{}.{}".format(x[0], x[1])
+                for x in Permission.objects.values_list("content_type__app_label", "codename")
+            ]
+
+            for permission in extracted:
+                assert permission in available_permissions, "{} not in {}".format(permission, available_permissions)
+
+                app, perm = permission.split(".")
+                perm_obj = Permission.objects.get(content_type__app_label=app, codename=perm)
+
+                self.permissions.add(perm_obj)
 
     class Meta:
         model = Group

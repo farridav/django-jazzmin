@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 
-from .test_app.library.factories import UserFactory
+from .test_app.library.factories import GroupFactory, UserFactory
 from .utils import parse_sidemenu, parse_topmenu, parse_usermenu
 
 
@@ -161,3 +161,26 @@ def test_user_menu(admin_user, client, custom_jazzmin_settings):
             "name": "See Profile",
         },
     ]
+
+
+@pytest.mark.django_db
+def test_group_permissions(client, custom_jazzmin_settings):
+    """
+    we honour inherited group permissions for the rendering of links
+    """
+    group = GroupFactory(permissions=("books.view_book",))
+    user = UserFactory(groups=(group,))
+
+    url = reverse("admin:index")
+    custom_jazzmin_settings["custom_links"] = {"books": [{"url": "make_messages", "permissions": ["books.view_book"]}]}
+    client.force_login(user)
+
+    response = client.get(url)
+    assert parse_sidemenu(response) == {
+        "Global": ["/en/admin/"],
+        "Books": ["/en/admin/books/book/", "/make_messages/"],
+    }
+
+    group.permissions.clear()
+    response = client.get(url)
+    assert parse_sidemenu(response) == {"Global": ["/en/admin/"]}
