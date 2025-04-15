@@ -18,14 +18,15 @@ classifiers = [
     "Framework :: Django",
     "Framework :: Django :: 4.2",
     "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     "Topic :: Internet :: WWW/HTTP :: WSGI",
@@ -36,27 +37,27 @@ include = ["jazzmin"]
 exclude = ["tests", "docs"]
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = ">=3.9"
 django = ">=4.2"
 
 [tool.poetry.group.dev.dependencies]
-django-debug-toolbar = "^3.2.4" # unparallelled debugging in django
-Werkzeug = "^2.0.2"             # support for werkzeug debugger in runserver_plus
-django-extensions = "^3.1.5"    # Django Sugar for development
-pytest = "^6.2.5"               # Test runner
-pytest-django = "^4.5.2"        # Django integration for pytest
+django-debug-toolbar = "^4.4.6" # unparallelled debugging in django
+Werkzeug = "^3.1.3"             # support for werkzeug debugger in runserver_plus
+django-extensions = "^3.2.3"    # Django Sugar for development
+pytest = "^8.3.4"               # Test runner
+pytest-django = "^4.9.0"        # Django integration for pytest
 pytest-cov = "^4.1.0"           # Measure code coverage during tests
-tox = "^3.24.5"                 # Test runner for python packages
-Faker = "^11.3.0"               # less fake fake data
+tox = "^4.23.2"                 # Test runner for python packages
+Faker = "^33.1.0"               # less fake fake data
 coveralls = "^3.3.1"            # Publish code coverage to coveralls
-beautifulsoup4 = "^4.10.0"      # Structure HTML documents into navigable things for test assertions
-mkdocs = "^1.2.3"               # Tool for serving rendered markdown docs
-polib = "^1.1.1"                # Tool for dealing with translation files
-factory-boy = "^3.2.1"          # Factory generation
-mypy = "^0.931"                 # Type checking
-click = "^8.0.3"                # Framework for building cli's
-ipdb = "^0.13.9"                # ipython breakpoints
-ruff = "*"                      # linter and code formatter
+beautifulsoup4 = "^4.12.3"      # Structure HTML documents into navigable things for test assertions
+mkdocs = "^1.6.1"               # Tool for serving rendered markdown docs
+polib = "^1.2.0"                # Tool for dealing with translation files
+factory-boy = "^3.3.1"          # Factory generation
+mypy = "^1.13.0"                # Type checking
+click = "^8.1.7"                # Framework for building cli's
+ipdb = "^0.13.13"               # ipython breakpoints
+ruff = "^0.8.1"                 # linter and code formatter
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/farridav/django-jazzmin/issues"
@@ -104,21 +105,28 @@ show_missing = true
 legacy_tox_ini = """
 [tox]
 envlist =
-    django4-{python3.8,python3.9,python3.10,python3.11,python3.12},
-    django5-{python3.10,python3.11,python3.12},
+    django4.2-{python3.9,python3.10,python3.11,python3.12},
+    django5.0-{python3.10,python3.11,python3.12},
+    django5.1-{python3.10,python3.11,python3.12,python3.13},
     # run one of the tests again but with coverage
-    coveralls-django4-python3.12,
+    coveralls-django4.2-python3.12,
 skipsdist = True
 
 [gh-actions]
 python =
-    3.8: python3.8
     3.9: python3.9
     3.10: python3.10
     3.11: python3.11
     3.12: python3.12
+    3.13: python3.13
 
 [testenv]
+basepython =
+    python3.9: python3.9
+    python3.10: python3.10
+    python3.11: python3.11
+    python3.12: python3.12
+    python3.13: python3.13
 setenv =
     PYTHONPATH = {toxinidir}
 commands =
@@ -135,10 +143,11 @@ deps =
     ruff
     beautifulsoup4
     factory-boy
-    django4: Django<5
-    django5: Django<6
+    django4.2: Django>=4.2,<5.0
+    django5.0: Django>=5.0,<5.1
+    django5.1: Django>=5.1,<5.2
 
-[testenv:coveralls-django4-python3.12]
+[testenv:coveralls-django4.2-python3.12]
 passenv = COVERALLS_REPO_TOKEN
 commands =
     mypy jazzmin --ignore-missing-imports

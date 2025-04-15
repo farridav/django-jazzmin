@@ -28,7 +28,7 @@
                     <span class="text-red">* </span>
                     {% endif %}
                 </label>
-                <div class="{% if not line.fields|length == 1 %} col-auto  fieldBox {% else %} col-sm-7 {% endif %}
+                <div class="{% if not line.fields|length == 1 %} col-auto  fieldBox {% else %} col-sm-9 {% endif %}
                              {% if field.field.name %} field-{{ field.field.name }}{% endif %}
                              {% if not field.is_readonly and field.errors %} errors{% endif %}
                              {% if field.field.is_hidden %} hidden {% endif %}

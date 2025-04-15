@@ -19,7 +19,7 @@ them as quickly as I would like, but im trying to get through them all now, hope
 [![Docs](https://readthedocs.org/projects/django-jazzmin/badge/?version=latest)](https://django-jazzmin.readthedocs.io)
 ![PyPI download month](https://img.shields.io/pypi/dm/django-jazzmin.svg)
 [![PyPI version](https://badge.fury.io/py/django-jazzmin.svg)](https://pypi.python.org/pypi/django-jazzmin/)
-![Python versions](https://img.shields.io/badge/python-%3E=3.8-brightgreen)
+![Python versions](https://img.shields.io/badge/python-%3E=3.9-brightgreen)
 ![Django Versions](https://img.shields.io/badge/django-%3E=4.2-brightgreen)
 [![Coverage Status](https://coveralls.io/repos/github/farridav/django-jazzmin/badge.svg?branch=main)](https://coveralls.io/github/farridav/django-jazzmin?branch=main)
 
@@ -34,6 +34,18 @@ pip install django-jazzmin
 ## Documentation
 
 See [Documentation](https://django-jazzmin.readthedocs.io) or [Test App](https://github.com/farridav/django-jazzmin/tree/main/tests/test_app/library/settings.py)
+
+## Demo
+
+Live demo https://django-jazzmin-test.onrender.com
+
+**Username**: test@test.com
+
+**Password**: test
+
+*Note: Data resets nightly*
+
+*Note: ☕ If the app seems sleepy, give it a minute - it's just having its power nap on the free tier.*
 
 ## Features
 

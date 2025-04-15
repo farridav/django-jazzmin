@@ -1,0 +1,11 @@
+Django
+whitenoise
+gunicorn
+psycopg2-binary
+dj-database-url
+factory-boy
+docutils
+importlib-metadata==4.13.0
+django-debug-toolbar
+django_extensions
+django-jazzmin
