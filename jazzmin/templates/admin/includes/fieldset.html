@@ -19,33 +19,35 @@
 {% endif %}
 
     {% for line in fieldset %}
-    <div class="form-group{% if line.fields|length == 1 and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
+    <div class="{% if line.fields|length == 1 and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
         <div class="row">
             {% for field in line %}
-                <label class="{% if not line.fields|length == 1 and forloop.counter != 1 %}col-auto {% else %}col-sm-3 {% endif %}text-left" for="id_{{ field.field.name }}">
-                    {{ field.field.label|capfirst }}
-                    {% if field.field.field.required %}
-                    <span class="text-red">* </span>
-                    {% endif %}
-                </label>
-                <div class="{% if not line.fields|length == 1 %} col-auto  fieldBox {% else %} col-sm-9 {% endif %}
-                             {% if field.field.name %} field-{{ field.field.name }}{% endif %}
-                             {% if not field.is_readonly and field.errors %} errors{% endif %}
-                             {% if field.field.is_hidden %} hidden {% endif %}
-                             {% if field.is_checkcard %} checkcard-row{% endif %}">
-                    {% if field.is_readonly %}
-                        <div class="readonly">{{ field.contents }}</div>
-                    {% else %}
-                        {{ field.field }}
-                    {% endif %}
-                    <div class="help-block red">
-                        {% if not line.fields|length == 1 and not field.is_readonly %}{{ field.errors }}{% endif %}
-                    </div>
-                    {% if field.field.help_text %}
-                        <div class="help-block">{{ field.field.help_text|safe }}</div>
-                    {% endif %}
-                    <div class="help-block text-red">
-                        {% if line.fields|length == 1 %}{{ line.errors }}{% endif %}
+                <div class="col form-group">
+                    <label class="col-auto text-left" for="id_{{ field.field.name }}">
+                        {{ field.field.label|capfirst }}
+                        {% if field.field.field.required %}
+                        <span class="text-red">* </span>
+                        {% endif %}
+                    </label>
+                    <div class="{% if not line.fields|length == 1 %} col-auto  fieldBox {% else %} col-sm-7 {% endif %}
+                                {% if field.field.name %} field-{{ field.field.name }}{% endif %}
+                                {% if not field.is_readonly and field.errors %} errors{% endif %}
+                                {% if field.field.is_hidden %} hidden {% endif %}
+                                {% if field.is_checkcard %} checkcard-row{% endif %}">
+                        {% if field.is_readonly %}
+                            <div class="readonly">{{ field.contents }}</div>
+                        {% else %}
+                            {{ field.field }}
+                        {% endif %}
+                        <div class="help-block red">
+                            {% if not line.fields|length == 1 and not field.is_readonly %}{{ field.errors }}{% endif %}
+                        </div>
+                        {% if field.field.help_text %}
+                            <div class="help-block">{{ field.field.help_text|safe }}</div>
+                        {% endif %}
+                        <div class="help-block text-red">
+                            {% if line.fields|length == 1 %}{{ line.errors }}{% endif %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}
