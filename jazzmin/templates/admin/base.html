@@ -217,6 +217,14 @@
                                 </a>
                             </li>
 
+                            <li class="nav-header">
+                                <div class="position-relative mr-2">
+                                    <i class="position-absolute fas fa-search" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
+                                    <input class="form-control form-control-sidebar" type="search"
+                                        placeholder="{% trans "Filter models" %}...">
+                                </div>
+                            </li>
+
                             {% if jazzmin_settings.navigation_expanded %}
                                 {% for app in side_menu_list %}
                                     <li class="nav-header">{{ app.name }}</li>
