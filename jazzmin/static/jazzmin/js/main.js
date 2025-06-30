@@ -48,12 +48,20 @@
         $main_li_parent.addClass('menu-is-opening menu-open');
     };
 
+    function filterSidebarModels() {
+        $("#model-filter-sidebar").on("input", function() {
+            const filter = $(this).val().toLowerCase();
+        })
+    };
+
     $(document).ready(function () {
         // Set active status on links
         setActiveLinks()
 
         // When we use the menu, store its state in a cookie to preserve it
         handleMenu();
+
+        filterSidebarModels()
 
         // Add minimal changelist styling to templates that we have been unable to override (e.g MPTT)
         // Needs to be here and not in change_list.js because this is the only JS we are guaranteed to run

@@ -20,13 +20,13 @@
         {% widthratio dashboard_list|length 2 1 as middle %}
     {% endif %}
 
-    <form class="form-inline col-12 pb-4" method="GET">
-        <input class="form-control mr-2" type="text" name="" value=""
-             placeholder="{% trans "Filter models" %}...">
-        <button class="btn {{ jazzmin_ui.button_classes.primary }}" type="submit">
-            {% trans "Search" %}
-        </button>
-    </form>
+    <div class="row col-12 pb-4">
+        <div class="position-relative">
+            <i class="position-absolute fas fa-search" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
+            <input class="form-control" type="text" id="model-filter-dashboard"
+                 placeholder="{% trans "Filter models" %}...">
+        </div>
+    </div>
 
     <div class="col-lg-9 col-12">
         <div class="row">
@@ -138,4 +138,8 @@
         </div>
     </div>
 
+{% endblock %}
+{% block extrajs %}
+    {{ block.super }}
+    <script src="{% static "jazzmin/js/dashboard_filter.js" %}"></script>
 {% endblock %}
