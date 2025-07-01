@@ -51,7 +51,29 @@
     function filterSidebarModels() {
         $("#model-filter-sidebar").on("input", function() {
             const filter = $(this).val().toLowerCase();
-        })
+            const $apps = $("li.nav-header[data-app-index]");
+
+            if (!filter) {
+                $apps.show();
+                $("li.nav-item").show();
+                return;
+            };
+
+            $apps.each(function(index) {
+                let appHasMatch = false;
+                const $models = $(`li.nav-item[data-app-index="${index}"]`);
+
+                $models.each(function() {
+                    const $model = $(this);
+                    const modelName = $model.find("a > p").text().toLowerCase().trim();
+                    const isMatch = modelName.includes(filter);
+
+                    $model.toggle(isMatch);
+                    if (isMatch) appHasMatch = true;
+                });
+                $(this).toggle(appHasMatch);
+            });
+        });
     };
 
     $(document).ready(function () {
@@ -61,6 +83,7 @@
         // When we use the menu, store its state in a cookie to preserve it
         handleMenu();
 
+        // Dynamically filter models in the sidebar
         filterSidebarModels()
 
         // Add minimal changelist styling to templates that we have been unable to override (e.g MPTT)

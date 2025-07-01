@@ -2,8 +2,17 @@
     function filterDashboardModels() {
         $("#model-filter-dashboard").on("input", function() {
             const filter = $(this).val().toLowerCase();
+            const $cardContainers = $("#card-container > * > .card");
 
-            $("#card-container > * > .card").each(function() {
+            if (!filter) {
+                $cardContainers.each(function() {
+                    $(this).show();
+                    $(this).find("table > tbody > tr").show();
+                });
+                return;
+            };
+
+            $cardContainers.each(function() {
                 let appHasMatch = false;
                 const $appCard = $(this);
                 const $rows = $appCard.find("table > tbody > tr");
@@ -22,6 +31,7 @@
     };
 
     $(document).ready(function() {
+        // Dynamically filter models in the dashboard
         filterDashboardModels();
     });
 })(jQuery);
