@@ -55,7 +55,7 @@
 
             if (!filter) {
                 $apps.show();
-                $("li.nav-item").show();
+                $("li.nav-item[data-app-index]").show();
                 return;
             };
 

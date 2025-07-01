@@ -20,13 +20,17 @@
         {% widthratio dashboard_list|length 2 1 as middle %}
     {% endif %}
 
-    <div class="row col-12 pb-4">
-        <div class="position-relative">
-            <i class="position-absolute fas fa-search" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
-            <input class="form-control" type="text" id="model-filter-dashboard"
-                 placeholder="{% trans "Filter models" %}...">
+    {% if jazzmin_settings.show_model_filters %}
+        <div class="col-2 pb-4">
+            <div class="position-relative">
+                <i class="position-absolute fas fa-search" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
+                <input class="form-control" type="text" id="model-filter-dashboard"
+                     placeholder="{% trans "Filter models" %}...">
+            </div>
         </div>
-    </div>
+        </div> {# Need to close the row from base so filter alignment is correct :-( #}
+        <div class="row">
+    {% endif %}
 
     <div class="col-lg-9 col-12">
         <div class="row" id="card-container">
