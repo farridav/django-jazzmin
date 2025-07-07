@@ -124,3 +124,57 @@ def test_changeform_section_ordering(change_form_context, order):
     fieldsets = get_sections(admin_form, inline_formsets)
 
     assert tuple(x.name for x in fieldsets) == order
+
+
+@pytest.mark.django_db
+def test_model_filters_rendered(admin_client, custom_jazzmin_settings):
+    """
+    The filter inputs in the sidebar and dashboard render when show_model_filters is True
+    """
+    url = reverse("admin:index")
+
+    custom_jazzmin_settings["show_model_filters"] = True
+    response = admin_client.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    assert soup.find("input", id="model-filter-sidebar") is not None
+    assert soup.find("input", id="model-filter-dashboard") is not None
+
+
+@pytest.mark.django_db
+def test_model_filters_not_rendered(admin_client, custom_jazzmin_settings):
+    """
+    The filter inputs in the sidebar and dashboard don't render when show_model_filters is False
+    """
+    url = reverse("admin:index")
+
+    custom_jazzmin_settings["show_model_filters"] = False
+    response = admin_client.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    assert soup.find("input", id="model-filter-sidebar") is None
+    assert soup.find("input", id="model-filter-dashboard") is None
+
+
+@pytest.mark.django_db
+def test_dashboard_filter_js_included(admin_client, custom_jazzmin_settings):
+    """
+    Dashboard filter JS is included when model filters are enabled.
+    """
+    custom_jazzmin_settings["show_model_filters"] = True
+    response = admin_client.get(reverse("admin:index"))
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    assert soup.find("script", {"src": "/static/jazzmin/js/dashboard_filter.js"}) is not None
+
+
+@pytest.mark.django_db
+def test_dashboard_filter_js_not_included(admin_client, custom_jazzmin_settings):
+    """
+    Dashboard filter JS is not included when model filters are disabled.
+    """
+    custom_jazzmin_settings["show_model_filters"] = False
+    response = admin_client.get(reverse("admin:index"))
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    assert soup.find("script", {"src": "/static/jazzmin/js/dashboard_filter.js"}) is None

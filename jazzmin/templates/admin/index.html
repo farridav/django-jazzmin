@@ -13,8 +13,8 @@
     </ol>
 {% endblock %}
 
-{% if jazzmin_settings.show_model_filters %}
-    {% block filters %}
+{% block filters %}
+    {% if jazzmin_settings.show_model_filters %}
         <div class="col-12 col-md-6 col-xl-3 pb-4">
             <div class="position-relative">
                 <i class="position-absolute fas fa-search" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
@@ -22,8 +22,8 @@
                      placeholder="{% trans "Filter models" %}...">
             </div>
         </div>
-    {% endblock %}
-{% endif %}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     {% get_side_menu using="app_list" as dashboard_list %}
@@ -144,5 +144,7 @@
 {% endblock %}
 {% block extrajs %}
     {{ block.super }}
-    <script src="{% static "jazzmin/js/dashboard_filter.js" %}"></script>
+    {% if jazzmin_settings.show_model_filters %}
+        <script src="{% static "jazzmin/js/dashboard_filter.js" %}"></script>
+    {% endif %}
 {% endblock %}
