@@ -93,6 +93,7 @@
         if ($changeListTable.length && !$changeListTable.hasClass('table table-striped')) {
             $changeListTable.addClass('table table-striped');
         };
+        $('a[data-toggle="pill"], a[data-bs-toggle="pill"]').tab('show');
     });
 
 })(jQuery);
