@@ -18,14 +18,14 @@
             <button type="button" role="button" data-bs-slide="next" data-bs-target="#jazzy-carousel" class="btn {{ jazzmin_ui.button_classes.primary }} float-right"><i class="fas fa-arrow-right"></i></button>
         </div>
     </div>
-    <div class="carousel-indicators">
+    <ol class="carousel-indicators">
         {% for fieldset in forms %}
-            <button class="{% if forloop.first %}active{% endif %}" type="button" data-bs-target="#jazzy-carousel" data-bs-slide-to="{{ forloop.counter0 }}"></button>
+            <li {% if forloop.first %}class="active"{% endif %} data-bs-target="#jazzy-carousel" data-bs-slide-to="{{ forloop.counter0 }}"></li>
         {% endfor %}
-    </div>
+    </ol>
     <div class="carousel-inner">
         {% for fieldset in forms %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %} {{ fieldset.classes }}" data-carouselid="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:general_tab|capfirst }}" data-bs-target="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
+            <div class="carousel-item{% if forloop.first %} active{% endif %} {{ fieldset.classes }}" data-carouselid="{{ forloop.counter0 }}" data-label="{{ fieldset.name|default:general_tab|capfirst }}" data-bs-target="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
                 {% if fieldset.is_inline %}
                     {% include fieldset.opts.template with inline_admin_formset=fieldset %}
                 {% else %}
