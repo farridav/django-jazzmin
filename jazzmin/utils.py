@@ -152,10 +152,23 @@ def get_view_permissions(user: AbstractUser) -> Set[str]:
 
 
 def make_menu(
-    user: AbstractUser, links: List[Dict], options: Dict, allow_appmenus: bool = True, admin_site: str = "admin"
+    user: AbstractUser,
+    links: List[Dict],
+    options: Dict,
+    allow_appmenus: bool = True,
+    admin_site: str = "admin",
+    request: Any = None,
 ) -> List[Dict]:
     """
-    Make a menu from a list of user supplied links
+    Make a menu from a list of user supplied links.
+
+    Supports an optional 'is_visible' callable on each link that receives the request
+    and returns True/False to control visibility. This allows for complex visibility logic
+    based on user attributes, groups, request path, etc.
+
+    Example:
+        {"name": "Dashboard", "url": "/dashboard/", "is_visible": lambda r: r.user.is_superuser}
+        {"name": "Editors Only", "url": "/edit/", "is_visible": lambda r: r.user.groups.filter(name="editors").exists()}
     """
     if not user:
         return []
@@ -165,11 +178,19 @@ def make_menu(
     menu = []
     for link in links:
         perm_matches = []
-        for perm in link.get("permissions", []):
+        permissions = link.get("permissions", [])
+        for perm in permissions:
             perm_matches.append(user.has_perm(perm))
 
         if not all(perm_matches):
             continue
+
+        # Custom callable condition - receives request and returns True/False
+        # This allows for complex visibility logic based on request path, user attributes, etc.
+        is_visible = link.get("is_visible")
+        if callable(is_visible) and request is not None:
+            if not is_visible(request):
+                continue
 
         # Url links
         if "url" in link:

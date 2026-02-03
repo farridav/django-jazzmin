@@ -229,7 +229,10 @@ Example:
             "icon": "fas fa-comments",
 
             # a list of permissions the user must have to see this link (optional)
-            "permissions": ["books.view_book"]
+            "permissions": ["books.view_book"],
+
+            # a callable that receives the request and returns True/False to control visibility (optional)
+            "is_visible": lambda request: request.user.is_superuser,
         }],
         # Add/Or a new group (name must not conflict with an installed app)
         "custom_group": [{
@@ -240,6 +243,31 @@ Example:
         }]
     },
 ```
+
+### Dynamic visibility with `is_visible`
+
+For complex visibility logic, you can use the `is_visible` option. It accepts a callable that receives the `request` object and returns `True` or `False`:
+
+```python
+# Show only for superusers
+"is_visible": lambda request: request.user.is_superuser
+
+# Show only for users in specific groups (OR logic)
+"is_visible": lambda request: request.user.groups.filter(name__in=["editors", "managers"]).exists()
+
+# Show only on specific pages (context-aware menus)
+"is_visible": lambda request: "/books/" in request.path
+
+# Combine with permissions for AND logic
+{
+    "name": "Editor Tools",
+    "url": "editor_dashboard",
+    "permissions": ["books.change_book"],  # User must have this permission
+    "is_visible": lambda request: request.user.groups.filter(name="editors").exists(),  # AND be in this group
+}
+```
+
+This works on `topmenu_links`, `usermenu_links`, and `custom_links`.
 
 #### note
 

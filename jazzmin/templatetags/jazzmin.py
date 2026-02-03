@@ -69,8 +69,9 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
                 {"name": app_label, "app_label": app_label, "app_url": "#", "has_module_perms": True, "models": []}
             )
 
+    request = context.get("request")
     custom_links = {
-        app_name: make_menu(user, links, options, allow_appmenus=False)
+        app_name: make_menu(user, links, options, allow_appmenus=False, request=request)
         for app_name, links in options.get("custom_links", {}).items()
     }
 
@@ -119,27 +120,32 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
     return menu
 
 
-@register.simple_tag
-def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
+@register.simple_tag(takes_context=True)
+def get_top_menu(context: Context, user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     """
     Produce the menu for the top nav bar
     """
     options = get_settings()
-    return make_menu(user, options.get("topmenu_links", []), options, allow_appmenus=True, admin_site=admin_site)
+    request = context.get("request")
+    return make_menu(
+        user, options.get("topmenu_links", []), options, allow_appmenus=True, admin_site=admin_site, request=request
+    )
 
 
-@register.simple_tag
-def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
+@register.simple_tag(takes_context=True)
+def get_user_menu(context: Context, user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
     """
     Produce the menu for the user dropdown
     """
     options = get_settings()
+    request = context.get("request")
     return make_menu(
         user,
         options.get("usermenu_links", []),
         options,
         allow_appmenus=False,
         admin_site=admin_site,
+        request=request,
     )
 
 
