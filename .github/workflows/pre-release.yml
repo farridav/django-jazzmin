@@ -6,16 +6,13 @@ on:
   pull_request:
     branches: [main]
 
-# Only allow the latest workflow to run and cancel all others. There is also job-level concurrency
-# enabled (see below), which is specified slightly differently.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  # Build the python package even on PRs to ensure we're able to build the package properly.
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -23,37 +20,26 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-          cache: pip
+          cache: "pip"
 
-      - name: Install dependencies
-        run: python -m pip install --upgrade pip poetry
+      - name: Install uv
+        run: pip install uv
 
-      - name: Building the wheels
+      - name: Bump version and build
         run: |
-          # Need to check both Test PyPi and GH releases as we need to version bump the patch
-          # version everytime we merge in a PR, but once we release a new production release, we
-          # need to bump from the new release. So we grab the latest releases from both sources,
-          # then reverse sort them to get highest version! Simples :D
-          LATEST_RELEASE_TEST_PYPI=$(curl -s https://test.pypi.org/rss/project/django-jazzmin/releases.xml | sed -n 's/\s*<title>\([{a,b}0-9.]*\).*/\1/p' | head -n 2 | xargs)
-          LATEST_RELEASE_GITHUB=$(curl -s "https://api.github.com/repos/farridav/django-jazzmin/tags" | jq -r '.[0].name[1:]')
-          LATEST_RELEASE=$(printf "${LATEST_RELEASE_GITHUB}\n${LATEST_RELEASE_TEST_PYPI}" | sort -V -r | head -n 1)
-
-          # Now we can bump the version correctly to release a new version nicely base on the
-          # latest GH release.
-          poetry version $LATEST_RELEASE
-          poetry version prerelease  # Using `prerelease` rather than `prepatch` due to a bug in Poetry (latest checked 1.8.1 - https://github.com/python-poetry/poetry/issues/879)
-          poetry build
+          make deps
+          make version-prerelease
+          make build
 
       - name: Save build
         uses: actions/cache/save@v4
         id: build-cache
         with:
-          path: |
-            dist/
+          path: dist/
           key: cache-${{ github.run_id }}-${{ github.run_attempt }}
 
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -62,28 +48,28 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-          cache: pip
+          cache: "pip"
 
-      - name: Install dependencies
-        run: python -m pip install --upgrade pip poetry
+      - name: Install uv
+        run: pip install uv
 
       - name: Get build
         uses: actions/cache/restore@v4
         with:
-          path: |
-            dist/
+          path: dist/
           key: cache-${{ github.run_id }}-${{ github.run_attempt }}
 
-      - name: Configure Poetry test repo
-        run: poetry config repositories.test_pypi https://test.pypi.org/legacy/
-
-      - name: Deploy to testpypi.org
+      - name: Deploy to test.pypi.org
         if: github.ref == 'refs/heads/main'
-        run: poetry publish -r test_pypi --dist-dir dist/ --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
+        env:
+          TEST_PYPI_TOKEN: ${{ secrets.TEST_PYPI_TOKEN }}
+        run: make publish-test-only || true
 
-      - name: Deploy to testpypi.org (Dry Run)
+      - name: Deploy to test.pypi.org (Dry Run)
         if: github.ref != 'refs/heads/main'
-        run: poetry publish -r test_pypi --dist-dir dist/ --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} || true
+        env:
+          TEST_PYPI_TOKEN: ${{ secrets.TEST_PYPI_TOKEN }}
+        run: make publish-test-only || true
 
   update_release_draft:
     permissions:

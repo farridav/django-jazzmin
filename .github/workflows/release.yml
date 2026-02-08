@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -14,12 +14,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-          cache: pip
+          cache: "pip"
 
-      - name: Install dependencies
-        run: python -m pip install --upgrade pip poetry
+      - name: Install uv
+        run: pip install uv
+
+      - name: Set version from tag
+        run: make version VERSION=${GITHUB_REF_NAME#v}
 
       - name: Deploy to pypi.org
-        run: |
-          poetry version ${GITHUB_REF_NAME/#v}
-          poetry publish --build --username __token__ --password ${{ secrets.PYPI_TOKEN }}
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: make publish

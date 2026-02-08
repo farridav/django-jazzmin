@@ -21,3 +21,4 @@ tests/test_app/static/
 .python-version
 .mypy_cache
 .ruff_cache
+todo.md
