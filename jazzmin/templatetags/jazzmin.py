@@ -42,8 +42,40 @@ register = Library()
 logger = logging.getLogger(__name__)
 
 
+def _side_menu_items_for_app(
+    app: dict[str, Any],
+    app_label: str,
+    app_custom_links: list[dict[str, Any]],
+    options: dict[str, Any],
+    ordering: list[str],
+) -> list[dict[str, Any]]:
+    """Build ordered menu items (models + custom links) for one app in the side menu."""
+    menu_items: list[dict[str, Any]] = []
+    for model in app.get("models", []):
+        model_str = "{}.{}".format(app_label, model["object_name"]).lower()
+        if model_str in options.get("hide_models", []):
+            continue
+        model["url"] = model["admin_url"]
+        model["model_str"] = model_str
+        model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
+        menu_items.append(model)
+
+    menu_items.extend(app_custom_links)
+    custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
+    model_ordering = [
+        x for x in ordering if x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names
+    ]
+    if model_ordering:
+        menu_items = order_with_respect_to(
+            menu_items,
+            model_ordering,
+            getter=lambda x: x.get("model_str", x.get("name", "").lower()),
+        )
+    return menu_items
+
+
 @register.simple_tag(takes_context=True)
-def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]:
+def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict[str, Any]]:
     """
     Get the list of apps and models to render out in the side menu and on the dashboard page
 
@@ -54,15 +86,10 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
         return []
 
     options = get_settings()
-    ordering = options.get("order_with_respect_to", [])
-    ordering = [x.lower() for x in ordering]
-
+    ordering = [x.lower() for x in options.get("order_with_respect_to", [])]
     installed_apps = get_installed_apps()
     available_apps: list[dict[str, Any]] = copy.deepcopy(context.get(using, []))
 
-    menu = []
-
-    # Add any arbitrary groups that are not in available_apps
     for app_label in options.get("custom_links", {}):
         if app_label.lower() not in installed_apps:
             available_apps.append(
@@ -74,53 +101,27 @@ def get_side_menu(context: Context, using: str = "available_apps") -> List[Dict]
         for app_name, links in options.get("custom_links", {}).items()
     }
 
+    menu: list[dict[str, Any]] = []
     for app in available_apps:
         app_label = app["app_label"]
-        app_custom_links = custom_links.get(app_label, [])
-        app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
         if app_label in options["hide_apps"]:
             continue
-
-        menu_items = []
-        for model in app.get("models", []):
-            model_str = "{app_label}.{model}".format(app_label=app_label, model=model["object_name"]).lower()
-            if model_str in options.get("hide_models", []):
-                continue
-
-            model["url"] = model["admin_url"]
-            model["model_str"] = model_str
-            model["icon"] = options["icons"].get(model_str, options["default_icon_children"])
-            menu_items.append(model)
-
-        menu_items.extend(app_custom_links)
-
-        custom_link_names = [x.get("name", "").lower() for x in app_custom_links]
-        model_ordering = list(
-            filter(
-                lambda x: x.lower().startswith("{}.".format(app_label)) or x.lower() in custom_link_names,
-                ordering,
-            )
-        )
-
-        if len(menu_items):
-            if model_ordering:
-                menu_items = order_with_respect_to(
-                    menu_items,
-                    model_ordering,
-                    getter=lambda x: x.get("model_str", x.get("name", "").lower()),
-                )
+        app_custom_links = custom_links.get(app_label, [])
+        app["icon"] = options["icons"].get(app_label, options["default_icon_parents"])
+        menu_items = _side_menu_items_for_app(app, app_label, app_custom_links, options, ordering)
+        if menu_items:
             app["models"] = menu_items
             menu.append(app)
 
     if ordering:
-        apps_order = list(filter(lambda x: "." not in x, ordering))
+        apps_order = [x for x in ordering if "." not in x]
         menu = order_with_respect_to(menu, apps_order, getter=lambda x: x["app_label"].lower())
 
     return menu
 
 
 @register.simple_tag
-def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
+def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict[str, Any]]:
     """
     Produce the menu for the top nav bar
     """
@@ -129,7 +130,7 @@ def get_top_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
 
 
 @register.simple_tag
-def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
+def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict[str, Any]]:
     """
     Produce the menu for the user dropdown
     """
@@ -144,7 +145,7 @@ def get_user_menu(user: AbstractUser, admin_site: str = "admin") -> List[Dict]:
 
 
 @register.simple_tag
-def get_jazzmin_settings(request: WSGIRequest) -> Dict:
+def get_jazzmin_settings(request: WSGIRequest) -> Dict[str, Any]:
     """
     Get Jazzmin settings, update any defaults from the request, and return
     """
@@ -164,7 +165,7 @@ def get_jazzmin_settings(request: WSGIRequest) -> Dict:
 
 
 @register.simple_tag
-def get_jazzmin_ui_tweaks() -> Dict:
+def get_jazzmin_ui_tweaks() -> Dict[str, Any]:
     """
     Return Jazzmin ui tweaks
     """
@@ -176,7 +177,7 @@ def get_jazzmin_version() -> str:
     """
     Get the version for this package
     """
-    return version
+    return str(version)
 
 
 @register.simple_tag
@@ -188,15 +189,15 @@ def get_user_avatar(user: AbstractUser) -> str:
         - URLField/Charfield on the model
         - A callable that receives the user instance e.g lambda u: u.profile.image.url
     """
-    no_avatar = static("vendor/adminlte/img/user2-160x160.jpg")
+    no_avatar = str(static("vendor/adminlte/img/user2-160x160.jpg"))
     options = get_settings()
-    avatar_field_name: Optional[Union[str, Callable]] = options.get("user_avatar")
+    avatar_field_name: Optional[Union[str, Callable[..., str]]] = options.get("user_avatar")
 
     if not avatar_field_name:
         return no_avatar
 
     if callable(avatar_field_name):
-        return avatar_field_name(user)
+        return str(avatar_field_name(user))
 
     # If we find the property directly on the user model (imagefield or URLfield)
     avatar_field = getattr(user, avatar_field_name, None)
@@ -205,10 +206,10 @@ def get_user_avatar(user: AbstractUser) -> str:
             return no_avatar
         if isinstance(avatar_field, str):
             return avatar_field
-        elif hasattr(avatar_field, "url"):
-            return avatar_field.url
-        elif callable(avatar_field):
-            return avatar_field()
+        if hasattr(avatar_field, "url"):
+            return str(avatar_field.url)
+        if callable(avatar_field):
+            return str(avatar_field())
 
     logger.warning("Avatar field must be an ImageField/URLField on the user model, or a callable")
 
@@ -216,7 +217,7 @@ def get_user_avatar(user: AbstractUser) -> str:
 
 
 @register.simple_tag
-def jazzmin_paginator_number(change_list: ChangeList, i: int) -> SafeText:
+def jazzmin_paginator_number(change_list: ChangeList, i: Union[int, str]) -> SafeText:
     """
     Generate an individual page index link in a paginated list.
     """
@@ -267,7 +268,7 @@ def jazzmin_paginator_number(change_list: ChangeList, i: int) -> SafeText:
 
 
 @register.simple_tag
-def admin_extra_filters(cl: ChangeList) -> Dict:
+def admin_extra_filters(cl: ChangeList) -> Dict[str, Any]:
     """
     Return the dict of used filters which is not included in list_filters form
     """
@@ -323,7 +324,7 @@ def jazzy_admin_url(value: Union[str, ModelBase], admin_site: str = "admin") -> 
     """
     Get the admin url for a given object
     """
-    return get_admin_url(value, admin_site=admin_site)
+    return str(get_admin_url(value, admin_site=admin_site))
 
 
 @register.filter
@@ -379,7 +380,7 @@ def debug(value: Any) -> Any:
 
 
 @register.filter
-def as_json(value: Union[List, Dict]) -> str:
+def as_json(value: Union[List[Any], Dict[str, Any]]) -> str:
     """
     Take the given item and dump it out as JSON
     """
@@ -429,11 +430,11 @@ def can_view_self(perms: PermWrapper) -> bool:
     Determines whether a user has sufficient permissions to view its own profile
     """
     view_perm = "view_{}".format(User._meta.model_name)
-    return perms[User._meta.app_label][view_perm]
+    return bool(perms[User._meta.app_label][view_perm])
 
 
 @register.simple_tag
-def header_class(header: Dict, forloop: Dict) -> str:
+def header_class(header: Dict[str, Any], forloop: Dict[str, Any]) -> str:
     """
     Adds CSS classes to header HTML element depending on its attributes
     """
@@ -473,27 +474,27 @@ def app_is_installed(app: str) -> bool:
 
 
 @register.simple_tag
-def action_message_to_list(action: LogEntry) -> List[Dict]:  # noqa: C901
+def action_message_to_list(action: LogEntry) -> List[Dict[str, Any]]:  # noqa: C901
     """
     Retrieves a formatted list with all actions taken by a user given a log entry object
     """
-    messages = []
+    messages: List[Dict[str, Any]] = []
 
-    def added(x: str) -> Dict:
+    def added(x: str) -> Dict[str, Any]:
         return {
             "msg": x,
             "icon": "plus-circle",
             "colour": "success",
         }
 
-    def changed(x: str) -> Dict:
+    def changed(x: str) -> Dict[str, Any]:
         return {
             "msg": x,
             "icon": "edit",
             "colour": "blue",
         }
 
-    def deleted(x: str) -> Dict:
+    def deleted(x: str) -> Dict[str, Any]:
         return {
             "msg": x,
             "icon": "trash",
@@ -551,4 +552,4 @@ def style_bold_first_word(message: str) -> SafeText:
 
 @register.filter
 def unicode_slugify(message: str) -> str:
-    return slugify(message, allow_unicode=True)
+    return str(slugify(message, allow_unicode=True))

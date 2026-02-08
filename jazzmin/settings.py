@@ -212,7 +212,7 @@ def get_search_model_string(search_model: str) -> str:
     return "{app}.{model_name}".format(app=app, model_name=model_name.lower())
 
 
-def get_settings() -> Dict:
+def get_settings() -> Dict[str, Any]:
     jazzmin_settings = copy.deepcopy(DEFAULT_SETTINGS)
     user_settings = {x: y for x, y in getattr(settings, "JAZZMIN_SETTINGS", {}).items() if y is not None}
     jazzmin_settings.update(user_settings)
@@ -263,7 +263,7 @@ def get_settings() -> Dict:
     return jazzmin_settings
 
 
-def get_ui_tweaks() -> Dict:
+def get_ui_tweaks() -> Dict[str, Any]:
     raw_tweaks = copy.deepcopy(DEFAULT_UI_TWEAKS)
     raw_tweaks.update(getattr(settings, "JAZZMIN_UI_TWEAKS", {}))
     tweaks = {x: y for x, y in raw_tweaks.items() if y not in (None, "", False)}

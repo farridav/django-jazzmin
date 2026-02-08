@@ -109,7 +109,7 @@ known-first-party = ["jazzmin"]
 known-local-folder = ["tests"]
 
 [tool.ruff.lint.mccabe]
-max-complexity = 11
+max-complexity = 10
 
 [tool.coverage.run]
 omit = ["*/__init__.py", ".tox", ".mypy_cache", ".reports", ".git"]
@@ -118,6 +118,46 @@ omit = ["*/__init__.py", ".tox", ".mypy_cache", ".reports", ".git"]
 omit = ["*/__init__.py", ".tox", ".mypy_cache", ".reports", ".git"]
 show_missing = true
 
+[tool.mypy]
+python_version = "3.10"
+disallow_any_generics = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_untyped_decorators = true
+ignore_errors = false
+ignore_missing_imports = true
+implicit_reexport = false
+strict_optional = true
+strict_equality = true
+no_implicit_optional = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unreachable = true
+warn_no_return = true
+warn_return_any = true
+explicit_package_bases = true
+
 [[tool.mypy.overrides]]
 module = ["pkg_resources.*"]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["django.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["factory", "factory.*"]
+follow_imports = "skip"
+
+# Tests and test app: relax strictness so we can fix gradually
+[[tool.mypy.overrides]]
+module = ["tests.*", "tests.test_app.*"]
+disallow_untyped_defs = false
+disallow_untyped_calls = false
+disallow_untyped_decorators = false
+
+# Django template tags use untyped decorators (register.simple_tag etc.)
+[[tool.mypy.overrides]]
+module = ["jazzmin.templatetags.*"]
+disallow_untyped_decorators = false
