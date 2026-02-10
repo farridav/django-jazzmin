@@ -3,6 +3,8 @@
 
 ## Project Status
 
+02/10/2026: I am carving out some time to clean things up here, and work through the issues and pull requests, expect some changes and overhauls on the tech and tooling side soon
+
 This project is being actively maintained, though with a reduced feature set, we are looking for contributors to help
 maintain and improve the project, please get in touch if you would like to help.
 
