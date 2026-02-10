@@ -96,14 +96,13 @@
                                             <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
                                         {% endif %}
 
-                                        {% if entry.model %}
-                                            <span class="mini quiet">
-                                                {% filter capfirst %}
-                                                    {{ entry.model }}
-                                                {% endfilter %}
+                                        {% if entry.content_type %}
+                                            <span class="mini quiet text-muted">
+                                                {{ entry.content_type.model }}
                                             </span>
                                         {% endif %}
                                     </h3>
+
                                     {% if not entry.is_deletion %}
                                         <div class="timeline-body">
                                             {% if entry.is_addition %}
