@@ -925,3 +925,10 @@ body.jazzmin-login-page {
     float: left;
     width: 100%;
 }
+
+/* GIS MAPS */
+.dj_map {
+    width: 600px;
+    height: 400px;
+}
+
