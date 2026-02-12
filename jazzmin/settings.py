@@ -34,6 +34,8 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "search_model": None,
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
+    # Whether to include model filter inputs in the side menu and dashboard page
+    "show_model_filters": True,
     ############
     # Top Menu #
     ############

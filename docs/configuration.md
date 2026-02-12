@@ -43,6 +43,9 @@ JAZZMIN_SETTINGS = {
 
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
+    
+    # Whether to include model filter inputs in the side menu and dashboard page
+    "show_model_filters": True,
 
     ############
     # Top Menu #
@@ -208,6 +211,21 @@ base  the ordering off of, it can be a full, or partial list, some examples:
 ```
 
 Currently, custom links (See below) cannot be ordered
+
+### Model filter
+
+You can include a text input above your apps in the side menu to filter dynamically all models that match the input.
+
+Adding or removing this input can be done using `show_model_filters`:
+
+```python
+# Whether to include model filter inputs in the side menu and dashboard page
+"show_model_filters": True,
+```
+
+#### Note
+
+Enabling this will also add an input to the dashboard page that behaves similarly.
 
 ### Side menu custom links
 

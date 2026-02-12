@@ -48,12 +48,43 @@
         $main_li_parent.addClass('menu-is-opening menu-open');
     };
 
+    function filterSidebarModels() {
+        $("#model-filter-sidebar").on("input", function() {
+            const filter = $(this).val().toLowerCase();
+            const $apps = $("li.nav-header[data-app-index]");
+
+            if (!filter) {
+                $apps.show();
+                $("li.nav-item[data-app-index]").show();
+                return;
+            };
+
+            $apps.each(function(index) {
+                let appHasMatch = false;
+                const $models = $(`li.nav-item[data-app-index="${index}"]`);
+
+                $models.each(function() {
+                    const $model = $(this);
+                    const modelName = $model.find("a > p").text().toLowerCase().trim();
+                    const isMatch = modelName.includes(filter);
+
+                    $model.toggle(isMatch);
+                    if (isMatch) appHasMatch = true;
+                });
+                $(this).toggle(appHasMatch);
+            });
+        });
+    };
+
     $(document).ready(function () {
         // Set active status on links
         setActiveLinks()
 
         // When we use the menu, store its state in a cookie to preserve it
         handleMenu();
+
+        // Dynamically filter models in the sidebar
+        filterSidebarModels()
 
         // Add minimal changelist styling to templates that we have been unable to override (e.g MPTT)
         // Needs to be here and not in change_list.js because this is the only JS we are guaranteed to run

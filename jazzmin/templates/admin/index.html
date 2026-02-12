@@ -13,6 +13,17 @@
     </ol>
 {% endblock %}
 
+{% block filters %}
+    {% if jazzmin_settings.show_model_filters %}
+        <div class="col-12 col-md-6 col-xl-3 pb-4">
+            <div class="position-relative">
+                <i class="position-absolute fas fa-search" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
+                <input class="form-control" type="text" id="model-filter-dashboard"
+                     placeholder="{% trans "Filter models" %}...">
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     {% get_side_menu using="app_list" as dashboard_list %}
@@ -21,7 +32,7 @@
     {% endif %}
 
     <div class="col-lg-9 col-12">
-        <div class="row">
+        <div class="row" id="card-container">
             <div class="col-md-6 col-sm-12">
                 {% for app in dashboard_list %}
                     <div class="card">
@@ -130,4 +141,10 @@
         </div>
     </div>
 
+{% endblock %}
+{% block extrajs %}
+    {{ block.super }}
+    {% if jazzmin_settings.show_model_filters %}
+        <script src="{% static "jazzmin/js/dashboard_filter.js" %}"></script>
+    {% endif %}
 {% endblock %}

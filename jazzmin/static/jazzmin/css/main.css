@@ -170,6 +170,12 @@ table.dataTable thead .sorting_desc_disabled::after {
     align-items: center;
 }
 
+.select2.select2-container.select2-container--admin-autocomplete .select2-selection.select2-selection--multiple {
+    border: 1px solid #ced4da !important;
+    padding: .375rem !important;
+    border-radius: .25rem !important;
+}
+
 .select2-container--default .select2-selection--single {
     border: 1px solid #ced4da;
 }
@@ -177,6 +183,14 @@ table.dataTable thead .sorting_desc_disabled::after {
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     right: 5px !important;
     top: unset !important;
+}
+
+.select2-selection__choice {
+    background-color: #f1f1f1 !important;
+}
+
+.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__choice__remove {
+    color: darkred !important;
 }
 
 .select2-results__option {

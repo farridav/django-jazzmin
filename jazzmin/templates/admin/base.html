@@ -217,11 +217,21 @@
                                 </a>
                             </li>
 
+                            {% if jazzmin_settings.show_model_filters %}
+                                <li class="nav-header">
+                                    <div class="position-relative">
+                                        <i class="position-absolute fas fa-search" style="right: 10px; top: 50%; transform: translateY(-50%);"></i>
+                                        <input class="form-control form-control-sidebar" type="search" id="model-filter-sidebar"
+                                            placeholder="{% trans "Filter models" %}...">
+                                    </div>
+                                </li>
+                            {% endif %}
+
                             {% if jazzmin_settings.navigation_expanded %}
                                 {% for app in side_menu_list %}
-                                    <li class="nav-header">{{ app.name }}</li>
+                                    <li class="nav-header" data-app-index="{{ forloop.counter0 }}">{{ app.name }}</li>
                                     {% for model in app.models %}
-                                        <li class="nav-item">
+                                        <li class="nav-item" data-app-index="{{ forloop.parentloop.counter0 }}">
                                             {% if model.url %}
                                             <a href="{{ model.url }}" class="nav-link">
                                                 <i class="nav-icon {{ model.icon }}"></i> <p>{{ model.name }}</p>
@@ -281,6 +291,9 @@
             <div class="content">
                 <div class="container-fluid">
                     <section id="content" class="content">
+                        <div class="row">
+                            {% block filters %} {% endblock %}
+                        </div>
                         {% block messages %}
                             {% for message in messages %}
                                 {% if message.tags == 'success' %}
