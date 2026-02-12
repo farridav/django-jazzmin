@@ -55,6 +55,7 @@
 <div class="wrapper">
 
     {% if not is_popup %}
+        {% block top_navbar %}
         <nav class="main-header navbar navbar-expand {{ jazzmin_ui.navbar_classes }}" id="jazzy-navbar">
             <ul class="navbar-nav">
 
@@ -179,6 +180,7 @@
                 </li>
             </ul>
         </nav>
+        {% endblock %}
         {% block sidebar %}
         {% if jazzmin_settings.show_sidebar %}
             {% get_side_menu as side_menu_list %}
