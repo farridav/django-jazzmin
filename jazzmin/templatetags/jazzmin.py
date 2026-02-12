@@ -368,7 +368,7 @@ def remove_lang(url: str, language_code: str) -> str:
     """
     Remove the language code from the url, if we have one
     """
-    return url.replace(language_code + "/", "")
+    return url.replace("/" + language_code + "/", "/")
 
 
 @register.filter
