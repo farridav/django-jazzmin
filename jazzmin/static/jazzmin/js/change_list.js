@@ -56,7 +56,8 @@
         $('.related-lookup').append('<i class="fa fa-search"></i>')
 
         // Allow for styling of selects
-        $('.actions select').addClass('form-control').select2({ width: 'element' });
+        const noSelect2 = '.empty-form select, .select2-hidden-accessible, .selectfilter, .selector-available select, .selector-chosen select, select[data-autocomplete-light-function=select2]'
+        $('.actions select').not(noSelect2).addClass('form-control').select2({ width: 'element' });
 
         searchFilters();
     });
