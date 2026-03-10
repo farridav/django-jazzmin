@@ -120,7 +120,7 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "site_logo": "books/img/logo.png",
     # Relative path to logo for your site, used for login logo (must be present in static files. Defaults to site_logo)
     "login_logo": "books/img/logo-login.png",
-    # Logo to use for login form in dark themes (must be present in static files. Defaults to login_logo)
+    # Logo to use when color scheme is dark (must be present in static files. Defaults to login_logo)
     "login_logo_dark": "books/img/logo-login-dark-mode.png",
     # CSS classes that are applied to the logo
     "site_logo_classes": None,
@@ -215,7 +215,9 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
     "custom_css": None,
     "custom_js": None,
     # Whether to show the UI customizer on the sidebar
-    "show_ui_builder": True,
+    "show_ui_builder": False,
+    # Whether to show the theme chooser dropdown in the top navbar
+    "show_theme_chooser": True,
     ###############
     # Change view #
     ###############
@@ -235,7 +237,7 @@ JAZZMIN_SETTINGS: Dict[str, Any] = {
 if not DEBUG and not TEST:
     JAZZMIN_SETTINGS["welcome_sign"] = "Username: test@test.com, Password: test (Data resets nightly)"
 
-JAZZMIN_UI_TWEAKS = {
+AJAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
     "footer_small_text": False,
     "body_small_text": False,
@@ -255,8 +257,8 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_compact_style": False,
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False,
-    "theme": "default",
-    "dark_mode_theme": "darkly",
+    "theme": "cerulean",
+    "default_theme_mode": "dark",
     "button_classes": {
         "primary": "btn-outline-primary",
         "secondary": "btn-outline-secondary",

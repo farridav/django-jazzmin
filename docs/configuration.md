@@ -22,7 +22,7 @@ JAZZMIN_SETTINGS = {
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
     "login_logo": None,
 
-    # Logo to use for login form in dark themes (defaults to login_logo)
+    # Logo to use when color scheme is dark (defaults to login_logo)
     "login_logo_dark": None,
 
     # CSS classes that are applied to the logo above
@@ -131,6 +131,8 @@ JAZZMIN_SETTINGS = {
     "use_google_fonts_cdn": True,
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": False,
+    # Whether to show the theme chooser dropdown in the top navbar
+    "show_theme_chooser": False,
 
     ###############
     # Change view #
@@ -343,7 +345,7 @@ class BookAdmin(admin.ModelAdmin):
 You can enable a language chooser dropdown using `"language_chooser": True` in your `JAZZMIN_SETTINGS`, we mainly use this for
 assisting with translations, but it could be of use to some people in their admin site.
 
-To make proper use of this, please ensure you have internationalisation setup properly, See [https://docs.djangoproject.com/en/3.1/topics/i18n/translation/](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/)
+To make proper use of this, please ensure you have internationalisation setup properly, See [https://docs.djangoproject.com/en/stable/topics/i18n/translation/](https://docs.djangoproject.com/en/stable/topics/i18n/translation/)
 
 Namely:
 

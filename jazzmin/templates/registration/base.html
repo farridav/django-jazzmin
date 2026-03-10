@@ -10,6 +10,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <script>
+        (function() {
+            var mode = localStorage.getItem('jazzmin-theme-mode') || '{{ jazzmin_ui.default_theme_mode|default:"light" }}';
+            if (mode === 'auto') {
+                mode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-bs-theme', mode);
+        })();
+    </script>
 
     <title>{% block title %}{{ title }} | {{ jazzmin_settings.site_title }}{% endblock %}</title>
 
@@ -22,10 +31,6 @@
     <!-- Bootswatch theme -->
     {% if jazzmin_ui.theme.name != 'default' %}
         <link rel="stylesheet" href="{{ jazzmin_ui.theme.src }}" id="jazzmin-theme" />
-    {% endif %}
-
-    {% if jazzmin_ui.dark_mode_theme %}
-        <link rel="stylesheet" href="{{ jazzmin_ui.dark_mode_theme.src }}" id="jazzmin-dark-mode-theme" media="(prefers-color-scheme: dark)"/>
     {% endif %}
 
     <!-- Custom fixes for django -->
@@ -48,22 +53,22 @@
     {% block extrastyle %} {% endblock %}
     {% block extrahead %} {% endblock %}
 </head>
-<body class="hold-transition jazzmin-login-page">
+<body class="login-page bg-body-secondary">
 
 <div class="login-box">
     <div class="login-logo">
-        <h1>
-            <picture>
-                <source
-                    srcset="{% static jazzmin_settings.login_logo_dark %}"
-                    media="(prefers-color-scheme: dark)">
-                 <img src="{% static jazzmin_settings.login_logo %}" alt="{{ jazzmin_settings.site_header }}">
-            </picture>
-        </h1>
+        {% if jazzmin_settings.login_logo_dark %}
+            <img class="logo-light" src="{% static jazzmin_settings.login_logo %}" alt="{{ jazzmin_settings.site_header }}">
+            <img class="logo-dark" src="{% static jazzmin_settings.login_logo_dark %}" alt="{{ jazzmin_settings.site_header }}">
+        {% elif jazzmin_settings.login_logo %}
+            <img src="{% static jazzmin_settings.login_logo %}" alt="{{ jazzmin_settings.site_header }}">
+        {% else %}
+            <a href="{% url 'admin:index' %}"><b>{{ jazzmin_settings.site_header }}</b></a>
+        {% endif %}
     </div>
 
     <div class="card">
-        <div class="card-body">
+        <div class="card-body login-card-body">
             {% block content %} {% endblock %}
         </div>
     </div>
@@ -72,7 +77,7 @@
 <!-- jQuery -->
 <script src="{% static "admin/js/vendor/jquery/jquery.js" %}"></script>
 <!-- Bootstrap 5 -->
-<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'vendor/adminlte/js/adminlte.min.js' %}"></script>
 

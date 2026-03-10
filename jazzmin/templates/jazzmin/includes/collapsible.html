@@ -5,7 +5,7 @@
 <div id="jazzy-collapsible">
     {% for fieldset in forms %}
         <div class="card card-default {{ fieldset.classes }}">
-            <div class="card-header collapsible-header" data-toggle="collapse" data-parent="#jazzy-collapsible" data-target="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
+            <div class="card-header collapsible-header" data-bs-toggle="collapse" data-bs-parent="#jazzy-collapsible" data-bs-target="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab">
                 <h4 class="card-title">
                     {{ fieldset.name|default:general_tab }}
                 </h4>

@@ -8,7 +8,7 @@
 
 {% if results %}
     <div class="card">
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive">
             <table id="result_list" class="table table-striped">
                 <thead>
                     <tr>
@@ -22,7 +22,7 @@
                                 {% endif %}
                                 {% if header.sorted %}
                                     <a href="{{ header.url_remove }}">
-                                        <div style="margin-top: .2em;" class="fa fa-times float-right"> </div>
+                                        <div style="margin-top: .2em;" class="fa fa-times float-end"> </div>
                                     </a>
                                     {% if header.ascending %}
                                         <i style="margin-top: .2em;" class="fa fa-sort-alpha-down"> </i>

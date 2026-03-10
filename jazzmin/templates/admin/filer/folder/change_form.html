@@ -21,9 +21,9 @@
 
 {% block object-tools %}
     {% if change and not is_popup %}
-        <a class="btn btn-block {{ jazzmin_ui.button_classes.secondary }} btn-sm" href="{% url history_url object_id %}">{% trans 'History' %}</a>
+        <a class="btn w-100 {{ jazzmin_ui.button_classes.secondary }} btn-sm" href="{% url history_url object_id %}">{% trans 'History' %}</a>
         {% if has_absolute_url %}
-            <a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="btn btn-block {{ jazzmin_ui.button_classes.secondary }} btn-sm">{% trans "View on site" %}</a>
+            <a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="btn w-100 {{ jazzmin_ui.button_classes.secondary }} btn-sm">{% trans "View on site" %}</a>
         {% endif%}
     {% endif %}
 {% endblock %}

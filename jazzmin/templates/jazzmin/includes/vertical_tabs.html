@@ -6,7 +6,7 @@
     <div class="col-5 col-sm-3">
         <div class="nav flex-column nav-tabs h-100" role="tablist" aria-orientation="vertical">
             {% for fieldset in forms %}
-                <a class="nav-link {% if forloop.first %}active{% endif %}" data-toggle="pill" href="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" role="tab" aria-controls="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="pill" href="#{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" role="tab" aria-controls="{{ fieldset.name|default:general_tab|unicode_slugify }}-tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
                     {{ fieldset.name|default:general_tab }}
                 </a>
             {% endfor %}

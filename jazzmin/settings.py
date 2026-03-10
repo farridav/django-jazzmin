@@ -20,7 +20,7 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "site_logo": "vendor/adminlte/img/AdminLTELogo.png",
     # Relative path to logo for your site, used for login logo (must be present in static files. Defaults to site_logo)
     "login_logo": None,
-    # Logo to use for login form in dark themes (must be present in static files. Defaults to login_logo)
+    # Logo to use when data-bs-theme is dark (must be present in static files. Defaults to login_logo)
     "login_logo_dark": None,
     # CSS classes that are applied to the logo
     "site_logo_classes": "img-circle",
@@ -84,6 +84,8 @@ DEFAULT_SETTINGS: Dict[str, Any] = {
     "use_google_fonts_cdn": True,
     # Whether to show the UI customizer on the sidebar
     "show_ui_builder": False,
+    # Whether to show the theme chooser dropdown in the top navbar
+    "show_theme_chooser": False,
     ###############
     # Change view #
     ###############
@@ -146,8 +148,9 @@ DEFAULT_UI_TWEAKS: Dict[str, Any] = {
     "sidebar_nav_flat_style": False,
     # Bootstrap theme to use (default, or from bootswatch, see THEMES below)
     "theme": "default",
-    # Theme to use instead if the user has opted for dark mode (e.g darkly/cyborg/slate/solar/superhero)
-    "dark_mode_theme": None,
+    # Default color scheme: "light", "dark", or "auto" (follow prefers-color-scheme).
+    # Any theme can be shown in light or dark via data-bs-theme on the html element.
+    "default_theme_mode": "light",
     # The classes/styles to use with buttons
     "button_classes": {
         "primary": "btn-primary",
@@ -159,9 +162,12 @@ DEFAULT_UI_TWEAKS: Dict[str, Any] = {
     },
 }
 
+# default brite cerulean cosmo cyborg darkly flatly journal litera lumen lux materia minty morph pulse quartz sandstone
+#  simplex sketchy slate solar spacelab superhero united vapor yeti zephyr
 THEMES = {
     # light themes
     "default": "vendor/bootswatch/default/bootstrap.min.css",
+    "brite": "vendor/bootswatch/brite/bootstrap.min.css",
     "cerulean": "vendor/bootswatch/cerulean/bootstrap.min.css",
     "cosmo": "vendor/bootswatch/cosmo/bootstrap.min.css",
     "flatly": "vendor/bootswatch/flatly/bootstrap.min.css",
@@ -170,8 +176,8 @@ THEMES = {
     "lumen": "vendor/bootswatch/lumen/bootstrap.min.css",
     "lux": "vendor/bootswatch/lux/bootstrap.min.css",
     "materia": "vendor/bootswatch/materia/bootstrap.min.css",
-    "morph": "vendor/bootswatch/morph/bootstrap.min.css",
     "minty": "vendor/bootswatch/minty/bootstrap.min.css",
+    "morph": "vendor/bootswatch/morph/bootstrap.min.css",
     "pulse": "vendor/bootswatch/pulse/bootstrap.min.css",
     "sandstone": "vendor/bootswatch/sandstone/bootstrap.min.css",
     "simplex": "vendor/bootswatch/simplex/bootstrap.min.css",
@@ -179,9 +185,7 @@ THEMES = {
     "spacelab": "vendor/bootswatch/spacelab/bootstrap.min.css",
     "united": "vendor/bootswatch/united/bootstrap.min.css",
     "yeti": "vendor/bootswatch/yeti/bootstrap.min.css",
-    "quartz": "vendor/bootswatch/quartz/bootstrap.min.css",
     "zephyr": "vendor/bootswatch/zephyr/bootstrap.min.css",
-    # dark themes
     "darkly": "vendor/bootswatch/darkly/bootstrap.min.css",
     "cyborg": "vendor/bootswatch/cyborg/bootstrap.min.css",
     "slate": "vendor/bootswatch/slate/bootstrap.min.css",
@@ -189,8 +193,6 @@ THEMES = {
     "superhero": "vendor/bootswatch/superhero/bootstrap.min.css",
     "vapor": "vendor/bootswatch/vapor/bootstrap.min.css",
 }
-
-DARK_THEMES = ("darkly", "cyborg", "slate", "solar", "superhero")
 
 CHANGEFORM_TEMPLATES = {
     "single": "jazzmin/includes/single.html",
@@ -265,8 +267,21 @@ def get_settings() -> Dict[str, Any]:
 
 def get_ui_tweaks() -> Dict[str, Any]:
     raw_tweaks = copy.deepcopy(DEFAULT_UI_TWEAKS)
-    raw_tweaks.update(getattr(settings, "JAZZMIN_UI_TWEAKS", {}))
+    user_tweaks = getattr(settings, "JAZZMIN_UI_TWEAKS", {})
+    raw_tweaks.update(user_tweaks)
     tweaks = {x: y for x, y in raw_tweaks.items() if y not in (None, "", False)}
+
+    # Backward compatibility: dark_mode_theme is removed; use default_theme_mode instead
+    if "dark_mode_theme" in user_tweaks and "default_theme_mode" not in user_tweaks:
+        raw_tweaks["default_theme_mode"] = "auto"
+        tweaks["default_theme_mode"] = "auto"
+        logger.warning(
+            "JAZZMIN_UI_TWEAKS['dark_mode_theme'] is deprecated and ignored. "
+            "Use default_theme_mode='auto' (or 'light'/'dark') instead. "
+            "All themes now support light/dark via data-bs-theme."
+        )
+    raw_tweaks.pop("dark_mode_theme", None)
+    tweaks.pop("dark_mode_theme", None)
 
     # These options dont work well together
     if tweaks.get("layout_boxed"):
@@ -304,18 +319,17 @@ def get_ui_tweaks() -> Dict[str, Any]:
         logger.warning("{} not found in {}, using default".format(theme, THEMES.keys()))
         theme = "default"
 
-    dark_mode_theme = tweaks.get("dark_mode_theme", None)
-    if dark_mode_theme and dark_mode_theme not in DARK_THEMES:
-        logger.warning("{} is not a dark theme, using darkly".format(dark_mode_theme))
-        dark_mode_theme = "darkly"
+    default_theme_mode = tweaks.get("default_theme_mode", "light")
+    if default_theme_mode not in ("light", "dark", "auto"):
+        logger.warning("default_theme_mode must be light, dark, or auto; using light")
+        default_theme_mode = "light"
 
     theme_body_classes = " theme-{}".format(theme)
-    if theme in DARK_THEMES:
-        theme_body_classes += " dark-mode"
 
     ret = {
         "raw": raw_tweaks,
         "theme": {"name": theme, "src": static(THEMES[theme])},
+        "default_theme_mode": default_theme_mode,
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
         "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
         "body_classes": classes(
@@ -333,9 +347,7 @@ def get_ui_tweaks() -> Dict[str, Any]:
         "brand_classes": classes("brand_small_text", "brand_colour"),
         "footer_classes": classes("footer_small_text"),
         "button_classes": tweaks["button_classes"],
+        "theme_list": list(THEMES.keys()),
     }
-
-    if dark_mode_theme:
-        ret["dark_mode_theme"] = {"name": dark_mode_theme, "src": static(THEMES[dark_mode_theme])}
 
     return ret

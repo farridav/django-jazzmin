@@ -22,7 +22,7 @@
     <div class="col-4 col-sm-2">
       <div class="nav flex-column nav-tabs h-100" id="tabs-tab" role="tablist" aria-orientation="vertical">
         {% for library in tag_libraries %}
-        <a class="nav-link" id="tabs-{% firstof library.grouper built_in_tags %}-tab" data-toggle="pill" href="#tabs-{% firstof library.grouper built_in_tags %}" role="tab" aria-controls="tabs-{% firstof library.grouper built_in_tags %}" aria-selected="true"><h6>{% firstof library.grouper _("Built-in tags") %}</h6></a>
+        <a class="nav-link" id="tabs-{% firstof library.grouper built_in_tags %}-tab" data-bs-toggle="pill" href="#tabs-{% firstof library.grouper built_in_tags %}" role="tab" aria-controls="tabs-{% firstof library.grouper built_in_tags %}" aria-selected="true"><h6>{% firstof library.grouper _("Built-in tags") %}</h6></a>
         {% endfor %}
       </div>
     </div>
@@ -30,7 +30,7 @@
     <div class="col-7 col-sm-9">
       <div class="tab-content" id="tabs-tabContent">
         {% for library in tag_libraries %}
-        <div class="tab-pane text-left fade{% if forloop.first %} show active{% endif %}" id="tabs-{% firstof library.grouper built_in_tags %}" role="tabpanel" aria-labelledby="tabs-{% firstof library.grouper built_in_tags %}-tab">
+        <div class="tab-pane text-start fade{% if forloop.first %} show active{% endif %}" id="tabs-{% firstof library.grouper built_in_tags %}" role="tabpanel" aria-labelledby="tabs-{% firstof library.grouper built_in_tags %}-tab">
           {% if library.grouper %}<p class="small quiet">{% blocktrans with code="{"|add:"% load "|add:library.grouper|add:" %"|add:"}" %}To use these tags, put <code>{{ code }}</code> in your template before using the tag.{% endblocktrans %}</p><hr>{% endif %}
           {% for tag in library.list|dictsort:"name" %}
             <h3 id="{{ library.grouper|default:"built_in" }}-{{ tag.name }}">{{ tag.name }}</h3>
