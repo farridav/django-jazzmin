@@ -13,7 +13,7 @@
 
 {% block content %}
     <div class="col-12">
-        <form action="" method="POST" class="form-horizontal">
+        <form action="{% url opts|admin_urlname:'export' %}" method="POST" class="form-horizontal">
             {% csrf_token %}
             <div class="row">
                 <div class="col-12 col-lg-9">
