@@ -331,7 +331,7 @@ def get_ui_tweaks() -> Dict[str, Any]:
         "theme": {"name": theme, "src": static(THEMES[theme])},
         "default_theme_mode": default_theme_mode,
         "sidebar_classes": classes("sidebar", "sidebar_disable_expand"),
-        "navbar_classes": classes("navbar", "no_navbar_border", "navbar_small_text"),
+        "navbar_classes": classes("no_navbar_border", "navbar_small_text"),
         "body_classes": classes(
             "accent", "body_small_text", "navbar_fixed", "footer_fixed", "sidebar_fixed", "layout_boxed"
         )
