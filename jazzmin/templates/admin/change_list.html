@@ -36,13 +36,6 @@
 {% block coltype %}flex{% endblock %}
 
     {% block page_actions %}
-        <div class="col-12 col-md-auto d-flex align-items-center justify-content-end page-actions">
-            {% block object-tools %}
-                {% block object-tools-items %}
-                    {% change_list_object_tools %}
-                {% endblock %}
-            {% endblock %}
-        </div>
     {% endblock %}
 
 
@@ -51,7 +44,46 @@
     {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
 
     {% block search %}
-        {% search_form cl %}
+        <div class="col-12 pb-4" id="change-list-filters">
+            <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                <form id="changelist-search" class="d-flex flex-wrap gap-2 align-items-center flex-grow-1" method="GET">
+                    {% if cl.has_filters %}
+                        {% for spec in cl.filter_specs %}{% jazzmin_list_filter cl spec %}{% endfor %}
+                    {% endif %}
+
+                    {% if cl.search_fields %}
+                        <input class="form-control" style="width: auto; min-width: 250px;" type="text" name="q" value="{{ cl.query }}" id="searchbar"
+                            {% if cl.search_help_text %} placeholder="{{ cl.search_help_text }}{% endif %}">
+                    {% endif %}
+
+                    {% if cl.has_filters or cl.search_fields %}
+                        <button type="submit" class="btn {{ jazzmin_ui.button_classes.primary }}">{% trans 'Search' %}</button>
+                        {% if show_result_count %}
+                            <span class="small quiet ms-2">
+                                {% blocktrans count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %}
+                                (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">
+                                    {% if cl.show_full_result_count %}
+                                        {% blocktrans with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktrans %}
+                                    {% else %}
+                                        {% trans "Show all" %}
+                                    {% endif %}
+                                </a>)
+                            </span>
+                        {% endif %}
+                        {% admin_extra_filters cl as extra_filters %}
+                        {% for pair in extra_filters.items %}
+                            {% if pair.0 != "q" %}<input type="hidden" name="{{ pair.0 }}" value="{{ pair.1 }}">{% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </form>
+
+                {% block object-tools %}
+                    {% block object-tools-items %}
+                        {% change_list_object_tools %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        </div>
     {% endblock %}
 
     <div class="col-12">

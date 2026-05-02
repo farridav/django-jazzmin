@@ -60,3 +60,11 @@ version-prerelease: ## Bump to next prerelease (for pre-release workflow)
 	LATEST_RELEASE=$$(printf "$${LATEST_RELEASE_GITHUB}\n$${LATEST_RELEASE_TEST_PYPI}" | sort -V -r | head -n 1); \
 	uv version $${LATEST_RELEASE} --frozen; \
 	uv version --bump patch --bump alpha --frozen
+
+
+download_bootswatch_css: ## Download the Bootswatch CSS and source map files
+	for theme in default brite cerulean cosmo cyborg darkly flatly journal litera lumen lux materia minty morph pulse quartz sandstone simplex sketchy slate solar spacelab superhero united vapor yeti zephyr; do \
+		mkdir -p jazzmin/static/vendor/bootswatch/$${theme}; \
+		curl -s https://bootswatch.com/5/$${theme}/bootstrap.min.css -o jazzmin/static/vendor/bootswatch/$${theme}/bootstrap.min.css; \
+		curl -s https://bootswatch.com/5/$${theme}/bootstrap.min.css.map -o jazzmin/static/vendor/bootswatch/$${theme}/bootstrap.min.css.map; \
+	done

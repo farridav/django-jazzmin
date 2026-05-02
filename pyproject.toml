@@ -61,6 +61,7 @@ dev = [
     "click>=8.1.7",
     "ipdb>=0.13.13",
     "ruff>=0.8.1",
+    "whitenoise>=6.0",
 ]
 
 [tool.uv]

@@ -1,13 +1,17 @@
 {% extends "registration/base.html" %}
 
-{% load i18n %}
+{% load i18n jazzmin %}
+{% get_jazzmin_settings request as jazzmin_settings %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
 {% block content %}
     <p class="login-box-msg">{{ jazzmin_settings.welcome_sign }}</p>
     <p class="text-center">
         {% trans "Thanks for spending some quality time with the web site today." %}
     </p>
-    <a class="btn {{ jazzmin_ui.button_classes.primary }} btn-block" href="{% url 'admin:index' %}">
-        {% trans 'Log in again' %}
-    </a>
+    <div class="d-grid">
+        <a class="btn {{ jazzmin_ui.button_classes.primary }}" href="{% url 'admin:index' %}">
+            {% trans 'Log in again' %}
+        </a>
+    </div>
 {% endblock %}

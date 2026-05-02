@@ -25,7 +25,7 @@
         $ele.search_filters();
         $ele.each(function () {
             const $this = $(this);
-            $this.select2({  width: '100%', minimumInputLength: getMinimuInputLength($this) });
+            $this.select2({ minimumInputLength: getMinimuInputLength($this) });
         });
 
         // Use select2 for mptt dropdowns
@@ -33,7 +33,6 @@
         if ($mptt.length) {
             $mptt.search_filters();
             $mptt.select2({
-                width: '100%',
                 minimumInputLength: getMinimuInputLength($mptt),
                 templateResult: function (data) {
                     // https://stackoverflow.com/questions/30820215/selectable-optgroups-in-select2#30948247

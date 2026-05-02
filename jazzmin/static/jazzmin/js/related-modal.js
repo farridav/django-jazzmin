@@ -15,7 +15,11 @@
             return;
         }
 
-        $('.related-modal-' + relatedModalCounter).modal('hide');
+        var modalEl = $('.related-modal-' + relatedModalCounter)[0];
+        if (modalEl) {
+            var bsModal = bootstrap.Modal.getInstance(modalEl);
+            if (bsModal) { bsModal.hide(); }
+        }
 
         relatedModalCounter-=1;
     }

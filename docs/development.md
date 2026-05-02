@@ -2,28 +2,33 @@
 
 ## Installation
 
-This project manages dependencies using [poetry](https://python-poetry.org/)
+This project manages dependencies using [uv](https://docs.astral.sh/uv/)
 
-Ensure you have poetry installed (`pip install poetry`)
+Ensure you have uv installed (see [uv installation docs](https://docs.astral.sh/uv/getting-started/installation/))
 
-Then get setup with `poetry install`
+Then get setup:
 
     git clone git@github.com:farridav/django-jazzmin.git
-    poetry install
+    cd django-jazzmin
+    make deps
 
 ## Running the test project
 
 Setup db tables etc.
 
-    python tests/test_app/manage.py migrate
+    uv run python tests/test_app/manage.py migrate
 
 Generate test data
 
-    python tests/test_app/manage.py reset
+    uv run python tests/test_app/manage.py reset
 
 Run development server (with werkzeug debugger)
 
-    python tests/test_app/manage.py runserver_plus
+    uv run python tests/test_app/manage.py runserver_plus
+
+Or simply use the Makefile:
+
+    make test_app
 
 ## Running the tests
 
@@ -31,10 +36,8 @@ Tests are run via github actions on any pull request into `main`, and are writte
 framework, we should have good enough tests for you to base your own off of, though where we are lacking, feel free to contribute,
 but keep it clean, concise and simple, leave the magic to the wizards.
 
-Run the test suite with your current python interpreter and Django version using `pytest` or target an individual test
-with `pytest -k my_test_name`
-
-Run against all supported Python and Django Versions using `tox`
+Run the test suite with `make test` or target an individual test
+with `uv run pytest -k my_test_name`
 
 ## Contribution guidelines
 
@@ -47,7 +50,7 @@ Run against all supported Python and Django Versions using `tox`
 
 ## Coding guidelines
 
-- autoformat your code with [black](https://github.com/psf/black)
+- autoformat your code with `make lint` (uses [ruff](https://docs.astral.sh/ruff/))
 - When fixing something display related, please bear the following in mind:
   - Try fixing the problem using HTML, else CSS, else JS
   - Try removing code, else changing code, else adding code

@@ -32,10 +32,8 @@ Live demo https://django-jazzmin-test.onrender.com
 You can also view the demo app by cloning the repository, and running the following commands:
 
 ```bash
-    poetry install
- ./tests/test_app/manage.py migrate
- ./tests/test_app/manage.py reset
- ./tests/test_app/manage.py runserver_plus
+make deps
+make test_app
 ```
 
 ## Screenshots

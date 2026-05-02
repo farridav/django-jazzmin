@@ -139,7 +139,6 @@ def test_password_change(admin_client):
         "django/forms/widgets/password.html",
         "django/forms/widgets/input.html",
         "django/forms/widgets/attrs.html",
-        "jazzmin/includes/ui_builder_panel.html",
         "django/forms/errors/list/default.html",
         "django/forms/errors/list/ul.html",
     }
@@ -159,7 +158,6 @@ def test_password_change(admin_client):
         "registration/password_change_done.html",
         "admin/base.html",
         "admin/base_site.html",
-        "jazzmin/includes/ui_builder_panel.html",
     }
 
 
@@ -178,7 +176,6 @@ def test_dashboard(admin_client):
         "admin/index.html",
         "admin/base_site.html",
         "admin/base.html",
-        "jazzmin/includes/ui_builder_panel.html",
     ]
 
 
@@ -219,7 +216,6 @@ def test_detail(admin_client):
         "django/forms/widgets/textarea.html": 1,
         "django/forms/widgets/time.html": 2,
         "jazzmin/includes/horizontal_tabs.html": 1,
-        "jazzmin/includes/ui_builder_panel.html": 1,
         "django/forms/div.html": 1,
         "django/forms/errors/list/default.html": 2,
         "admin/widgets/date.html": 3,
@@ -252,7 +248,6 @@ def test_detail(admin_client):
         "django/forms/widgets/textarea.html",
         "django/forms/widgets/time.html",
         "jazzmin/includes/horizontal_tabs.html",
-        "jazzmin/includes/ui_builder_panel.html",
         "django/forms/div.html",
         "django/forms/errors/list/default.html",
         "admin/widgets/date.html",
@@ -289,7 +284,6 @@ def test_list(admin_client):
         "admin/change_list_results.html": 1,
         "admin/date_hierarchy.html": 1,
         "admin/pagination.html": 1,
-        "admin/search_form.html": 1,
         "django/forms/widgets/attrs.html": 27,
         "django/forms/widgets/checkbox.html": 5,
         "django/forms/widgets/hidden.html": 11,
@@ -297,7 +291,6 @@ def test_list(admin_client):
         "django/forms/widgets/select.html": 2,
         "django/forms/widgets/select_option.html": 4,
         "django/forms/widgets/text.html": 5,
-        "jazzmin/includes/ui_builder_panel.html": 1,
         "django/forms/div.html": 1,
         "django/forms/errors/list/default.html": 6,
         "django/forms/errors/list/ul.html": 6,
@@ -315,7 +308,6 @@ def test_list(admin_client):
         "admin/change_list_results.html",
         "admin/date_hierarchy.html",
         "admin/pagination.html",
-        "admin/search_form.html",
         "django/forms/widgets/attrs.html",
         "django/forms/widgets/checkbox.html",
         "django/forms/widgets/hidden.html",
@@ -323,7 +315,6 @@ def test_list(admin_client):
         "django/forms/widgets/select.html",
         "django/forms/widgets/select_option.html",
         "django/forms/widgets/text.html",
-        "jazzmin/includes/ui_builder_panel.html",
         "django/forms/div.html",
         "django/forms/errors/list/default.html",
         "django/forms/errors/list/ul.html",
@@ -352,7 +343,6 @@ def test_history(admin_client):
         "admin/object_history.html": 1,
         "admin/base.html": 1,
         "admin/base_site.html": 1,
-        "jazzmin/includes/ui_builder_panel.html": 1,
     }
 
     # The templates that were used
@@ -360,7 +350,6 @@ def test_history(admin_client):
         "admin/object_history.html",
         "admin/base.html",
         "admin/base_site.html",
-        "jazzmin/includes/ui_builder_panel.html",
     }
 
 
@@ -384,7 +373,6 @@ def test_delete(admin_client):
         "admin/base_site.html": 1,
         "admin/base.html": 1,
         "admin/includes/object_delete_summary.html": 1,
-        "jazzmin/includes/ui_builder_panel.html": 1,
     }
 
     # The templates that were used
@@ -393,7 +381,6 @@ def test_delete(admin_client):
         "admin/base_site.html",
         "admin/base.html",
         "admin/includes/object_delete_summary.html",
-        "jazzmin/includes/ui_builder_panel.html",
     }
 
     response = admin_client.post(url, data={"post": "yes"}, follow=True)

@@ -2,7 +2,7 @@
 {% load mptt_admin %}
 
 <div class="form-group">
-    <select class="form-control search-filter-mptt" style="width: 100%;" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
+    <select class="form-control search-filter-mptt" tabindex="-1" aria-hidden="true" data-name="{{ field_name }}">
         <option value="">{{ title }}</option>
         <option value="">---------</option>
         {% for choice in choices %}

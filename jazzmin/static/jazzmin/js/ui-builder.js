@@ -16,9 +16,16 @@
         "danger",
         "success",
     ]
-    const darkThemes = ["darkly", "cyborg", "slate", "solar", "superhero"]
 
     window.ui_changes = window.ui_changes || {'button_classes': {}};
+
+    function applyThemeMode(mode) {
+        var resolved = mode === 'auto'
+            ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+            : mode;
+        document.documentElement.setAttribute('data-bs-theme', resolved);
+        localStorage.setItem('jazzmin-theme-mode', mode);
+    }
 
     function miscListeners() {
         $('#footer-fixed').on('click', function () {
@@ -95,81 +102,31 @@
         });
     }
 
-    function themeSpecificTweaks(theme) {
-        if (darkThemes.indexOf(theme) > -1) {
-            $('#navbar-variants .bg-dark').click();
-            $("#jazzmin-btn-style-primary").val('btn-primary').change();
-            $("#jazzmin-btn-style-secondary").val('btn-secondary').change();
-            $body.addClass('dark-mode');
-        } else {
-            $('#navbar-variants .bg-white').click();
-            $("#jazzmin-btn-style-primary").val('btn-outline-primary').change();
-            $("#jazzmin-btn-style-secondary").val('btn-outline-secondary').change();
-            $body.removeClass('dark-mode');
-        }
-    }
-
     function themeChooserListeners() {
-        // Theme chooser (standard)
+        // Theme chooser (standard) — #jazzmin-theme link is always present in the DOM
         $("#jazzmin-theme-chooser").on('change', function () {
-            let $themeCSS = $('#jazzmin-theme');
+            const $themeCSS = $('#jazzmin-theme');
+            const base = $themeCSS.data('theme-base');
+            const newTheme = $(this).val();
 
-            // If we are using the default theme, there will be no theme css, just the bundled one in adminlte
-            if (!$themeCSS.length) {
-                const staticSrc = $('#adminlte-css').attr('href').split('vendor')[0]
-                $themeCSS = $('<link>').attr({
-                    'href': staticSrc + 'vendor/bootswatch/default/bootstrap.min.css',
-                    'rel': 'stylesheet',
-                    'id': 'jazzmin-theme'
-                }).appendTo('head');
+            if (newTheme === 'default') {
+                $themeCSS.removeAttr('href');
+            } else {
+                $themeCSS.attr('href', base + '/' + newTheme + '/bootstrap.min.css');
             }
 
-            const currentSrc = $themeCSS.attr('href');
-            const currentTheme = currentSrc.split('/')[4];
-            let newTheme = $(this).val();
-
-            $themeCSS.attr('href', currentSrc.replace(currentTheme, newTheme));
-
-            $body.removeClass (function (index, className) {
-                return (className.match (/(^|\s)theme-\S+/g) || []).join(' ');
-            });
-            $body.addClass('theme-' + newTheme);
-
-            themeSpecificTweaks(newTheme);
+            $body.removeClass(function (index, className) {
+                return (className.match(/(^|\s)theme-\S+/g) || []).join(' ');
+            }).addClass('theme-' + newTheme);
 
             window.ui_changes['theme'] = newTheme;
         });
 
-        // Theme chooser (dark mode)
-        $("#jazzmin-dark-mode-theme-chooser").on('change', function () {
-            let $themeCSS = $('#jazzmin-dark-mode-theme');
-            // If we are using the default theme, there will be no theme css, just the bundled one in adminlte
-
-            if (this.value === "") {
-                $themeCSS.remove();
-                window.ui_changes['dark_mode_theme'] = null;
-                return
-            }
-
-            if (!$themeCSS.length) {
-                const staticSrc = $('#adminlte-css').attr('href').split('vendor')[0]
-                $themeCSS = $('<link>').attr({
-                    'href': staticSrc + 'vendor/bootswatch/darkly/bootstrap.min.css',
-                    'rel': 'stylesheet',
-                    'id': 'jazzmin-dark-mode-theme',
-                    'media': '(prefers-color-scheme: dark)'
-                }).appendTo('head');
-            }
-
-            const currentSrc = $themeCSS.attr('href');
-            const currentTheme = currentSrc.split('/')[4];
-            const newTheme = $(this).val();
-
-            $themeCSS.attr('href', currentSrc.replace(currentTheme, newTheme));
-
-            themeSpecificTweaks(newTheme);
-
-            window.ui_changes['dark_mode_theme'] = newTheme;
+        // Color scheme (data-bs-theme): any theme can be shown in light or dark
+        $("#jazzmin-theme-mode-chooser").on('change', function () {
+            const mode = $(this).val();
+            window.ui_changes['default_theme_mode'] = mode;
+            applyThemeMode(mode);
         });
     }
 
@@ -298,8 +255,13 @@
 
     function setFromExisting() {
         $('#jazzmin-theme-chooser').val(window.ui_changes['theme']);
-        $('#jazzmin-dark-mode-theme-chooser').val(window.ui_changes['dark_mode_theme']);
-        $('#theme-condition').val(window.ui_changes['theme_condition']);
+        const themeMode = window.ui_changes['default_theme_mode'] || 'light';
+        $('#jazzmin-theme-mode-chooser').val(themeMode);
+        applyThemeMode(themeMode);
+        const themeCondition = window.ui_changes['theme_condition'];
+        if (themeCondition && $('#theme-condition').length) {
+            $('#theme-condition').val(themeCondition);
+        }
         $('#body-small-text').get(0).checked = window.ui_changes['body_small_text'];
         $('#footer-small-text').get(0).checked = window.ui_changes['footer_small_text'];
         $('#sidebar-nav-small-text').get(0).checked = window.ui_changes['sidebar_nav_small_text'];

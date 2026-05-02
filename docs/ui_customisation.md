@@ -21,35 +21,49 @@ into your settings that will persist these customisations beyond page refresh.
 With the ui customiser enabled (see above), you can try out different bootswatch themes, and combine the theme with our
 other UI tweaks.
 
-### Dark mode enabled
+### Color scheme (light / dark)
 
-If you set `JAZZMIN_UI_TWEAKS["dark_mode_theme"]` to a dark theme, then users that have opted for dark mode on their
-device will be served this theme instead of the one in `JAZZMIN_UI_TWEAKS["theme"]`
+Any Bootswatch theme can be shown in light or dark. Jazzmin sets Bootstrap’s `data-bs-theme` on the `<html>` element
+to `"light"` or `"dark"`, so the same theme adapts to the chosen color scheme.
 
-This is done using `prefers-color-scheme` in the CSS media attribute, see [here](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme)
-for more information on the web standard
+- **`default_theme_mode`** in `JAZZMIN_UI_TWEAKS`: `"light"`, `"dark"`, or `"auto"`. With `"auto"`, the scheme follows
+  the system preference (`prefers-color-scheme`). Default is `"light"`.
+- The UI customizer lets users switch between Light, Dark, and System; the choice is stored in `localStorage` and can be
+  copied into settings via “Show code”.
 
-for example, to use `flatly` for all users that have no preference or prefer light mode, and `darkly` for those who opt
-for dark mode on their device:
+Example: default to dark, with one theme for everyone:
 
 ```python
 JAZZMIN_UI_TWEAKS = {
     ...
     "theme": "flatly",
-    "dark_mode_theme": "darkly",
+    "default_theme_mode": "dark",
 }
 ```
 
-To force the use of a single theme regardless, just omit `dark_mode_theme` from your `JAZZMIN_UI_TWEAKS`
+Example: follow system preference:
 
-You can preview any of the available themes on your site using the UI Customizer (See above), or view them on bootswatch
-below
+```python
+JAZZMIN_UI_TWEAKS = {
+    ...
+    "theme": "flatly",
+    "default_theme_mode": "auto",
+}
+```
 
-### Light themes
+**Migration from `dark_mode_theme`:** If you had `dark_mode_theme` set (e.g. `"darkly"`), it is deprecated and no longer used. For the same behaviour (dark theme when the user’s system prefers dark), set `default_theme_mode": "auto"` and remove `dark_mode_theme`. If you do not update your config, Jazzmin will treat existing `dark_mode_theme` as `default_theme_mode": "auto"` and log a deprecation warning.
 
-- default (Standard theme built on top of bootstrap)
+You can preview any of the available themes on your site using the UI Customizer (see above), or view them on bootswatch
+below.
+
+### Available themes
+
+- default (standard Bootstrap-based theme)
+- brite [preview](https://bootswatch.com/brite/)
 - cerulean [preview](https://bootswatch.com/cerulean/)
 - cosmo [preview](https://bootswatch.com/cosmo/)
+- cyborg [preview](https://bootswatch.com/cyborg/)
+- darkly [preview](https://bootswatch.com/darkly/)
 - flatly [preview](https://bootswatch.com/flatly/)
 - journal [preview](https://bootswatch.com/journal/)
 - litera [preview](https://bootswatch.com/litera/)
@@ -57,21 +71,20 @@ below
 - lux [preview](https://bootswatch.com/lux/)
 - materia [preview](https://bootswatch.com/materia/)
 - minty [preview](https://bootswatch.com/minty/)
+- morph [preview](https://bootswatch.com/morph/)
 - pulse [preview](https://bootswatch.com/pulse/)
+- quartz [preview](https://bootswatch.com/quartz/)
 - sandstone [preview](https://bootswatch.com/sandstone/)
 - simplex [preview](https://bootswatch.com/simplex/)
 - sketchy [preview](https://bootswatch.com/sketchy/)
-- spacelab [preview](https://bootswatch.com/spacelab/)
-- united [preview](https://bootswatch.com/united/)
-- yeti [preview](https://bootswatch.com/yeti/)
-
-### Dark themes
-
-- darkly [preview](https://bootswatch.com/darkly/)
-- cyborg [preview](https://bootswatch.com/cyborg/)
 - slate [preview](https://bootswatch.com/slate/)
 - solar [preview](https://bootswatch.com/solar/)
+- spacelab [preview](https://bootswatch.com/spacelab/)
 - superhero [preview](https://bootswatch.com/superhero/)
+- united [preview](https://bootswatch.com/united/)
+- vapor [preview](https://bootswatch.com/vapor/)
+- yeti [preview](https://bootswatch.com/yeti/)
+- zephyr [preview](https://bootswatch.com/zephyr/)
 
 Here are some screenshots of the themes in action, Use the UI Customizer (See above) to test them all
 
@@ -140,12 +153,10 @@ body.theme-darkly p {
 }
 ```
 
-Or to target your `dark_mode_theme` wrap it like this:
+To target dark color scheme (when `data-bs-theme="dark"` is set on the document), use:
 
 ```css
-@media (prefers-color-scheme: dark) {
-    body.theme-darkly p {
-        color: pink;
-    }
+html[data-bs-theme="dark"] body.theme-darkly p {
+    color: pink;
 }
 ```
