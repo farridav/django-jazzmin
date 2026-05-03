@@ -12,7 +12,7 @@
 
         {% if cl.search_fields %}
             <input class="form-control" style="width: auto; min-width: 250px;" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar"
-                {% if cl.search_help_text %} placeholder="{{ cl.search_help_text }}{% endif %}">
+                {% if cl.search_help_text %} placeholder="{{ cl.search_help_text }}" {% endif %}>
         {% endif %}
 
         {% if cl.has_filters or cl.search_fields %}
