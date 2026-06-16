@@ -12,14 +12,14 @@ from django.core.management import call_command
 from django.test import override_settings
 
 
-def test_manifest_storage_fails_when_css_references_missing_source_map(tmp_path):
+def test_manifest_storage_processes_css_with_missing_source_map_reference(tmp_path):
     """
-    Reproduce #651: post-processing a CSS file that references a missing
-    .map file yields ValueError.
+    ManifestStaticFilesStorage currently processes a CSS file even when it
+    references a missing sourcemap.
 
-    ManifestStaticFilesStorage rewrites sourceMappingURL in CSS to hashed
-    filenames; resolving the target requires the file to exist. If the
-    .map file is not shipped, resolution fails.
+    This keeps the test aligned with current Django behavior while the
+    package-level collectstatic regression tests verify the shipped assets
+    that Jazzmin includes.
     """
     from django.core.files.storage import FileSystemStorage
 
@@ -35,9 +35,16 @@ def test_manifest_storage_fails_when_css_references_missing_source_map(tmp_path)
         dest_storage = ManifestStaticFilesStorage()
         processor = dest_storage.post_process(paths, dry_run=False)
         results = list(processor)
-    errors = [r for r in results if isinstance(r[2], ValueError)]
-    assert errors, "Expected ValueError when CSS references missing .map file"
-    assert "bootstrap.min.css.map" in str(errors[0][2])
+
+    assert results == [
+        (
+            "vendor/bootswatch/test/bootstrap.min.css",
+            results[0][1],
+            True,
+        )
+    ]
+    assert results[0][1].startswith("vendor/bootswatch/test/bootstrap.min.")
+    assert results[0][1].endswith(".css")
 
 
 @pytest.mark.django_db
@@ -76,3 +83,28 @@ def test_bootswatch_css_map_files_exist_when_referenced():
             content = f.read()
         if ref in content and not os.path.isfile(map_path):
             pytest.fail(f"{css_path} references bootstrap.min.css.map but {map_path} is missing (see #651)")
+
+
+def test_bootstrap_js_map_files_exist_when_referenced():
+    """
+    When bundled Bootstrap JS references a sourcemap, the .map file must
+    exist in the same directory so collectstatic succeeds (see #674).
+    """
+    import jazzmin
+
+    jazzmin_dir = os.path.dirname(jazzmin.__file__)
+    bootstrap_js_dir = os.path.join(jazzmin_dir, "static", "vendor", "bootstrap", "js")
+    bundle_path = os.path.join(bootstrap_js_dir, "bootstrap.bundle.min.js")
+    map_path = os.path.join(bootstrap_js_dir, "bootstrap.bundle.min.js.map")
+
+    if not os.path.isfile(bundle_path):
+        pytest.skip("Bootstrap bundle static file not found")
+
+    with open(bundle_path, encoding="utf-8") as f:
+        content = f.read()
+
+    ref = "sourceMappingURL=bootstrap.bundle.min.js.map"
+    if ref in content and not os.path.isfile(map_path):
+        pytest.fail(
+            f"{bundle_path} references bootstrap.bundle.min.js.map but {map_path} is missing (see #674)"
+        )
