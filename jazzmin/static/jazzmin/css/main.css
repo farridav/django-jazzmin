@@ -218,11 +218,6 @@ html[data-bs-theme="dark"] select:not(.form-select):not([multiple]) {
     gap: 0.25rem;
 }
 
-.related-widget-wrapper .select2-container {
-    flex: 1;
-    min-width: 0;
-}
-
 .related-widget-wrapper-link {
     flex-shrink: 0;
 }
@@ -246,45 +241,6 @@ html[data-bs-theme="dark"] select:not(.form-select):not([multiple]) {
 #jazzy-sidebar .nav-sidebar > .nav-item {
     width: 100%;
 }
-
-
-/* ============================================================================
-   SELECT2 - Dark theme support
-   ========================================================================== */
-html[data-bs-theme="dark"] .select2-container--default .select2-selection--single,
-html[data-bs-theme="dark"] .select2-container--default .select2-selection--multiple {
-    background-color: var(--bs-body-bg);
-    border-color: var(--bs-border-color);
-    color: var(--bs-body-color);
-}
-
-html[data-bs-theme="dark"] .select2-container--default .select2-selection--single .select2-selection__rendered,
-html[data-bs-theme="dark"] .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-    color: var(--bs-body-color);
-}
-
-html[data-bs-theme="dark"] .select2-dropdown {
-    background-color: var(--bs-body-bg);
-    border-color: var(--bs-border-color);
-}
-
-html[data-bs-theme="dark"] .select2-container--default .select2-results__option {
-    background-color: var(--bs-body-bg);
-    color: var(--bs-body-color);
-}
-
-html[data-bs-theme="dark"] .select2-container--default .select2-results__option--highlighted[aria-selected] {
-    background-color: var(--bs-primary);
-    color: var(--bs-white);
-}
-
-/* SELECT2 - Border theming */
-.select2-container--default .select2-selection--single,
-.select2-container--default .select2-selection--multiple {
-    border: 1px solid var(--bs-border-color);
-    border-radius: .375rem;
-}
-
 
 /* ============================================================================
    FORM SPACING - Django form-row / form-group

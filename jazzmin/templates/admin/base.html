@@ -64,7 +64,7 @@
     {% block extrastyle %} {% endblock %}
     {% block extrahead %} {% endblock %}
 </head>
-<body class="layout-fixed{% if jazzmin_settings.show_sidebar %} sidebar-expand-lg sidebar-open{% else %} no-sidebar{% endif %} bg-body-tertiary {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }}" data-admin-utc-offset="{% now "Z" %}">
+<body class="app-layout-identity {% if jazzmin_settings.show_sidebar %}sidebar-expand-lg{% else %}sidebar-collapse{% endif %} bg-body-tertiary {% sidebar_status request %} {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %} {{ jazzmin_ui.body_classes }}" data-admin-utc-offset="{% now "Z" %}">
 
     <div class="app-wrapper">
 
@@ -121,7 +121,7 @@
 
                 {% if jazzmin_settings.show_ui_builder %}
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                    <a class="nav-link" data-lte-toggle="control-sidebar" href="#" role="button">
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
@@ -237,8 +237,7 @@
                 </div>
 
                 <div class="sidebar-wrapper">
-                    <div class="user-panel d-flex">
-                        <div class="image">
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex border-bottom border-secondary">                        <div class="image">
                             {% if jazzmin_settings|has_jazzmin_setting:"user_avatar" %}
                                 <img src="{% get_user_avatar request.user %}" width="160px" class="img-circle elevation-2" alt="User Image">
                             {% else %}
@@ -283,12 +282,15 @@
                                 {% endfor %}
                             {% else %}
                                 {% for app in side_menu_list %}
-                                    <li class="nav-item has-treeview">
+                                    <li class="nav-item">
                                         <a href="#" class="nav-link">
                                             <i class="nav-icon {{ app.icon }}"></i>
-                                            <p>{{ app.name|truncatechars:21 }} <i class="nav-arrow fas fa-chevron-right" aria-hidden="true"></i></p>
+                                            <p>
+                                                {{ app.name|truncatechars:21 }}
+                                                <i class="nav-arrow bi bi-chevron-right fas fa-chevron-right"></i>
+                                            </p>
                                         </a>
-                                        <ul class="nav nav-treeview">
+                                        <ul class="nav nav-treeview menu-open">
                                             {% for model in app.models %}
                                                 <li class="nav-item">
                                                     <a href="{% if model.url %}{{ model.url }}{% else %}javascript:void(0){% endif %}" class="nav-link">
