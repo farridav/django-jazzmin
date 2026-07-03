@@ -6,7 +6,6 @@ customise, including a built-in UI customizer
 ## Features
 
 - Drop-in admin skin, all configuration optional
-- Select2 drop-downs
 - Bootstrap 5 & AdminLTE UI components
 - Search bar for any given model admin
 - Modal windows instead of popups

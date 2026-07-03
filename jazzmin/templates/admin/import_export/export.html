@@ -4,8 +4,7 @@
 
 {% block extrastyle %}
     {{ block.super }}
-    <link rel="stylesheet" href="{% static 'vendor/select2/css/select2.min.css' %}">
-{% endblock %}
+    {% endblock %}
 
 {% block breadcrumbs_last %}
     {% trans "Export" %}
@@ -25,10 +24,10 @@
                         </div>
                         <div class="card-body">
                             {% for field in form %}
-                                <div class="form-group field-name">
-                                    <div class="row">
+                                <div class="mb-3 field-name">
+                                    <div class="row align-items-center">
                                     {{ field.errors }}
-                                        <div class="col-sm-2 text-start">
+                                        <div class="col-sm-2 text-start col-form-label">
                                             {{ field.label_tag }}
                                         </div>
                                         <div class="col-sm-10 text-start">
@@ -56,7 +55,7 @@
                             </h3>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
+                            <div>
                                 <input type="submit" class="btn {{ jazzmin_ui.button_classes.success }} form-control" value="{% trans "Submit" %}">
                             </div>
                         </div>
@@ -69,6 +68,5 @@
 
 {% block extrajs %}
     {{  block.super }}
-    <script type="text/javascript" src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'jazzmin/js/change_form.js' %}"></script>
 {% endblock %}

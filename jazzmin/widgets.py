@@ -1,31 +1,25 @@
 from typing import Any
-
-from django import forms
 from django.forms.widgets import Select, SelectMultiple
 
 
 class JazzminSelect(Select):
     template_name = "jazzmin/widgets/select.html"
 
-    @property
-    def media(self) -> forms.Media:
-        return forms.Media(
-            css={"all": ("vendor/select2/css/select2.min.css",)},
-            js=("vendor/select2/js/select2.min.js",),
-        )
+    def build_attrs(self, base_attrs: dict[str, Any], extra_attrs: dict[str, Any] | None = None) -> dict[str, Any]:
+        attrs = super().build_attrs(base_attrs, extra_attrs)
+        classes = attrs.get("class", "")
+        if "form-select" not in classes:
+            attrs["class"] = f"{classes} form-select".strip()
+        return attrs
 
 
 class JazzminSelectMultiple(SelectMultiple):
     template_name = "jazzmin/widgets/select.html"
 
     def build_attrs(self, base_attrs: dict[str, Any], extra_attrs: dict[str, Any] | None = None) -> dict[str, Any]:
-        merged = dict(extra_attrs) if extra_attrs else {}
-        merged["multiple"] = "multiple"
-        return {**base_attrs, **merged}
-
-    @property
-    def media(self) -> forms.Media:
-        return forms.Media(
-            css={"all": ("vendor/select2/css/select2.min.css",)},
-            js=("vendor/select2/js/select2.min.js",),
-        )
+        attrs = super().build_attrs(base_attrs, extra_attrs)
+        attrs["multiple"] = "multiple"
+        classes = attrs.get("class", "")
+        if "form-control" not in classes:
+            attrs["class"] = f"{classes} form-control".strip()
+        return attrs
