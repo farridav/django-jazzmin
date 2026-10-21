@@ -93,7 +93,7 @@
 
         const widgetVal = widgetEl.val();
         if (widgetEl.hasClass('vManyToManyRawIdAdminField') && Boolean(widgetVal)) {
-            widgetEl.val(widgetVal + ', ' + chosenId);
+            widgetEl.val(widgetVal + ',' + chosenId);
         } else {
             widgetEl.val(chosenId);
         }
